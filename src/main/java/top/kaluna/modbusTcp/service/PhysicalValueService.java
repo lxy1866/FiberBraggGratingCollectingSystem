@@ -9,6 +9,7 @@ import top.kaluna.modbusTcp.domain.PhysicalValueExample;
 import top.kaluna.modbusTcp.mapper.PhysicalValueMapper;
 import top.kaluna.modbusTcp.req.PhysicalValueReq;
 import top.kaluna.modbusTcp.resp.PhysicalValueQueryResp;
+import top.kaluna.modbusTcp.util.CopyUtil;
 import top.kaluna.modbusTcp.util.DateUtil;
 
 
@@ -33,13 +34,8 @@ public class PhysicalValueService {
         PhysicalValueExample.Criteria criteria = physicalValueExample.createCriteria();
         criteria.andCreateTimeBetween(DateUtil.getStartTime(), DateUtil.getEndTime());
         final List<PhysicalValue> physicalValues = physicalValueMapper.selectByExample(physicalValueExample);
-        List<PhysicalValueQueryResp> respsList = new ArrayList<>();
-        for (PhysicalValue physicalValue :
-                physicalValues) {
-            PhysicalValueQueryResp physicalValueQueryResp = new PhysicalValueQueryResp();
-            BeanUtils.copyProperties(physicalValue, physicalValueQueryResp);
-            respsList.add(physicalValueQueryResp);
-        }
+
+        final List<PhysicalValueQueryResp> respsList = CopyUtil.copyList(physicalValues, PhysicalValueQueryResp.class);
         return respsList;
     }
 

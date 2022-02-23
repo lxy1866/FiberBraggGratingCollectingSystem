@@ -1,6 +1,5 @@
 package top.kaluna.modbusTcp.resp;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
