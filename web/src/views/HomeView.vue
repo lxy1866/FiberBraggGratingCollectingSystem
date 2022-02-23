@@ -50,7 +50,7 @@
         </a-menu>
       </a-layout-sider>
       <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
-        Content
+        <pre>{{pv}}</pre>
       </a-layout-content>
     </a-layout>
   </a-layout-content>
@@ -58,9 +58,11 @@
 
 <script lang="ts">
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import axios from "axios";
+
 export default defineComponent({
+  name:'Home',
   components: {
     UserOutlined,
     LaptopOutlined,
@@ -68,13 +70,20 @@ export default defineComponent({
   },
   setup() {
     console.log("setup");
-    axios.get("http://localhost:8080/pv/list").then(function (response){
-      console.log(response);
+    const pv = ref();
+    onMounted(()=>{
+      console.log("onMounted")
+      axios.get("http://localhost:8080/pv/list").then(function (response){
+        console.log(response);
+        const data = response.data;
+        pv.value = data.content;
+      })
     })
     return {
       selectedKeys1: ref<string[]>(['2']),
       selectedKeys2: ref<string[]>(['1']),
       openKeys: ref<string[]>(['sub1']),
+      pv
     };
   },
 });
