@@ -1,4 +1,4 @@
-package top.kaluna.modbusTcp.protocol;
+package top.kaluna.modbusTcp.util;
 
 import java.math.BigDecimal;
 
@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * @author Yuery
  * @date 2021/12/12/0012 - 16:51
  */
-public class CommonUtil {
+public class NumTypeChangeUtil {
     /**
      *
      * @param src byte数组

@@ -2,13 +2,19 @@ package top.kaluna.modbusTcp.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import top.kaluna.modbusTcp.domain.PhysicalValue;
+import top.kaluna.modbusTcp.domain.PhysicalValueExample;
 import top.kaluna.modbusTcp.mapper.PhysicalValueMapper;
-import top.kaluna.modbusTcp.resp.PageResp;
+import top.kaluna.modbusTcp.req.PhysicalValueReq;
 import top.kaluna.modbusTcp.resp.PhysicalValueQueryResp;
+import top.kaluna.modbusTcp.util.DateUtil;
+
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,9 +28,19 @@ public class PhysicalValueService {
 
     private static final Logger LOG = LoggerFactory.getLogger(PhysicalValueService.class);
 
-    public List<PhysicalValue> list(){
-
-        return physicalValueMapper.selectByExample(null);
+    public List<PhysicalValueQueryResp> list(PhysicalValueReq req){
+        PhysicalValueExample physicalValueExample = new PhysicalValueExample();
+        PhysicalValueExample.Criteria criteria = physicalValueExample.createCriteria();
+        criteria.andCreateTimeBetween(DateUtil.getStartTime(), DateUtil.getEndTime());
+        final List<PhysicalValue> physicalValues = physicalValueMapper.selectByExample(physicalValueExample);
+        List<PhysicalValueQueryResp> respsList = new ArrayList<>();
+        for (PhysicalValue physicalValue :
+                physicalValues) {
+            PhysicalValueQueryResp physicalValueQueryResp = new PhysicalValueQueryResp();
+            BeanUtils.copyProperties(physicalValue, physicalValueQueryResp);
+            respsList.add(physicalValueQueryResp);
+        }
+        return respsList;
     }
 
 //    public PageResp<PhysicalValueQueryResp> list(PhysicalValueQueryResp physicalValueQueryResp){

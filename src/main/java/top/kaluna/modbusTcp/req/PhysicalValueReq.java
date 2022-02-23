@@ -1,14 +1,9 @@
-package top.kaluna.modbusTcp.resp;
+package top.kaluna.modbusTcp.req;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * @author Yuery
- * @date 2022/2/22/0022 - 12:27
- */
-public class PhysicalValueQueryResp {
+public class PhysicalValueReq {
     private Long id;
 
     private BigDecimal val1;

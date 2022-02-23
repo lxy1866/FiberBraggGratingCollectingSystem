@@ -14,3 +14,5 @@ create table `physical_value`(
 INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id) VALUES (267.7500, 61.5073, 118.6680, 232.4906, 94.8208, 274.2150, 1);
 INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id) VALUES (267.7500, 61.5043, 118.6680, 232.4906, 94.8208, 274.2150, 2);
 INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id, create_time) VALUES (267.7500, 61.5043, 118.6680, 232.4906, 94.8208, 274.2150, 3, '2017-10-27 12:15:42.664');
+INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id, create_time) VALUES (267.7500, 61.5043, 118.6680, 232.4906, 94.8208, 274.2150, 4, '2022-2-23 12:15:42.664');
+INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id, create_time) VALUES (267.7500, 61.5043, 118.6680, 232.4906, 94.8208, 274.2150, 5, '2017-2-23 12:15:42.664');
