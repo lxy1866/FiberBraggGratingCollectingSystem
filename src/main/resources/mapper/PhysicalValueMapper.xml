@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.kaluna.modbusTcp.mapper.PhysicalValueMapper">
+  <resultMap id="BaseResultMap" type="top.kaluna.modbusTcp.domain.PhysicalValue">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="val1" jdbcType="DECIMAL" property="val1" />
+    <result column="val2" jdbcType="DECIMAL" property="val2" />
+    <result column="val3" jdbcType="DECIMAL" property="val3" />
+    <result column="val4" jdbcType="DECIMAL" property="val4" />
+    <result column="val5" jdbcType="DECIMAL" property="val5" />
+    <result column="val6" jdbcType="DECIMAL" property="val6" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, val1, val2, val3, val4, val5, val6, create_time
+  </sql>
+  <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from physical_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from physical_value
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from physical_value
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueExample">
+    delete from physical_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.PhysicalValue">
+    insert into physical_value (id, val1, val2, 
+      val3, val4, val5, val6, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{val1,jdbcType=DECIMAL}, #{val2,jdbcType=DECIMAL}, 
+      #{val3,jdbcType=DECIMAL}, #{val4,jdbcType=DECIMAL}, #{val5,jdbcType=DECIMAL}, #{val6,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.PhysicalValue">
+    insert into physical_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="val1 != null">
+        val1,
+      </if>
+      <if test="val2 != null">
+        val2,
+      </if>
+      <if test="val3 != null">
+        val3,
+      </if>
+      <if test="val4 != null">
+        val4,
+      </if>
+      <if test="val5 != null">
+        val5,
+      </if>
+      <if test="val6 != null">
+        val6,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="val1 != null">
+        #{val1,jdbcType=DECIMAL},
+      </if>
+      <if test="val2 != null">
+        #{val2,jdbcType=DECIMAL},
+      </if>
+      <if test="val3 != null">
+        #{val3,jdbcType=DECIMAL},
+      </if>
+      <if test="val4 != null">
+        #{val4,jdbcType=DECIMAL},
+      </if>
+      <if test="val5 != null">
+        #{val5,jdbcType=DECIMAL},
+      </if>
+      <if test="val6 != null">
+        #{val6,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueExample" resultType="java.lang.Long">
+    select count(*) from physical_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update physical_value
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.val1 != null">
+        val1 = #{record.val1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.val2 != null">
+        val2 = #{record.val2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.val3 != null">
+        val3 = #{record.val3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.val4 != null">
+        val4 = #{record.val4,jdbcType=DECIMAL},
+      </if>
+      <if test="record.val5 != null">
+        val5 = #{record.val5,jdbcType=DECIMAL},
+      </if>
+      <if test="record.val6 != null">
+        val6 = #{record.val6,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update physical_value
+    set id = #{record.id,jdbcType=BIGINT},
+      val1 = #{record.val1,jdbcType=DECIMAL},
+      val2 = #{record.val2,jdbcType=DECIMAL},
+      val3 = #{record.val3,jdbcType=DECIMAL},
+      val4 = #{record.val4,jdbcType=DECIMAL},
+      val5 = #{record.val5,jdbcType=DECIMAL},
+      val6 = #{record.val6,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.modbusTcp.domain.PhysicalValue">
+    update physical_value
+    <set>
+      <if test="val1 != null">
+        val1 = #{val1,jdbcType=DECIMAL},
+      </if>
+      <if test="val2 != null">
+        val2 = #{val2,jdbcType=DECIMAL},
+      </if>
+      <if test="val3 != null">
+        val3 = #{val3,jdbcType=DECIMAL},
+      </if>
+      <if test="val4 != null">
+        val4 = #{val4,jdbcType=DECIMAL},
+      </if>
+      <if test="val5 != null">
+        val5 = #{val5,jdbcType=DECIMAL},
+      </if>
+      <if test="val6 != null">
+        val6 = #{val6,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.kaluna.modbusTcp.domain.PhysicalValue">
+    update physical_value
+    set val1 = #{val1,jdbcType=DECIMAL},
+      val2 = #{val2,jdbcType=DECIMAL},
+      val3 = #{val3,jdbcType=DECIMAL},
+      val4 = #{val4,jdbcType=DECIMAL},
+      val5 = #{val5,jdbcType=DECIMAL},
+      val6 = #{val6,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
