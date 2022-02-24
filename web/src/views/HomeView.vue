@@ -52,82 +52,26 @@
       <a-layout-content
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
-        <a-list size="small" bordered :data-source="pv">
-          <template #renderItem="{ item }">
-            <a-list-item>{{ item }}</a-list-item>
-          </template>
-          <template #header>
-            <div>Header</div>
-          </template>
-          <template #footer>
-            <div>Footer</div>
-          </template>
-        </a-list>
+        <n-loading-bar-provider>
+          <n-message-provider>
+            <n-notification-provider>
+              <n-dialog-provider>
+                <the-list />
+              </n-dialog-provider>
+            </n-notification-provider>
+          </n-message-provider>
+        </n-loading-bar-provider>
       </a-layout-content>
     </a-layout>
   </a-layout-content>
 </template>
-
-<script lang="ts">
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
-import { defineComponent, ref, onMounted } from 'vue';
-import axios from "axios";
+<script>
+import { defineComponent } from "vue";
+import TheList from "../components/the-list.vue";
 
 export default defineComponent({
-  name:'Home',
   components: {
-    UserOutlined,
-    LaptopOutlined,
-    NotificationOutlined,
-  },
-  setup() {
-    console.log("setup");
-    const pv = ref();
-    onMounted(()=>{
-      console.log("onMounted")
-      axios.get("http://localhost:8080/pv/list").then(function (response){
-        console.log(response);
-        const data = response.data;
-        pv.value = data.content;
-      })
-    })
-    const pagination = {
-      onChange: (page: number) => {
-        console.log(page);
-      },
-      pageSize: 3,
-    };
-    const actions: Record<string, string>[] = [
-      { type: 'StarOutlined', text: '156' },
-      { type: 'LikeOutlined', text: '156' },
-      { type: 'MessageOutlined', text: '2' },
-    ];
-    return {
-      selectedKeys1: ref<string[]>(['2']),
-      selectedKeys2: ref<string[]>(['1']),
-      openKeys: ref<string[]>(['sub1']),
-      pv,
-      pagination,
-      actions,
-    };
+    TheList,
   },
 });
 </script>
-<style>
-#components-layout-demo-top-side .logo {
-  float: left;
-  width: 120px;
-  height: 31px;
-  margin: 16px 24px 16px 0;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.ant-row-rtl #components-layout-demo-top-side .logo {
-  float: right;
-  margin: 16px 0 16px 24px;
-}
-
-.site-layout-background {
-  background: #fff;
-}
-</style>

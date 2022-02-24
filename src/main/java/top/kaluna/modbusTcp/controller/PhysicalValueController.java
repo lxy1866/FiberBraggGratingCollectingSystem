@@ -1,6 +1,7 @@
 package top.kaluna.modbusTcp.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import top.kaluna.modbusTcp.domain.PhysicalValue;
 import top.kaluna.modbusTcp.mapper.PhysicalValueMapper;
@@ -23,6 +24,7 @@ public class PhysicalValueController {
     private PhysicalValueService physicalValueService;
 
     @RequestMapping("/list")
+    @ResponseBody
     public CommonResp list(PhysicalValueReq req){
         CommonResp<List<PhysicalValueQueryResp>> resp = new CommonResp<>();
         List<PhysicalValueQueryResp> list = physicalValueService.list(req);
