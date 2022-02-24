@@ -12,6 +12,9 @@ import java.io.IOException;
  * @author Yuery
  * @date 2022/2/24/0024 - 17:40
  */
+/**
+ * 过滤器是给web容器用的
+ */
 @Component
 public class LogFilter implements Filter {
     public static final Logger LOG = LoggerFactory.getLogger(LogFilter.class);
