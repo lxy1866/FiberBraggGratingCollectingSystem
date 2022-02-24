@@ -59,7 +59,7 @@ export default defineComponent({
   setup () {
     onMounted(()=>{
       console.log("onMounted")
-      axios.get(process.env.VUE_APP_SERVER+"/pv/list").then(function (response){
+      axios.get("/pv/list").then(function (response){
         console.log(response);
         data.value = response.data.content;
       })
