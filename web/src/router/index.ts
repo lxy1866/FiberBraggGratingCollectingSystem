@@ -4,7 +4,7 @@ import About from '../views/about.vue'
 import AdminPhysicalValue from '../views/admin/admin-physicalValue.vue'
 
 import component from "*.vue";
-
+import AdminUser from '../views/admin/admin-user.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -24,6 +24,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin/physicalValue',
     name: 'AdminPhysicalValue',
     component: AdminPhysicalValue
+  },
+  {
+    path: '/admin/user',
+    name: 'AdminUser',
+    component: AdminUser,
+    meta: {
+      loginRequire: true
+    }
   },
 ]
 

@@ -11,6 +11,7 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import top.kaluna.modbusTcp.exception.BusinessException;
 import top.kaluna.modbusTcp.resp.CommonResp;
 
 /**
@@ -37,20 +38,20 @@ public class ControllerExceptionHandler {
         return commonResp;
     }
 
-//    /**
-//     * 校验异常统一处理
-//     * @param e
-//     * @return
-//     */
-//    @ExceptionHandler(value = BusinessException.class)
-//    @ResponseBody
-//    public CommonResp validExceptionHandler(BusinessException e) {
-//        CommonResp commonResp = new CommonResp();
-//        LOG.warn("业务异常：{}", e.getCode().getDesc());
-//        commonResp.setSuccess(false);
-//        commonResp.setMessage(e.getCode().getDesc());
-//        return commonResp;
-//    }
+    /**
+     * 校验异常统一处理
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = BusinessException.class)
+    @ResponseBody
+    public CommonResp validExceptionHandler(BusinessException e) {
+        CommonResp commonResp = new CommonResp();
+        LOG.warn("业务异常：{}", e.getCode().getDesc());
+        commonResp.setSuccess(false);
+        commonResp.setMessage(e.getCode().getDesc());
+        return commonResp;
+    }
 
     /**
      * 校验异常统一处理
