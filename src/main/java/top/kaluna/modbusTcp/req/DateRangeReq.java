@@ -6,7 +6,7 @@ import java.util.Date;
  * @author Yuery
  * @date 2022/2/24/0024 - 16:10
  */
-public class DateRangeReq {
+public class DateRangeReq extends PageReq{
 
     public Date startTime;
 

@@ -3,7 +3,7 @@ package top.kaluna.modbusTcp.req;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class PhysicalValueReq {
+public class PhysicalValueReq extends PageReq{
     private Long id;
 
     private BigDecimal val1;
@@ -84,21 +84,4 @@ public class PhysicalValueReq {
         this.createTime = createTime;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", val1=").append(val1);
-        sb.append(", val2=").append(val2);
-        sb.append(", val3=").append(val3);
-        sb.append(", val4=").append(val4);
-        sb.append(", val5=").append(val5);
-        sb.append(", val6=").append(val6);
-        sb.append(", createTime=").append(createTime);
-        sb.append("]");
-        return sb.toString();
-    }
 }
