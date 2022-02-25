@@ -1,5 +1,7 @@
 package top.kaluna.modbusTcp.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -40,7 +42,15 @@ public class PhysicalValueService {
         }else{
             criteria.andCreateTimeBetween(req.startTime, req.endTime);
         }
+
+
         final List<PhysicalValue> physicalValues = physicalValueMapper.selectByExample(physicalValueExample);
+
+        PageHelper.startPage(1, 3);
+        PageInfo<PhysicalValue> pageInfo = new PageInfo<>(physicalValues);
+        LOG.info("总行数：{}", pageInfo.getTotal());
+        LOG.info("总页数：{}",pageInfo.getPages());
+
         final List<PhysicalValueQueryResp> respsList = CopyUtil.copyList(physicalValues, PhysicalValueQueryResp.class);
         return respsList;
     }
