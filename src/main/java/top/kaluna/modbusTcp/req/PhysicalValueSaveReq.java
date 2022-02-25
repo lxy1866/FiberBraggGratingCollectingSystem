@@ -1,5 +1,6 @@
 package top.kaluna.modbusTcp.req;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -9,17 +10,17 @@ import java.util.Date;
  */
 public class PhysicalValueSaveReq extends PageReq {
     private Long id;
-
+    @NotNull(message="[val1]不能为空")
     private BigDecimal val1;
-
+    @NotNull(message="[val2]不能为空")
     private BigDecimal val2;
-
+    @NotNull(message="[val3]不能为空")
     private BigDecimal val3;
-
+    @NotNull(message="[val4]不能为空")
     private BigDecimal val4;
-
+    @NotNull(message="[val5]不能为空")
     private BigDecimal val5;
-
+    @NotNull(message="[val6]不能为空")
     private BigDecimal val6;
 
     private Date createTime;

@@ -35,7 +35,7 @@ public class PhysicalValueController {
         return resp;
     }
     @PostMapping("/save")
-    public CommonResp save(@RequestBody PhysicalValueSaveReq ebookQueryReq){
+    public CommonResp save(@Valid @RequestBody PhysicalValueSaveReq ebookQueryReq){
         CommonResp resp = new CommonResp<>();
         physicalValueService.save(ebookQueryReq);
         return resp;
