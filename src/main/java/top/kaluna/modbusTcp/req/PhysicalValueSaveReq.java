@@ -3,7 +3,11 @@ package top.kaluna.modbusTcp.req;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class PhysicalValueReq extends PageReq{
+/**
+ * @author Yuery
+ * @date 2022/2/25/0025 - 16:16
+ */
+public class PhysicalValueSaveReq extends PageReq {
     private Long id;
 
     private BigDecimal val1;
@@ -83,5 +87,4 @@ public class PhysicalValueReq extends PageReq{
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
 }

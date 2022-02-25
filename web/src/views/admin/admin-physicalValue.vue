@@ -147,10 +147,18 @@ export default defineComponent({
     const modalLoading = ref(false);
     const handleModalOk = () =>{
       modalLoading.value = true;
-      setTimeout(()=>{
-        modalLoading.value = false;
-        modalVisible.value = false;
-      },2000);
+      axios.post("/pv/save", physicalValue.value).then((response)=>{
+        const data = response.data; //data = commonResp
+        if(data.success){
+          modalLoading.value = false;
+          modalVisible.value = false;
+        }
+        //重新加载列表
+        handleQuery({
+          page: pagination.value.current,
+          size: pagination.value.pageSize
+        })
+      });
     };
     const edit = (record: any)=>{
       modalVisible.value = true;

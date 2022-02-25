@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import top.kaluna.modbusTcp.req.DateRangeReq;
 
 import top.kaluna.modbusTcp.req.PageReq;
+import top.kaluna.modbusTcp.req.PhysicalValueSaveReq;
 import top.kaluna.modbusTcp.resp.CommonResp;
 import top.kaluna.modbusTcp.resp.PageResp;
 import top.kaluna.modbusTcp.resp.PhysicalValueQueryResp;
@@ -29,6 +30,12 @@ public class PhysicalValueController {
         CommonResp<PageResp<PhysicalValueQueryResp>> resp = new CommonResp<>();
         PageResp<PhysicalValueQueryResp> list = physicalValueService.list(req);
         resp.setContent(list);
+        return resp;
+    }
+    @PostMapping("/save")
+    public CommonResp save(@RequestBody PhysicalValueSaveReq ebookQueryReq){
+        CommonResp resp = new CommonResp<>();
+        physicalValueService.save(ebookQueryReq);
         return resp;
     }
 }
