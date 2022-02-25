@@ -72,7 +72,7 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
-
+import {message} from 'ant-design-vue'
 export default defineComponent({
   name: 'AdminPhysicalValue',
   setup(){
@@ -139,11 +139,16 @@ export default defineComponent({
       }).then((response)=>{
         loading.value = false;
         const data = response.data;
-        physicalValues.value = data.content.list;
+        if(data.success){
+          physicalValues.value = data.content.list;
 
-        //重置分页按钮
-        pagination.value.current = params.page;
-        pagination.value.total = data.content.total;
+          //重置分页按钮
+          pagination.value.current = params.page;
+          pagination.value.total = data.content.total;
+        }else {
+          message.error(data.message)
+        }
+
       });
     };
     /**

@@ -13,6 +13,7 @@ import top.kaluna.modbusTcp.service.PhysicalValueService;
 import top.kaluna.modbusTcp.util.SnowFlake;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class PhysicalValueController {
 
     @GetMapping("/list")
     @ResponseBody
-    public CommonResp<PageResp<PhysicalValueQueryResp>> list(DateRangeReq req){
+    public CommonResp<PageResp<PhysicalValueQueryResp>> list(@Valid DateRangeReq req){
         CommonResp<PageResp<PhysicalValueQueryResp>> resp = new CommonResp<>();
         PageResp<PhysicalValueQueryResp> list = physicalValueService.list(req);
         resp.setContent(list);
