@@ -59,9 +59,14 @@ export default defineComponent({
   setup () {
     onMounted(()=>{
       console.log("onMounted")
-      axios.get("/pv/list").then(function (response){
+      axios.get("/pv/list",{
+        params:{
+          page:1,
+          size:1000
+        }
+      }).then(function (response){
         console.log(response);
-        data.value = response.data.content;
+        data.value = response.data.content.list;
       })
     })
     return {
