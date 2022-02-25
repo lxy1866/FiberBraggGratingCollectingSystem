@@ -6,17 +6,14 @@
       <a-table
           :columns="columns"
           :row-key="record => record.id"
-          :data-source="physicalValue"
+          :data-source="physicalValues"
           :pagination="pagination"
           :loading="loading"
           @change="handleTableChange"
       >
-        <template #cover="{ text: cover }">
-          <img v-if="cover" :src="cover" alt="avatar" />
-        </template>
         <template v-slot:action="{text: record}">
           <a-space size="small">
-            <a-button type="primary" @click="edit">
+            <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
             <a-button type="danger">
@@ -29,12 +26,34 @@
   </a-layout>
 
   <a-modal
-      title="电子书单"
+      title="编辑物理值"
       v-model:visible="modalVisible"
       :confim-loading="modalLoading"
       @ok="handleModalOk"
   >
-    <p>test</p>
+    <a-form :model="physicalValue" :label-col="{span : 6}">
+      <a-form-item label="id">
+        <a-input v-model:value="physicalValue.id" />
+      </a-form-item>
+      <a-form-item label="val1">
+        <a-input v-model:value="physicalValue.val1" />
+      </a-form-item>
+      <a-form-item label="val2">
+        <a-input v-model:value="physicalValue.val2" />
+      </a-form-item>
+      <a-form-item label="val3">
+        <a-input v-model:value="physicalValue.val3" />
+      </a-form-item>
+      <a-form-item label="val4">
+        <a-input v-model:value="physicalValue.val4" />
+      </a-form-item>
+      <a-form-item label="val5">
+        <a-input v-model:value="physicalValue.val5" />
+      </a-form-item>
+      <a-form-item label="val6">
+        <a-input v-model:value="physicalValue.val6" />
+      </a-form-item>
+    </a-form>
   </a-modal>
 </template>
 <script lang="ts">
@@ -44,7 +63,8 @@ import axios from 'axios';
 export default defineComponent({
   name: 'AdminPhysicalValue',
   setup(){
-    const physicalValue = ref();
+    const physicalValue = ref({});
+    const physicalValues = ref();
     const pagination = ref({
       current: 1,
       pageSize: 3,
@@ -55,8 +75,7 @@ export default defineComponent({
     const columns = [
       {
         title: '序号',
-        dataIndex: 'ID',
-        slots:{ customRender: 'cover'},
+        dataIndex: 'id',
       },
       {
         title: '第一个物理值',
@@ -107,7 +126,7 @@ export default defineComponent({
       }).then((response)=>{
         loading.value = false;
         const data = response.data;
-        physicalValue.value = data.content.list;
+        physicalValues.value = data.content.list;
 
         //重置分页按钮
         pagination.value.current = params.page;
@@ -133,8 +152,9 @@ export default defineComponent({
         modalVisible.value = false;
       },2000);
     };
-    const edit = ()=>{
+    const edit = (record: any)=>{
       modalVisible.value = true;
+      physicalValue.value = record
     }
     onMounted(()=>{
       handleQuery({
@@ -147,9 +167,9 @@ export default defineComponent({
       columns,
       loading,
       handleTableChange,
-      physicalValue,
+      physicalValues,
       edit,
-
+      physicalValue,
       modalVisible,
       modalLoading,
       handleModalOk
