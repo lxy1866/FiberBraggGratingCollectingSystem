@@ -25,4 +25,8 @@ public class DateUtil {
         todayEnd.set(Calendar.MILLISECOND, 999);
         return todayEnd.getTime();
     }
+    public static Date getNowTime(){
+        return new Date();
+    }
+
 }

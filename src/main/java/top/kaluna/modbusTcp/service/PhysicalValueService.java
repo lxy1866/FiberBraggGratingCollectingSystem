@@ -62,8 +62,13 @@ public class PhysicalValueService {
 
     public void save(PhysicalValueSaveReq physicalValueSaveReq) {
         PhysicalValue physicalValue = CopyUtil.copy(physicalValueSaveReq, PhysicalValue.class);
-        if(ObjectUtils.isEmpty(physicalValue)){
+
+        PhysicalValueExample physicalValueExample = new PhysicalValueExample();
+        PhysicalValueExample.Criteria criteria = physicalValueExample.createCriteria();
+        criteria.andIdEqualTo(physicalValueSaveReq.getId());
+        if(ObjectUtils.isEmpty(physicalValueMapper.selectByExample(physicalValueExample))){
             //新增
+            physicalValue.setCreateTime(DateUtil.getNowTime());
             physicalValue.setId(snowFlake.nextId());
             physicalValueMapper.insert(physicalValue);
         }else {

@@ -3,6 +3,11 @@
     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
+      <p>
+        <a-button type="primary" @click="add()" size="large">
+          新增
+        </a-button>
+      </p>
       <a-table
           :columns="columns"
           :row-key="record => record.id"
@@ -158,6 +163,8 @@ export default defineComponent({
       axios.post("/pv/save", physicalValue.value).then((response)=>{
         const data = response.data; //data = commonResp
         if(data.success){
+          modalLoading.value = false;
+          modalVisible.value = false;
           //重新加载列表
           handleQuery({
             page: pagination.value.current,
@@ -166,6 +173,10 @@ export default defineComponent({
         }
       });
     };
+    const add = ()=>{
+      modalVisible.value = true;
+      physicalValue.value = {}
+    }
     const edit = (record: any)=>{
       modalVisible.value = true;
       physicalValue.value = record
@@ -199,7 +210,8 @@ export default defineComponent({
       modalVisible,
       modalLoading,
       handleModalOk,
-      handleDelete
+      handleDelete,
+      add
     }
   }
 })
