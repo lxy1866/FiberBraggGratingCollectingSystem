@@ -4,9 +4,11 @@
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
       <p>
-        <a-button type="primary" @click="add()" size="large">
-          新增
-        </a-button>
+        <a-form-item>
+          <a-button type="primary" @click="add()">
+            新增
+          </a-button>
+        </a-form-item>
       </p>
       <a-table
           :columns="columns"
@@ -73,9 +75,12 @@
 import {defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
 import {message} from 'ant-design-vue'
+import {Tool} from "@/util/tool"
 export default defineComponent({
   name: 'AdminPhysicalValue',
   setup(){
+    const param = ref();
+    param.value = {};
     const physicalValue = ref({});
     const physicalValues = ref();
     const pagination = ref({
@@ -134,7 +139,7 @@ export default defineComponent({
       axios.get("/pv/list", {
         params:{
           page: params.page,
-          size: params.size
+          size: params.size,
         }
       }).then((response)=>{
         loading.value = false;
@@ -184,7 +189,8 @@ export default defineComponent({
     }
     const edit = (record: any)=>{
       modalVisible.value = true;
-      physicalValue.value = record
+
+      physicalValue.value = Tool.copy(record)
     }
     const handleDelete = (id: number)=>{
       axios.delete("/pv/delete/"+id).then((response)=>{
@@ -216,7 +222,9 @@ export default defineComponent({
       modalLoading,
       handleModalOk,
       handleDelete,
-      add
+      add,
+      param,
+      handleQuery
     }
   }
 })
