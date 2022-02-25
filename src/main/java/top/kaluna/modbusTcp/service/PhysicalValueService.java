@@ -15,6 +15,7 @@ import top.kaluna.modbusTcp.resp.PageResp;
 import top.kaluna.modbusTcp.resp.PhysicalValueQueryResp;
 import top.kaluna.modbusTcp.util.CopyUtil;
 import top.kaluna.modbusTcp.util.DateUtil;
+import top.kaluna.modbusTcp.util.SnowFlake;
 
 
 import javax.annotation.Resource;
@@ -26,6 +27,9 @@ import java.util.List;
  */
 @Service
 public class PhysicalValueService {
+
+    @Resource
+    private SnowFlake snowFlake;
     @Resource
     private PhysicalValueMapper physicalValueMapper;
 
@@ -60,9 +64,14 @@ public class PhysicalValueService {
         PhysicalValue physicalValue = CopyUtil.copy(physicalValueSaveReq, PhysicalValue.class);
         if(ObjectUtils.isEmpty(physicalValue)){
             //新增
+            physicalValue.setId(snowFlake.nextId());
             physicalValueMapper.insert(physicalValue);
         }else {
             physicalValueMapper.updateByPrimaryKey(physicalValue);
         }
+    }
+
+    public void delete(Long id) {
+        physicalValueMapper.deleteByPrimaryKey(id);
     }
 }

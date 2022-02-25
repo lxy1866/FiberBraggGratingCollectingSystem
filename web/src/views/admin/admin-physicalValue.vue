@@ -16,9 +16,17 @@
             <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
-            <a-button type="danger">
-              删除
-            </a-button>
+            <a-popconfirm
+                title="删除不可恢复，确认删除?"
+                ok-text="Yes"
+                cancel-text="No"
+                @confirm="handleDelete(record.id)"
+                @cancel="cancel"
+            >
+              <a-button type="danger">
+                删除
+              </a-button>
+            </a-popconfirm>
           </a-space>
         </template>
       </a-table>
@@ -150,19 +158,29 @@ export default defineComponent({
       axios.post("/pv/save", physicalValue.value).then((response)=>{
         const data = response.data; //data = commonResp
         if(data.success){
-          modalLoading.value = false;
-          modalVisible.value = false;
+          //重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize
+          })
         }
-        //重新加载列表
-        handleQuery({
-          page: pagination.value.current,
-          size: pagination.value.pageSize
-        })
       });
     };
     const edit = (record: any)=>{
       modalVisible.value = true;
       physicalValue.value = record
+    }
+    const handleDelete = (id: number)=>{
+      axios.delete("/pv/delete/"+id).then((response)=>{
+        const data = response.data; //data = commonResp
+        if(data.success){
+          //重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize
+          })
+        }
+      });
     }
     onMounted(()=>{
       handleQuery({
@@ -180,7 +198,8 @@ export default defineComponent({
       physicalValue,
       modalVisible,
       modalLoading,
-      handleModalOk
+      handleModalOk,
+      handleDelete
     }
   }
 })

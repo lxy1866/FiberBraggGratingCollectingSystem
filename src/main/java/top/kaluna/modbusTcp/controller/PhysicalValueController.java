@@ -10,6 +10,7 @@ import top.kaluna.modbusTcp.resp.CommonResp;
 import top.kaluna.modbusTcp.resp.PageResp;
 import top.kaluna.modbusTcp.resp.PhysicalValueQueryResp;
 import top.kaluna.modbusTcp.service.PhysicalValueService;
+import top.kaluna.modbusTcp.util.SnowFlake;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,6 +37,12 @@ public class PhysicalValueController {
     public CommonResp save(@RequestBody PhysicalValueSaveReq ebookQueryReq){
         CommonResp resp = new CommonResp<>();
         physicalValueService.save(ebookQueryReq);
+        return resp;
+    }
+    @DeleteMapping("/delete/{id}")
+    public CommonResp delete(@PathVariable Long id){
+        CommonResp resp = new CommonResp<>();
+        physicalValueService.delete(id);
         return resp;
     }
 }
