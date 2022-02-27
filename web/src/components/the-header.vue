@@ -7,6 +7,7 @@
         :style="{ lineHeight: '64px' }"
     >
       <div class="header-wrap">
+        <div>光纤光栅采集系统</div>
         <div class="header-left">
           <a-menu-item key="/">
             <transition :name="transitionName">
