@@ -80,6 +80,8 @@ export default defineComponent({
       axios.post("/user/login", user.value).then((response) => {
         const data = response.data; // data = commonResp
         if (data.success) {
+          user.value = data.content;
+          store.commit("setUser", user.value)
           message.success("登录成功");
         } else {
           message.error(data.message);
