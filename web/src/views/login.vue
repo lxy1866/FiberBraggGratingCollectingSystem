@@ -27,7 +27,7 @@
     <div class="right">
 
       <a-form
-          :model="user"
+          :model="LoginUser"
           name="basic"
           :label-col="{ span: 8 }"
           :wrapper-col="{ span: 16 }"
@@ -40,7 +40,7 @@
             name="loginName"
             :rules="[{ required: true, message: 'Please input your username!' }]"
         >
-          <a-input v-model:value="user.loginName" />
+          <a-input v-model:value="LoginUser.loginName" />
         </a-form-item>
 
         <a-form-item
@@ -48,7 +48,7 @@
             name="password"
             :rules="[{ required: true, message: 'Please input your password!' }]"
         >
-          <a-input-password v-model:value="user.password" />
+          <a-input-password v-model:value="LoginUser.password" />
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
@@ -59,7 +59,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import {Tool} from "@/util/tool";
@@ -74,14 +74,18 @@ export default defineComponent({
     function change(){
       emit("isChange",false);
     }
-    const user = ref({password:null,loginName:null});
+    //用来登录
+    const LoginUser = ref({password:null,loginName:null});
+    const user = computed(()=>{
+      return store.state.user
+    });
     const onFinish = () => {
       //user.value.password = hexMd5(user.value.password + KEY);
-      axios.post("/user/login", user.value).then((response) => {
+      axios.post("/user/login", LoginUser.value).then((response) => {
         const data = response.data; // data = commonResp
         if (data.success) {
-          user.value = data.content;
-          store.commit("setUser", user.value)
+          LoginUser.value = data.content;
+          store.commit("setUser", LoginUser.value)
           message.success("登录成功");
         } else {
           message.error(data.message);
@@ -97,7 +101,8 @@ export default defineComponent({
       user,
       onFinish,
       onFinishFailed,
-      change
+      change,
+      LoginUser
     };
   },
 });
