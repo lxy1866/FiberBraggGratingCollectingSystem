@@ -10,6 +10,7 @@ import naive from "naive-ui";
 import STable from "@surely-vue/table";
 import axios from "axios";
 axios.defaults.baseURL = process.env.VUE_APP_SERVER;
+import '../static/reset.less'
 
 /**
  * axios拦截器
