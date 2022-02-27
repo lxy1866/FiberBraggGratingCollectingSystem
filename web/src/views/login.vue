@@ -76,16 +76,13 @@ export default defineComponent({
     }
     //用来登录
     const LoginUser = ref({password:null,loginName:null});
-    const user = computed(()=>{
-      return store.state.user
-    });
+
     const onFinish = () => {
       //user.value.password = hexMd5(user.value.password + KEY);
       axios.post("/user/login", LoginUser.value).then((response) => {
         const data = response.data; // data = commonResp
         if (data.success) {
-          LoginUser.value = data.content;
-          store.commit("setUser", LoginUser.value)
+          store.commit("setUser", data.content)
           message.success("登录成功");
         } else {
           message.error(data.message);
@@ -98,7 +95,6 @@ export default defineComponent({
       console.log('Failed:', errorInfo);
     };
     return {
-      user,
       onFinish,
       onFinishFailed,
       change,

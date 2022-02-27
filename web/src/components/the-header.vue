@@ -29,11 +29,23 @@
             </transition>
           </a-menu-item>
         </div>
-        <div>
+        <div class="header-right">
           <a-menu-item key="/login">
             <transition :name="transitionName">
               <router-link to="/login" @isChange="getSon" v-show="isShow">登录</router-link>
             </transition>
+          </a-menu-item>
+          <a-menu-item key="/logout" >
+            <a-popconfirm
+                title="确认退出登录?"
+                ok-text="是"
+                cancel-text="否"
+                @confirm="logout()"
+            >
+              <a  v-show="user.id">
+                <span>退出登录</span>
+              </a>
+            </a-popconfirm>
           </a-menu-item>
         </div>
       </div>
@@ -42,17 +54,37 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from 'vue';
+import store from "@/store";
+import axios from "axios";
+import {message} from "ant-design-vue";
 export default defineComponent({
 
   name: 'the-header',
+
   setup(){
+    const user = computed(()=>{
+      return store.state.user
+    });
     let transitionName = ref()
     let isShow = ref(true);
     function getSon(value:any){
       isShow.value = value;
       console.log(isShow.value);
     }
-
+    const logout = () =>{
+      console.log("退出登录开始");
+      console.log(typeof user.value.token)
+      axios.get('/user/logout/'+user.value.token).then((response)=>{
+        const data = response.data;
+        console.log(data);
+        if(data.success){
+          message.success("退出登录成功");
+          store.commit("setUser", {});
+        }else {
+          message.error(data.message);
+        }
+      })
+    }
     // watch: {
     //   //使用watch 监听$router的变化
     //   $route(to, from) {
@@ -70,7 +102,9 @@ export default defineComponent({
     return {
       transitionName,
       isShow,
-      getSon
+      getSon,
+      logout,
+      user
     }
   },
 });
@@ -84,6 +118,10 @@ export default defineComponent({
   width: 100%;
 }
 .header-left{
+  display: flex;
+  justify-content: left;
+}
+.header-right{
   display: flex;
   justify-content: left;
 }
