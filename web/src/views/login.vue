@@ -52,7 +52,7 @@
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <a-button type="primary" html-type="submit" >Submit</a-button>
+          <a-button type="primary" html-type="submit" @click="change">Submit</a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -69,7 +69,11 @@ declare let KEY: any;
 
 export default defineComponent({
 
-  setup() {
+  setup(props, context) {
+    let emit = context.emit;
+    function change(){
+      emit("isChange",false);
+    }
     const user = ref({password:null,loginName:null});
     const onFinish = () => {
       //user.value.password = hexMd5(user.value.password + KEY);
@@ -91,6 +95,7 @@ export default defineComponent({
       user,
       onFinish,
       onFinishFailed,
+      change
     };
   },
 });

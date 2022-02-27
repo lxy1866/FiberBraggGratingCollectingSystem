@@ -32,7 +32,7 @@
         <div>
           <a-menu-item key="/login">
             <transition :name="transitionName">
-              <router-link to="/login">登录</router-link>
+              <router-link to="/login" @isChange="getSon" v-show="isShow">登录</router-link>
             </transition>
           </a-menu-item>
         </div>
@@ -42,11 +42,17 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from 'vue';
-
 export default defineComponent({
+
   name: 'the-header',
   setup(){
-    const transitionName = ref()
+    let transitionName = ref()
+    let isShow = ref(true);
+    function getSon(value:any){
+      isShow.value = value;
+      console.log(isShow.value);
+    }
+
     // watch: {
     //   //使用watch 监听$router的变化
     //   $route(to, from) {
@@ -63,6 +69,8 @@ export default defineComponent({
     // }
     return {
       transitionName,
+      isShow,
+      getSon
     }
   },
 });
