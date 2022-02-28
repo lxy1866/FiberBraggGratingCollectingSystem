@@ -52,7 +52,7 @@
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <a-button type="primary" html-type="submit" @click="change">Submit</a-button>
+          <a-button type="primary" html-type="submit" >Submit</a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -69,11 +69,7 @@ declare let KEY: any;
 
 export default defineComponent({
 
-  setup(props, context) {
-    let emit = context.emit;
-    function change(){
-      emit("isChange",false);
-    }
+  setup() {
     //用来登录
     const LoginUser = ref({password:null,loginName:null});
 
@@ -97,7 +93,6 @@ export default defineComponent({
     return {
       onFinish,
       onFinishFailed,
-      change,
       LoginUser
     };
   },

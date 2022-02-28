@@ -7,8 +7,8 @@
         :style="{ lineHeight: '64px' }"
     >
       <div class="header-wrap">
-        <div>光纤光栅采集系统</div>
         <div class="header-left">
+          <div>光纤光栅采集系统</div>
           <a-menu-item key="/">
             <transition :name="transitionName">
               <router-link to="/">首页</router-link>
@@ -16,25 +16,24 @@
           </a-menu-item>
           <a-menu-item key="/admin/user">
             <transition :name="transitionName">
-              <router-link to="/admin/user">用户管理</router-link>
+              <router-link to="/admin/user" :style="user.id? {} : {display:'none'}">用户管理</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/admin/physicalValue">
             <transition :name="transitionName">
-              <router-link to="/admin/physicalValue">应变值</router-link>
+              <router-link to="/admin/physicalValue" :style="user.id? {} : {display:'none'}">应变值</router-link>
             </transition>
           </a-menu-item>
+
+        </div>
+        <div class="header-right">
           <a-menu-item key="/about">
             <transition :name="transitionName">
               <router-link to="/about">关于我们</router-link>
             </transition>
           </a-menu-item>
-        </div>
-        <div class="header-right">
           <a-menu-item key="/login">
-            <transition :name="transitionName">
-              <router-link to="/login" @isChange="getSon" v-show="isShow">登录</router-link>
-            </transition>
+              <router-link to="/login" v-show="!user.id">登录</router-link>
           </a-menu-item>
           <a-menu-item key="/logout" >
             <a-popconfirm
@@ -67,11 +66,6 @@ export default defineComponent({
       return store.state.user
     });
     let transitionName = ref()
-    let isShow = ref(true);
-    function getSon(value:any){
-      isShow.value = value;
-      console.log(isShow.value);
-    }
     const logout = () =>{
       console.log("退出登录开始");
       console.log(typeof user.value.token)
@@ -102,8 +96,6 @@ export default defineComponent({
     // }
     return {
       transitionName,
-      isShow,
-      getSon,
       logout,
       user
     }
