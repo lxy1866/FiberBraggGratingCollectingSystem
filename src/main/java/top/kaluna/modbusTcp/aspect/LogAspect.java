@@ -10,11 +10,14 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import top.kaluna.modbusTcp.util.SnowFlake;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 public class LogAspect {
     private static final Logger LOG = LoggerFactory.getLogger(LogAspect.class);
+    @Resource
+    private SnowFlake snowFlake;
     /**
      * 定义一个切点
      */
@@ -36,6 +41,7 @@ public class LogAspect {
     }
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable{
+        MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
         //开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
@@ -77,5 +83,23 @@ public class LogAspect {
         LOG.info("返回结果:{}",JSONObject.toJSONString(result,mySimplePropertyPreFilter));
         LOG.info("------ 结束 耗时:{}ms ------",System.currentTimeMillis() - startTime);
         return result;
+    }
+    /**
+     * 使用nginx做反向代理，需要用该方法才能取到真实的远程ip
+     * @param request
+     * @return
+     */
+    public String getRemoteIp(HttpServletRequest request){
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
+            ip = request.getRemoteAddr();
+        }
+        return ip;
     }
 }
