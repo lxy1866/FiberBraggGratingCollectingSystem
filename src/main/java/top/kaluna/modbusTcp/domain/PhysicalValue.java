@@ -1,7 +1,6 @@
 package top.kaluna.modbusTcp.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class PhysicalValue {
     private Long id;
@@ -18,7 +17,7 @@ public class PhysicalValue {
 
     private BigDecimal val6;
 
-    private Date createTime;
+    private Long createTime;
 
     public Long getId() {
         return id;
@@ -76,11 +75,11 @@ public class PhysicalValue {
         this.val6 = val6;
     }
 
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 

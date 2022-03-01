@@ -52,16 +52,6 @@
       <a-layout-content
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
-        <n-space vertical>
-        <n-loading-bar-provider>
-          <n-message-provider>
-            <n-notification-provider>
-              <n-dialog-provider>
-                <the-date-range />
-              </n-dialog-provider>
-            </n-notification-provider>
-          </n-message-provider>
-        </n-loading-bar-provider>
         <n-loading-bar-provider>
           <n-message-provider>
             <n-notification-provider>
@@ -71,7 +61,6 @@
             </n-notification-provider>
           </n-message-provider>
         </n-loading-bar-provider>
-        </n-space>
       </a-layout-content>
     </a-layout>
   </a-layout-content>
@@ -79,12 +68,10 @@
 <script>
 import { defineComponent } from "vue";
 import TheList from "../components/the-list.vue";
-import TheDateRange from "../components/the-dateRange.vue";
 
 export default defineComponent({
   components: {
     TheList,
-    TheDateRange,
   },
 });
 </script>

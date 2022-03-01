@@ -40,9 +40,9 @@ public class PhysicalValueService {
         PhysicalValueExample.Criteria criteria = physicalValueExample.createCriteria();
         //默认时间是今天
         if(ObjectUtils.isEmpty(req.startTime) || ObjectUtils.isEmpty(req.endTime) || ObjectUtils.isEmpty(req)){
-            criteria.andCreateTimeBetween(DateUtil.getStartTime(), DateUtil.getEndTime());
+
         }else{
-            criteria.andCreateTimeBetween(req.startTime, req.endTime);
+
         }
 
 
@@ -68,7 +68,7 @@ public class PhysicalValueService {
         criteria.andIdEqualTo(physicalValueSaveReq.getId());
         if(ObjectUtils.isEmpty(physicalValueMapper.selectByExample(physicalValueExample))){
             //新增
-            physicalValue.setCreateTime(DateUtil.getNowTime());
+            physicalValue.setCreateTime(DateUtil.getNowTime().getTime());
             physicalValue.setId(snowFlake.nextId());
             physicalValueMapper.insert(physicalValue);
         }else {

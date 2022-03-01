@@ -1,4 +1,11 @@
 <template>
+  <n-space vertical>
+    <n-date-picker
+        v-model:value="range2"
+        type="datetimerange"
+        :shortcuts="rangeShortcuts"
+    />
+  </n-space>
   <n-space vertical :size="12">
     <n-data-table
         size="small"
@@ -9,10 +16,11 @@
   </n-space>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue'
 import axios from "axios";
 let data = ref();
+let range2 = ref();
 const columns = [
   {
     title: 'id',
@@ -62,7 +70,7 @@ export default defineComponent({
       axios.get("/pv/list",{
         params:{
           page:1,
-          size:1000
+          size:10,
         }
       }).then(function (response){
         console.log(response);
@@ -74,7 +82,8 @@ export default defineComponent({
       pagination: {
         pageSize: 10
       },
-      data
+      data,
+      range2
     }
   }
 })

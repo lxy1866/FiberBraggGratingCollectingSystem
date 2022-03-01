@@ -8,24 +8,24 @@ import java.util.Date;
  */
 public class DateRangeReq extends PageReq{
 
-    public Date startTime;
+    public Long startTime;
 
-    public Date endTime;
+    public Long endTime;
 
-    public Date getStartTime() {
+
+    public Long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Long startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
-
 }

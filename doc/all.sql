@@ -7,8 +7,7 @@ create table `physical_value`(
     `val4` decimal(10,4) not null comment '应变值4',
     `val5` decimal(10,4) not null comment '应变值5',
     `val6` decimal(10,4) not null comment '应变值6',
-    `create_time` datetime(3) default '1970-01-01
-00:00:00.000' not null comment '创建时间',
+    `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
     primary key (`id`)
 )engine=innodb default charset=utf8mb4  comment '应变值';
 INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id) VALUES (267.7500, 61.5073, 118.6680, 232.4906, 94.8208, 274.2150, 1);
