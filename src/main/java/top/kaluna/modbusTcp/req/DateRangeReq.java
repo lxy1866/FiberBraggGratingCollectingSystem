@@ -28,4 +28,13 @@ public class DateRangeReq extends PageReq{
     public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("DateRangeReq{");
+        sb.append("startTime=").append(startTime);
+        sb.append(", endTime=").append(endTime);
+        sb.append('}');
+        return sb.toString();
+    }
 }

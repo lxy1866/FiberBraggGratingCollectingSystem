@@ -5,8 +5,6 @@
         type="datetimerange"
         :shortcuts="rangeShortcuts"
     />
-  </n-space>
-  <n-space vertical :size="12">
     <n-data-table
         size="small"
         :columns="columns"
@@ -17,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue'
+import {defineComponent, onMounted, ref, watch} from 'vue'
 import axios from "axios";
 let data = ref();
 let range2 = ref();
@@ -65,18 +63,42 @@ const columns = [
 ];
 export default defineComponent({
   setup () {
-    onMounted(()=>{
-      console.log("onMounted")
-      axios.get("/pv/list",{
+    /**
+     * 数据查询
+     * @param params
+     */
+    const handleQuery = (params:any)=>{
+      axios.get("/pv/list", {
         params:{
-          page:1,
-          size:10,
+          page: params.page,
+          size: params.size,
+          startTime: params.startTime,
+          endTime: params.endTime
         }
       }).then(function (response){
         console.log(response);
         data.value = response.data.content.list;
       })
-    })
+    };
+    onMounted(()=>{
+      console.log("onMounted")
+      handleQuery({
+        page: 1,
+        size: 10
+      })
+      watch(range2,(newValue, oldValue)=>{
+        console.log(newValue,oldValue);
+        console.log("range2.value[0]"+range2.value[0]);
+        console.log("range2.value[1]"+range2.value[1])
+        handleQuery({
+          page:1,
+          size:10,
+          startTime: range2.value[0],
+          endTime: range2.value[1]
+        })
+      });
+    });
+
     return {
       columns,
       pagination: {

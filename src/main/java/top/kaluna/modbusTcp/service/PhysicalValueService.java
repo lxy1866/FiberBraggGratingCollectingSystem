@@ -42,10 +42,8 @@ public class PhysicalValueService {
         if(ObjectUtils.isEmpty(req.startTime) || ObjectUtils.isEmpty(req.endTime) || ObjectUtils.isEmpty(req)){
 
         }else{
-
+            criteria.andCreateTimeBetween(req.getStartTime(), req.getEndTime());
         }
-
-
         final List<PhysicalValue> physicalValues = physicalValueMapper.selectByExample(physicalValueExample);
 
         PageHelper.startPage(req.getPage(), req.getSize());
