@@ -1,18 +1,51 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/home.vue'
 import About from '../views/about.vue'
 import AdminPhysicalValue from '../views/admin/admin-physicalValue.vue'
 import Login from '../views/login.vue'
 import {Tool} from "@/util/tool";
 import store from "@/store";
-import component from "*.vue";
 import AdminUser from '../views/admin/admin-user.vue'
-import login from "@/views/login.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import('../views/home.vue'),
+    //定义嵌套路由
+    children:[
+        {
+          path: '/',
+          name:'历史数据查询',
+          component:()=> import('../views/home.vue'),
+        },
+        {
+          path: '/abnormalDataQuery',
+          name:'异常波动数据查询',
+          component:()=> import('../components/abnormalDataQuery.vue')
+        },
+    ],
+  },
+
+  {
+    path: '/breakpoint',
+    name: '断点位置维修情况',
+    component: () => import(/* webpackChunkName: "about" */ '../components/breakpoint.vue'),
+  },
+  {
+    path: '/realTimeShapeSensor',
+    name: '实时形状传感',
+    component:()=>import('../components/realTimeShapeSensor.vue'),
+    children:[
+      {
+        path: '/twoDimension',
+        name:'二维形状传感',
+        component:() =>import('../components/twoDimension.vue')
+      },
+      {
+        path:'/threeDimension',
+        name:'三维形状传感',
+        component:()=>import('../components/threeDimension.vue')
+      }
+    ]
   },
   {
     path: '/login',
@@ -23,10 +56,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/about',
     name: 'About',
     component: About
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    //component: () => import(/* webpackChunkName: "about" */ '../views/about.vue')
   },
   {
     path: '/admin/physicalValue',

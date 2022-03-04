@@ -4,74 +4,149 @@
 
     </a-breadcrumb>
     <a-layout style="padding: 24px 0; background: #fff">
-      <a-layout-sider width="200" style="background: #fff">
+      <a-layout-sider width="200"  style="background: #fff" >
         <a-menu
-            v-model:selectedKeys="selectedKeys2"
+            v-model:selectedKeys="selectedKeys"
             v-model:openKeys="openKeys"
             mode="inline"
             style="height: 100%"
         >
-          <a-sub-menu key="sub1">
+          <a-sub-menu key="数据查询">
             <template #title>
                 <span>
                   <user-outlined />
-                  subnav 1
+                  数据查询
                 </span>
             </template>
-            <a-menu-item key="1">option1</a-menu-item>
-            <a-menu-item key="2">option2</a-menu-item>
-            <a-menu-item key="3">option3</a-menu-item>
-            <a-menu-item key="4">option4</a-menu-item>
+            <a-menu-item key="历史数据查询" >
+              历史数据查询
+            </a-menu-item>
+            <a-menu-item key="异常波动数据查询">
+              异常波动数据查询
+            </a-menu-item>
           </a-sub-menu>
-          <a-sub-menu key="sub2">
+          <a-sub-menu key="断点查询">
             <template #title>
                 <span>
                   <laptop-outlined />
-                  subnav 2
+                  断点查询
                 </span>
             </template>
-            <a-menu-item key="5">option5</a-menu-item>
-            <a-menu-item key="6">option6</a-menu-item>
-            <a-menu-item key="7">option7</a-menu-item>
-            <a-menu-item key="8">option8</a-menu-item>
+            <a-menu-item key="断点位置维修情况">
+              断点位置维修情况
+            </a-menu-item>
           </a-sub-menu>
-          <a-sub-menu key="sub3">
+          <a-sub-menu key="实时形状传感">
             <template #title>
                 <span>
                   <notification-outlined />
-                  subnav 3
+                  实时形状传感
                 </span>
             </template>
-            <a-menu-item key="9">option9</a-menu-item>
-            <a-menu-item key="10">option10</a-menu-item>
-            <a-menu-item key="11">option11</a-menu-item>
-            <a-menu-item key="12">option12</a-menu-item>
+            <a-menu-item key="二维形状传感">
+                二维形状传感
+            </a-menu-item>
+            <a-menu-item key="三维形状传感">
+                三维形状传感
+            </a-menu-item>
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
       <a-layout-content
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
-        <n-loading-bar-provider>
-          <n-message-provider>
-            <n-notification-provider>
-              <n-dialog-provider>
-                <the-list />
-              </n-dialog-provider>
-            </n-notification-provider>
-          </n-message-provider>
-        </n-loading-bar-provider>
+        <div>
+          <div v-show="'历史数据查询' === selectedKey">
+            <n-loading-bar-provider>
+              <n-message-provider>
+                <n-notification-provider>
+                  <n-dialog-provider>
+                    <HistoryDataQuery />
+                  </n-dialog-provider>
+                </n-notification-provider>
+              </n-message-provider>
+            </n-loading-bar-provider>
+          </div>
+          <div v-show="'异常波动数据查询' === selectedKey">
+            <n-loading-bar-provider>
+              <n-message-provider>
+                <n-notification-provider>
+                  <n-dialog-provider>
+                    <AbnormalDataQuery />
+                  </n-dialog-provider>
+                </n-notification-provider>
+              </n-message-provider>
+            </n-loading-bar-provider>
+          </div>
+          <div v-show="'断点位置维修情况' === selectedKey">
+            <n-loading-bar-provider>
+              <n-message-provider>
+                <n-notification-provider>
+                  <n-dialog-provider>
+                    <Breakpoint/>
+                  </n-dialog-provider>
+                </n-notification-provider>
+              </n-message-provider>
+            </n-loading-bar-provider>
+          </div>
+          <div v-show="'二维形状传感'=== selectedKey">
+            <n-loading-bar-provider>
+              <n-message-provider>
+                <n-notification-provider>
+                  <n-dialog-provider>
+                    <TwoDimension />
+                  </n-dialog-provider>
+                </n-notification-provider>
+              </n-message-provider>
+            </n-loading-bar-provider>
+          </div>
+          <div v-show="'三维形状传感' === selectedKey">
+            <n-loading-bar-provider>
+              <n-message-provider>
+                <n-notification-provider>
+                  <n-dialog-provider>
+                    <ThreeDimension />
+                  </n-dialog-provider>
+                </n-notification-provider>
+              </n-message-provider>
+            </n-loading-bar-provider>
+          </div>
+        </div>
       </a-layout-content>
     </a-layout>
   </a-layout-content>
 </template>
 <script>
-import { defineComponent } from "vue";
-import TheList from "../components/the-list.vue";
-
+import { defineComponent, ref, watch, onMounted} from "vue";
+import HistoryDataQuery from "../components/historyDataQuery.vue";
+import AbnormalDataQuery from "../components/abnormalDataQuery.vue";
+import Breakpoint from "../components/breakpoint.vue";
+import TwoDimension from "../components/twoDimension.vue";
+import ThreeDimension from "../components/threeDimension.vue";
 export default defineComponent({
   components: {
-    TheList,
+    HistoryDataQuery,
+    AbnormalDataQuery,
+    Breakpoint,
+    TwoDimension,
+    ThreeDimension,
   },
+  setup(){
+    const selectedKeys = ref();
+    const openKeys = ref();
+    const selectedKey = ref();
+    onMounted(()=>{
+      watch(selectedKeys,()=>{
+        console.log('selectedKeys=',selectedKeys.value)
+        selectedKey.value = selectedKeys.value[0];
+      })
+    });
+    return{
+      selectedKeys,
+      openKeys,
+      selectedKey
+    }
+  },
+
 });
 </script>
