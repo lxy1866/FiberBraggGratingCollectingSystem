@@ -25,3 +25,21 @@ create table `user`(
 )engine = innodb default charset = utf8mb4 comment = '用户';
 
 insert into `user` (id, `login_name`, `name`, `password`) values (1, 'test','测试','test');
+
+drop table if exists `breakpointRecord`;
+create table `breakpointRecord`(
+    `id` bigint not null comment 'ID',
+    `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
+    `point` varchar(10) not null comment '断点大概位置',
+    primary key (`id`)
+)engine = innodb default charset = utf8mb4 comment = '断点记录表（会不断生成同一个断点的位置记录）';
+
+drop table if exists `breakpoint`;
+create table `breakpoint`(
+    `id` bigint not null comment 'ID',
+    `is_maintenance` tinyint not null comment  '是否维修完成',
+    `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
+    `maintenance_time` bigint(13) comment '维修完成时间',
+    `point` varchar(10) not null comment '断点大概位置',
+    primary key (`id`)
+)engine = innodb default charset = utf8mb4 comment = '断点记录表，通过id字段'
