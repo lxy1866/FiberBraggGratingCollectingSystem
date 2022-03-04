@@ -40,7 +40,7 @@ public class PhysicalValueService {
         PhysicalValueExample.Criteria criteria = physicalValueExample.createCriteria();
         //默认时间是今天
         if(ObjectUtils.isEmpty(req.startTime) || ObjectUtils.isEmpty(req.endTime) || ObjectUtils.isEmpty(req)){
-
+            criteria.andCreateTimeBetween(DateUtil.getStartTime().getTime(), DateUtil.getEndTime().getTime());
         }else{
             criteria.andCreateTimeBetween(req.getStartTime(), req.getEndTime());
         }
