@@ -15,7 +15,6 @@ package top.kaluna.modbusTcp.protocol;/*
  */
 import io.netty.util.ReferenceCountUtil;
 
-import java.applet.AppletContext;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -105,7 +104,6 @@ public class CollectDataRunner implements ApplicationRunner {
                  * 这个physicalValue是映射到数据库对象
                  */
                 PhysicalValue physicalValue = new PhysicalValue();
-
                 //将解析出来的数据设置到physicValueFloat
                 for(int i = 0; i < TOTALPHYSICVAL; i++){
                     bytes[i] = ByteBufUtil.getBytes(response.getRegisters(),i*4,4);
@@ -116,7 +114,7 @@ public class CollectDataRunner implements ApplicationRunner {
                     System.out.println("第"+(i+1)+"个"+"物理值(转成十进制，除以10000): "+ physicValueFloat[i]);
                     //map.put("第"+(i+1)+"个"+"物理值(转成十进制，除以10000): ", physicValueFloat[i]);
                 }
-                setSixValue(physicValueFloat,physicalValue);
+                setSixValueAndTag(physicValueFloat,physicalValue);
                 //websocket推送
                 String logId = MDC.get("LOG_ID");
                 wsService.sendInfo(physicalValue.toString(), logId);
@@ -136,16 +134,31 @@ public class CollectDataRunner implements ApplicationRunner {
 
 
     }
-    public void setSixValue(Float[] physicValueFloat,PhysicalValue physicalValue){
+    public void setSixValueAndTag(Float[] physicValueFloat, PhysicalValue physicalValue){
         Date date = new Date();
+        byte tag = 0;
         physicalValue.setVal1(new BigDecimal(Float.toString(physicValueFloat[0])));
         physicalValue.setVal2(new BigDecimal(Float.toString(physicValueFloat[1])));
         physicalValue.setVal3(new BigDecimal(Float.toString(physicValueFloat[2])));
         physicalValue.setVal4(new BigDecimal(Float.toString(physicValueFloat[3])));
         physicalValue.setVal5(new BigDecimal(Float.toString(physicValueFloat[4])));
         physicalValue.setVal6(new BigDecimal(Float.toString(physicValueFloat[5])));
+        if(physicalValue.getVal1() == null){
+            tag = 1;
+        }else if(physicalValue.getVal2() == null){
+            tag = 2;
+        }else if(physicalValue.getVal3() == null){
+            tag = 3;
+        }else if(physicalValue.getVal4() == null){
+            tag = 4;
+        }else if(physicalValue.getVal5() == null){
+            tag = 5;
+        }else if(physicalValue.getVal6() == null){
+            tag = 6;
+        }
         physicalValue.setCreateTime(date.getTime());
         physicalValue.setId(snowFlake.nextId());
+        physicalValue.setTag(tag);
     }
     public void stop() {
         started = false;
