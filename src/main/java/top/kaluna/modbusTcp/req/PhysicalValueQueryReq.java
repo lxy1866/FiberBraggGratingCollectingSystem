@@ -18,7 +18,7 @@ public class PhysicalValueQueryReq extends PageReq{
 
     private BigDecimal val6;
 
-    private Date createTime;
+    private Long createTime;
 
     public Long getId() {
         return id;
@@ -76,12 +76,11 @@ public class PhysicalValueQueryReq extends PageReq{
         this.val6 = val6;
     }
 
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
-
 }
