@@ -41,7 +41,8 @@
                              type="XMLMAPPER"/>
 
 
-        <table tableName="physical_value"/>
+<!--        <table tableName="physical_value"/>-->
 <!--        <table tableName="user"/>-->
+        <table tableName="breakpoint_record"></table>
     </context>
 </generatorConfiguration>
