@@ -2,6 +2,9 @@ package top.kaluna.modbusTcp.domain;
 
 import java.math.BigDecimal;
 
+/**
+ * @author 86158
+ */
 public class PhysicalValue {
     private Long id;
 
@@ -16,6 +19,11 @@ public class PhysicalValue {
     private BigDecimal val5;
 
     private BigDecimal val6;
+
+    /**
+     *断点位置（0表示没有，1表示第一个位置断了，以此类推）
+     */
+    private Byte tag;
 
     private Long createTime;
 
@@ -75,6 +83,14 @@ public class PhysicalValue {
         this.val6 = val6;
     }
 
+    public Byte getTag() {
+        return tag;
+    }
+
+    public void setTag(Byte tag) {
+        this.tag = tag;
+    }
+
     public Long getCreateTime() {
         return createTime;
     }
@@ -96,6 +112,7 @@ public class PhysicalValue {
         sb.append(", val4=").append(val4);
         sb.append(", val5=").append(val5);
         sb.append(", val6=").append(val6);
+        sb.append(", tag=").append(tag);
         sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();

@@ -7,6 +7,7 @@ create table `physical_value`(
     `val4` decimal(10,4) not null comment '应变值4',
     `val5` decimal(10,4) not null comment '应变值5',
     `val6` decimal(10,4) not null comment '应变值6',
+    `tag` tinyint not null comment '断点位置（0表示没有，1表示第一个位置断了，以此类推）',
     `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
     primary key (`id`)
 )engine=innodb default charset=utf8mb4  comment '应变值';
@@ -26,20 +27,12 @@ create table `user`(
 
 insert into `user` (id, `login_name`, `name`, `password`) values (1, 'test','测试','test');
 
-drop table if exists `breakpointRecord`;
-create table `breakpointRecord`(
+drop table if exists `breakpoint_record`;
+create table `breakpoint_record`(
     `id` bigint not null comment 'ID',
+    `tag` tinyint not null comment '断点位置（0表示没有，1表示第一个位置断了，以此类推）',
     `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
-    `point` varchar(10) not null comment '断点大概位置',
+    `state` tinyint not null comment  '是否维修完成（0表示没有，1表示已经完成维修）',
+    `detail` varchar(40) comment '详情',
     primary key (`id`)
 )engine = innodb default charset = utf8mb4 comment = '断点记录表（会不断生成同一个断点的位置记录）';
-
-drop table if exists `breakpoint`;
-create table `breakpoint`(
-    `id` bigint not null comment 'ID',
-    `is_maintenance` tinyint not null comment  '是否维修完成',
-    `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
-    `maintenance_time` bigint(13) comment '维修完成时间',
-    `point` varchar(10) not null comment '断点大概位置',
-    primary key (`id`)
-)engine = innodb default charset = utf8mb4 comment = '断点记录表，通过id字段'

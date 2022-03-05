@@ -9,6 +9,7 @@
     <result column="val4" jdbcType="DECIMAL" property="val4" />
     <result column="val5" jdbcType="DECIMAL" property="val5" />
     <result column="val6" jdbcType="DECIMAL" property="val6" />
+    <result column="tag" jdbcType="TINYINT" property="tag" />
     <result column="create_time" jdbcType="BIGINT" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, val1, val2, val3, val4, val5, val6, create_time
+    id, val1, val2, val3, val4, val5, val6, tag, create_time
   </sql>
   <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueExample" resultMap="BaseResultMap">
     select
@@ -105,10 +106,10 @@
   <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.PhysicalValue">
     insert into physical_value (id, val1, val2, 
       val3, val4, val5, val6, 
-      create_time)
+      tag, create_time)
     values (#{id,jdbcType=BIGINT}, #{val1,jdbcType=DECIMAL}, #{val2,jdbcType=DECIMAL}, 
       #{val3,jdbcType=DECIMAL}, #{val4,jdbcType=DECIMAL}, #{val5,jdbcType=DECIMAL}, #{val6,jdbcType=DECIMAL}, 
-      #{createTime,jdbcType=BIGINT})
+      #{tag,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.PhysicalValue">
     insert into physical_value
@@ -133,6 +134,9 @@
       </if>
       <if test="val6 != null">
         val6,
+      </if>
+      <if test="tag != null">
+        tag,
       </if>
       <if test="createTime != null">
         create_time,
@@ -159,6 +163,9 @@
       </if>
       <if test="val6 != null">
         #{val6,jdbcType=DECIMAL},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=BIGINT},
@@ -195,6 +202,9 @@
       <if test="record.val6 != null">
         val6 = #{record.val6,jdbcType=DECIMAL},
       </if>
+      <if test="record.tag != null">
+        tag = #{record.tag,jdbcType=TINYINT},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=BIGINT},
       </if>
@@ -212,6 +222,7 @@
       val4 = #{record.val4,jdbcType=DECIMAL},
       val5 = #{record.val5,jdbcType=DECIMAL},
       val6 = #{record.val6,jdbcType=DECIMAL},
+      tag = #{record.tag,jdbcType=TINYINT},
       create_time = #{record.createTime,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -238,6 +249,9 @@
       <if test="val6 != null">
         val6 = #{val6,jdbcType=DECIMAL},
       </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=TINYINT},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=BIGINT},
       </if>
@@ -252,6 +266,7 @@
       val4 = #{val4,jdbcType=DECIMAL},
       val5 = #{val5,jdbcType=DECIMAL},
       val6 = #{val6,jdbcType=DECIMAL},
+      tag = #{tag,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
