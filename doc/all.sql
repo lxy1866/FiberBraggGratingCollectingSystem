@@ -38,6 +38,7 @@ create table `breakpoint_record`(
     primary key (`id`)
 )engine = innodb default charset = utf8mb4 comment = '断点记录表（会不断生成同一个断点的位置记录）';
 
+
 show variables like '%event_scheduler%';
 #获取前一小时的时间
 select date_sub(now(), interval 1 hour);
@@ -46,3 +47,7 @@ select min(create_time) create_time, tag from physical_value where (create_time 
                                    #{createTime,jdbcType=BIGINT}-3600000 and tag != 0;
 #【bug】[42000][1055] Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'modbustcpDev.physical_value.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
 SET @@GLOBAL.sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
+
+show variables like '%max_connect_errors%';
+
+flush hosts;
