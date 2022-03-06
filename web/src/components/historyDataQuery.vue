@@ -61,25 +61,33 @@ const columns = [
     dataIndex: 'createTime'
   }
 ];
+declare let formatDate: any;
+const formatDateWrapper = (time:any)=>{
+  const data = new Date(time);
+  return formatDate(data,'yyyy-MM-dd hh:mm:ss');
+}
+const handleQuery = (params:any)=>{
+  axios.get("/pv/list", {
+    params:{
+      page: params.page,
+      size: params.size,
+      startTime: params.startTime,
+      endTime: params.endTime
+    }
+  }).then(function (response){
+    console.log(response);
+    response.data.content.list.forEach((item:any)=>{
+      item.createTime = formatDateWrapper(Number(item.createTime))
+    })
+    data.value = response.data.content.list;
+  })
+};
 export default defineComponent({
   setup () {
     /**
      * 数据查询
      * @param params
      */
-    const handleQuery = (params:any)=>{
-      axios.get("/pv/list", {
-        params:{
-          page: params.page,
-          size: params.size,
-          startTime: params.startTime,
-          endTime: params.endTime
-        }
-      }).then(function (response){
-        console.log(response);
-        data.value = response.data.content.list;
-      })
-    };
     onMounted(()=>{
       console.log("onMounted")
       handleQuery({

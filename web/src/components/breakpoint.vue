@@ -41,7 +41,7 @@
 <script lang="ts">
 import {h, defineComponent, onMounted, ref, watch, provide} from 'vue'
 import ThePopconfirm from './the-popconfirm.vue';
-import { useMessage } from 'naive-ui'
+import { useMessage } from 'naive-ui';
 import axios from "axios";
 type breakpoint = {
   id: number
@@ -49,7 +49,7 @@ type breakpoint = {
   tag: number
   state: number
 }
-
+declare let formatDate: any;
 
 const createColumns = ({printRow}:any) => {
   return [
@@ -100,7 +100,9 @@ const handleQuery = (params:any)=> {
       state: params.state
     }
   }).then(function (response) {
-    console.log(response);
+    response.data.content.list.forEach((item:any)=>{
+      item.createTime =  formatDateWrapper(Number(item.createTime))
+    })
     data.value = response.data.content.list;
   });
 }
@@ -112,11 +114,16 @@ const handleQueryFinish = (params:any)=> {
       state: params.state
     }
   }).then(function (response) {
-    console.log(response);
+    response.data.content.list.forEach((item:any)=>{
+      item.createTime = formatDateWrapper(Number(item.createTime))
+    })
     data.value = response.data.content.list;
   });
 }
-
+const formatDateWrapper = (time:any)=>{
+  const data = new Date(time);
+  return formatDate(data,'yyyy-MM-dd hh:mm:ss');
+}
 export default defineComponent({
   components:{
     ThePopconfirm
@@ -149,6 +156,7 @@ export default defineComponent({
         }
       });
     });
+
 
     return {
       value1,

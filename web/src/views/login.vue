@@ -72,7 +72,6 @@ export default defineComponent({
           message.error(data.message);
         }
       });
-
     };
 
     const onFinishFailed = (errorInfo: any) => {

@@ -18,6 +18,7 @@ module.exports = {
     'vue/no-unused-vars' : 'off',
     '@typescript-eslint/ban-ts-comment' : 'off',
     '@typescript-eslint/no-empty-function' : 'off',
-    'vue/no-unused-components' : 'off'
+    'vue/no-unused-components' : 'off',
+    '@typescript-eslint/no-extra-semi' : 'off'
   }
 }
