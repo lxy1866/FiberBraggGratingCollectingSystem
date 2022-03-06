@@ -7,7 +7,9 @@
             embedded
             :bordered="false"
         >
-          如果已经维修完成，请及时在本页面点击维修完成【tag表示光纤光栅的序号，0表示没有断点，1表示第一个光纤光栅断裂，以此类推】
+          如果已经维修完成，请及时在本页面点击”完成维修“
+          <br/>tag表示光纤光栅的序号，0表示没有断点，1表示第一个光纤光栅断裂，以此类推
+          <br/>state表示处理状态，0表示为处理，1表示处理完成
         </n-card>
 
         <a-select
@@ -102,6 +104,18 @@ const handleQuery = (params:any)=> {
     data.value = response.data.content.list;
   });
 }
+const handleQueryFinish = (params:any)=> {
+  axios.get("/bpr/finishList", {
+    params: {
+      page: params.page,
+      size: params.size,
+      state: params.state
+    }
+  }).then(function (response) {
+    console.log(response);
+    data.value = response.data.content.list;
+  });
+}
 
 export default defineComponent({
   components:{
@@ -115,17 +129,24 @@ export default defineComponent({
       handleQuery({
         page: 1,
         size: 10,
-        state: value1.value == '未处理'? 0 : 1
+        state: 0
       })
       watch(value1,(newValue, oldValue)=>{
 
         console.log(newValue,oldValue);
-        handleQuery({
-          page:1,
-          size:10,
-          state: value1.value == '未处理'? 0 : 1
-        })
-
+        if(value1.value == '未处理'){
+          handleQuery({
+            page:1,
+            size:10,
+            state: 0
+          })
+        }else{
+          handleQueryFinish({
+            page: 1,
+            size:10,
+            state: 1
+          })
+        }
       });
     });
 

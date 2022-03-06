@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import top.kaluna.modbusTcp.domain.BreakpointRecord;
 import top.kaluna.modbusTcp.domain.BreakpointRecordExample;
+import top.kaluna.modbusTcp.domain.BreakpointRecordFinish;
 import top.kaluna.modbusTcp.mapper.BreakpointRecordCustMapper;
+import top.kaluna.modbusTcp.mapper.BreakpointRecordFinishMapper;
 import top.kaluna.modbusTcp.mapper.BreakpointRecordMapper;
 import top.kaluna.modbusTcp.req.BreakpointRecordQueryReq;
 import top.kaluna.modbusTcp.resp.BreakpointRecordQueryResp;
@@ -29,6 +31,8 @@ public class BreakpointRecordService {
     private BreakpointRecordCustMapper breakpointRecordCustMapper;
     @Resource
     private BreakpointRecordMapper breakpointRecordMapper;
+    @Resource
+    private BreakpointRecordFinishMapper breakpointRecordFinishMapper;
     public void insertBreakpointInfoByScanPhysicalValue(){
         Long createTime = DateUtil.getNowTime().getTime();
         breakpointRecordCustMapper.insertBreakpointInfoByScanPhysicalValue(createTime);
@@ -66,8 +70,9 @@ public class BreakpointRecordService {
         breakpointRecords.forEach((BreakpointRecord breakpointRecord)->{
             breakpointRecord.setState(state);
             breakpointRecord.setTag(tag);
-            breakpointRecordMapper.updateByPrimaryKey(breakpointRecord);
+            BreakpointRecordFinish breakpointRecordFinish = CopyUtil.copy(breakpointRecord, BreakpointRecordFinish.class);
+            breakpointRecordFinishMapper.insert(breakpointRecordFinish);
         });
-
+        breakpointRecordMapper.deleteByExample(breakpointRecordExample);
     }
 }

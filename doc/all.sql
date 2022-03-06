@@ -51,3 +51,13 @@ SET @@GLOBAL.sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FO
 show variables like '%max_connect_errors%';
 
 flush hosts;
+
+drop table if exists `breakpoint_record_finish`;
+create table `breakpoint_record_finish`(
+                                    `id` bigint not null auto_increment comment 'ID',
+                                    `tag` tinyint not null comment '断点位置（0表示没有，1表示第一个位置断了，以此类推）',
+                                    `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
+                                    `state` tinyint default 0 comment  '是否维修完成（0表示没有，1表示已经完成维修）',
+                                    `detail` varchar(40) default null comment '详情',
+                                    primary key (`id`)
+)engine = innodb default charset = utf8mb4 comment = '断点记录表（会不断生成同一个断点的位置记录）';

@@ -5,6 +5,7 @@ import top.kaluna.modbusTcp.req.BreakpointRecordQueryReq;
 import top.kaluna.modbusTcp.resp.BreakpointRecordQueryResp;
 import top.kaluna.modbusTcp.resp.CommonResp;
 import top.kaluna.modbusTcp.resp.PageResp;
+import top.kaluna.modbusTcp.service.BreakpointRecordFinishService;
 import top.kaluna.modbusTcp.service.BreakpointRecordService;
 
 import javax.annotation.Resource;
@@ -19,6 +20,8 @@ import javax.validation.Valid;
 public class BreakpointRecordController {
     @Resource
     private BreakpointRecordService breakpointRecordService;
+    @Resource
+    private BreakpointRecordFinishService breakpointRecordFinishService;
 
     @GetMapping("/list")
     @ResponseBody
@@ -32,6 +35,14 @@ public class BreakpointRecordController {
     public CommonResp delete(@PathVariable Long id){
         CommonResp resp = new CommonResp<>();
         breakpointRecordService.update(id);
+        return resp;
+    }
+    @GetMapping("/finishList")
+    @ResponseBody
+    public CommonResp<PageResp<BreakpointRecordQueryResp>> finishList(@Valid BreakpointRecordQueryReq req){
+        CommonResp<PageResp<BreakpointRecordQueryResp>> resp = new CommonResp<>();
+        PageResp<BreakpointRecordQueryResp> list = breakpointRecordFinishService.list(req);
+        resp.setContent(list);
         return resp;
     }
 }
