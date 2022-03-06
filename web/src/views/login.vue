@@ -2,59 +2,47 @@
   <div class="all">
     <div class="left">
       <n-carousel
-          direction="vertical"
-          dot-placement="right"
-          show-arrow
-      autoplay>
-        <img
+          direction="vertical">
+       <img
             class="carousel-img"
             src="https://cdn.dribbble.com/users/2187949/screenshots/15516290/media/55595638238f89afb7a9a9a204986ef7.jpeg?compress=1&resize=1200x900&vertical=top"
-        >
-        <img
-            class="carousel-img"
-            src="https://cdn.dribbble.com/users/2837665/screenshots/17308481/media/9f034db3ef4617f92780bde0719fc043.png?compress=1&resize=1200x900&vertical=top"
-        >
-        <img
-            class="carousel-img"
-            src="https://cdn.dribbble.com/users/2837665/screenshots/15589873/media/94f3f3b2a7f92ffc0ebe704c20af3b8b.png?compress=1&resize=1200x900&vertical=top"
-        >
-        <img
-            class="carousel-img"
-            src="https://cdn.dribbble.com/users/2837665/screenshots/17222810/media/bf76e18b8e18ba1ba3b304db09ceb6d6.png?compress=1&resize=1200x900&vertical=top"
         >
       </n-carousel>
     </div>
     <div class="right">
 
-      <a-form
-          :model="LoginUser"
-          name="basic"
-          :label-col="{ span: 8 }"
-          :wrapper-col="{ span: 16 }"
-          autocomplete="off"
-          @finish="onFinish"
-          @finishFailed="onFinishFailed"
-      >
-        <a-form-item
-            label="Username"
-            name="loginName"
-            :rules="[{ required: true, message: 'Please input your username!' }]"
+      <n-card title="账号登录" size="huge">
+        <a-form
+            :model="LoginUser"
+            name="basic"
+            :label-col="{ span: 8 }"
+            :wrapper-col="{ span: 16 }"
+            autocomplete="off"
+            @finish="onFinish"
+            @finishFailed="onFinishFailed"
         >
-          <a-input v-model:value="LoginUser.loginName" />
-        </a-form-item>
+          <a-form-item
+              label="账号"
+              name="loginName"
+              :rules="[{ required: true, message: '请输入你的账号!' }]"
+          >
+            <a-input v-model:value="LoginUser.loginName" />
+          </a-form-item>
 
-        <a-form-item
-            label="Password"
-            name="password"
-            :rules="[{ required: true, message: 'Please input your password!' }]"
-        >
-          <a-input-password v-model:value="LoginUser.password" />
-        </a-form-item>
+          <a-form-item
+              label="密码"
+              name="password"
+              :rules="[{ required: true, message: '请输入你都密码!' }]"
+          >
+            <a-input-password v-model:value="LoginUser.password" />
+          </a-form-item>
 
-        <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <a-button type="primary" html-type="submit" >Submit</a-button>
-        </a-form-item>
-      </a-form>
+          <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
+            <a-button  html-type="submit" >提交</a-button>
+          </a-form-item>
+        </a-form>
+      </n-card>
+
     </div>
   </div>
 </template>
