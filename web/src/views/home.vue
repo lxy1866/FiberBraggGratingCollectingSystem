@@ -56,7 +56,7 @@
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
         <div>
-          <div v-show="'历史数据查询' === selectedKey">
+          <div v-if="'历史数据查询' === selectedKey">
             <n-loading-bar-provider>
               <n-message-provider>
                 <n-notification-provider>
@@ -67,7 +67,7 @@
               </n-message-provider>
             </n-loading-bar-provider>
           </div>
-          <div v-show="'异常波动数据查询' === selectedKey">
+          <div v-else-if="'异常波动数据查询' === selectedKey">
             <n-loading-bar-provider>
               <n-message-provider>
                 <n-notification-provider>
@@ -78,7 +78,7 @@
               </n-message-provider>
             </n-loading-bar-provider>
           </div>
-          <div v-show="'断点位置维修情况' === selectedKey">
+          <div v-else-if="'断点位置维修情况' === selectedKey">
             <n-loading-bar-provider>
               <n-message-provider>
                 <n-notification-provider>
@@ -89,7 +89,7 @@
               </n-message-provider>
             </n-loading-bar-provider>
           </div>
-          <div v-show="'二维形状传感'=== selectedKey">
+          <div v-else-if="'二维形状传感'=== selectedKey">
             <n-loading-bar-provider>
               <n-message-provider>
                 <n-notification-provider>
@@ -100,7 +100,7 @@
               </n-message-provider>
             </n-loading-bar-provider>
           </div>
-          <div v-show="'三维形状传感' === selectedKey">
+          <div v-else-if="'三维形状传感' === selectedKey">
             <n-loading-bar-provider>
               <n-message-provider>
                 <n-notification-provider>
@@ -111,6 +111,16 @@
               </n-message-provider>
             </n-loading-bar-provider>
           </div>
+          <div v-else>
+            <n-loading-bar-provider>
+            <n-message-provider>
+              <n-notification-provider>
+                <n-dialog-provider>
+                  <Introduction />
+                </n-dialog-provider>
+              </n-notification-provider>
+            </n-message-provider>
+          </n-loading-bar-provider></div>
         </div>
       </a-layout-content>
     </a-layout>
@@ -123,8 +133,10 @@ import AbnormalDataQuery from "../components/abnormalDataQuery.vue";
 import Breakpoint from "../components/breakpoint.vue";
 import TwoDimension from "../components/twoDimension.vue";
 import ThreeDimension from "../components/threeDimension.vue";
+import Introduction from "@/components/introduction.vue";
 export default defineComponent({
   components: {
+    Introduction,
     HistoryDataQuery,
     AbnormalDataQuery,
     Breakpoint,
