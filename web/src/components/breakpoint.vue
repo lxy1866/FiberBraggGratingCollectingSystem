@@ -49,7 +49,7 @@ type breakpoint = {
 }
 
 
-const createColumns = ({printRow}) => {
+const createColumns = ({printRow}:any) => {
   return [
     {
       title: 'id',
@@ -70,7 +70,7 @@ const createColumns = ({printRow}) => {
     {
       title: '处理',
       key: '处理',
-      render(row) {
+      render(row:any) {
         return h(
             ThePopconfirm,
             {
@@ -89,6 +89,7 @@ const message = useMessage();
  */
 const data = ref();
 const value1 = ref();
+const rowDataId = ref();
 const handleQuery = (params:any)=> {
   axios.get("/bpr/list", {
     params: {
@@ -108,6 +109,7 @@ export default defineComponent({
   },
   setup () {
     provide('selectData', value1);
+    provide('rowDataId',rowDataId)
     onMounted(()=>{
       console.log("onMounted")
       handleQuery({
@@ -131,9 +133,8 @@ export default defineComponent({
       value1,
       data,
       columns: createColumns({
-        printRow(row: breakpoint){
-          const rowDataId = row.id;
-          provide('rowDataId',rowDataId)
+        printRow(row: breakpoint) {
+          rowDataId.value = row.id;
         }
       }),
       pagination: {

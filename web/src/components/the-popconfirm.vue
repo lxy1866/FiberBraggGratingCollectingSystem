@@ -19,40 +19,31 @@ import {defineComponent, ref, inject} from 'vue'
 import { useMessage } from 'naive-ui'
 import axios from "axios";
 const data = ref();
-const handleUpdate = (params:any)=> {
-  axios.get("/bpr/update/", {
-    params: {
-      id: params.id,
-    }
-  }).then(function (response) {
+
+const handleUpdate = (rowDataId:any)=> {
+  axios.get("/bpr/update/"+Number(rowDataId)).then(function (response) {
     console.log(response);
     data.value = response.data.content;
   });
 }
-type rowDataType = {
-  id: number
-  createTime: number
-  tag: number
-  state: number
-}
+
 export default defineComponent({
   setup () {
     const message = useMessage();
-    const selectData = inject('selectData');
-    const rowDataId = inject('rowDataId');
+    const selectData:any = inject('selectData');
+    let rowDataId:any = inject('rowDataId');
+    console.log(rowDataId.value)
     return {
       handlePositiveClick () {
         message.info('确认')
-        console.log(rowDataId)
-        handleUpdate({
-          id: rowDataId
-        })
+        handleUpdate(rowDataId.value)
       },
       handleNegativeClick () {
         message.info('取消')
       },
       handleUpdate,
-      selectData
+      selectData,
+      rowDataId
     }
   }
 

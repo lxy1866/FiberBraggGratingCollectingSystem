@@ -28,8 +28,8 @@ public class PhysicalValueJob {
      * 从physical_value表查询前半个小时tag！=0的记录到breakpoint_record记录表中
      */
     @Transactional(rollbackFor = Exception.class)
-    //@Scheduled(cron = "0 0/30 * * * ?" )
-    @Scheduled(cron = "0/5 * * * * ? ")
+    @Scheduled(cron = "0 0/30 * * * ?" )
+    //@Scheduled(cron = "0/5 * * * * ? ")
     public void cron(){
         //增加日志流水号
         MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
