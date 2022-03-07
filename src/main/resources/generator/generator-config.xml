@@ -44,6 +44,7 @@
 <!--        <table tableName="physical_value"/>-->
 <!--        <table tableName="user"/>-->
 <!--        <table tableName="breakpoint_record"></table>-->
-        <table tableName="breakpoint_record_finish"></table>
+<!--        <table tableName="breakpoint_record_finish"></table>-->
+        <table tableName="normal_range"></table>
     </context>
 </generatorConfiguration>
