@@ -61,3 +61,24 @@ create table `breakpoint_record_finish`(
                                     `detail` varchar(40) default null comment '详情',
                                     primary key (`id`)
 )engine = innodb default charset = utf8mb4 comment = '断点记录表（会不断生成同一个断点的位置记录）';
+
+drop table if exists `normal_range`;
+create table `normal_range`(
+                       `id` bigint not null auto_increment comment 'ID',
+                       `val1_min_value` decimal(10,4) not null comment 'val1最小值',
+                       `val2_min_value` decimal(10,4) not null comment 'val2最小值',
+                       `val3_min_value` decimal(10,4) not null comment 'val3最小值',
+                       `val4_min_value` decimal(10,4) not null comment 'val4最小值',
+                       `val5_min_value` decimal(10,4) not null comment 'val5最小值',
+                       `val6_min_value` decimal(10,4) not null comment 'val6最小值',
+                       `val1_max_value` decimal(10,4) not null comment 'val1最大值',
+                       `val2_max_value` decimal(10,4) not null comment 'val2最大值',
+                       `val3_max_value` decimal(10,4) not null comment 'val3最大值',
+                       `val4_max_value` decimal(10,4) not null comment 'val4最大值',
+                       `val5_max_value` decimal(10,4) not null comment 'val5最大值',
+                       `val6_max_value` decimal(10,4) not null comment 'val6最大值',
+                       `create_time` bigint(13) not null comment '创建时间',
+                       primary key (`id`)
+)engine = innodb default charset = utf8mb4 comment = '物理值正常值范围表';
+
+select * from normal_range where id=(select max(id) from normal_range);
