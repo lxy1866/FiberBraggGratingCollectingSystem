@@ -1,234 +1,154 @@
 <template>
-  <a-layout>
-    <a-layout-content
-        :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
-    >
-      <p>
-        <a-form-item>
-          <a-button type="primary" @click="add()">
-            新增
-          </a-button>
-        </a-form-item>
-      </p>
-      <a-table
-          :columns="columns"
-          :row-key="record => record.id"
-          :data-source="physicalValues"
-          :pagination="pagination"
-          :loading="loading"
-          @change="handleTableChange"
-      >
-        <template v-slot:action="{text: record}">
-          <a-space size="small">
-            <a-button type="primary" @click="edit(record)">
-              编辑
-            </a-button>
-            <a-popconfirm
-                title="删除不可恢复，确认删除?"
-                ok-text="Yes"
-                cancel-text="No"
-                @confirm="handleDelete(record.id)"
-                @cancel="cancel"
+  <a-layout-content style="padding: 0 50px">
+    <a-breadcrumb style="margin: 16px 0">
+
+    </a-breadcrumb>
+    <a-layout style="padding: 24px 0; background: #fff">
+
+      <div class="content-wrapper">
+        <div class="content-left" style="margin-top: 30px">
+          <n-space vertical>
+            <n-card
+                title="📖 设置光纤光栅传感器阵列的应变范围值"
+                embedded
+                :bordered="false"
             >
-              <a-button type="danger">
-                删除
-              </a-button>
-            </a-popconfirm>
-          </a-space>
-        </template>
-      </a-table>
-    </a-layout-content>
-  </a-layout>
-
-  <a-modal
-      title="编辑物理值"
-      v-model:visible="modalVisible"
-      :confim-loading="modalLoading"
-      @ok="handleModalOk"
-  >
-    <a-form :model="physicalValue" :label-col="{span : 6}">
-      <a-form-item label="id">
-        <a-input v-model:value="physicalValue.id" />
-      </a-form-item>
-      <a-form-item label="val1">
-        <a-input v-model:value="physicalValue.val1" />
-      </a-form-item>
-      <a-form-item label="val2">
-        <a-input v-model:value="physicalValue.val2" />
-      </a-form-item>
-      <a-form-item label="val3">
-        <a-input v-model:value="physicalValue.val3" />
-      </a-form-item>
-      <a-form-item label="val4">
-        <a-input v-model:value="physicalValue.val4" />
-      </a-form-item>
-      <a-form-item label="val5">
-        <a-input v-model:value="physicalValue.val5" />
-      </a-form-item>
-      <a-form-item label="val6">
-        <a-input v-model:value="physicalValue.val6" />
-      </a-form-item>
-    </a-form>
-  </a-modal>
+              每个光纤光栅传感器都有自己的应变范围，超出范围的记录会被展示到异常波动数据页面中。
+            </n-card>
+            <n-form :model="model">
+              <n-dynamic-input
+                  v-model:value="model.dynamicInputValue"
+                  item-style="margin-bottom: 0;"
+                  :on-create="onCreate"
+                  #="{ index, value }"
+                  :min="6"
+                  :max="6"
+              >
+                <div style="display: flex">
+                  <n-form-item
+                      ignore-path-change
+                      :show-label="false"
+                      :path="`dynamicInputValue[${index}].minMalue`"
+                      :rule="dynamicInputRule"
+                  >
+                    <n-input
+                        v-model:value="model.dynamicInputValue[index].minValue"
+                        placeholder="minValue"
+                        @keydown.enter.prevent
+                    />
+                  </n-form-item>
+                  <div style="height: 34px; line-height: 34px; margin: 0 8px">
+                    &lt;
+                  </div>
+                  <n-form-item
+                      ignore-path-change
+                      :show-label="false"
+                      :path="`dynamicInputValue[${index}].name`"
+                      :rule="dynamicInputRule"
+                  >
+                    <n-input
+                        v-model:value="model.dynamicInputValue[index].name"
+                        placeholder="请输入val+序号【1-6】"
+                        @keydown.enter.prevent
+                    />
+                    <!--
+                      由于在 input 元素里按回车会导致 form 里面的 button 被点击，所以阻止了默认行为
+                    -->
+                  </n-form-item>
+                  <div style="height: 34px; line-height: 34px; margin: 0 8px">
+                    &lt;
+                  </div>
+                  <n-form-item
+                      ignore-path-change
+                      :show-label="false"
+                      :path="`dynamicInputValue[${index}].maxValue`"
+                      :rule="dynamicInputRule"
+                  >
+                    <n-input
+                        v-model:value="model.dynamicInputValue[index].maxValue"
+                        placeholder="maxValue"
+                        @keydown.enter.prevent
+                    />
+                  </n-form-item>
+                </div>
+              </n-dynamic-input>
+              <n-popconfirm
+                  @positive-click="handlePositiveClick"
+                  @negative-click="handleNegativeClick"
+              >
+                <template #trigger>
+                  <n-button round style="margin-left: 250px">
+                    确认提交
+                  </n-button>
+                </template>
+                是否设置完参数？
+              </n-popconfirm>
+            </n-form>
+          </n-space>
+        </div>
+        <div class="content-right">
+          <pre>{{ JSON.stringify(model.dynamicInputValue, null, 3) }}</pre>
+        </div>
+      </div>
+    </a-layout>
+  </a-layout-content>
 </template>
+
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue';
+import { defineComponent, ref } from 'vue'
+import {message} from "ant-design-vue";
 import axios from 'axios';
-import {message} from 'ant-design-vue'
-import {Tool} from "@/util/tool"
-export default defineComponent({
-  name: 'AdminPhysicalValue',
-  setup(){
-    const param = ref();
-    param.value = {};
-    const physicalValue = ref({});
-    const physicalValues = ref();
-    const pagination = ref({
-      current: 1,
-      pageSize: 3,
-      total: 0
-    });
-    const loading = ref(false);
 
-    const columns = [
-      {
-        title: '序号',
-        dataIndex: 'id',
-      },
-      {
-        title: '第一个物理值',
-        dataIndex: 'val1'
-      },
-      {
-        title: '第二个物理值',
-        dataIndex: 'val2',
-      },
-      {
-        title: '第三个物理值',
-        dataIndex: 'val3',
-      },
-      {
-        title:'第四个物理值',
-        dataIndex: 'val4',
-      },
-      {
-        title:'第五个物理值',
-        dataIndex: 'val5',
-      },
-      {
-        title:'第六个物理值',
-        dataIndex: 'val6',
-      },
-      {
-        title: '时间',
-        dataIndex: 'createTime'
-      },
-      {
-        title:'Action',
-        key:'action',
-        slots: {customRender: 'action'}
+const model = ref({
+  dynamicInputValue: [{ minValue:'',name: '',maxValue: ''}]
+})
+const handlePositiveClick  = () =>{
+  if(model.value.dynamicInputValue.length === 6){
+    //请求后端接口保存6个范围值
+    axios.post("/nr/save", model.value.dynamicInputValue).then((response) => {
+      const data = response.data;
+      if (data.success) {
+        message.success("保存成功");
+      } else {
+        message.error(data.message);
       }
-    ];
-    /**
-     * 数据查询
-     * @param params
-     */
-    const handleQuery = (params:any)=>{
-
-      loading.value = true;
-      axios.get("/pv/list", {
-        params:{
-          page: params.page,
-          size: params.size,
-        }
-      }).then((response)=>{
-        loading.value = false;
-        const data = response.data;
-        if(data.success){
-          physicalValues.value = data.content.list;
-
-          //重置分页按钮
-          pagination.value.current = params.page;
-          pagination.value.total = data.content.total;
-        }else {
-          message.error(data.message)
-        }
-
-      });
-    };
-    /**
-     * 表格点击页码时触发
-     */
-    const handleTableChange = (pagination:any) =>{
-      console.log("看看自带的分页参数有啥:" + pagination);
-      handleQuery({
-        page:pagination.current,
-        size:pagination.pageSize,
-      });
-    };
-    const modalVisible = ref(false);
-    const modalLoading = ref(false);
-    const handleModalOk = () =>{
-      modalLoading.value = true;
-      axios.post("/pv/save", physicalValue.value).then((response)=>{
-        const data = response.data; //data = commonResp
-        if(data.success){
-          modalLoading.value = false;
-          modalVisible.value = false;
-          //重新加载列表
-          handleQuery({
-            page: pagination.value.current,
-            size: pagination.value.pageSize
-          })
-        }
-      });
-    };
-    const add = ()=>{
-      modalVisible.value = true;
-      physicalValue.value = {}
-    }
-    const edit = (record: any)=>{
-      modalVisible.value = true;
-
-      physicalValue.value = Tool.copy(record)
-    }
-    const handleDelete = (id: number)=>{
-      axios.delete("/pv/delete/"+id).then((response)=>{
-        const data = response.data; //data = commonResp
-        if(data.success){
-          //重新加载列表
-          handleQuery({
-            page: pagination.value.current,
-            size: pagination.value.pageSize
-          })
-        }else {
-          message.error(data.message);
-        }
-      });
-    }
-    onMounted(()=>{
-      handleQuery({
-        page: 1,
-        size: pagination.value.pageSize
-      });
     });
+  }else{
+    console.log("model.value.dynamicInputValue的类型", typeof model.value.dynamicInputValue)
+    message.info("不得少于6个参数范围")
+  }
+
+};
+const handleNegativeClick =()=> {
+  message.info('取消成功')
+}
+export default defineComponent({
+  setup () {
     return {
-      pagination,
-      columns,
-      loading,
-      handleTableChange,
-      physicalValues,
-      edit,
-      physicalValue,
-      modalVisible,
-      modalLoading,
-      handleModalOk,
-      handleDelete,
-      add,
-      param,
-      handleQuery
+      dynamicInputRule: {
+        trigger: 'input',
+        validator (rule: unknown, value: string) {
+          //if (value.length >= 15) return new Error('最多输入15个字符')
+          return true
+        }
+      },
+      model,
+      onCreate () {
+        return {
+          minValue:'',
+          name: '',
+          maxValue:''
+        }
+      },
+      handlePositiveClick,
+      handleNegativeClick
     }
   }
 })
 </script>
-
+<style>
+.content-wrapper{
+  display: flex;
+  justify-content: space-evenly;
+}
+</style>

@@ -35,11 +35,11 @@ export default defineComponent({
     console.log(rowDataId.value)
     return {
       handlePositiveClick () {
-        message.info('确认')
+        message.info('确认成功')
         handleUpdate(rowDataId.value)
       },
       handleNegativeClick () {
-        message.info('取消')
+        message.info('取消成功')
       },
       handleUpdate,
       selectData,
