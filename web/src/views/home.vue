@@ -21,8 +21,8 @@
             <a-menu-item key="历史数据查询" >
               历史数据查询
             </a-menu-item>
-            <a-menu-item key="异常波动数据查询">
-              异常波动数据查询
+            <a-menu-item key="异常波动数据检测">
+              异常波动数据检测
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="断点查询">
@@ -67,7 +67,7 @@
               </n-message-provider>
             </n-loading-bar-provider>
           </div>
-          <div v-else-if="'异常波动数据查询' === selectedKey">
+          <div v-else-if="'异常波动数据检测' === selectedKey">
             <n-loading-bar-provider>
               <n-message-provider>
                 <n-notification-provider>

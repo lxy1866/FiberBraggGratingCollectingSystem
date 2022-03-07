@@ -21,7 +21,7 @@
           </a-menu-item>
           <a-menu-item key="/admin/physicalValue">
             <transition :name="transitionName">
-              <router-link to="/admin/physicalValue" :style="user.id? {} : {display:'none'}">应变值</router-link>
+              <router-link to="/admin/physicalValue" :style="user.id? {} : {display:'none'}">光纤光栅参数设置</router-link>
             </transition>
           </a-menu-item>
 

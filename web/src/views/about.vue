@@ -3,7 +3,8 @@
     <a-breadcrumb style="margin: 16px 0">
 
     </a-breadcrumb>
-  <div class="wrapper">
+    <a-layout style="padding: 24px 0; background: #fff">
+      <div class="wrapper" style="margin-left: 20px">
     <n-timeline>
       <n-timeline-item
           type="success"
@@ -65,6 +66,7 @@
       />
     </n-timeline>
   </div>
+    </a-layout>
   </a-layout-content>
 </template>
 <style>
