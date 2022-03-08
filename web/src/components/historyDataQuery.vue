@@ -76,10 +76,12 @@ const handleQuery = (params:any)=>{
     }
   }).then(function (response){
     console.log(response);
-    response.data.content.list.forEach((item:any)=>{
-      item.createTime = formatDateWrapper(Number(item.createTime))
-    })
-    data.value = response.data.content.list;
+    if(response.data.content.list.length !== 0){
+      response.data.content.list.forEach((item:any)=>{
+        item.createTime = formatDateWrapper(Number(item.createTime))
+      })
+      data.value = response.data.content.list;
+    }
   })
 };
 export default defineComponent({
@@ -109,9 +111,6 @@ export default defineComponent({
 
     return {
       columns,
-      pagination: {
-        pageSize: 10
-      },
       data,
       range2
     }

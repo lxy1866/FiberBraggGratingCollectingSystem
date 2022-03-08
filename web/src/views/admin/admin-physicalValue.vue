@@ -13,9 +13,10 @@
                 embedded
                 :bordered="false"
             >
-              每个光纤光栅传感器都有自己的应变范围，超出范围的记录会被展示到异常波动数据页面中。
+              每个光纤光栅传感器都有自己的应变范围，超出范围的记录会被展示到异常波动数据页面中。<br/>
+              参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。
             </n-card>
-            <n-form :model="model">
+            <n-form :model="model" >
               <n-dynamic-input
                   v-model:value="model.dynamicInputValue"
                   item-style="margin-bottom: 0;"
@@ -62,7 +63,7 @@
                       ignore-path-change
                       :show-label="false"
                       :path="`dynamicInputValue[${index}].maxValue`"
-                      :rule="dynamicInputRule"
+                      :rul="dynamicInputRule"
                   >
                     <n-input
                         v-model:value="model.dynamicInputValue[index].maxValue"
@@ -77,12 +78,41 @@
                   @negative-click="handleNegativeClick"
               >
                 <template #trigger>
-                  <n-button round style="margin-left: 250px">
+                  <n-button round style="margin-left: 150px" :disabled="code !== 'test'">
                     确认提交
                   </n-button>
                 </template>
                 是否设置完参数？
               </n-popconfirm>
+              <n-popconfirm
+                  @positive-click="handlePopModifyFrame"
+                  @negative-click="handleNegativeClick"
+              >
+                <template #trigger>
+                  <n-button round style="margin-left: 115px">
+                    重新修改
+                  </n-button>
+                </template>
+                是否重新设置参数？
+              </n-popconfirm>
+              <n-modal
+                  v-model:show="showModalRef"
+                  :mask-closable="false"
+                  preset="dialog"
+                  title="输入授权码"
+                  positive-text="确认"
+                  negative-text="取消"
+                  @positive-click="onPositiveClick"
+                  @negative-click="onNegativeClick"
+              >
+                <n-input
+                    v-model:value="code"
+                    type="password"
+                    show-password-on="mousedown"
+                    placeholder="密码"
+                    :maxlength="8"
+                />
+              </n-modal>
             </n-form>
           </n-space>
         </div>
@@ -98,32 +128,51 @@
 import { defineComponent, ref } from 'vue'
 import {message} from "ant-design-vue";
 import axios from 'axios';
-
 const model = ref({
   dynamicInputValue: [{ minValue:'',name: '',maxValue: ''}]
 })
-const handlePositiveClick  = () =>{
-  if(model.value.dynamicInputValue.length === 6){
-    //请求后端接口保存6个范围值
-    axios.post("/nr/save", model.value.dynamicInputValue).then((response) => {
-      const data = response.data;
-      if (data.success) {
-        message.success("保存成功");
-      } else {
-        message.error(data.message);
-      }
-    });
-  }else{
-    console.log("model.value.dynamicInputValue的类型", typeof model.value.dynamicInputValue)
-    message.info("不得少于6个参数范围")
-  }
 
-};
-const handleNegativeClick =()=> {
-  message.info('取消成功')
-}
+
 export default defineComponent({
   setup () {
+    const code = ref();
+    const showModalRef = ref(false)
+    const onNegativeClick =()=> {
+      message.success('Cancel')
+      showModalRef.value = false
+    };
+    const handlePositiveClick  = () =>{
+      if(model.value.dynamicInputValue.length === 6){
+        //请求后端接口保存6个范围值
+        axios.post("/nr/save", model.value.dynamicInputValue).then((response) => {
+          const data = response.data;
+          if (data.success) {
+            message.success("保存成功");
+            code.value = "";
+          } else {
+            message.error(data.message);
+          }
+        });
+      }else{
+        console.log("model.value.dynamicInputValue的类型", typeof model.value.dynamicInputValue)
+        message.info("不得少于6个参数范围")
+      }
+    };
+    const onPositiveClick = ()=> {
+      //验证授权码是否正确
+      if(code.value === 'test'){
+        message.success('授权码正确')
+        showModalRef.value = false
+      }else{
+        message.success('授权码错误')
+      }
+    }
+    const handleNegativeClick =()=> {
+      message.info('取消成功')
+    }
+    const handlePopModifyFrame = ()=>{
+      showModalRef.value = true
+    }
     return {
       dynamicInputRule: {
         trigger: 'input',
@@ -141,7 +190,12 @@ export default defineComponent({
         }
       },
       handlePositiveClick,
-      handleNegativeClick
+      handleNegativeClick,
+      onPositiveClick,
+      onNegativeClick,
+      showModalRef,
+      handlePopModifyFrame,
+      code,
     }
   }
 })

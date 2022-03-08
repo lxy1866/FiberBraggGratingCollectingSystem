@@ -46,4 +46,12 @@ public class PhysicalValueController {
         physicalValueService.delete(id);
         return resp;
     }
+    @GetMapping("/abnormalList")
+    @ResponseBody
+    public CommonResp<PageResp<PhysicalValueQueryResp>> abnormalList(@Valid DateRangeReq req){
+        CommonResp<PageResp<PhysicalValueQueryResp>> resp = new CommonResp<>();
+        PageResp<PhysicalValueQueryResp> list = physicalValueService.abnormalList(req);
+        resp.setContent(list);
+        return resp;
+    }
 }

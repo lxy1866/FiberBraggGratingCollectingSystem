@@ -352,6 +352,6 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="findMaxId" resultType="top.kaluna.modbusTcp.resp.NormalRangeQueryResp">
-    select * from normal_range where id=(select max(id) from normal_range);
+    select * from normal_range where id=(select max(id) from normal_range) limit 1;
   </select>
 </mapper>
