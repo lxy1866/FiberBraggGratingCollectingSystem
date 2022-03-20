@@ -1,7 +1,6 @@
 <template>
-  <a-layout>
     <a-layout-content
-        :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
+        :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px', height: height_top.height}"
     >
       <p>
         <a-form layout="inline" :model="param">
@@ -51,7 +50,6 @@
         </template>
       </a-table>
     </a-layout-content>
-  </a-layout>
 
   <a-modal
       title="用户表单"
@@ -266,6 +264,26 @@ export default defineComponent({
         size: pagination.value.pageSize,
       });
     });
+    const height_top = ref({
+      height: ''
+    });
+    const windowHeight = ref({
+      height: ''
+    });
+    onMounted(()=>{
+      if(window.innerHeight != null){
+        height_top.value.height = window.innerHeight-134+'px';
+        windowHeight.value.height = window.innerHeight-70+'px'
+      }
+
+      window.onresize = () => {
+        return (() => {
+          height_top.value.height = window.innerHeight-70+'px';
+          windowHeight.value.height = window.innerHeight+'px'
+        })();
+      };
+
+    })
 
     return {
       param,
@@ -289,7 +307,9 @@ export default defineComponent({
       resetModalVisible,
       resetModalLoading,
       handleResetModalOk,
-      resetPassword
+      resetPassword,
+      height_top,
+      windowHeight
     }
   }
 });

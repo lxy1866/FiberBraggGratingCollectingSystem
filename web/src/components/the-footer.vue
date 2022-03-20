@@ -1,5 +1,5 @@
 <template>
-  <a-layout-footer style="text-align: center">
+  <a-layout-footer style="text-align: center; background:  #001529; color: white; position:fixed; bottom:0px;left:0px;right: 0px;">
     FiberBraggGrating Collecting System ©2022 Created by Danly
   </a-layout-footer>
 </template>

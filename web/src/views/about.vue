@@ -69,7 +69,7 @@
     </a-layout>
   </a-layout-content>
 </template>
-<style>
+<style scoped>
 .wrapper{
   display: flex;
   justify-content: space-between;

@@ -1,22 +1,22 @@
 <template>
-  <a-layout-content style="padding: 0 50px">
+  <a-layout-content style="padding: 0 50px; ">
     <a-breadcrumb style="margin: 16px 0">
 
     </a-breadcrumb>
-    <a-layout style="padding: 24px 0; background: #fff">
-      <a-layout-sider width="200" style="background: #fff; height: 525px"  >
+    <a-layout style="padding: 24px 0; ">
+      <a-layout-sider width="200" style="background: #ffffff; height: 525px"  >
         <a-menu
             v-model:selectedKeys="selectedKeys"
             v-model:openKeys="openKeys"
             mode="inline"
-            style="height: 100%"
+            :style="{ height: '100%', borderRight: 0 }"
         >
           <a-sub-menu key="数据查询">
             <template #title>
-                <span>
-                  <user-outlined />
-                  数据查询
-                </span>
+              <span>
+                <database-outlined />
+                数据查询
+              </span>
             </template>
             <a-menu-item key="历史数据查询" >
               历史数据查询
@@ -28,7 +28,7 @@
           <a-sub-menu key="断点查询">
             <template #title>
                 <span>
-                  <laptop-outlined />
+                  <user-outlined />
                   断点查询
                 </span>
             </template>
@@ -39,7 +39,7 @@
           <a-sub-menu key="实时形状传感">
             <template #title>
                 <span>
-                  <notification-outlined />
+                  <user-outlined />
                   实时形状传感
                 </span>
             </template>
@@ -134,6 +134,7 @@ import Breakpoint from "../components/breakpoint.vue";
 import TwoDimension from "../components/twoDimension.vue";
 import ThreeDimension from "../components/threeDimension.vue";
 import Introduction from "@/components/introduction.vue";
+import { DatabaseOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
 export default defineComponent({
   components: {
     Introduction,
@@ -142,6 +143,9 @@ export default defineComponent({
     Breakpoint,
     TwoDimension,
     ThreeDimension,
+    DatabaseOutlined,
+    LaptopOutlined,
+    NotificationOutlined
   },
   setup(){
     const selectedKeys = ref();

@@ -1,12 +1,12 @@
 .ant-layout-header{
-  height: 60px;
+  height: 64px;
   padding-left: 30px;
   padding-right: 0;
-  background: white;
+  background: #001529
 }
 .ant-menu-overflow{
   width: 100%;
-  height: 60px;
+  height: 64px;
   display: flex;
   align-content: space-between;
   align-items: center;
@@ -18,15 +18,6 @@
   border-bottom: 1px solid #ffffff;
   box-shadow: none;
 }
-.ant-menu-item a:before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: transparent;
-  content: "";
-}
 .ant-form {
   box-sizing: border-box;
   margin: 0;
@@ -37,4 +28,149 @@
   line-height: 1.5715;
   list-style: none;
   font-feature-settings: 'tnum';
+}
+.ant-menu-overflow-item.ant-menu-item.ant-menu-item-selected.ant-menu-item-only-child{
+  width: 68px;
+  height: 64px;
+}
+.ant-form-item-label {
+  display: inline-block;
+  flex-grow: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: right;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.ant-form-item-label > label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  color: white;
+  font-size: 15px;
+  font-style: normal;
+}
+.ant-input {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 4px 11px;
+  color: white;
+  font-size: 14px;
+  line-height: 1.5715;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  content: '';
+}
+.ant-btn {
+  line-height: 1.5715;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  height: 32px;
+  padding: 4px 15px;
+  font-size: 14px;
+  border-radius: 2px;
+  color: white;
+  background: transparent;
+}
+.ant-btn:hover, .ant-btn:focus {
+  color: #ff4d4f;
+  background: transparent;
+  border-color: white;
+}
+.ant-form-item-has-error .ant-input, .ant-form-item-has-error .ant-input-affix-wrapper, .ant-form-item-has-error .ant-input:hover, .ant-form-item-has-error .ant-input-affix-wrapper:hover {
+  background-color: transparent;
+  border-color: white;
+}
+.anticon svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: auto;
+  margin-left: 290px;
+  margin-top: 7px;
+}
+.ant-input-affix-wrapper {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  display: flex;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 4px 11px;
+  width: 100%;
+  text-align: start;
+  background-color: #001529;
+  background-image: none;
+  color: white;
+  font-size: 14px;
+  line-height: 1.5715;
+}
+.ant-input-password-icon {
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item-group-title, .ant-menu-dark .ant-menu-item > a, .ant-menu-dark .ant-menu-item > span > a {
+  color: cadetblue;
+}
+.ant-menu-item a::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  content: '';
+}
+.ant-menu-item a::after{
+  background-color: #187fe61c;
+}
+.ant-popover-inner {
+  background-color: #001529;
+  background-clip: padding-box;
+  border-radius: 2px;
+}
+.ant-menu-submenu-title .ant-menu-title-content .anticon svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: auto;
+  margin-left: 0px;
+  margin-top: 7px;
+}
+.ant-popover-message {
+  position: relative;
+  padding: 4px 0 12px;
+  color: white;
+  font-size: 14px;
+}
+#basic_password.ant-input{
+  background: #001529;
 }

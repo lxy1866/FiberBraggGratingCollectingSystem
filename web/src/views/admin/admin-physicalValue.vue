@@ -1,9 +1,6 @@
 <template>
-  <a-layout-content style="padding: 0 50px">
-    <a-breadcrumb style="margin: 16px 0">
-
-    </a-breadcrumb>
-    <a-layout style="padding: 24px 0; background: #fff">
+  <a-layout-content >
+    <a-layout :style="{ background: '#fff', marginTop: '8px', position: 'relative' } ">
 
       <div class="content-wrapper">
         <div class="content-left" style="margin-top: 30px">
@@ -125,7 +122,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import {defineComponent, onMounted, ref} from 'vue'
 import {message} from "ant-design-vue";
 import axios from 'axios';
 const model = ref({
@@ -173,6 +170,25 @@ export default defineComponent({
     const handlePopModifyFrame = ()=>{
       showModalRef.value = true
     }
+    const height_top = ref({
+      height: ''
+    });
+    const windowHeight = ref({
+      height: ''
+    })
+    onMounted(()=>{
+      if(window.innerHeight != null){
+        height_top.value.height = window.innerHeight-134+'px';
+      }
+
+      window.onresize = () => {
+        return (() => {
+          height_top.value.height = window.innerHeight-70+'px';
+          windowHeight.value.height = window.innerHeight+'px'
+        })();
+      };
+
+    })
     return {
       dynamicInputRule: {
         trigger: 'input',
@@ -196,13 +212,20 @@ export default defineComponent({
       showModalRef,
       handlePopModifyFrame,
       code,
+      height_top,
+      windowHeight,
     }
   }
 })
 </script>
-<style>
+<style scoped>
 .content-wrapper{
   display: flex;
   justify-content: space-evenly;
+  position: relative;
+  padding-bottom: 75px;
+}
+*, html {
+  scroll-behavior: auto !important;
 }
 </style>

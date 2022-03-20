@@ -11,9 +11,7 @@ import javax.validation.constraints.Pattern;
 public class UserLoginReq {
 
     @NotEmpty(message = "密码不能为空")
-    //@Pattern(regexp = "^(?![0~9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$",message = "[密码]规则不正确")
     private String password;
-
 
     public String getPassword() {
         return password;

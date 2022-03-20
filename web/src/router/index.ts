@@ -8,14 +8,19 @@ import AdminUser from '../views/admin/admin-user.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: () => import('../views/home.vue'),
+    name: 'BigScreen',
+    component: () => import('../views/bigScreen.vue'),
+  },
+  {
+    path: '/detail',
+    name: 'Detail',
+    component: () => import('../views/detail.vue'),
     //定义嵌套路由
     children:[
         {
-          path: '/',
+          path: '/home',
           name:'历史数据查询',
-          component:()=> import('../views/home.vue'),
+          component:()=> import('../views/detail.vue'),
         },
         {
           path: '/abnormalDataQuery',
