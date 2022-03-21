@@ -16,8 +16,8 @@ export default defineComponent({
 
       var data = [];
 // Parametric curve
-      for (var t = 0; t < 25; t += 0.001) {
-        var x = (1 + 0.25 * Math.cos(t)) * Math.cos(t);
+      for (let t = 0; t < 25; t += 0.001) {
+        const x = (1 + 0.25 * Math.cos(t)) * Math.cos(t);
         var y = (1 + 0.25 * Math.cos(t)) * Math.sin(t);
         var z = t + 2.0 * Math.sin(t);
         data.push([x, y, z]);
