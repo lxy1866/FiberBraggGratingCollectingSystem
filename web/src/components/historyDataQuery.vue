@@ -1,5 +1,4 @@
 <template>
-  <project-select/>
 
   <p>请选择你要查询的日期范围</p>
 
@@ -20,7 +19,6 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref, watch} from 'vue'
-import ProjectSelect from '../components/project-select.vue'
 import axios from "axios";
 let data = ref();
 let range2 = ref();
@@ -91,7 +89,6 @@ const handleQuery = (params:any)=>{
 };
 export default defineComponent({
   components:{
-    ProjectSelect
   },
   setup () {
     /**

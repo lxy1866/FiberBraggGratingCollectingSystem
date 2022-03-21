@@ -1,5 +1,6 @@
 package top.kaluna.modbusTcp.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -231,6 +232,186 @@ public class FbgValueInfoExample {
 
         public Criteria andPropertyNameNotBetween(String value1, String value2) {
             addCriterion("property_name not between", value1, value2, "propertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinIsNull() {
+            addCriterion("`min` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinIsNotNull() {
+            addCriterion("`min` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinEqualTo(BigDecimal value) {
+            addCriterion("`min` =", value, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinNotEqualTo(BigDecimal value) {
+            addCriterion("`min` <>", value, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinGreaterThan(BigDecimal value) {
+            addCriterion("`min` >", value, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("`min` >=", value, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinLessThan(BigDecimal value) {
+            addCriterion("`min` <", value, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("`min` <=", value, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinIn(List<BigDecimal> values) {
+            addCriterion("`min` in", values, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinNotIn(List<BigDecimal> values) {
+            addCriterion("`min` not in", values, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("`min` between", value1, value2, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("`min` not between", value1, value2, "min");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxIsNull() {
+            addCriterion("`max` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxIsNotNull() {
+            addCriterion("`max` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxEqualTo(BigDecimal value) {
+            addCriterion("`max` =", value, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxNotEqualTo(BigDecimal value) {
+            addCriterion("`max` <>", value, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxGreaterThan(BigDecimal value) {
+            addCriterion("`max` >", value, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("`max` >=", value, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxLessThan(BigDecimal value) {
+            addCriterion("`max` <", value, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("`max` <=", value, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxIn(List<BigDecimal> values) {
+            addCriterion("`max` in", values, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxNotIn(List<BigDecimal> values) {
+            addCriterion("`max` not in", values, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("`max` between", value1, value2, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("`max` not between", value1, value2, "max");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Long value) {
+            addCriterion("create_time =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Long value) {
+            addCriterion("create_time <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Long value) {
+            addCriterion("create_time >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Long value) {
+            addCriterion("create_time >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Long value) {
+            addCriterion("create_time <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Long value) {
+            addCriterion("create_time <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Long> values) {
+            addCriterion("create_time in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Long> values) {
+            addCriterion("create_time not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Long value1, Long value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Long value1, Long value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
     }

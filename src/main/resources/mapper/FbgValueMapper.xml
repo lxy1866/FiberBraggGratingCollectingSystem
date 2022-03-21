@@ -3,7 +3,6 @@
 <mapper namespace="top.kaluna.modbusTcp.mapper.FbgValueMapper">
   <resultMap id="BaseResultMap" type="top.kaluna.modbusTcp.domain.FbgValue">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="project_id" jdbcType="BIGINT" property="projectId" />
     <result column="physical_value_info_id" jdbcType="BIGINT" property="physicalValueInfoId" />
     <result column="value" jdbcType="DECIMAL" property="value" />
     <result column="tag" jdbcType="TINYINT" property="tag" />
@@ -68,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, project_id, physical_value_info_id, `value`, tag, create_time
+    id, physical_value_info_id, `value`, tag, create_time
   </sql>
   <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueExample" resultMap="BaseResultMap">
     select
@@ -101,21 +100,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.FbgValue">
-    insert into fbg_value (id, project_id, physical_value_info_id, 
-      `value`, tag, create_time
-      )
-    values (#{id,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{physicalValueInfoId,jdbcType=BIGINT}, 
-      #{value,jdbcType=DECIMAL}, #{tag,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}
-      )
+    insert into fbg_value (id, physical_value_info_id, `value`, 
+      tag, create_time)
+    values (#{id,jdbcType=BIGINT}, #{physicalValueInfoId,jdbcType=BIGINT}, #{value,jdbcType=DECIMAL}, 
+      #{tag,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.FbgValue">
     insert into fbg_value
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="projectId != null">
-        project_id,
       </if>
       <if test="physicalValueInfoId != null">
         physical_value_info_id,
@@ -133,9 +127,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
-      </if>
-      <if test="projectId != null">
-        #{projectId,jdbcType=BIGINT},
       </if>
       <if test="physicalValueInfoId != null">
         #{physicalValueInfoId,jdbcType=BIGINT},
@@ -163,9 +154,6 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.projectId != null">
-        project_id = #{record.projectId,jdbcType=BIGINT},
-      </if>
       <if test="record.physicalValueInfoId != null">
         physical_value_info_id = #{record.physicalValueInfoId,jdbcType=BIGINT},
       </if>
@@ -186,7 +174,6 @@
   <update id="updateByExample" parameterType="map">
     update fbg_value
     set id = #{record.id,jdbcType=BIGINT},
-      project_id = #{record.projectId,jdbcType=BIGINT},
       physical_value_info_id = #{record.physicalValueInfoId,jdbcType=BIGINT},
       `value` = #{record.value,jdbcType=DECIMAL},
       tag = #{record.tag,jdbcType=TINYINT},
@@ -198,9 +185,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.modbusTcp.domain.FbgValue">
     update fbg_value
     <set>
-      <if test="projectId != null">
-        project_id = #{projectId,jdbcType=BIGINT},
-      </if>
       <if test="physicalValueInfoId != null">
         physical_value_info_id = #{physicalValueInfoId,jdbcType=BIGINT},
       </if>
@@ -218,8 +202,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="top.kaluna.modbusTcp.domain.FbgValue">
     update fbg_value
-    set project_id = #{projectId,jdbcType=BIGINT},
-      physical_value_info_id = #{physicalValueInfoId,jdbcType=BIGINT},
+    set physical_value_info_id = #{physicalValueInfoId,jdbcType=BIGINT},
       `value` = #{value,jdbcType=DECIMAL},
       tag = #{tag,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=BIGINT}

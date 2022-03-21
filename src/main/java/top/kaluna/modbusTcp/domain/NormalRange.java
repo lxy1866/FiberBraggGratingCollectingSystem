@@ -1,33 +1,16 @@
 package top.kaluna.modbusTcp.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NormalRange {
     private Long id;
 
-    private BigDecimal val1MinValue;
-
-    private BigDecimal val2MinValue;
-
-    private BigDecimal val3MinValue;
-
-    private BigDecimal val4MinValue;
-
-    private BigDecimal val5MinValue;
-
-    private BigDecimal val6MinValue;
-
-    private BigDecimal val1MaxValue;
-
-    private BigDecimal val2MaxValue;
-
-    private BigDecimal val3MaxValue;
-
-    private BigDecimal val4MaxValue;
-
-    private BigDecimal val5MaxValue;
-
-    private BigDecimal val6MaxValue;
+    /**
+     * 所有光纤光栅传感阵列的最小最大值
+     */
+    List<List<BigDecimal>> values = new ArrayList<>();
 
     private Long createTime;
 
@@ -39,101 +22,6 @@ public class NormalRange {
         this.id = id;
     }
 
-    public BigDecimal getVal1MinValue() {
-        return val1MinValue;
-    }
-
-    public void setVal1MinValue(BigDecimal val1MinValue) {
-        this.val1MinValue = val1MinValue;
-    }
-
-    public BigDecimal getVal2MinValue() {
-        return val2MinValue;
-    }
-
-    public void setVal2MinValue(BigDecimal val2MinValue) {
-        this.val2MinValue = val2MinValue;
-    }
-
-    public BigDecimal getVal3MinValue() {
-        return val3MinValue;
-    }
-
-    public void setVal3MinValue(BigDecimal val3MinValue) {
-        this.val3MinValue = val3MinValue;
-    }
-
-    public BigDecimal getVal4MinValue() {
-        return val4MinValue;
-    }
-
-    public void setVal4MinValue(BigDecimal val4MinValue) {
-        this.val4MinValue = val4MinValue;
-    }
-
-    public BigDecimal getVal5MinValue() {
-        return val5MinValue;
-    }
-
-    public void setVal5MinValue(BigDecimal val5MinValue) {
-        this.val5MinValue = val5MinValue;
-    }
-
-    public BigDecimal getVal6MinValue() {
-        return val6MinValue;
-    }
-
-    public void setVal6MinValue(BigDecimal val6MinValue) {
-        this.val6MinValue = val6MinValue;
-    }
-
-    public BigDecimal getVal1MaxValue() {
-        return val1MaxValue;
-    }
-
-    public void setVal1MaxValue(BigDecimal val1MaxValue) {
-        this.val1MaxValue = val1MaxValue;
-    }
-
-    public BigDecimal getVal2MaxValue() {
-        return val2MaxValue;
-    }
-
-    public void setVal2MaxValue(BigDecimal val2MaxValue) {
-        this.val2MaxValue = val2MaxValue;
-    }
-
-    public BigDecimal getVal3MaxValue() {
-        return val3MaxValue;
-    }
-
-    public void setVal3MaxValue(BigDecimal val3MaxValue) {
-        this.val3MaxValue = val3MaxValue;
-    }
-
-    public BigDecimal getVal4MaxValue() {
-        return val4MaxValue;
-    }
-
-    public void setVal4MaxValue(BigDecimal val4MaxValue) {
-        this.val4MaxValue = val4MaxValue;
-    }
-
-    public BigDecimal getVal5MaxValue() {
-        return val5MaxValue;
-    }
-
-    public void setVal5MaxValue(BigDecimal val5MaxValue) {
-        this.val5MaxValue = val5MaxValue;
-    }
-
-    public BigDecimal getVal6MaxValue() {
-        return val6MaxValue;
-    }
-
-    public void setVal6MaxValue(BigDecimal val6MaxValue) {
-        this.val6MaxValue = val6MaxValue;
-    }
 
     public Long getCreateTime() {
         return createTime;
@@ -143,48 +31,22 @@ public class NormalRange {
         this.createTime = createTime;
     }
 
-    public void setValue(int index, BigDecimal minValue, BigDecimal maxValue){
-        if(index == 1){
-            setVal1MinValue(minValue);
-            setVal1MaxValue(maxValue);
-        }else if(index == 2){
-            setVal2MinValue(minValue);
-            setVal2MaxValue(maxValue);
-        }else if(index == 3){
-            setVal3MinValue(minValue);
-            setVal3MaxValue(maxValue);
-        }else if(index == 4){
-            setVal4MinValue(minValue);
-            setVal4MaxValue(maxValue);
-        }else if(index == 5){
-            setVal5MinValue(minValue);
-            setVal5MaxValue(maxValue);
-        }else {
-            setVal6MinValue(minValue);
-            setVal6MaxValue(maxValue);
-        }
+    public List<List<BigDecimal>> getValues() {
+        return values;
     }
+
+    public void setValues(List<List<BigDecimal>> values) {
+        this.values = values;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", val1MinValue=").append(val1MinValue);
-        sb.append(", val2MinValue=").append(val2MinValue);
-        sb.append(", val3MinValue=").append(val3MinValue);
-        sb.append(", val4MinValue=").append(val4MinValue);
-        sb.append(", val5MinValue=").append(val5MinValue);
-        sb.append(", val6MinValue=").append(val6MinValue);
-        sb.append(", val1MaxValue=").append(val1MaxValue);
-        sb.append(", val2MaxValue=").append(val2MaxValue);
-        sb.append(", val3MaxValue=").append(val3MaxValue);
-        sb.append(", val4MaxValue=").append(val4MaxValue);
-        sb.append(", val5MaxValue=").append(val5MaxValue);
-        sb.append(", val6MaxValue=").append(val6MaxValue);
+        final StringBuilder sb = new StringBuilder("NormalRange{");
+        sb.append("id=").append(id);
+        sb.append(", values=").append(values);
         sb.append(", createTime=").append(createTime);
-        sb.append("]");
+        sb.append('}');
         return sb.toString();
     }
 }
+

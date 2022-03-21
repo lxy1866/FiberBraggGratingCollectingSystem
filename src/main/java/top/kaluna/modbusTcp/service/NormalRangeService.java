@@ -1,21 +1,20 @@
 package top.kaluna.modbusTcp.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import top.kaluna.modbusTcp.domain.NormalRange;
-import top.kaluna.modbusTcp.domain.NormalRangeExample;
-import top.kaluna.modbusTcp.domain.SingleNormalRange;
+import top.kaluna.modbusTcp.domain.*;
+
+import top.kaluna.modbusTcp.mapper.FbgValueInfoMapper;
+import top.kaluna.modbusTcp.mapper.FbgValueMapper;
 import top.kaluna.modbusTcp.mapper.NormalRangeMapper;
-import top.kaluna.modbusTcp.req.NormalRangeSaveReq;
+
 import top.kaluna.modbusTcp.resp.NormalRangeQueryResp;
+import top.kaluna.modbusTcp.util.CopyUtil;
 import top.kaluna.modbusTcp.util.DateUtil;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 
 /**
@@ -24,9 +23,11 @@ import java.util.List;
  */
 @Service
 public class NormalRangeService {
-    @Resource
-    private NormalRangeMapper normalRangeMapper;
 
+    @Resource
+    private FbgValueInfoMapper fbgValueInfoMapper;
+
+    private NormalRangeMapper normalRangeMapper;
     public NormalRangeQueryResp findMaxId() {
         return normalRangeMapper.findMaxId();
     }
@@ -34,13 +35,33 @@ public class NormalRangeService {
     public int save(String reqStr) {
         List<SingleNormalRange> lists = JSONObject.parseArray(reqStr, SingleNormalRange.class);
 
-        NormalRange normalRange = new NormalRange();
-        int index = 1;
+        //System.out.println(lists);
+        //[SingleNormalRange{minValue=11, maxValue=22, name='val1'}, SingleNormalRange{minValue=22, maxValue=33, name='val2'}]
+
+        FbgValueInfoExample fbgValueInfoExample = new FbgValueInfoExample();
+        FbgValueInfoExample.Criteria criteria = fbgValueInfoExample.createCriteria();
+
         for (SingleNormalRange list : lists) {
-            normalRange.setValue(index, list.getMinValue(), list.getMaxValue());
-            index++;
+            criteria.andPropertyNameEqualTo(list.getName());
+            List<FbgValueInfo> fbgValueInfos = fbgValueInfoMapper.selectByExample(fbgValueInfoExample);
+            if(fbgValueInfoMapper.selectByExample(fbgValueInfoExample) != null && fbgValueInfos.size() != 0){
+                //对于已经存在的传感器，更新对应的min和max
+                FbgValueInfo fbgValueInfo = CopyUtil.copy(fbgValueInfos.get(0), FbgValueInfo.class);
+                fbgValueInfo.setMin(list.getMinValue());
+                fbgValueInfo.setMax(list.getMaxValue());
+                fbgValueInfo.setCreateTime(DateUtil.getNowTime().getTime());
+                fbgValueInfoMapper.updateByExample(fbgValueInfo,fbgValueInfoExample);
+            }else{
+                //对于不已经存在的传感器，新增一条记录
+                FbgValueInfo fbgValueInfo = new FbgValueInfo();
+                fbgValueInfo.setPropertyName(list.getName());
+                fbgValueInfo.setMin(list.getMinValue());
+                fbgValueInfo.setMax(list.getMaxValue());
+                fbgValueInfo.setCreateTime(DateUtil.getNowTime().getTime());
+                fbgValueInfo.setId(Long.parseLong(String.valueOf(list.getName().charAt(3))));
+                fbgValueInfoMapper.insert(fbgValueInfo);
+            }
         }
-        normalRange.setCreateTime(DateUtil.getNowTime().getTime());
-        return normalRangeMapper.insert(normalRange);
+        return lists.size();
     }
 }

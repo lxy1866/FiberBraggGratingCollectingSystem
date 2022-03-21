@@ -20,25 +20,21 @@ INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id, create_time)
 drop table if exists `fbg_value`;
 create table `fbg_value`(
      `id` bigint not null comment 'id',
-     `project_id` bigint not null comment '项目id',
      `physical_value_info_id` bigint not null comment '属性编号',
      `value` decimal(10,4) not null comment '应变值',
      `tag` tinyint not null comment '断点位置（0表示没有，1表示第一个位置断了，以此类推）',
      `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
      primary key (`id`)
 )engine=innodb default charset=utf8mb4  comment '应变值';
-drop table if exists `physical_value_info`;
+drop table if exists `fbg_value_info`;
 create table `fbg_value_info`(
     `id` bigint not null comment 'id',
-    `property_name` varchar(20) not null comment '属性名',
-    primary key (`id`)
+    `property_name` varchar(20) not null comment '传感器名',
+    `min` decimal(10,4) not null comment '最小值',
+    `max` decimal(10,4) not null comment '最小值',
+    `create_time` bigint(13) not null comment '创建时间'
 )engine=innodb default charset = utf8mb4 comment '光纤光栅传感阵列物理属性表';
-insert into fbg_value_info (id, property_name) values (1, 'val1');
-insert into fbg_value_info (id, property_name) values (2, 'val2');
-insert into fbg_value_info (id, property_name) values (3, 'val3');
-insert into fbg_value_info (id, property_name) values (4, 'val4');
-insert into fbg_value_info (id, property_name) values (5, 'val5');
-insert into fbg_value_info (id, property_name) values (6, 'val6');
+
 
 drop table if exists `user`;
 create table `user`(
@@ -104,6 +100,7 @@ create table `normal_range`(
                        `create_time` bigint(13) not null comment '创建时间',
                        primary key (`id`)
 )engine = innodb default charset = utf8mb4 comment = '物理值正常值范围表';
+#以上这个normal_range表也要作废
 
 select * from normal_range where id=(select max(id) from normal_range);
 

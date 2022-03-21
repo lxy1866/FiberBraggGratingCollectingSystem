@@ -1,9 +1,16 @@
-package top.kaluna.modbusTcp.domain;
+package top.kaluna.modbusTcp.resp;
 
 import java.math.BigDecimal;
 
-public class FbgValue {
+/**
+ * @author Yuery
+ * @date 2022/3/21/0021 - 19:39
+ */
+
+public class FbgValueQueryResp {
     private Long id;
+
+    private Long projectId;
 
     private Long physicalValueInfoId;
 
@@ -19,6 +26,14 @@ public class FbgValue {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     public Long getPhysicalValueInfoId() {
@@ -60,6 +75,7 @@ public class FbgValue {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", projectId=").append(projectId);
         sb.append(", physicalValueInfoId=").append(physicalValueInfoId);
         sb.append(", value=").append(value);
         sb.append(", tag=").append(tag);

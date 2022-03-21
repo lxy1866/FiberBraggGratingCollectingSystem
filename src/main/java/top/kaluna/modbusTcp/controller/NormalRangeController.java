@@ -23,15 +23,15 @@ public class NormalRangeController {
     public CommonResp save(@RequestBody String req){
         CommonResp resp = new CommonResp<>();
         int save = normalRangeSaveService.save(req);
-        resp.setSuccess(save == 1);
+        resp.setSuccess(save != 0);
         return resp;
     }
-    @GetMapping("findMaxId")
-    @ResponseBody
-    public CommonResp<NormalRangeQueryResp> findMaxid(){
-        CommonResp<NormalRangeQueryResp> resp = new CommonResp<>();
-        NormalRangeQueryResp maxIdRecord = normalRangeSaveService.findMaxId();
-        resp.setContent(maxIdRecord);
-        return resp;
-    }
+//    @GetMapping("findMaxId")
+//    @ResponseBody
+//    public CommonResp<NormalRangeQueryResp> findMaxid(){
+//        CommonResp<NormalRangeQueryResp> resp = new CommonResp<>();
+//        NormalRangeQueryResp maxIdRecord = normalRangeSaveService.findMaxId();
+//        resp.setContent(maxIdRecord);
+//        return resp;
+//    }
 }
