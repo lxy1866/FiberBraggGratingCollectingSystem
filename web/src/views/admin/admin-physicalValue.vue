@@ -13,21 +13,24 @@
               每个光纤光栅传感器都有自己的应变范围，超出范围的记录会被展示到异常波动数据页面中。<br/>
               参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。
             </n-card>
-
-            <n-form :model="model" >
+              <p style="color: red">请先输入光纤光栅传感阵列的个数：</p>
+              <n-input-number :style="{ width: '20%' }" v-model:value="inputNum" />
+              <p style="color: red">请输入每个光纤光栅传感阵列的应变值的正常范围：</p>
+            <dv-border-box-2>
+              <n-form :model="model" >
               <n-dynamic-input
                   v-model:value="model.dynamicInputValue"
                   item-style="margin-bottom: 0;"
                   :on-create="onCreate"
                   #="{ index, value }"
-                  :min="6"
-                  :max="6"
+                  :min="inputNum"
+                  :max="inputNum"
               >
                 <div style="display: flex">
                   <n-form-item
                       ignore-path-change
                       :show-label="false"
-                      :path="`dynamicInputValue[${index}].minMalue`"
+                      :path="`dynamicInputValue[${index}].minValue`"
                       :rule="dynamicInputRule"
                   >
                     <n-input
@@ -47,7 +50,7 @@
                   >
                     <n-input
                         v-model:value="model.dynamicInputValue[index].name"
-                        placeholder="请输入val+序号【1-6】"
+                        placeholder="请输入val+序号【1-10】"
                         @keydown.enter.prevent
                     />
                     <!--
@@ -112,6 +115,7 @@
                 />
               </n-modal>
             </n-form>
+            </dv-border-box-2>
           </n-space>
         </div>
         <div class="content-right">
@@ -123,38 +127,39 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue'
+import {defineComponent, onMounted, ref, watch} from 'vue'
 import {message} from "ant-design-vue";
 import axios from 'axios';
 const model = ref({
   dynamicInputValue: [{ minValue:'',name: '',maxValue: ''}]
 })
 
-
+const code = ref();
+let inputNum = ref(null);
+const handlePositiveClick  = () =>{
+  console.log(inputNum.value)
+  if(model.value.dynamicInputValue.length === inputNum.value){
+    //请求后端接口保存6个范围值
+    axios.post("/nr/save", model.value.dynamicInputValue).then((response) => {
+      const data = response.data;
+      if (data.success) {
+        message.success("保存成功");
+        code.value = "";
+      } else {
+        message.error(data.message);
+      }
+    });
+  }else{
+    console.log("model.value.dynamicInputValue的类型", typeof model.value.dynamicInputValue)
+    message.info("输入的光纤光栅传感阵列的个数与设置的参数范围个数不匹配，请重新输入！")
+  }
+};
 export default defineComponent({
   setup () {
-    const code = ref();
     const showModalRef = ref(false)
     const onNegativeClick =()=> {
       message.success('Cancel')
       showModalRef.value = false
-    };
-    const handlePositiveClick  = () =>{
-      if(model.value.dynamicInputValue.length === 6){
-        //请求后端接口保存6个范围值
-        axios.post("/nr/save", model.value.dynamicInputValue).then((response) => {
-          const data = response.data;
-          if (data.success) {
-            message.success("保存成功");
-            code.value = "";
-          } else {
-            message.error(data.message);
-          }
-        });
-      }else{
-        console.log("model.value.dynamicInputValue的类型", typeof model.value.dynamicInputValue)
-        message.info("不得少于6个参数范围")
-      }
     };
     const onPositiveClick = ()=> {
       //验证授权码是否正确
@@ -178,17 +183,9 @@ export default defineComponent({
       height: ''
     })
     onMounted(()=>{
-      if(window.innerHeight != null){
-        height_top.value.height = window.innerHeight-134+'px';
-      }
-
-      window.onresize = () => {
-        return (() => {
-          height_top.value.height = window.innerHeight-70+'px';
-          windowHeight.value.height = window.innerHeight+'px'
-        })();
-      };
-
+      watch(inputNum,(newValue, oldValue)=>{
+        console.log(newValue,oldValue);
+      })
     })
     return {
       dynamicInputRule: {
@@ -215,6 +212,7 @@ export default defineComponent({
       code,
       height_top,
       windowHeight,
+      inputNum
     }
   }
 })

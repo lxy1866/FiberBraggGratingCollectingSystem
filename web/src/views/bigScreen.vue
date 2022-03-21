@@ -16,7 +16,6 @@
         <dv-border-box-8 class="border-box">
           <temperature class="charts" style="height:300px; margin-left: 50px;"/>
         </dv-border-box-8>
-
         <dv-border-box-8 class="border-box">
           <dv-capsule-chart :config="config7" class="charts" style="height:300px" />
         </dv-border-box-8>
@@ -70,14 +69,8 @@ export default defineComponent({
   },
   setup(){
     onMounted(()=>{
+
     });
-    // let chart = echarts.init(document.getElementById('GuangdongMap'));
-    // echarts.registerMap("GuangdongMap", GuangdongJson)
-    // chart.setOption({
-    //   geo: {
-    //     map: 'GuangdongMap'
-    //   }
-    // });
     return{
       config1,
       config2,
