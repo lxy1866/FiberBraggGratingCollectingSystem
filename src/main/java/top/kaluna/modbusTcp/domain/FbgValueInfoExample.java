@@ -3,14 +3,14 @@ package top.kaluna.modbusTcp.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhysicalValueInfoExample {
+public class FbgValueInfoExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public PhysicalValueInfoExample() {
+    public FbgValueInfoExample() {
         oredCriteria = new ArrayList<>();
     }
 

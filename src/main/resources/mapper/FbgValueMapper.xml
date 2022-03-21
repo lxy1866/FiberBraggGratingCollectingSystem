@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.kaluna.modbusTcp.mapper.PhysicalValueInfoMapper">
-  <resultMap id="BaseResultMap" type="top.kaluna.modbusTcp.domain.PhysicalValueInfo">
+<mapper namespace="top.kaluna.modbusTcp.mapper.FbgValueMapper">
+  <resultMap id="BaseResultMap" type="top.kaluna.modbusTcp.domain.FbgValue">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="property_name" jdbcType="VARCHAR" property="propertyName" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="physical_value_info_id" jdbcType="BIGINT" property="physicalValueInfoId" />
+    <result column="value" jdbcType="DECIMAL" property="value" />
+    <result column="tag" jdbcType="TINYINT" property="tag" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, property_name
+    id, project_id, physical_value_info_id, `value`, tag, create_time
   </sql>
-  <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from physical_value_info
+    from fbg_value
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,56 +87,96 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from physical_value_info
+    from fbg_value
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from physical_value_info
+    delete from fbg_value
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueInfoExample">
-    delete from physical_value_info
+  <delete id="deleteByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueExample">
+    delete from fbg_value
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueInfo">
-    insert into physical_value_info (id, property_name)
-    values (#{id,jdbcType=BIGINT}, #{propertyName,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.FbgValue">
+    insert into fbg_value (id, project_id, physical_value_info_id, 
+      `value`, tag, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{physicalValueInfoId,jdbcType=BIGINT}, 
+      #{value,jdbcType=DECIMAL}, #{tag,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueInfo">
-    insert into physical_value_info
+  <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.FbgValue">
+    insert into fbg_value
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="propertyName != null">
-        property_name,
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="physicalValueInfoId != null">
+        physical_value_info_id,
+      </if>
+      <if test="value != null">
+        `value`,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="createTime != null">
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="propertyName != null">
-        #{propertyName,jdbcType=VARCHAR},
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="physicalValueInfoId != null">
+        #{physicalValueInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=DECIMAL},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueInfoExample" resultType="java.lang.Long">
-    select count(*) from physical_value_info
+  <select id="countByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueExample" resultType="java.lang.Long">
+    select count(*) from fbg_value
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update physical_value_info
+    update fbg_value
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.propertyName != null">
-        property_name = #{record.propertyName,jdbcType=VARCHAR},
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.physicalValueInfoId != null">
+        physical_value_info_id = #{record.physicalValueInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.value != null">
+        `value` = #{record.value,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tag != null">
+        tag = #{record.tag,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -140,25 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update physical_value_info
+    update fbg_value
     set id = #{record.id,jdbcType=BIGINT},
-      property_name = #{record.propertyName,jdbcType=VARCHAR}
+      project_id = #{record.projectId,jdbcType=BIGINT},
+      physical_value_info_id = #{record.physicalValueInfoId,jdbcType=BIGINT},
+      `value` = #{record.value,jdbcType=DECIMAL},
+      tag = #{record.tag,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueInfo">
-    update physical_value_info
+  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.modbusTcp.domain.FbgValue">
+    update fbg_value
     <set>
-      <if test="propertyName != null">
-        property_name = #{propertyName,jdbcType=VARCHAR},
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="physicalValueInfoId != null">
+        physical_value_info_id = #{physicalValueInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null">
+        `value` = #{value,jdbcType=DECIMAL},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.kaluna.modbusTcp.domain.PhysicalValueInfo">
-    update physical_value_info
-    set property_name = #{propertyName,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="top.kaluna.modbusTcp.domain.FbgValue">
+    update fbg_value
+    set project_id = #{projectId,jdbcType=BIGINT},
+      physical_value_info_id = #{physicalValueInfoId,jdbcType=BIGINT},
+      `value` = #{value,jdbcType=DECIMAL},
+      tag = #{tag,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

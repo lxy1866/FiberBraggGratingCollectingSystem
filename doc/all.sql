@@ -2,7 +2,6 @@ drop table if exists `physical_value`;
 create table `physical_value`(
     `id` bigint not null comment 'id',
     `project_id` bigint not null comment '项目id',
-    `physical_value_info_id` not null comment '属性编号',
     `val1` decimal(10,4) not null comment '应变值1',
     `val2` decimal(10,4) not null comment '应变值2',
     `val3` decimal(10,4) not null comment '应变值3',
@@ -17,19 +16,29 @@ create index index_create_time ON physical_value(create_time);
 INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id, create_time) VALUES (267.7500, 61.5043, 118.6680, 232.4906, 94.8208, 274.2150, 3, 1646123552647);
 INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id, create_time) VALUES (267.7500, 61.5043, 118.6680, 232.4906, 94.8208, 274.2150, 4, 1646123552647);
 INSERT INTO physical_value (val2, val1, val3, val4, val5, val6, id, create_time) VALUES (267.7500, 61.5043, 118.6680, 232.4906, 94.8208, 274.2150, 5, 1646123552647);
-
+#上面的physical_value表将换成 fbg_value
+drop table if exists `fbg_value`;
+create table `fbg_value`(
+     `id` bigint not null comment 'id',
+     `project_id` bigint not null comment '项目id',
+     `physical_value_info_id` bigint not null comment '属性编号',
+     `value` decimal(10,4) not null comment '应变值',
+     `tag` tinyint not null comment '断点位置（0表示没有，1表示第一个位置断了，以此类推）',
+     `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
+     primary key (`id`)
+)engine=innodb default charset=utf8mb4  comment '应变值';
 drop table if exists `physical_value_info`;
-create table `physical_value_info`(
+create table `fbg_value_info`(
     `id` bigint not null comment 'id',
     `property_name` varchar(20) not null comment '属性名',
     primary key (`id`)
 )engine=innodb default charset = utf8mb4 comment '光纤光栅传感阵列物理属性表';
-insert into physical_value_info (id, property_name) values (1, 'val1');
-insert into physical_value_info (id, property_name) values (2, 'val2');
-insert into physical_value_info (id, property_name) values (3, 'val3');
-insert into physical_value_info (id, property_name) values (4, 'val4');
-insert into physical_value_info (id, property_name) values (5, 'val5');
-insert into physical_value_info (id, property_name) values (6, 'val6');
+insert into fbg_value_info (id, property_name) values (1, 'val1');
+insert into fbg_value_info (id, property_name) values (2, 'val2');
+insert into fbg_value_info (id, property_name) values (3, 'val3');
+insert into fbg_value_info (id, property_name) values (4, 'val4');
+insert into fbg_value_info (id, property_name) values (5, 'val5');
+insert into fbg_value_info (id, property_name) values (6, 'val6');
 
 drop table if exists `user`;
 create table `user`(

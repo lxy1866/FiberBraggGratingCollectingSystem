@@ -1,6 +1,6 @@
 package top.kaluna.modbusTcp.domain;
 
-public class PhysicalValueInfo {
+public class FbgValueInfo {
     private Long id;
 
     private String propertyName;
