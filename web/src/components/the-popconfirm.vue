@@ -16,8 +16,8 @@
 
 <script lang="ts">
 import {defineComponent, ref, inject} from 'vue'
-import { useMessage } from 'naive-ui'
 import axios from "axios";
+import { message } from 'ant-design-vue';
 const data = ref();
 
 const handleUpdate = (rowDataId:any)=> {
@@ -29,7 +29,6 @@ const handleUpdate = (rowDataId:any)=> {
 
 export default defineComponent({
   setup () {
-    const message = useMessage();
     const selectData:any = inject('selectData');
     let rowDataId:any = inject('rowDataId');
     console.log(rowDataId.value)

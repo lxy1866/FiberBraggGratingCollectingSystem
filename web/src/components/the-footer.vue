@@ -1,13 +1,22 @@
 <template>
   <a-layout-footer style="text-align: center; background:  #001529; color: white; position:fixed; bottom:0px;left:0px;right: 0px;">
-    FiberBraggGrating Collecting System ©2022 Created by Danly
+    FiberBraggGrating Collecting System ©2022 Created by Danly.  <span style="color: #ffffff">{{timeslot}}</span>
   </a-layout-footer>
 </template>
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue';
+import { defineComponent, computed, onMounted, ref } from 'vue';
 import store from "@/store";
 import {Tool} from "@/util/tool";
 import { notification } from 'ant-design-vue';
+
+let timeslot = ref();
+function resetTime(i:any) {
+  if (i < 10) {
+    return '0' + i
+  }
+  return i
+}
+
 export default defineComponent({
   name: 'the-footer',
   setup(){
@@ -41,6 +50,21 @@ export default defineComponent({
       websocket.onclose = onClose;
     };
     onMounted(() => {
+      setInterval(() => {
+        const realTime = new Date();
+        timeslot.value =
+            resetTime(realTime.getFullYear()) +
+            '/'+
+            resetTime(realTime.getMonth()) +
+            '/' +
+            resetTime(realTime.getDay()) +
+            ' ' +
+            resetTime(realTime.getHours()) +
+            ':' +
+            resetTime(realTime.getMinutes()) +
+            ':' +
+            resetTime(realTime.getSeconds())
+      }, 1000)
       // WebSocket
       if ('WebSocket' in window) {
         token = Tool.uuid(10);
@@ -55,7 +79,8 @@ export default defineComponent({
       }
     });
     return {
-      user
+      user,
+      timeslot
     }
   }
 });

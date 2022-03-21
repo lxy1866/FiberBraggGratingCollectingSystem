@@ -8,7 +8,8 @@
     >
       <div class="header-wrap">
         <div class="header-left">
-          <div style="font-style: italic; font-size: 32px; color: white; font-weight: bolder">FBG</div>
+          <img src="../assets/Logo_stu.png">
+          <div style=" font-size: 20px; color: white; font-weight: bolder">汕头大学</div>
           <a-menu-item key="/">
             <transition :name="transitionName">
               <router-link to="/">首页</router-link>
@@ -16,7 +17,7 @@
           </a-menu-item>
           <a-menu-item key="/detail">
             <transition :name="transitionName">
-              <router-link to="/detail">详情</router-link>
+              <router-link to="/detail">传感器列表</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/admin/user">
@@ -55,7 +56,6 @@
             </a-popconfirm>
           </a-menu-item>
           <a-menu-item>
-
           </a-menu-item>
         </div>
       </div>
@@ -150,5 +150,12 @@ export default defineComponent({
 .slide-left-leave-active {
   opacity: 0;
   transform: translate3d(-100%, 0, 0);
+}
+img{
+  position: relative;
+  width: 45px;
+  height: 45px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 </style>

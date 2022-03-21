@@ -13,6 +13,7 @@
               每个光纤光栅传感器都有自己的应变范围，超出范围的记录会被展示到异常波动数据页面中。<br/>
               参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。
             </n-card>
+
             <n-form :model="model" >
               <n-dynamic-input
                   v-model:value="model.dynamicInputValue"

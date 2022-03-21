@@ -1,6 +1,7 @@
 drop table if exists `physical_value`;
 create table `physical_value`(
     `id` bigint not null comment 'id',
+    `project_id` bigint not null comment '项目id',
     `val1` decimal(10,4) not null comment '应变值1',
     `val2` decimal(10,4) not null comment '应变值2',
     `val3` decimal(10,4) not null comment '应变值3',
@@ -46,7 +47,7 @@ select date_sub(now(), interval 1 hour);
 select min(create_time) create_time, tag from physical_value where (create_time > 3600 and tag != 0) group by tag;
                                    #{createTime,jdbcType=BIGINT}-3600000 and tag != 0;
 #【bug】[42000][1055] Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'modbustcpDev.physical_value.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
-SET @@GLOBAL.sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
+#SET @@GLOBAL.sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
 
 show variables like '%max_connect_errors%';
 
@@ -82,3 +83,4 @@ create table `normal_range`(
 )engine = innodb default charset = utf8mb4 comment = '物理值正常值范围表';
 
 select * from normal_range where id=(select max(id) from normal_range);
+

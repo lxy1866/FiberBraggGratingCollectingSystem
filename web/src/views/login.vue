@@ -1,37 +1,15 @@
 <template>
-  <a-layout-content style="padding: 0; background: #001529;" :style="height_top">
-    <div class="all" >
-    <div class="left">
-    </div>
+  <a-layout-content style=" background: #001529;" :style="height_top">
     <div class="right">
-      <dv-border-box-8 >
         <div class="innerForm">
+          <dv-decoration-3 style="width:250px;height:30px;"  />
           <n-card title="FBG" size="huge"
-                  style=" font-weight: bold;
-                  font-style: italic;
-                  --n-color: #001529;
-                  --n-border-radius: 3px;
-                  --n-color-modal: #001529;
-                  --n-color-popover: #fff;
-                  --n-color-target: #18a058;
-                  --n-text-color: white;
-                  --n-line-height: 1.6;
-                  --n-action-color: rgb(250, 250, 252);
-                  --n-title-text-color: white;
-                  --n-title-font-weight: 500;
-                  --n-close-color: rgba(122, 122, 122, 1);
-                  --n-close-color-hover: rgba(89, 89, 89, 1);
-                  --n-close-color-pressed: rgba(149, 149, 149, 1);
-                  --n-border-color: rgb(239, 239, 245);
-                  --n-box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.08), 0 3px 6px 0 rgba(0, 0, 0, 0.06), 0 5px 12px 4px rgba(0, 0, 0, 0.04);
-                  --n-padding-top: 27px;
-                  --n-padding-bottom: 28px;
-                  --n-padding-left: 40px;
-                  --n-font-size: 14px;
-                  --n-title-font-size: 30px;
-                  --n-close-size: 18px;
-                  font-weight: bold;">
-
+                  font-color="white"
+                  font-style="italic"
+                  style="--n-color: #001529;
+                  --n-title-font-size: 37px;
+                  --n-title-text-color: white"
+          >
             <a-form
                 :model="LoginUser"
                 name="basic"
@@ -41,9 +19,6 @@
                 @finish="onFinish"
                 @finishFailed="onFinishFailed"
             >
-              <div style="display: flex; justify-content: center">
-                <dv-decoration-3 style="width:250px;height:30px;"  />
-              </div>
               <a-form-item
                   label="NAME"
                   name="loginName"
@@ -66,11 +41,7 @@
             </a-form>
           </n-card>
         </div>
-      </dv-border-box-8>
-
     </div>
-
-  </div>
   </a-layout-content>
 </template>
 <script lang="ts">
@@ -82,7 +53,6 @@ import store from "@/store";
 import {anchorDark} from "naive-ui";
 declare let hexMd5: any;
 declare let KEY: any;
-
 
 export default defineComponent({
 
@@ -131,32 +101,17 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.all{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.left{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  margin-left: 40px;
-}
+
 .right{
   display: flex;
   align-items: center;
   width: 40%;
   margin-top: 100px;
-  margin-right: 200px;
+  margin-left: 700px;
 }
 .innerForm{
   width: 94%;
   margin: 3%;
   height: 335px;
-}
-.logo{
-  width: 80px;
-  height: 80px;
 }
 </style>

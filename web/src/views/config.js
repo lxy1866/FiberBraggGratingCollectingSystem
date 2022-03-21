@@ -15,7 +15,7 @@ const config2={
     carousel: 'page'
 }
 const config3={
-    header: ['项目', '指标', '极值'],
+    header: ['传感器编号', '应变值', '时间'],
     data: [
         ['洪鹤大桥', '支座位移', '1.2mm'],
         ['洪鹤大桥', '应变', '3.6μξ'],
