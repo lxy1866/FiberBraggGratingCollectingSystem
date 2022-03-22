@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.kaluna.modbusTcp.mapper.FbgValueInfoMapper">
   <resultMap id="BaseResultMap" type="top.kaluna.modbusTcp.domain.FbgValueInfo">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id" jdbcType="BIGINT" property="id" />
     <result column="property_name" jdbcType="VARCHAR" property="propertyName" />
     <result column="min" jdbcType="DECIMAL" property="min" />
     <result column="max" jdbcType="DECIMAL" property="max" />
+    <result column="distance" jdbcType="BIGINT" property="distance" />
     <result column="create_time" jdbcType="BIGINT" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, property_name, `min`, `max`, create_time
+    id, property_name, `min`, `max`, distance, create_time
   </sql>
   <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfoExample" resultMap="BaseResultMap">
     select
@@ -83,16 +84,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from fbg_value_info
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from fbg_value_info
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <delete id="deleteByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfoExample">
     delete from fbg_value_info
     <if test="_parameter != null">
@@ -101,9 +92,11 @@
   </delete>
   <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfo">
     insert into fbg_value_info (id, property_name, `min`, 
-      `max`, create_time)
+      `max`, distance, create_time
+      )
     values (#{id,jdbcType=BIGINT}, #{propertyName,jdbcType=VARCHAR}, #{min,jdbcType=DECIMAL}, 
-      #{max,jdbcType=DECIMAL}, #{createTime,jdbcType=BIGINT})
+      #{max,jdbcType=DECIMAL}, #{distance,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfo">
     insert into fbg_value_info
@@ -119,6 +112,9 @@
       </if>
       <if test="max != null">
         `max`,
+      </if>
+      <if test="distance != null">
+        distance,
       </if>
       <if test="createTime != null">
         create_time,
@@ -136,6 +132,9 @@
       </if>
       <if test="max != null">
         #{max,jdbcType=DECIMAL},
+      </if>
+      <if test="distance != null">
+        #{distance,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=BIGINT},
@@ -163,6 +162,9 @@
       <if test="record.max != null">
         `max` = #{record.max,jdbcType=DECIMAL},
       </if>
+      <if test="record.distance != null">
+        distance = #{record.distance,jdbcType=BIGINT},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=BIGINT},
       </if>
@@ -177,35 +179,10 @@
       property_name = #{record.propertyName,jdbcType=VARCHAR},
       `min` = #{record.min,jdbcType=DECIMAL},
       `max` = #{record.max,jdbcType=DECIMAL},
+      distance = #{record.distance,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfo">
-    update fbg_value_info
-    <set>
-      <if test="propertyName != null">
-        property_name = #{propertyName,jdbcType=VARCHAR},
-      </if>
-      <if test="min != null">
-        `min` = #{min,jdbcType=DECIMAL},
-      </if>
-      <if test="max != null">
-        `max` = #{max,jdbcType=DECIMAL},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfo">
-    update fbg_value_info
-    set property_name = #{propertyName,jdbcType=VARCHAR},
-      `min` = #{min,jdbcType=DECIMAL},
-      `max` = #{max,jdbcType=DECIMAL},
-      create_time = #{createTime,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

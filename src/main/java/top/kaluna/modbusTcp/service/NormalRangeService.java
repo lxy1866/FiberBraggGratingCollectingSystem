@@ -45,11 +45,12 @@ public class NormalRangeService {
             criteria.andPropertyNameEqualTo(list.getName());
             List<FbgValueInfo> fbgValueInfos = fbgValueInfoMapper.selectByExample(fbgValueInfoExample);
             if(fbgValueInfoMapper.selectByExample(fbgValueInfoExample) != null && fbgValueInfos.size() != 0){
-                //对于已经存在的传感器，更新对应的min和max
+                //对于已经存在的传感器，更新对应的min,max,distance
                 FbgValueInfo fbgValueInfo = CopyUtil.copy(fbgValueInfos.get(0), FbgValueInfo.class);
                 fbgValueInfo.setMin(list.getMinValue());
                 fbgValueInfo.setMax(list.getMaxValue());
                 fbgValueInfo.setCreateTime(DateUtil.getNowTime().getTime());
+                fbgValueInfo.setDistance(list.getDistance());
                 fbgValueInfoMapper.updateByExample(fbgValueInfo,fbgValueInfoExample);
             }else{
                 //对于不已经存在的传感器，新增一条记录
@@ -59,6 +60,7 @@ public class NormalRangeService {
                 fbgValueInfo.setMax(list.getMaxValue());
                 fbgValueInfo.setCreateTime(DateUtil.getNowTime().getTime());
                 fbgValueInfo.setId(Long.parseLong(String.valueOf(list.getName().charAt(3))));
+                fbgValueInfo.setDistance(list.getDistance());
                 fbgValueInfoMapper.insert(fbgValueInfo);
             }
         }

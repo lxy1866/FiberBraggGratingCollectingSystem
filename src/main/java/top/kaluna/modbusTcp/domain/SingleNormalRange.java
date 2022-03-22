@@ -10,6 +10,15 @@ public class SingleNormalRange {
     private BigDecimal minValue;
     private BigDecimal maxValue;
     private String name;
+    private Long distance;
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
 
     public BigDecimal getMinValue() {
         return minValue;
@@ -41,6 +50,7 @@ public class SingleNormalRange {
         sb.append("minValue=").append(minValue);
         sb.append(", maxValue=").append(maxValue);
         sb.append(", name='").append(name).append('\'');
+        sb.append(", distance=").append(distance);
         sb.append('}');
         return sb.toString();
     }

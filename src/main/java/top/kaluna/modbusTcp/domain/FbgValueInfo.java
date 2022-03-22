@@ -11,6 +11,8 @@ public class FbgValueInfo {
 
     private BigDecimal max;
 
+    private Long distance;
+
     private Long createTime;
 
     public Long getId() {
@@ -45,6 +47,14 @@ public class FbgValueInfo {
         this.max = max;
     }
 
+    public Long getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
+
     public Long getCreateTime() {
         return createTime;
     }
@@ -63,6 +73,7 @@ public class FbgValueInfo {
         sb.append(", propertyName=").append(propertyName);
         sb.append(", min=").append(min);
         sb.append(", max=").append(max);
+        sb.append(", distance=").append(distance);
         sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();

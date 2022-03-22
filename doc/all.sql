@@ -32,9 +32,9 @@ create table `fbg_value_info`(
     `property_name` varchar(20) not null comment '传感器名',
     `min` decimal(10,4) not null comment '最小值',
     `max` decimal(10,4) not null comment '最小值',
+    `distance` bigint not null comment '与光纤光栅解调仪的距离',
     `create_time` bigint(13) not null comment '创建时间'
 )engine=innodb default charset = utf8mb4 comment '光纤光栅传感阵列物理属性表';
-
 
 drop table if exists `user`;
 create table `user`(

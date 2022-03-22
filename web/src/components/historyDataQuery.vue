@@ -1,6 +1,6 @@
 <template>
 
-  <p>请选择你要查询的日期范围</p>
+  <p style="color: red; font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
 
   <n-space vertical>
     <n-date-picker

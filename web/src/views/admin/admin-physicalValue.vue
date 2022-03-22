@@ -6,7 +6,7 @@
         <div class="content-left" style="margin-top: 30px">
           <n-space vertical>
             <n-card
-                title="📖 设置光纤光栅传感器阵列的应变范围值"
+                title="📖 设置光纤光栅传感器阵列的应变范围值以及与光纤光栅解调仪的距离"
                 embedded
                 :bordered="false"
             >
@@ -15,7 +15,7 @@
             </n-card>
               <p style="color: red">请先输入光纤光栅传感阵列的个数：</p>
               <n-input-number :style="{ width: '20%' }" v-model:value="inputNum" />
-              <p style="color: red">请输入每个光纤光栅传感阵列的应变值的正常范围：</p>
+              <p style="color: red">请输入每个光纤光栅传感阵列的应变值的正常范围以及与光纤光栅解调仪的距离：</p>
             <dv-border-box-2>
               <n-form :model="model" >
               <n-dynamic-input
@@ -25,6 +25,7 @@
                   #="{ index, value }"
                   :min="inputNum"
                   :max="inputNum"
+
               >
                 <div style="display: flex">
                   <n-form-item
@@ -69,6 +70,19 @@
                     <n-input
                         v-model:value="model.dynamicInputValue[index].maxValue"
                         placeholder="maxValue"
+                        @keydown.enter.prevent
+                    />
+                  </n-form-item>
+                  &nbsp;&nbsp;
+                  <n-form-item
+                      ignore-path-change
+                      :show-label="false"
+                      :path="`dynamicInputValue[${index}].distance`"
+                      :rul="dynamicInputRule"
+                  >
+                    <n-input
+                        v-model:value="model.dynamicInputValue[index].distance"
+                        placeholder="distance"
                         @keydown.enter.prevent
                     />
                   </n-form-item>
@@ -131,7 +145,7 @@ import {defineComponent, onMounted, ref, watch} from 'vue'
 import {message} from "ant-design-vue";
 import axios from 'axios';
 const model = ref({
-  dynamicInputValue: [{ minValue:'',name: '',maxValue: ''}]
+  dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:''}]
 })
 
 const code = ref();
@@ -151,7 +165,7 @@ const handlePositiveClick  = () =>{
     });
   }else{
     console.log("model.value.dynamicInputValue的类型", typeof model.value.dynamicInputValue)
-    message.info("输入的光纤光栅传感阵列的个数与设置的参数范围个数不匹配，请重新输入！")
+    message.info("输入的光纤光栅传感阵列的个数与设置的参数范围个数不匹配！")
   }
 };
 export default defineComponent({
@@ -200,7 +214,8 @@ export default defineComponent({
         return {
           minValue:'',
           name: '',
-          maxValue:''
+          maxValue:'',
+          distance:''
         }
       },
       handlePositiveClick,
