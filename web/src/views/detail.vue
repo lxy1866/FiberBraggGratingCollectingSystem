@@ -1,10 +1,10 @@
 <template>
-  <a-layout-content style="padding: 0 50px; ">
+  <a-layout-content style="padding: 0 50px">
     <a-breadcrumb style="margin: 16px 0">
 
     </a-breadcrumb>
-    <a-layout style="padding: 24px 0; ">
-      <a-layout-sider width="200" style="background: #ffffff; height: 525px"  >
+    <a-layout style="padding: 24px 0; background: #fff">
+      <a-layout-sider width="200"  style="background: #fff" >
         <a-menu
             v-model:selectedKeys="selectedKeys"
             v-model:openKeys="openKeys"
@@ -134,7 +134,6 @@ import Breakpoint from "../components/breakpoint.vue";
 import TwoDimension from "../components/twoDimension.vue";
 import ThreeDimension from "../components/threeDimension.vue";
 import Introduction from "@/components/introduction.vue";
-import { DatabaseOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
 export default defineComponent({
   components: {
     Introduction,
@@ -143,9 +142,6 @@ export default defineComponent({
     Breakpoint,
     TwoDimension,
     ThreeDimension,
-    DatabaseOutlined,
-    LaptopOutlined,
-    NotificationOutlined
   },
   setup(){
     const selectedKeys = ref();
