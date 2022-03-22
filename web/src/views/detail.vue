@@ -1,10 +1,10 @@
 <template>
-  <a-layout-content style="padding: 0 50px">
+  <a-layout-content style="padding: 0 50px;">
     <a-breadcrumb style="margin: 16px 0">
 
     </a-breadcrumb>
     <a-layout style="padding: 24px 0; background: #fff">
-      <a-layout-sider width="200"  style="background: #fff" >
+      <a-layout-sider width="200"  style="background: #fff; height: 530px" >
         <a-menu
             v-model:selectedKeys="selectedKeys"
             v-model:openKeys="openKeys"

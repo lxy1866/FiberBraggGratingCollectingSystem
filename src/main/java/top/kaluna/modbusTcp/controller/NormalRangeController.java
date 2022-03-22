@@ -26,12 +26,11 @@ public class NormalRangeController {
         resp.setSuccess(save != 0);
         return resp;
     }
-//    @GetMapping("findMaxId")
-//    @ResponseBody
-//    public CommonResp<NormalRangeQueryResp> findMaxid(){
-//        CommonResp<NormalRangeQueryResp> resp = new CommonResp<>();
-//        NormalRangeQueryResp maxIdRecord = normalRangeSaveService.findMaxId();
-//        resp.setContent(maxIdRecord);
-//        return resp;
-//    }
+    @GetMapping("/total")
+    public CommonResp getTotal(){
+        CommonResp resp = new CommonResp();
+        int total = normalRangeSaveService.getTotal();
+        resp.setContent(total);
+        return resp;
+    }
 }

@@ -26,7 +26,9 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/user/login",
                         "/pv/list",
                         "/bpr/list",
-                        "/bpr/update"
+                        "/bpr/update",
+                        "/fbg/list",
+                        "/nr/total"
                         );
     }
 

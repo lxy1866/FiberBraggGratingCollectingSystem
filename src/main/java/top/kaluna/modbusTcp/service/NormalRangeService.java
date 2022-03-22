@@ -1,12 +1,10 @@
 package top.kaluna.modbusTcp.service;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import top.kaluna.modbusTcp.domain.*;
 
 import top.kaluna.modbusTcp.mapper.FbgValueInfoMapper;
-import top.kaluna.modbusTcp.mapper.FbgValueMapper;
 import top.kaluna.modbusTcp.mapper.NormalRangeMapper;
 
 import top.kaluna.modbusTcp.resp.NormalRangeQueryResp;
@@ -65,5 +63,9 @@ public class NormalRangeService {
             }
         }
         return lists.size();
+    }
+
+    public int  getTotal() {
+        return fbgValueInfoMapper.total();
     }
 }

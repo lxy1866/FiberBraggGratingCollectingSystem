@@ -26,6 +26,17 @@ create table `fbg_value`(
      `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
      primary key (`id`)
 )engine=innodb default charset=utf8mb4  comment '应变值';
+insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (1, 1, 11, 0, 1647907862069);
+insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (2, 1, 11, 0, 1647907862069);
+insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (3, 2, 22, 0, 1647907862069);
+insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (4, 2, 22, 0, 1647907862069);
+
+insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (5, 1, 11, 0, 1647907933365);
+insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (6, 1, 11, 0, 1647907933365);
+insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (7, 2, 22, 0, 1647907933365);
+insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (8, 2, 22, 0, 1647907933365);
+
+
 drop table if exists `fbg_value_info`;
 create table `fbg_value_info`(
     `id` bigint not null comment 'id',
