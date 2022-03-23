@@ -110,7 +110,7 @@ export default defineComponent({
 
 <style  scoped>
 #center {
-  color: blue;
+  color: white;
   display: flex;
   flex-direction: column;
 }

@@ -18,25 +18,57 @@ export default defineComponent({
       const data = genData();
 
       const option = {
+        toolbox: {
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
         title: {
-          text: '同姓氏数量统计',
-          x: 'center'
+          text: '传感阵列的动态实时应变值',
+          textStyle:{
+            color: '#ffffff',
+            fontFamily: '宋体',
+          },
         },
         legend: {
           type: 'scroll',
           orient: 'vertical',
           right: 10,
+          backgroundColor: "transparent",
           top: 20,
           bottom: 20,
           // x: 'right',
-          selected: data.selectedList
+          selected: data.selectedList,
+          textStyle: {
+            color: "blue"
+          }
         },
         tooltip: {
           formatter: "{b} : {c}"
         },
         grid: {},
-        xAxis: {type: 'category'},
-        yAxis: {type: 'value'},
+        xAxis: {
+          type: 'category',
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize : 12      //更改坐标轴文字大小
+            }
+          },
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize : 12      //更改坐标轴文字大小
+            }
+          },
+        },
         series: data.showDataArr,
         animationEasing: "elasticOut",
       }
@@ -44,7 +76,7 @@ export default defineComponent({
       //生成数据的方法
       function genData(count = 7) {
         const nameList = [
-          'val1', 'val2', 'val3', 'val4', 'val5', 'val6', '水', '窦', '章', '云', '苏', '潘', '葛', '奚', '范', '臧', '计', '伏', '成', '戴', '谈', '宋', '茅', '庞', '熊', '纪', '舒', '屈', '项', '危'
+          'val1', 'val2', 'val3', 'val4', 'val5', 'val6', 'val7', 'val8', 'val9', 'val10', 'val11', 'val12', 'val13', 'val14', 'val15', 'val16', 'val17', 'val18', 'val19', 'val20', 'val21', 'val22', 'val23', 'val24', 'val25', 'val26', 'val27', 'val28', 'val29', 'val30'
         ];
         const legendData = [];
         const seriesData = [];
@@ -77,19 +109,7 @@ export default defineComponent({
           selectedList: selectedList
         }
       }
-
-      //模拟加载
-      myChart.showLoading({
-            text: 'loading',
-            color: '#37A2DA',
-            textColor: '#37A2DA',
-            zlevel: 0,
-          },
-      );
-      setTimeout(() => {
-        myChart.hideLoading()
-        myChart.setOption(option)
-      }, 1000)
+      myChart.setOption(option)
     })
   }
 })

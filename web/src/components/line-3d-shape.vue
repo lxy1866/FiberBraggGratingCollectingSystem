@@ -31,6 +31,13 @@ export default defineComponent({
             saveAsImage: { show: true },
           }
         },
+        title: {
+          text: '海缆的位移值',
+          textStyle:{
+            color: '#ffffff',
+            fontFamily: '宋体',
+          },
+        },
         tooltip: {},
         backgroundColor: 'transparent',
         visualMap: {

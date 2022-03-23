@@ -1,6 +1,8 @@
 package top.kaluna.modbusTcp.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import top.kaluna.modbusTcp.domain.FbgValue;
 import top.kaluna.modbusTcp.domain.FbgValueExample;
@@ -27,4 +29,6 @@ public interface FbgValueMapper {
     int updateByPrimaryKeySelective(FbgValue record);
 
     int updateByPrimaryKey(FbgValue record);
+
+    List<FbgValue> selectForAbnormal(Long startTime, Long endTime);
 }

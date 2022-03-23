@@ -28,24 +28,12 @@ public class FbgValueController {
         resp.setContent(list);
         return resp;
     }
-//    @PostMapping("/save")
-//    public CommonResp save(@Valid @RequestBody FbgValueSaveReq ebookQueryReq){
-//        CommonResp resp = new CommonResp<>();
-//        fbgValueService.save(ebookQueryReq);
-//        return resp;
-//    }
-//    @DeleteMapping("/delete/{id}")
-//    public CommonResp delete(@PathVariable Long id){
-//        CommonResp resp = new CommonResp<>();
-//        fbgValueService.delete(id);
-//        return resp;
-//    }
-//    @GetMapping("/abnormalList")
-//    @ResponseBody
-//    public CommonResp<PageResp<FbgValueQueryResp>> abnormalList(@Valid DateRangeReq req){
-//        CommonResp<PageResp<FbgValueQueryResp>> resp = new CommonResp<>();
-//        PageResp<FbgValueQueryResp> list = fbgValueService.abnormalList(req);
-//        resp.setContent(list);
-//        return resp;
-//    }
+    @GetMapping("/abnormalList")
+    @ResponseBody
+    public CommonResp<PageResp<String>> abnormalList(@Valid DateRangeReq req){
+        CommonResp<PageResp<String>> resp = new CommonResp<>();
+        PageResp<String> list = fbgValueService.abnormalList(req);
+        resp.setContent(list);
+        return resp;
+    }
 }

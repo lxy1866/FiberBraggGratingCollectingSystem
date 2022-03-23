@@ -30,9 +30,7 @@
               :pagination="pagination"
               align="center"
               bordered="true"
-
           />
-
       </n-space>
     </a-layout-content>
   </a-layout>

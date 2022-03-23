@@ -26,6 +26,7 @@ create table `fbg_value`(
      `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
      primary key (`id`)
 )engine=innodb default charset=utf8mb4  comment '应变值';
+alter table fbg_value modify id int auto_increment;
 insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (1, 1, 11, 0, 1647907862069);
 insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (2, 1, 11, 0, 1647907862069);
 insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (3, 2, 22, 0, 1647907862069);
@@ -115,4 +116,9 @@ create table `normal_range`(
 
 select * from normal_range where id=(select max(id) from normal_range);
 
+select * from fbg_value a left join fbg_value_info b
+    on a.physical_value_info_id = b.id
+where a.value not between b.min
+    and a.create_time between #{startTime} and #{endTime}
+    and b.max order by a.create_time
 

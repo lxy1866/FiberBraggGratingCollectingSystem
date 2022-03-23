@@ -1,4 +1,5 @@
 <template>
+  <p style="color: red; font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
   <n-space vertical>
     <n-date-picker
         v-model:value="range2"
@@ -21,45 +22,15 @@ let data = ref();
 let range2 = ref();
 const columns = [
   {
-    title: 'id',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: 'val1',
-    dataIndex: 'val1',
-    key: 'val1',
-  },
-  {
-    title: 'val2',
-    dataIndex: 'val2',
-    key: 'val2',
-  },
-  {
-    title: 'val3',
-    key: 'val3',
-    dataIndex: 'val3',
-  },
-  {
-    title: 'val4',
-    key: 'val4',
-    dataIndex: 'val4'
-  },
-  {
-    title: 'val5',
-    key: 'val5',
-    dataIndex: 'val5',
-  },
-  {
-    title:'val6',
-    key: 'val6',
-    dataIndex: 'val6'
-  },
-  {
     title: 'createTime',
     key: 'createTime',
     dataIndex: 'createTime'
-  }
+  },
+  {
+    title: 'msg',
+    dataIndex: 'msg',
+    key: 'msg',
+  },
 ];
 declare let formatDate: any;
 const formatDateWrapper = (time:any)=>{
@@ -67,7 +38,7 @@ const formatDateWrapper = (time:any)=>{
   return formatDate(data,'yyyy-MM-dd hh:mm:ss');
 }
 const handleQuery = (params:any)=>{
-  axios.get("/pv/abnormalList", {
+  axios.get("/fbg/abnormalList", {
     params:{
       page: params.page,
       size: params.size,
@@ -75,11 +46,14 @@ const handleQuery = (params:any)=>{
       endTime: params.endTime
     }
   }).then(function (response){
+    let resultList: any[] = []
     console.log(response);
     response.data.content.list.forEach((item:any)=>{
-      item.createTime = formatDateWrapper(Number(item.createTime))
+      let obj = JSON.parse(item)
+      obj.createTime =  formatDateWrapper(Number(obj.createTime));
+      resultList.push(obj);
     })
-    data.value = response.data.content.list;
+    data.value = resultList;
   })
 };
 export default defineComponent({

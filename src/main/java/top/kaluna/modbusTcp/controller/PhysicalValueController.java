@@ -1,20 +1,13 @@
 package top.kaluna.modbusTcp.controller;
-
-import com.github.pagehelper.Page;
 import org.springframework.web.bind.annotation.*;
 import top.kaluna.modbusTcp.req.DateRangeReq;
-
-import top.kaluna.modbusTcp.req.PageReq;
 import top.kaluna.modbusTcp.req.PhysicalValueSaveReq;
 import top.kaluna.modbusTcp.resp.CommonResp;
 import top.kaluna.modbusTcp.resp.PageResp;
 import top.kaluna.modbusTcp.resp.PhysicalValueQueryResp;
 import top.kaluna.modbusTcp.service.PhysicalValueService;
-import top.kaluna.modbusTcp.util.SnowFlake;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author Yuery
@@ -26,26 +19,6 @@ public class PhysicalValueController {
     @Resource
     private PhysicalValueService physicalValueService;
 
-    @GetMapping("/list")
-    @ResponseBody
-    public CommonResp<PageResp<PhysicalValueQueryResp>> list(@Valid DateRangeReq req){
-        CommonResp<PageResp<PhysicalValueQueryResp>> resp = new CommonResp<>();
-        PageResp<PhysicalValueQueryResp> list = physicalValueService.list(req);
-        resp.setContent(list);
-        return resp;
-    }
-    @PostMapping("/save")
-    public CommonResp save(@Valid @RequestBody PhysicalValueSaveReq ebookQueryReq){
-        CommonResp resp = new CommonResp<>();
-        physicalValueService.save(ebookQueryReq);
-        return resp;
-    }
-    @DeleteMapping("/delete/{id}")
-    public CommonResp delete(@PathVariable Long id){
-        CommonResp resp = new CommonResp<>();
-        physicalValueService.delete(id);
-        return resp;
-    }
     @GetMapping("/abnormalList")
     @ResponseBody
     public CommonResp<PageResp<PhysicalValueQueryResp>> abnormalList(@Valid DateRangeReq req){

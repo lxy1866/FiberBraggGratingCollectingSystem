@@ -28,6 +28,8 @@
           <line-chart-temperature class="charts" style="height: 300px;"/>
         </dv-border-box-8>
         <dv-border-box-8 class="border-box">
+          <div class="charts" style="height: 300px"><img   src="../assets/pipeline.jpg"/></div>
+
         </dv-border-box-8>
       </div>
       <div class="box right">
@@ -115,7 +117,7 @@ export default defineComponent({
 }
 img{
   width: auto;
-  height: auto;
+  height: auto%;
   max-width: 98%;
   margin-top: 1%;
   margin-left: 1%;

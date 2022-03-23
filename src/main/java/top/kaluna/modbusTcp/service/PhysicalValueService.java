@@ -39,48 +39,6 @@ public class PhysicalValueService {
 
     private static final Logger LOG = LoggerFactory.getLogger(PhysicalValueService.class);
 
-    public PageResp<PhysicalValueQueryResp> list(DateRangeReq req){
-        PhysicalValueExample physicalValueExample = new PhysicalValueExample();
-        PhysicalValueExample.Criteria criteria = physicalValueExample.createCriteria();
-        //默认时间是今天
-        if(ObjectUtils.isEmpty(req.startTime) || ObjectUtils.isEmpty(req.endTime) || ObjectUtils.isEmpty(req)){
-            criteria.andCreateTimeBetween(DateUtil.getStartTime().getTime(), DateUtil.getEndTime().getTime());
-        }else{
-            criteria.andCreateTimeBetween(req.getStartTime(), req.getEndTime());
-        }
-        final List<PhysicalValue> physicalValues = physicalValueMapper.selectByExample(physicalValueExample);
-
-        PageHelper.startPage(req.getPage(), req.getSize());
-        PageInfo<PhysicalValue> pageInfo = new PageInfo<>(physicalValues);
-        LOG.info("总行数：{}", pageInfo.getTotal());
-        LOG.info("总页数：{}",pageInfo.getPages());
-
-        final List<PhysicalValueQueryResp> respsList = CopyUtil.copyList(physicalValues, PhysicalValueQueryResp.class);
-        PageResp<PhysicalValueQueryResp> pageResp = new PageResp<>();
-        pageResp.setTotal(pageInfo.getTotal());
-        pageResp.setList(respsList);
-        return pageResp;
-    }
-
-    public void save(PhysicalValueSaveReq physicalValueSaveReq) {
-        PhysicalValue physicalValue = CopyUtil.copy(physicalValueSaveReq, PhysicalValue.class);
-
-        PhysicalValueExample physicalValueExample = new PhysicalValueExample();
-        PhysicalValueExample.Criteria criteria = physicalValueExample.createCriteria();
-        criteria.andIdEqualTo(physicalValueSaveReq.getId());
-        if(ObjectUtils.isEmpty(physicalValueMapper.selectByExample(physicalValueExample))){
-            //新增
-            physicalValue.setCreateTime(DateUtil.getNowTime().getTime());
-            physicalValue.setId(snowFlake.nextId());
-            physicalValueMapper.insert(physicalValue);
-        }else {
-            physicalValueMapper.updateByPrimaryKey(physicalValue);
-        }
-    }
-
-    public void delete(Long id) {
-        physicalValueMapper.deleteByPrimaryKey(id);
-    }
 
     public PageResp<PhysicalValueQueryResp> abnormalList(DateRangeReq req) {
         PhysicalValueExample physicalValueExample = new PhysicalValueExample();

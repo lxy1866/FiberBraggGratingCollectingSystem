@@ -188,4 +188,7 @@
   <select id="total" resultType="java.lang.Integer">
     select count(*) from fbg_value_info
   </select>
+  <select id="selectAllRecord" resultType="top.kaluna.modbusTcp.domain.FbgValueInfo">
+    select * from fbg_value_info
+  </select>
 </mapper>
