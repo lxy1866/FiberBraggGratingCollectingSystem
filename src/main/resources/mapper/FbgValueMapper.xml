@@ -215,4 +215,13 @@
     and a.create_time between #{startTime} and #{endTime}
     and b.max order by a.create_time
   </select>
+  <insert id="multipleInsert">
+    insert into fbg_value
+    (physical_value_info_id, value, tag, create_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.physical_value_info_id},#{item.value},#{item.tag},#{item.create_time})
+    </foreach>
+  </insert>
+
 </mapper>

@@ -53,6 +53,71 @@ public class FbgValue {
         this.createTime = createTime;
     }
 
+    /**
+     * 建造者
+     */
+    public static final class Builder{
+        private final FbgValue fbgValue;
+
+        /**
+         * 私有构造函数
+         */
+        private Builder(){
+            fbgValue = new FbgValue();
+        }
+
+        /**
+         * 构建 建造者
+         *
+         * @return 返回 建造者
+         */
+        public static Builder builder(){
+            return new Builder();
+        }
+
+        /**
+         * 赋值
+         * @param physicalValueInfoId
+         * @return 返回 建造者
+         */
+        public Builder withPhysicalValueInfoId(Long physicalValueInfoId){
+            fbgValue.setPhysicalValueInfoId(physicalValueInfoId);
+            return this;
+        }
+
+        /**
+         * 赋值
+         * @param value
+         * @return 返回 建造者
+         */
+        public Builder withValue(BigDecimal value){
+            fbgValue.setValue(value);
+            return this;
+        }
+
+        /**
+         * 赋值
+         * @param tag
+         * @return 返回 建造者
+         */
+        public Builder withTag(Byte tag){
+            fbgValue.setTag(tag);
+            return this;
+        }
+
+        /**
+         * 赋值
+         * @param createTime
+         * @return 返回 建造者
+         */
+        public Builder withCreateTime(Long createTime){
+            fbgValue.setCreateTime(createTime);
+            return this;
+        }
+        public FbgValue build(){
+            return fbgValue;
+        }
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

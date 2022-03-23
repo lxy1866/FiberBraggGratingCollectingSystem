@@ -31,4 +31,6 @@ public interface FbgValueMapper {
     int updateByPrimaryKey(FbgValue record);
 
     List<FbgValue> selectForAbnormal(Long startTime, Long endTime);
+
+    int multipleInsert(List<FbgValue> fbgValues);
 }
