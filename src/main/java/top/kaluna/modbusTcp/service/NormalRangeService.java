@@ -7,7 +7,6 @@ import top.kaluna.modbusTcp.domain.*;
 import top.kaluna.modbusTcp.mapper.FbgValueInfoMapper;
 import top.kaluna.modbusTcp.mapper.NormalRangeMapper;
 
-import top.kaluna.modbusTcp.resp.NormalRangeQueryResp;
 import top.kaluna.modbusTcp.util.CopyUtil;
 import top.kaluna.modbusTcp.util.DateUtil;
 
@@ -25,10 +24,7 @@ public class NormalRangeService {
     @Resource
     private FbgValueInfoMapper fbgValueInfoMapper;
 
-    private NormalRangeMapper normalRangeMapper;
-    public NormalRangeQueryResp findMaxId() {
-        return normalRangeMapper.findMaxId();
-    }
+
 
     public int save(String reqStr) {
         List<SingleNormalRange> lists = JSONObject.parseArray(reqStr, SingleNormalRange.class);

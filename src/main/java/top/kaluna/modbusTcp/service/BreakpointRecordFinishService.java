@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Service
 public class BreakpointRecordFinishService {
-    private static final Logger LOG = LoggerFactory.getLogger(PhysicalValueService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BreakpointRecordFinishService.class);
     @Resource
     private BreakpointRecordFinishMapper breakpointRecordFinishMapper;
 

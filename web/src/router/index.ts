@@ -93,7 +93,7 @@ router.beforeEach((to, from, next) =>{
   })){
     const loginUser = store.state.user;
     if(Tool.isEmpty(loginUser)){
-      console.log("用户未登录！");
+      alert("用户未登录！")
       next('/');
     }else {
       next();

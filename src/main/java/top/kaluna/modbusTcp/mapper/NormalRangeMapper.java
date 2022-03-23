@@ -4,7 +4,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import top.kaluna.modbusTcp.domain.NormalRange;
 import top.kaluna.modbusTcp.domain.NormalRangeExample;
-import top.kaluna.modbusTcp.resp.NormalRangeQueryResp;
 
 public interface NormalRangeMapper {
     long countByExample(NormalRangeExample example);
@@ -29,5 +28,4 @@ public interface NormalRangeMapper {
 
     int updateByPrimaryKey(NormalRange record);
 
-    NormalRangeQueryResp findMaxId();
 }

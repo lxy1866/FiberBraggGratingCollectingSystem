@@ -88,7 +88,7 @@ const message = useMessage();
  * @param params
  */
 const data = ref();
-const value1 = ref();
+const value1 = ref("已处理");
 const rowDataId = ref();
 const handleQuery = (params:any)=> {
   axios.get("/bpr/list", {

@@ -60,9 +60,9 @@ public class FbgValue {
         private final FbgValue fbgValue;
 
         /**
-         * 私有构造函数
+         * 构造函数
          */
-        private Builder(){
+        public Builder(){
             fbgValue = new FbgValue();
         }
 

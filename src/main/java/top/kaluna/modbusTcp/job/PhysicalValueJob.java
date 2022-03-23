@@ -35,7 +35,7 @@ public class PhysicalValueJob {
         MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
         LOG.info("更新断点记录表开始");
         long start = System.currentTimeMillis();
-        breakpointRecordService.insertBreakpointInfoByScanPhysicalValue();
+        breakpointRecordService.insertBreakpointInfoByScanFbgValue();
         LOG.info("更新断点记录表结束，耗时：{}毫秒",System.currentTimeMillis() - start);
     }
 }

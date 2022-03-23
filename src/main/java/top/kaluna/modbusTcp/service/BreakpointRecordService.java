@@ -26,14 +26,14 @@ import java.util.List;
  */
 @Service
 public class BreakpointRecordService {
-    private static final Logger LOG = LoggerFactory.getLogger(PhysicalValueService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BreakpointRecordService.class);
     @Resource
     private BreakpointRecordCustMapper breakpointRecordCustMapper;
     @Resource
     private BreakpointRecordMapper breakpointRecordMapper;
     @Resource
     private BreakpointRecordFinishMapper breakpointRecordFinishMapper;
-    public void insertBreakpointInfoByScanPhysicalValue(){
+    public void insertBreakpointInfoByScanFbgValue(){
         Long createTime = DateUtil.getNowTime().getTime();
         breakpointRecordCustMapper.insertBreakpointInfoByScanPhysicalValue(createTime);
     }

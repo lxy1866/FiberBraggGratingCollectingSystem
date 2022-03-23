@@ -28,7 +28,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/bpr/list",
                         "/bpr/update",
                         "/fbg/list",
-                        "/nr/total"
+                        "/nr/total",
+                        "/fbg/abnormalList"
                         );
     }
 

@@ -9,14 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import top.kaluna.modbusTcp.domain.*;
-import top.kaluna.modbusTcp.mapper.FbgValueInfoMapper;
 import top.kaluna.modbusTcp.mapper.FbgValueMapper;
 import top.kaluna.modbusTcp.req.DateRangeReq;
 import top.kaluna.modbusTcp.resp.FbgValueQueryResp;
-import top.kaluna.modbusTcp.resp.NormalRangeQueryResp;
 import top.kaluna.modbusTcp.resp.PageResp;
-import top.kaluna.modbusTcp.resp.PhysicalValueQueryResp;
-import top.kaluna.modbusTcp.util.CopyUtil;
 import top.kaluna.modbusTcp.util.DateUtil;
 
 import javax.annotation.Resource;
@@ -32,19 +28,24 @@ import static java.util.stream.Collectors.groupingBy;
 public class FbgValueService {
     @Resource
     private FbgValueMapper fbgValueMapper;
-    @Resource
-    private FbgValueInfoMapper fbgValueInfoMapper;
-    private static final Logger LOG = LoggerFactory.getLogger(PhysicalValueService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FbgValueService.class);
     public PageResp<String> list(DateRangeReq req) {
+        Long startTime;
+        Long endTime;
         FbgValueExample fbgValueExample = new FbgValueExample();
         FbgValueExample.Criteria criteria = fbgValueExample.createCriteria();
         //默认时间是今天
         if(ObjectUtils.isEmpty(req.startTime) || ObjectUtils.isEmpty(req.endTime) || ObjectUtils.isEmpty(req)){
-            criteria.andCreateTimeBetween(DateUtil.getStartTime().getTime(), DateUtil.getEndTime().getTime());
-
+            startTime = DateUtil.getStartTime().getTime();
+            endTime = DateUtil.getEndTime().getTime();
+            System.out.println("startTime:"+startTime);
+            System.out.println("endTime:"+endTime);
         }else{
-            criteria.andCreateTimeBetween(req.getStartTime(), req.getEndTime());
+            startTime = req.getStartTime();
+            endTime =  req.getEndTime();
         }
+        criteria.andCreateTimeBetween(startTime,endTime);
+
         fbgValueExample.setOrderByClause("create_time ASC");
         //查询到指定时间范围的数据
         final List<FbgValue> fbgValues = fbgValueMapper.selectByExample(fbgValueExample);

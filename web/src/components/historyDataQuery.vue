@@ -106,7 +106,7 @@ export default defineComponent({
       console.log("onMounted")
       handleQuery({
         page: 1,
-        size: 10
+        size: 10,
       })
       watch(range2, (newValue, oldValue) => {
         console.log(newValue, oldValue);

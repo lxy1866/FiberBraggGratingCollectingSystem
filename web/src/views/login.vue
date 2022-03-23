@@ -82,6 +82,7 @@ export default defineComponent({
         if (data.success) {
           store.commit("setUser", data.content)
           message.success("登录成功");
+          
         } else {
           message.error(data.message);
         }

@@ -1,14 +1,10 @@
 package top.kaluna.modbusTcp.controller;
 
 import org.springframework.web.bind.annotation.*;
-import top.kaluna.modbusTcp.req.NormalRangeSaveReq;
 import top.kaluna.modbusTcp.resp.CommonResp;
-import top.kaluna.modbusTcp.resp.NormalRangeQueryResp;
 import top.kaluna.modbusTcp.service.NormalRangeService;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.util.HashMap;
 
 /**
  * @author Yuery

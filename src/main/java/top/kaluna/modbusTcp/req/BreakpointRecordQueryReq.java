@@ -14,5 +14,4 @@ public class BreakpointRecordQueryReq extends PageReq{
     public void setState(Byte state) {
         this.state = state;
     }
-
 }

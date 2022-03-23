@@ -37,6 +37,12 @@ insert into fbg_value (id, physical_value_info_id, value, tag, create_time) valu
 insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (7, 2, 22, 0, 1647907933365);
 insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (8, 2, 22, 0, 1647907933365);
 
+insert into fbg_value (physical_value_info_id, value, tag, create_time) values (1, 11, 0, 1648137700000);
+insert into fbg_value (physical_value_info_id, value, tag, create_time) values (2, 11, 0, 1648137700000);
+insert into fbg_value (physical_value_info_id, value, tag, create_time) values (3, 22, 0, 1648137700000);
+insert into fbg_value (physical_value_info_id, value, tag, create_time) values (4, 22, 0, 1648137700000);
+insert into fbg_value (physical_value_info_id, value, tag, create_time) values (5, 22, 0, 1648137700000);
+
 
 drop table if exists `fbg_value_info`;
 create table `fbg_value_info`(

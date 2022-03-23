@@ -4,6 +4,6 @@
 
 
 <insert id="insertBreakpointInfoByScanPhysicalValue" parameterType="long">
-    insert ignore into breakpoint_record (create_time, tag) select min(create_time) create_time, tag from physical_value where create_time > #{createTime, jdbcType=BIGINT}-1800000 and tag != 0 group by tag;
+    insert ignore into breakpoint_record (create_time, tag) select min(create_time) create_time, tag from fbg_value where create_time > #{createTime, jdbcType=BIGINT}-1800000 and tag != 0 group by tag;
 </insert>
 </mapper>
