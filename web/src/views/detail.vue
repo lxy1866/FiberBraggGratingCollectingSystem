@@ -1,5 +1,5 @@
 <template>
-  <a-layout-content style="padding: 0 50px;">
+  <a-layout-content style="padding: 0 50px;margin-bottom: 70px">
     <a-breadcrumb style="margin: 16px 0">
 
     </a-breadcrumb>

@@ -10,22 +10,34 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'BigScreen',
     component: () => import('../views/bigScreen.vue'),
+    meta:{
+      loginRequire: true
+    }
   },
   {
     path: '/detail',
     name: 'Detail',
     component: () => import('../views/detail.vue'),
+    meta: {
+      loginRequire: true
+    },
     //定义嵌套路由
     children:[
         {
           path: '/home',
           name:'历史数据查询',
           component:()=> import('../views/detail.vue'),
+          meta:{
+            loginRequire: true
+          }
         },
         {
           path: '/abnormalDataQuery',
           name:'异常波动数据查询',
-          component:()=> import('../components/abnormalDataQuery.vue')
+          component:()=> import('../components/abnormalDataQuery.vue'),
+          meta:{
+            loginRequire: true
+          }
         },
     ],
   },
@@ -60,7 +72,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'About',
-    component: About
+    component: About,
+    meta:{
+      loginRequire: true
+    }
   },
   {
     path: '/admin/physicalValue',
@@ -93,8 +108,7 @@ router.beforeEach((to, from, next) =>{
   })){
     const loginUser = store.state.user;
     if(Tool.isEmpty(loginUser)){
-      alert("用户未登录！")
-      next('/');
+      next('/login');
     }else {
       next();
     }

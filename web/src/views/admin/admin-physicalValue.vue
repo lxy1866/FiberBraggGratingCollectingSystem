@@ -1,21 +1,21 @@
 <template>
-  <a-layout-content >
-    <a-layout :style="{ background: '#fff', marginTop: '8px', position: 'relative' } ">
+  <a-layout-content style="margin-bottom: 70px;">
+    <a-layout :style="{ background: '#fff', marginTop: '8px', position: 'relative'} ">
 
       <div class="content-wrapper">
-        <div class="content-left" style="margin-top: 30px">
+        <div class="content-left" style="margin-top: 30px; ">
           <n-space vertical>
             <n-card
-                title="📖 设置光纤光栅传感器阵列的应变范围值以及与光纤光栅解调仪的距离"
+                title="📖 设置光纤光栅传感器阵列的参数量程以及与光纤光栅解调仪的距离"
                 embedded
                 :bordered="false"
             >
-              每个光纤光栅传感器都有自己的应变范围，超出范围的记录会被展示到异常波动数据页面中。<br/>
-              参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。
+              每个光纤光栅传感器都有自己的应变量程（如果是温度传感器则为温度量程，如果是振动为振动量程），超出范围的记录会被展示到异常波动数据页面中。<br/>
+              参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。注意：先点击重新修改再点击确认提交。
             </n-card>
               <p style="color: red">请先输入光纤光栅传感阵列的个数：</p>
               <n-input-number :style="{ width: '20%' }" v-model:value="inputNum" />
-              <p style="color: red">请输入每个光纤光栅传感阵列的应变值的正常范围以及与光纤光栅解调仪的距离：</p>
+              <p style="color: red">请输入每个光纤光栅传感阵列的应变值的量程（或者温度量程，振动量程）以及与光纤光栅解调仪的距离：</p>
             <dv-border-box-2>
               <n-form :model="model" >
               <n-dynamic-input
@@ -25,7 +25,6 @@
                   #="{ index, value }"
                   :min="inputNum"
                   :max="inputNum"
-
               >
                 <div style="display: flex">
                   <n-form-item
@@ -82,7 +81,20 @@
                   >
                     <n-input
                         v-model:value="model.dynamicInputValue[index].distance"
-                        placeholder="distance"
+                        placeholder="与解调仪的距离"
+                        @keydown.enter.prevent
+                    />
+                  </n-form-item>
+                  &nbsp;&nbsp;
+                  <n-form-item
+                      ignore-path-change
+                      :show-label="false"
+                      :path="`dynamicInputValue[${index}].category`"
+                      :rul="dynamicInputRule"
+                  >
+                    <n-input
+                        v-model:value="model.dynamicInputValue[index].category"
+                        placeholder="应变1，温度2，振动3"
                         @keydown.enter.prevent
                     />
                   </n-form-item>
@@ -145,7 +157,7 @@ import {defineComponent, onMounted, ref, watch} from 'vue'
 import {message} from "ant-design-vue";
 import axios from 'axios';
 const model = ref({
-  dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:''}]
+  dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:''}]
 })
 
 const code = ref();
@@ -215,7 +227,8 @@ export default defineComponent({
           minValue:'',
           name: '',
           maxValue:'',
-          distance:''
+          distance:'',
+          category:''
         }
       },
       handlePositiveClick,
@@ -235,11 +248,8 @@ export default defineComponent({
 <style scoped>
 .content-wrapper{
   display: flex;
-  justify-content: space-evenly;
   position: relative;
+  justify-content: space-evenly;
   padding-bottom: 75px;
-}
-*, html {
-  scroll-behavior: auto !important;
 }
 </style>

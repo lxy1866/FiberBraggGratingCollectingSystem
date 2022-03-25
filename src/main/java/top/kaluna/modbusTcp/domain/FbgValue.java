@@ -12,6 +12,17 @@ public class FbgValue {
     private Byte tag;
 
     private Long createTime;
+    public FbgValue(){
+
+    }
+
+    public FbgValue(Long id, Long physicalValueInfoId, BigDecimal value, Byte tag, Long createTime) {
+        this.id = id;
+        this.physicalValueInfoId = physicalValueInfoId;
+        this.value = value;
+        this.tag = tag;
+        this.createTime = createTime;
+    }
 
     public Long getId() {
         return id;

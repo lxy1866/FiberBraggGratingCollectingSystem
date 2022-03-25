@@ -9,4 +9,6 @@ import org.apache.ibatis.annotations.Param;
 public interface BreakpointRecordCustMapper {
 
     void insertBreakpointInfoByScanPhysicalValue(Long createTime);
+
+    byte findTagForOnLine();
 }

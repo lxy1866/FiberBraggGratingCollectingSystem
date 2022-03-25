@@ -6,4 +6,8 @@
 <insert id="insertBreakpointInfoByScanPhysicalValue" parameterType="long">
     insert ignore into breakpoint_record (create_time, tag) select min(create_time) create_time, tag from fbg_value where create_time > #{createTime, jdbcType=BIGINT}-1800000 and tag != 0 group by tag;
 </insert>
+<select id="findTagForOnLine" resultType="java.lang.Byte">
+    select tag from breakpoint_record order by create_time desc limit 1
+</select>
+
 </mapper>

@@ -40,7 +40,7 @@
           <line3d-shape class="charts" style="height: 300px;"/>
         </dv-border-box-8>
         <dv-border-box-8 class="border-box">
-          <dv-capsule-chart :config="config7" class="charts" style="height:300px" />
+          <line-chart-vibration2 class="charts" style="height: 300px;"/>
         </dv-border-box-8>
       </div>
     </div>
@@ -58,6 +58,7 @@ import LineChartTemperature from '../components/line-chart-temperature.vue'
 import LineChartStrain from '../components/line-chart-strain.vue'
 import Line3dShape from '../components/line-3d-shape.vue'
 import LineChartVibration from '../components/line-chart-vibration.vue'
+import LineChartVibration2 from '../components/line-chart-vibration2.vue'
 
 export default defineComponent({
 
@@ -67,7 +68,8 @@ export default defineComponent({
     LineChartTemperature,
     LineChartVibration,
     LineChartStrain,
-    Line3dShape
+    Line3dShape,
+    LineChartVibration2
   },
   setup(){
     onMounted(()=>{
@@ -110,6 +112,7 @@ export default defineComponent({
 .charts{
   width: 94%;
   margin: 3%;
+  display: flex;
 }
 #pie.charts{
   height: 100%;
@@ -117,7 +120,7 @@ export default defineComponent({
 }
 img{
   width: auto;
-  height: auto%;
+  height: auto;
   max-width: 98%;
   margin-top: 1%;
   margin-left: 1%;
@@ -127,5 +130,6 @@ img{
 .border-box{
   width: 100%;
   height: 100%;
+  display: flex;
 }
 </style>

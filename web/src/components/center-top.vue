@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="card">
-        <n-card title="预警信息"
+        <n-card title="海缆健康状态预警信息"
                 font-color="white"
                 style="--n-color: #001529;
                   --n-title-font-size: 15px;
@@ -36,70 +36,138 @@
 <script>
 import centerChart1 from "./centerChart1.vue";
 import centerChart2 from "./centerChart2.vue";
-import {defineComponent} from "vue";
+import {defineComponent, onMounted, ref, toRefs,reactive} from "vue";
+import axios from "axios";
+
+
 const warnMessage = '暂无'
+function handleQueryOnline() {
+  return axios.get("/ct/calculateOnLine")
+}
 export default defineComponent({
   name: 'center-top',
   setup() {
-    return {
-      titleItem: [
-        {
-          title: "今日传感器总量",
-          number: {
-            number: [120],
-            toFixed: 1,
-            content: "{nt}"
+    const state =  reactive({
+        titleItem: [
+          {
+            title: "今日传感器总量",
+            number: {
+              number: [0],
+              toFixed: 0,
+              content: "{nt}"
+            }
+          },
+          {
+            title: "今日传感器在线个数",
+            number: {
+              number: [0],
+              toFixed: 0,
+              content: "{nt}"
+            }
+          },
+          {
+            title: "今日累计异常波动次数",
+            number: {
+              number: [0],
+              toFixed: 0,
+              content: "{nt}"
+            }
+          },
+          {
+            title: "今年累计异常波动次数",
+            number: {
+              number: [0],
+              toFixed: 0,
+              content: "{nt}"
+            }
+          },
+          {
+            title: "今年成功任务次数",
+            number: {
+              number: [0],
+              toFixed: 0,
+              content: "{nt}"
+            }
+          },
+          {
+            title: "今年达标任务个数",
+            number: {
+              number: [0],
+              toFixed: 0,
+              content: "{nt}"
+            }
           }
-        },
+        ]
+    })
+
+    /**
+     * 大概清楚了，就是要新建一个newTitleItem 设置里面的值来替换state中的titleItem
+     */
+    onMounted(async ()=>{
+      const { data } = await handleQueryOnline();
+      console.log(data.content)
+      const newTitleItem = [{
+        title: "今日传感器总量",
+        number: {
+          number: [data.content.total],
+          toFixed: 0,
+          content: "{nt}"
+        }
+      },
         {
           title: "今日传感器在线个数",
           number: {
-            number: [18],
-            toFixed: 1,
+            number: [data.content.onLine],
+            toFixed: 0,
             content: "{nt}"
           }
         },
         {
           title: "今日累计异常波动次数",
           number: {
-            number: [2],
-            toFixed: 1,
+            number: [data.content.abnormalTimes],
+            toFixed: 0,
             content: "{nt}"
           }
         },
         {
           title: "今年累计异常波动次数",
           number: {
-            number: [14],
-            toFixed: 1,
+            number: [data.content.thisYearAbnormalTimes],
+            toFixed: 0,
             content: "{nt}"
           }
         },
         {
           title: "今年成功任务次数",
           number: {
-            number: [106],
-            toFixed: 1,
+            number: [data.content.onLine],
+            toFixed: 0,
             content: "{nt}"
           }
         },
         {
           title: "今年达标任务个数",
           number: {
-            number: [100],
-            toFixed: 1,
+            number: [data.content.onLine],
+            toFixed: 0,
             content: "{nt}"
           }
         }
-      ],
-      water: {
-        data: [24, 45],
-        shape: 'roundRect',
-        formatter:'{value}%',
-        waveNum:3
-      },
-      warnMessage
-    };
+      ]
+      state.titleItem = newTitleItem
+
+      // console.log(state.titleItem[0])
+      // console.log(state.titleItem[0].number.number)
+      // console.log(state.titleItem[0].number.number[0])
+      // state.titleItem[0].number.number.shift();
+      // state.titleItem[0].number.number.push(data.content)
+      // console.log(state.titleItem[0].number.number)
+    })
+    return {
+      ...toRefs(state),
+      warnMessage,
+    }
   },
   components: {
     centerChart1,
@@ -151,5 +219,6 @@ export default defineComponent({
   margin-top: 14px;
   margin-left: 20px;
   width: 60%;
+  display: flex;
 }
 </style>

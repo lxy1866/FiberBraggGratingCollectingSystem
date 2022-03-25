@@ -12,10 +12,12 @@ import top.kaluna.modbusTcp.domain.*;
 import top.kaluna.modbusTcp.mapper.FbgValueMapper;
 import top.kaluna.modbusTcp.req.DateRangeReq;
 import top.kaluna.modbusTcp.resp.FbgValueQueryResp;
+import top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp;
 import top.kaluna.modbusTcp.resp.PageResp;
 import top.kaluna.modbusTcp.util.DateUtil;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -28,6 +30,7 @@ import static java.util.stream.Collectors.groupingBy;
 public class FbgValueService {
     @Resource
     private FbgValueMapper fbgValueMapper;
+
     private static final Logger LOG = LoggerFactory.getLogger(FbgValueService.class);
     public PageResp<String> list(DateRangeReq req) {
         Long startTime;
@@ -52,7 +55,6 @@ public class FbgValueService {
         //分组
         final Collection<List<FbgValue>> collects = fbgValues.stream().collect(groupingBy(FbgValue::getCreateTime)).values();
 
-        FbgValueQueryResp fbgValueQueryResp = new FbgValueQueryResp();
         Map<String, String> map = new HashMap<>();
         List<String> respsList = new ArrayList<>();
         collects.forEach((item)->{
@@ -61,10 +63,8 @@ public class FbgValueService {
             }
             map.put("createTime", item.get(0).getCreateTime().toString());
             String astr = JSONObject.toJSONString(map,SerializerFeature.MapSortField);
-            fbgValueQueryResp.setMap(map);
             respsList.add(astr);
         });
-
         PageHelper.startPage(req.getPage(), req.getSize());
         PageInfo<FbgValueQueryResp> pageInfo = new PageInfo<>();
         LOG.info("总行数：{}", pageInfo.getTotal());
@@ -120,5 +120,50 @@ public class FbgValueService {
         }
         return null;
     }
+    public int abnormalListTimes() {
+        Long startTime = DateUtil.getStartTime().getTime();
+        Long endTime = DateUtil.getEndTime().getTime();
+        //联表查询出异常的数据
+        final List<FbgValue> fbgValues = fbgValueMapper.selectForAbnormal(startTime, endTime);
+        return fbgValues.size();
+    }
+    public int thisYearAbnormalListTimes() {
+        Long startTime = DateUtil.getCurrYearFirst().getTime();
+        Long endTime = DateUtil.getCurrYearLast().getTime();
+        //联表查询出异常的数据
+        final List<FbgValue> fbgValues = fbgValueMapper.selectForAbnormal(startTime, endTime);
+        return fbgValues.size();
+    }
+    /**
+     * 查询此时此刻温度传感器的温度值
+     * 联合fbg_value和fbg_value_info两个表来进行查询：
+     * 条件1：fbg_value_info的category为2
+     * 条件2：fbg_value的create_time最大
+     */
+    public BigDecimal temperatureNow() {
+        return fbgValueMapper.temperatureNow();
+    }
 
+    /**
+     * 查询过去24小时的温度最大最小值
+     * 联合fbg_value和fbg_value_info两个表来进行查询：
+     * 条件1：fbg_value_info的category为2
+     * 条件2：fbg_value 为最小 或者 最大
+     * 条件3：按照时间范围查询
+     * 传入时间参数
+     * 要得到每个小时的最小值以及最大值
+     * @return
+     */
+    public List<LastNHoursMinAndMaxResp> minAndMaxFromLast24Hours() {
+        List<LastNHoursMinAndMaxResp> minAndMaxFromLast24Hours = new ArrayList<>();
+        for (int i = 1; i <= 24;i++) {
+            if (i == 1) {
+                minAndMaxFromLast24Hours.add(fbgValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStart(i).getTime(), DateUtil.getNowTime().getTime()));
+            }else{
+                minAndMaxFromLast24Hours.add(fbgValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStart(i).getTime(),DateUtil.LastNHoursStart(i - 1).getTime()));
+            }
+        }
+        System.out.println(minAndMaxFromLast24Hours.toString());
+        return minAndMaxFromLast24Hours;
+    }
 }

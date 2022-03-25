@@ -1,5 +1,6 @@
 package top.kaluna.modbusTcp.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,4 +30,37 @@ public class DateUtil {
         return new Date();
     }
 
+    /**
+     *
+     * @return 获取某年的第一天
+     */
+    public static Date getCurrYearFirst() {
+        Calendar currCal = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.YEAR, currCal.get(Calendar.YEAR));
+        return calendar.getTime();
+    }
+    /**
+     * @return 获取某年的最后一天
+     */
+    public static Date getCurrYearLast(){
+        Calendar currCal = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.YEAR, currCal.get(Calendar.YEAR));
+        calendar.roll(Calendar.DAY_OF_YEAR, -1);
+        return calendar.getTime();
+    }
+
+
+    /**
+     * @return 获取过去N小时的开始时间
+     */
+    public static Date LastNHoursStart(int past){
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.set(Calendar.HOUR_OF_DAY,c.get(Calendar.HOUR_OF_DAY) - past);
+        return c.getTime();
+    }
 }

@@ -29,7 +29,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/bpr/update",
                         "/fbg/list",
                         "/nr/total",
-                        "/fbg/abnormalList"
+                        "/fbg/abnormalList",
+                        "/fbg/temperatureNow"
                         );
     }
 

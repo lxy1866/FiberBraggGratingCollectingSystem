@@ -32,8 +32,8 @@ public class BreakpointRecordController {
         return resp;
     }
     @GetMapping("/update/{id}")
-    public CommonResp delete(@PathVariable Long id){
-        CommonResp resp = new CommonResp<>();
+    public CommonResp<Object> delete(@PathVariable Long id){
+        CommonResp<Object> resp = new CommonResp<>();
         breakpointRecordService.update(id);
         return resp;
     }
@@ -44,6 +44,13 @@ public class BreakpointRecordController {
         PageResp<BreakpointRecordQueryResp> list = breakpointRecordFinishService.list(req);
         resp.setContent(list);
         return resp;
+    }
+    @GetMapping("/calculateOnLineRate")
+    public CommonResp<Integer> calculateOnLine(){
+        CommonResp<Integer> resp = new CommonResp<>();
+         int tagForOnLineRate = breakpointRecordService.calculateOnLine();
+         resp.setContent(tagForOnLineRate);
+         return resp;
     }
 }
 

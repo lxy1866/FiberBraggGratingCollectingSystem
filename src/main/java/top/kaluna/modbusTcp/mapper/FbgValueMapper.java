@@ -1,11 +1,12 @@
 package top.kaluna.modbusTcp.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import top.kaluna.modbusTcp.domain.FbgValue;
 import top.kaluna.modbusTcp.domain.FbgValueExample;
+import top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp;
 
 public interface FbgValueMapper {
     long countByExample(FbgValueExample example);
@@ -33,4 +34,8 @@ public interface FbgValueMapper {
     List<FbgValue> selectForAbnormal(Long startTime, Long endTime);
 
     int multipleInsert(List<FbgValue> fbgValues);
+
+    BigDecimal temperatureNow();
+
+    LastNHoursMinAndMaxResp minAndMaxFrom24Hours(long lastNHoursStart, long lastNHoursEnd);
 }

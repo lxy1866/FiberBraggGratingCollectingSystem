@@ -75,4 +75,10 @@ public class BreakpointRecordService {
         });
         breakpointRecordMapper.deleteByExample(breakpointRecordExample);
     }
+
+    public int calculateOnLine() {
+        int tag = (int) breakpointRecordCustMapper.findTagForOnLine();
+        //计算在线率 tag = 1 在线的0个 tag = 2 在线的1个
+        return tag - 1;
+    }
 }

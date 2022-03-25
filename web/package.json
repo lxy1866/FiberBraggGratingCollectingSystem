@@ -11,16 +11,18 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@jiaminghi/data-view": "^2.10.0",
     "@jiaminghi/charts": "^0.2.18",
+    "@jiaminghi/data-view": "^2.10.0",
     "@surely-vue/table": "^2.1.1",
     "ant-design-vue": "^2.2.8",
     "axios": "^0.26.0",
+    "jquery": "^3.6.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.14",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-eslint": "~5.0.0",

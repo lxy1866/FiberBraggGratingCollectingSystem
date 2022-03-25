@@ -6,6 +6,7 @@
 import {defineComponent, onMounted} from "vue";
 import * as echarts from 'echarts';
 import 'echarts-gl';
+
 export default defineComponent({
   name: 'line-3d-Shape',
   setup() {
@@ -32,7 +33,7 @@ export default defineComponent({
           }
         },
         title: {
-          text: '海缆的位移值',
+          text: '海缆实时形状',
           textStyle:{
             color: '#ffffff',
             fontFamily: '宋体',
@@ -118,7 +119,7 @@ export default defineComponent({
           }
         ]
       };
-
+      window.onresize = myChart.resize;
       option && myChart.setOption(option);
 
    })

@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   'extends': [
     'plugin:vue/vue3-essential',
@@ -19,6 +19,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment' : 'off',
     '@typescript-eslint/no-empty-function' : 'off',
     'vue/no-unused-components' : 'off',
-    '@typescript-eslint/no-extra-semi' : 'off'
+    '@typescript-eslint/no-extra-semi' : 'off',
+
   }
 }

@@ -1,15 +1,15 @@
 <template>
-  <a-layout-content style=" background: #001529;" :style="height_top">
-    <div class="right">
-        <div class="innerForm">
-          <dv-decoration-3 style="width:250px;height:30px;"  />
-          <n-card title="FBG" size="huge"
+  <a-layout-content style=" background: #001529; display: flex; justify-content: right" :style="height_top">
+    <div class="innerForm">
+      <dv-decoration-3 style="width:60%;height:20px;" />
+      <n-card title="FBG" size="huge"
                   font-color="white"
                   font-style="italic"
                   style="--n-color: #001529;
                   --n-title-font-size: 37px;
                   --n-title-text-color: white"
           >
+
             <a-form
                 :model="LoginUser"
                 name="basic"
@@ -40,23 +40,22 @@
               </a-form-item>
             </a-form>
           </n-card>
-        </div>
     </div>
   </a-layout-content>
 </template>
 <script lang="ts">
 import {defineComponent, ref, computed, onMounted} from 'vue';
+import { useRouter } from 'vue-router'
 import axios from 'axios';
 import { message } from 'ant-design-vue';
-import {Tool} from "@/util/tool";
 import store from "@/store";
-import {anchorDark} from "naive-ui";
 declare let hexMd5: any;
 declare let KEY: any;
 
 export default defineComponent({
 
   setup() {
+    const router=useRouter()
     //用来登录
     const LoginUser = ref({password:null,loginName:null});
 
@@ -80,9 +79,10 @@ export default defineComponent({
       axios.post("/user/login", LoginUser.value).then((response) => {
         const data = response.data; // data = commonResp
         if (data.success) {
+          router.push({ path: '/' })
           store.commit("setUser", data.content)
           message.success("登录成功");
-          
+
         } else {
           message.error(data.message);
         }
@@ -102,17 +102,9 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-
-.right{
-  display: flex;
-  align-items: center;
-  width: 40%;
-  margin-top: 100px;
-  margin-left: 700px;
-}
 .innerForm{
-  width: 94%;
-  margin: 3%;
+  width: 40%;
+  margin: 8%;
   height: 335px;
 }
 </style>

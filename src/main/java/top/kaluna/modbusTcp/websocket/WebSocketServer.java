@@ -70,7 +70,7 @@ public class WebSocketServer {
             } catch (IOException e) {
                 LOG.error("推送消息失败：{}，内容：{}", token, message);
             }
-            LOG.info("推送消息：{}，内容：{}", token, message);
+            //LOG.info("推送消息：{}，内容：{}", token, message);
         }
     }
 

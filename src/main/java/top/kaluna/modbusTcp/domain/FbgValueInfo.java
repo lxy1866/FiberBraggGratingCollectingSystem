@@ -15,6 +15,8 @@ public class FbgValueInfo {
 
     private Long createTime;
 
+    private Integer category;
+
     public Long getId() {
         return id;
     }
@@ -63,6 +65,14 @@ public class FbgValueInfo {
         this.createTime = createTime;
     }
 
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -75,6 +85,7 @@ public class FbgValueInfo {
         sb.append(", max=").append(max);
         sb.append(", distance=").append(distance);
         sb.append(", createTime=").append(createTime);
+        sb.append(", category=").append(category);
         sb.append("]");
         return sb.toString();
     }

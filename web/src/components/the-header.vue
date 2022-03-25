@@ -12,12 +12,12 @@
           <div style=" font-size: 20px; color: white; font-weight: bolder">汕头大学</div>
           <a-menu-item key="/">
             <transition :name="transitionName">
-              <router-link to="/">首页</router-link>
+              <router-link to="/" :style="user.id? {} : {display:'none'}">首页</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/detail">
             <transition :name="transitionName">
-              <router-link to="/detail">传感器列表</router-link>
+              <router-link to="/detail" :style="user.id? {} : {display:'none'}">传感器列表</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/admin/user">
@@ -35,7 +35,7 @@
         <div class="header-right">
           <a-menu-item key="/about" >
             <transition :name="transitionName">
-              <router-link to="/about">关于</router-link>
+              <router-link to="/about" :style="user.id? {} : {display:'none'}">关于</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/login">
@@ -67,11 +67,13 @@ import { defineComponent, ref, computed, watch } from 'vue';
 import store from "@/store";
 import axios from "axios";
 import {message} from "ant-design-vue";
+import { useRouter } from 'vue-router'
 export default defineComponent({
 
   name: 'the-header',
 
   setup(){
+    const router=useRouter()
     const user = computed(()=>{
       return store.state.user
     });
@@ -83,6 +85,7 @@ export default defineComponent({
         const data = response.data;
         console.log(data);
         if(data.success){
+          router.push({ path: '/login' })
           message.success("退出登录成功");
           store.commit("setUser", {});
         }else {

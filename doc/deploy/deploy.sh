@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "publish------"
 
-process_id=`ps -ef | grep wiki.jar  | grep -v gred |awk '{print $2}'`
+process_id=`ps -ef | grep modbusTcp.jar  | grep -v gred |awk '{print $2}'`
 if [ $process_id ] ; then
 sudo kill -9 $ process_id
 fi

@@ -1,10 +1,12 @@
 package top.kaluna.modbusTcp.controller;
 
 import org.springframework.web.bind.annotation.*;
+import top.kaluna.modbusTcp.domain.FbgValueInfo;
 import top.kaluna.modbusTcp.resp.CommonResp;
 import top.kaluna.modbusTcp.service.NormalRangeService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Yuery
@@ -27,6 +29,20 @@ public class NormalRangeController {
         CommonResp resp = new CommonResp();
         int total = normalRangeSaveService.getTotal();
         resp.setContent(total);
+        return resp;
+    }
+    @GetMapping("/vibrationDistance")
+    public CommonResp<List<FbgValueInfo>> getVibrationDistance(){
+        CommonResp<List<FbgValueInfo>> resp = new CommonResp<>();
+        final List<FbgValueInfo> vibrationDistance = normalRangeSaveService.getVibrationDistance();
+        resp.setContent(vibrationDistance);
+        return resp;
+    }
+    @GetMapping("/strainDistance")
+    public CommonResp<List<FbgValueInfo>> getStrainDistance(){
+        CommonResp<List<FbgValueInfo>> resp = new CommonResp<>();
+        final List<FbgValueInfo> vibrationDistance = normalRangeSaveService.getStrainDistance();
+        resp.setContent(vibrationDistance);
         return resp;
     }
 }

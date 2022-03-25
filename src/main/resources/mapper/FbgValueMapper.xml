@@ -223,5 +223,15 @@
       (#{item.physical_value_info_id},#{item.value},#{item.tag},#{item.create_time})
     </foreach>
   </insert>
-
+  <select id="temperatureNow" resultType="java.math.BigDecimal">
+    select value from fbg_value a left join fbg_value_info b
+    on a.physical_value_info_id = b.id
+    where b.category = 2 order by a.create_time desc limit 1;
+  </select>
+  <select id="minAndMaxFrom24Hours" resultType="top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp">
+    select min(value) min, max(value) max from fbg_value a left join fbg_value_info b
+    on a.physical_value_info_id = b.id
+    where b.category = 2
+    and a.create_time between #{lastNHoursStart} and #{lastNHoursEnd}
+  </select>
 </mapper>
