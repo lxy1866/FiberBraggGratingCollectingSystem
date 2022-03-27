@@ -1,6 +1,6 @@
 <template>
-  <a-layout-footer style="text-align: center; background:  #001529; color: white; position:fixed; bottom:0px;left:0px;right: 0px;">
-    FiberBraggGrating Collecting System ©2022 Created by Danly.  <span style="color: #ffffff">{{timeslot}}</span>
+  <a-layout-footer style="text-align: center; background:  #001529; color: cadetblue; position:fixed; bottom:0px;left:0px;right: 0px;">
+    海底电缆智能健康监测系统 ©2022 Created by Danly.  <span style="color: cadetblue">{{timeslot}}</span>
   </a-layout-footer>
 </template>
 <script lang="ts">

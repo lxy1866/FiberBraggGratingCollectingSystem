@@ -1,19 +1,19 @@
 <template>
-  <div id="lineChartStrain" className="lineChartStrain"></div>
+  <div id="lineChartStrain" class="lineChartStrain"></div>
 </template>
 
 <script lang="ts">
 import * as echarts from 'echarts';
 import store from "@/store";
 import {Tool} from "@/util/tool";
-import {defineComponent, onMounted, computed} from "vue";
+import {defineComponent, onMounted, computed, inject, watch} from "vue";
 import axios from "axios";
 
 const user = computed(() => store.state.user)
 export default defineComponent({
   name: 'line-chart-vibration',
   setup() {
-    const vibrationColors: Record<string, string> = {
+    const strainColors: Record<string, string> = {
       0: '#ed2939',
       1: '#000',
       2: '#003897',
@@ -27,8 +27,22 @@ export default defineComponent({
       10: '#d52b1e',
       11: '#e30a17',
       12: '#00247d',
-      13: '#b22234'
+      13: '#b22234',
+      14: '#ef7878',
+      15: '#559069',
+      16: '#a45060',
+      17: '#670044',
+      18: '#565965',
+      19: '#340569',
+      20: '#586042',
+      21: '#619405',
+      22: '#945006',
+      23: '#586473',
+      24: '#124995',
+      25: '#759594',
+      27: '#c56600'
     };
+    const request:any = inject('request');
 
     function getFbgValueInfoForDistance() {
       return axios.get("/nr/strainDistance")
@@ -36,11 +50,17 @@ export default defineComponent({
 
     onMounted(async () => {
       const {data} = await getFbgValueInfoForDistance();
+      watch(request,(newValue, oldValue)=>{
+        console.log("line-chart-strain传过来的click值request:",newValue,oldValue);
+        if(request.value == true){
+          myChart.setOption<echarts.EChartsOption>(option);
+        }
+      });
       const FbgValueInfo = data.content//数组 每一个元素是id, propertyName, min, max, distance, creatTime, category
       let y = []
       for (let i = 0; i < FbgValueInfo.length; i++) {
         y.push(FbgValueInfo[i].propertyName)
-        console.log(y)
+        //console.log(y)
       }
       const chartDom = document.getElementById('lineChartStrain')!;
       const myChart = echarts.init(chartDom);
@@ -96,10 +116,10 @@ export default defineComponent({
           },
         },
         yAxis: {
-          name: '与光纤光栅解调仪的距离',
+          name: '初始位置',
           nameLocation: 'start',
           type: 'category',
-          max: 4,
+          max: 19,
           inverse: false,
           data: ['val6', 'val7', 'val8', 'val9', 'val10'],
           axisLine: {
@@ -133,7 +153,7 @@ export default defineComponent({
               //柱条的颜色
               color: function (param: any) {
                 //console.log(param)
-                return vibrationColors[param.data.physicalValueInfoId] || '#003897';
+                return strainColors[param.data.physicalValueInfoId] || '#003897';
               }
             },
             label: {

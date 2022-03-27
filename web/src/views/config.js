@@ -1,4 +1,6 @@
-const config1={
+const config1 = {
+    number: [100],
+    content: '{nt}℃'
 }
 const config2={
 

@@ -1,12 +1,10 @@
 <template>
-  <a-layout-content style="margin-bottom: 70px;">
-    <a-layout :style="{ background: '#fff', marginTop: '8px', position: 'relative'} ">
-
+  <a-layout-content style="height: 744px;background: white">
       <div class="content-wrapper">
         <div class="content-left" style="margin-top: 30px; ">
           <n-space vertical>
             <n-card
-                title="📖 设置光纤光栅传感器阵列的参数量程以及与光纤光栅解调仪的距离"
+                title="📖 设置光纤光栅传感器阵列的参数量程以及初始位置"
                 embedded
                 :bordered="false"
             >
@@ -15,7 +13,7 @@
             </n-card>
               <p style="color: red">请先输入光纤光栅传感阵列的个数：</p>
               <n-input-number :style="{ width: '20%' }" v-model:value="inputNum" />
-              <p style="color: red">请输入每个光纤光栅传感阵列的应变值的量程（或者温度量程，振动量程）以及与光纤光栅解调仪的距离：</p>
+              <p style="color: red">请输入每个光纤光栅传感阵列的应变值的量程（或者温度量程，振动量程）以及初始位置：</p>
             <dv-border-box-2>
               <n-form :model="model" >
               <n-dynamic-input
@@ -81,7 +79,7 @@
                   >
                     <n-input
                         v-model:value="model.dynamicInputValue[index].distance"
-                        placeholder="与解调仪的距离"
+                        placeholder="初始位置"
                         @keydown.enter.prevent
                     />
                   </n-form-item>
@@ -148,7 +146,6 @@
           <pre>{{ JSON.stringify(model.dynamicInputValue, null, 3) }}</pre>
         </div>
       </div>
-    </a-layout>
   </a-layout-content>
 </template>
 
@@ -250,6 +247,11 @@ export default defineComponent({
   display: flex;
   position: relative;
   justify-content: space-evenly;
-  padding-bottom: 75px;
+}
+.content-right{
+  height: 100%;
+}
+.content-left{
+  height: 100%
 }
 </style>

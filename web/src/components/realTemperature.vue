@@ -1,5 +1,5 @@
 <template>
-  <div id="temperature" class="lineChartTemperature"></div>
+  <div id="realTemperature" class="realTemperature"></div>
 </template>
 <script type="text/javascript">
 // 基于准备好的dom，初始化echarts实例
@@ -70,12 +70,10 @@ if(TP_value < -10) {
   boxPosition = [65, -120];
 }
 leftColor = Gradient[Gradient.length - 1].color;
-
-
-
 function handleQueryTemperatureNow(){
   return axios.get("/fbg/temperatureNow")
 }
+
 export default defineComponent({
   name: 'temperature',
   // 因为柱状初始化为0，温度存在负值，所以加上负值60和空出距离10
@@ -122,23 +120,22 @@ export default defineComponent({
         xAxis: [{
           show: false,
           min: -10,
-          max: 80,
+          max: 50,
           data: []
         }, {
           show: false,
           min: -10,
-          max: 80,
+          max: 50,
           data: []
         }, {
           show: false,
           min: -10,
-          max: 80,
+          max: 50,
           data: []
         }, {
           show: false,
           min: -5,
-          max: 80,
-
+          max: 50,
         }],
         series: [{
           name: '条',
@@ -151,13 +148,13 @@ export default defineComponent({
               normal: {
                 show: true,
                 position: boxPosition,
-                width: 200,
-                height: 100,
+                width: 70,
+                height: 40,
                 formatter: '{back| ' + TP_value + ' }{unit|°C}\n{downTxt|' + TP_txt + '}',
                 rich: {
                   back: {
                     align: 'center',
-                    lineHeight: 50,
+                    lineHeight: 30,
                     fontSize: 40,
                     fontFamily: 'digifacewide',
                     color: leftColor
@@ -295,8 +292,8 @@ export default defineComponent({
       }
     })
     onMounted(async ()=>{
+      const myChart = echarts.init(document.getElementById('realTemperature'));
       const {data} = await handleQueryTemperatureNow();
-
       let TP_value= data.content;
       const kd = [];
       const Gradient = [];
@@ -367,8 +364,6 @@ export default defineComponent({
       state.option.series[0].data[0].label.normal.rich.back.color = leftColor
       state.option.series[0].itemStyle.normal.color = new echarts.graphic.LinearGradient(0, 1, 0, 0, Gradient)
       state.option.series[6].data = kd
-      const myChart = echarts.init(document.getElementById('temperature'));
-      window.onresize = myChart.resize;
       myChart.setOption(state.option);
     });
     return{
@@ -377,8 +372,8 @@ export default defineComponent({
   }
 })
 </script>
-<style>
-.lineChartTemperature{
+<style scoped>
+.realTemperature{
   display: flex;
 }
 </style>

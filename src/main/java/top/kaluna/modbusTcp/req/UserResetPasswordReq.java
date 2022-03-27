@@ -10,9 +10,19 @@ import javax.validation.constraints.Pattern;
 public class UserResetPasswordReq {
     private Long id;
 
-    @NotNull(message = "[密码]不能为空")
-    @Pattern(regexp = "^(?![0~9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$",message = "[密码]至少包含数字和英文，长度6-32")
+//    @NotNull(message = "[密码]不能为空")
+//    @Pattern(regexp = "^(?![0~9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$",message = "[密码]至少包含数字和英文，长度6-32")
     private String password;
+
+    private String loginName;
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
 
     public Long getId() {
         return id;
@@ -36,6 +46,7 @@ public class UserResetPasswordReq {
         final StringBuilder sb = new StringBuilder("UserResetPasswordReq{");
         sb.append("id=").append(id);
         sb.append(", password='").append(password).append('\'');
+        sb.append(", loginName='").append(loginName).append('\'');
         sb.append('}');
         return sb.toString();
     }

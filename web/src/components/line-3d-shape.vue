@@ -1,5 +1,5 @@
 <template>
-    <div id="main"></div>
+    <div id="line-3d-shape" class="line-3d-shape"></div>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'line-3d-Shape',
   setup() {
     onMounted(()=>{
-      var chartDom = document.getElementById('main');
+      var chartDom = document.getElementById('line-3d-shape');
       var myChart = echarts.init(chartDom);
       var option;
 
@@ -129,4 +129,7 @@ export default defineComponent({
 })
 </script>
 <style scoped>
+.line-3d-shape{
+  display: flex;
+}
 </style>

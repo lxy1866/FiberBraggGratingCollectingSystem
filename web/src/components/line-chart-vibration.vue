@@ -1,7 +1,6 @@
 <template>
-  <div id="lineChartVibration2" class="lineChartVibration2"></div>
+  <div id="lineChartVibration" class="lineChartVibration"></div>
 </template>
-
 <script lang="ts">
 import * as echarts from 'echarts';
 import store from "@/store";
@@ -26,7 +25,20 @@ export default defineComponent({
       10: '#d52b1e',
       11: '#e30a17',
       12: '#00247d',
-      13: '#b22234'
+      13: '#b22234',
+      14: '#ef7878',
+      15: '#559069',
+      16: '#a45060',
+      17: '#670044',
+      18: '#565965',
+      19: '#340569',
+      20: '#586042',
+      21: '#619405',
+      22: '#945006',
+      23: '#586473',
+      24: '#124995',
+      25: '#759594',
+      27: '#c56600'
     };
     function getFbgValueInfoForDistance(){
       return axios.get("/nr/vibrationDistance")
@@ -37,9 +49,9 @@ export default defineComponent({
       let y = []
       for (let i = 0; i < FbgValueInfo.length; i++) {
         y.push(FbgValueInfo[i].propertyName)
-        console.log(y)
+        //console.log(y)
       }
-      const chartDom = document.getElementById('lineChartVibration2')!;
+      const chartDom = document.getElementById('lineChartVibration')!;
       const myChart = echarts.init(chartDom);
       let option:any;
       let websocket: any;
@@ -92,7 +104,7 @@ export default defineComponent({
           },
         },
         yAxis: {
-          name: '与光纤光栅解调仪的距离',
+          name: '初始位置',
           nameLocation: 'start',
           type: 'category',
           max: 4,
@@ -191,7 +203,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.lineChartVibration2{
-  display: flex;
-}
+/*.lineChartVibration{*/
+/*  display: flex;*/
+/*}*/
 </style>

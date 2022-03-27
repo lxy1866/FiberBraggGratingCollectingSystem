@@ -1,24 +1,21 @@
 <template>
     <a-layout-content
-        :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px', height: height_top.height}"
+        :style="{background: '#ffffff', padding: '24px', margin: 0, minHeight: '280px', height: height_top.height}"
     >
       <p>
-        <a-form layout="inline" :model="param">
-          <a-form-item>
-            <a-input v-model:value="param.loginName" placeholder="登陆名">
-            </a-input>
-          </a-form-item>
-          <a-form-item>
-            <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})" ghost>
-              查询
-            </a-button>
-          </a-form-item>
-          <a-form-item>
-            <a-button type="primary" @click="add()" ghost>
-              新增
-            </a-button>
-          </a-form-item>
-        </a-form>
+        <n-input v-model:value="searchLoginName" type="text" placeholder="登陆名" style="width: 182px"/>
+        &nbsp;&nbsp;&nbsp;
+        <n-button strong secondary type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
+          查询
+        </n-button>
+        &nbsp;&nbsp;&nbsp;
+        <n-button strong secondary type="primary" @click="add()" :disabled="codeIsRight">
+          新增
+        </n-button>
+        &nbsp;&nbsp;&nbsp;
+        <a-button type="primary" @click="showModalCodeVisible" ghost >
+          验证授权码
+        </a-button>
       </p>
       <a-table
           :columns="columns"
@@ -30,11 +27,8 @@
       >
         <template v-slot:action="{ text, record }">
           <a-space size="small">
-            <a-button type="primary" @click="resetPassword(record)" ghost>
+            <a-button type="primary" @click="resetPassword(record)" ghost :disabled="codeIsRight">
               重置密码
-            </a-button>
-            <a-button type="primary" @click="edit(record)" ghost>
-              编辑
             </a-button>
             <a-popconfirm
                 title="删除后不可恢复，确认删除?"
@@ -42,7 +36,7 @@
                 cancel-text="否"
                 @confirm="handleDelete(record.id)"
             >
-              <a-button type="danger" ghost>
+              <a-button type="danger" ghost :disabled="codeIsRight">
                 删除
               </a-button>
             </a-popconfirm>
@@ -51,37 +45,66 @@
       </a-table>
     </a-layout-content>
 
-  <a-modal
-      title="用户表单"
-      v-model:visible="modalVisible"
-      :confirm-loading="modalLoading"
-      @ok="handleModalOk"
+  <n-modal
+      v-model:show="addModalVisible"
+      preset="dialog"
+      title="新增"
+      positive-text="确认"
+      negative-text="取消"
+      @positive-click="handleAddModalOk"
+      @negative-click="onNegativeClick"
   >
-    <a-form :model="user" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-      <a-form-item label="登陆名">
-        <a-input v-model:value="user.loginName" :disabled="!!user.id"/>
-      </a-form-item>
-      <a-form-item label="昵称">
-        <a-input v-model:value="user.name" />
-      </a-form-item>
-      <a-form-item label="密码" v-show="!user.id">
-        <a-input v-model:value="user.password" type="password"/>
-      </a-form-item>
-    </a-form>
-  </a-modal>
+    <n-input
+        v-model:value="user.loginName"
+        placeholder="登陆名"
+        :maxlength="8"
+    />
+    <br/><br/>
+    <n-input
+        v-model:value="user.password"
+        type="password"
+        show-password-on="mousedown"
+        placeholder="密码"
+        :maxlength="8"
+    />
+  </n-modal>
+  <n-modal
+      v-model:show="resetModalVisible"
+      :mask-closable="false"
+      preset="dialog"
+      title="输入新密码"
+      positive-text="确认"
+      negative-text="取消"
+      @positive-click="handleResetModalOk"
+      @negative-click="onNegativeClick"
+  >
+    <n-input
+        v-model:value="user.password"
+        type="password"
+        show-password-on="mousedown"
+        placeholder="密码"
+        :maxlength="8"
+    />
+  </n-modal>
+  <n-modal
+      v-model:show="modalCodeVisible"
+      :mask-closable="false"
+      preset="dialog"
+      title="输入授权码"
+      positive-text="确认"
+      negative-text="取消"
+      @positive-click="onPositiveClickCode"
+      @negative-click="onNegativeClick"
+  >
+    <n-input
+        v-model:value="code"
+        type="password"
+        show-password-on="mousedown"
+        placeholder="密码"
+        :maxlength="8"
+    />
+  </n-modal>
 
-  <a-modal
-      title="重置密码"
-      v-model:visible="resetModalVisible"
-      :confirm-loading="resetModalLoading"
-      @ok="handleResetModalOk"
-  >
-    <a-form :model="user" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-      <a-form-item label="新密码">
-        <a-input v-model:value="user.password" type="password"/>
-      </a-form-item>
-    </a-form>
-  </a-modal>
 </template>
 
 <script lang="ts">
@@ -89,16 +112,12 @@ import { defineComponent, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import {Tool} from "@/util/tool";
-import store from "@/store";
-
 declare let hexMd5: any;
 declare let KEY: any;
-
 export default defineComponent({
   name: 'AdminUser',
   setup() {
-    const param = ref();
-    param.value = {};
+    const searchLoginName = ref();
     const users = ref();
     const pagination = ref({
       current: 1,
@@ -106,18 +125,16 @@ export default defineComponent({
       total: 0
     });
     const loading = ref(false);
-
+    const code = ref();
+    const codeIsRight = ref(true);
+    const modalCodeVisible = ref(false);
     const columns = [
       {
         title: '登陆名',
         dataIndex: 'loginName'
       },
       {
-        title: '名称',
-        dataIndex: 'name'
-      },
-      {
-        title: '密码',
+        title: '密码（已加密）',
         dataIndex: 'password'
       },
       {
@@ -126,7 +143,24 @@ export default defineComponent({
         slots: { customRender: 'action' }
       }
     ];
+    const onNegativeClick =()=> {
+      message.success('Cancel')
+      resetModalVisible.value = false
+    };
+    const showModalCodeVisible = ()=>{
+      modalCodeVisible.value = true;
+    }
+    const onPositiveClickCode = ()=> {
+      //验证授权码是否正确
+      if(code.value === 'test'){
+        message.success('授权码正确')
+        modalCodeVisible.value = false;
+        codeIsRight.value = false;
+      }else{
+        message.success('授权码错误')
+      }
 
+    }
     /**
      * 数据查询
      **/
@@ -138,7 +172,7 @@ export default defineComponent({
         params: {
           page: params.page,
           size: params.size,
-          loginName: param.value.loginName
+          loginName: searchLoginName.value
         }
       }).then((response) => {
         //console.log("user-token="+store.state.user.token);
@@ -155,7 +189,6 @@ export default defineComponent({
         }
       });
     };
-
     /**
      * 表格点击页码时触发
      */
@@ -166,22 +199,16 @@ export default defineComponent({
         size: pagination.pageSize
       });
     };
-
     // -------- 表单 ---------
     const user = ref();
-    const modalVisible = ref(false);
-    const modalLoading = ref(false);
-    const handleModalOk = () => {
-      modalLoading.value = true;
-
+    const addModalVisible = ref(false);
+    const handleAddModalOk = () => {
       user.value.password = hexMd5(user.value.password + KEY);
-
       axios.post("/user/save", user.value).then((response) => {
-        modalLoading.value = false;
         const data = response.data; // data = commonResp
         if (data.success) {
-          modalVisible.value = false;
-
+          addModalVisible.value = false;
+          message.success(data.message);
           // 重新加载列表
           handleQuery({
             page: pagination.value.current,
@@ -192,20 +219,11 @@ export default defineComponent({
         }
       });
     };
-
-    /**
-     * 编辑
-     */
-    const edit = (record: any) => {
-      modalVisible.value = true;
-      user.value = Tool.copy(record);
-    };
-
     /**
      * 新增
      */
     const add = () => {
-      modalVisible.value = true;
+      addModalVisible.value = true;
       user.value = {};
     };
 
@@ -226,18 +244,14 @@ export default defineComponent({
 
     // -------- 重置密码 ---------
     const resetModalVisible = ref(false);
-    const resetModalLoading = ref(false);
     const handleResetModalOk = () => {
-      resetModalLoading.value = true;
-
       user.value.password = hexMd5(user.value.password + KEY);
-
       axios.post("/user/reset-password", user.value).then((response) => {
-        resetModalLoading.value = false;
         const data = response.data; // data = commonResp
         if (data.success) {
+          message.success(data.message)
           resetModalVisible.value = false;
-
+          searchLoginName.value = null
           // 重新加载列表
           handleQuery({
             page: pagination.value.current,
@@ -252,12 +266,11 @@ export default defineComponent({
     /**
      * 重置密码
      */
-    const resetPassword = (record: any) => {
+    const resetPassword = (record:any) => {
       resetModalVisible.value = true;
       user.value = Tool.copy(record);
       user.value.password = null;
     };
-
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -286,30 +299,29 @@ export default defineComponent({
     })
 
     return {
-      param,
+      searchLoginName,
       users,
       pagination,
       columns,
       loading,
       handleTableChange,
       handleQuery,
-
-      edit,
       add,
-
       user,
-      modalVisible,
-      modalLoading,
-      handleModalOk,
-
+      addModalVisible,
+      handleAddModalOk,
       handleDelete,
-
       resetModalVisible,
-      resetModalLoading,
       handleResetModalOk,
       resetPassword,
       height_top,
-      windowHeight
+      windowHeight,
+      onNegativeClick,
+      onPositiveClickCode,
+      code,
+      modalCodeVisible,
+      codeIsRight,
+      showModalCodeVisible
     }
   }
 });

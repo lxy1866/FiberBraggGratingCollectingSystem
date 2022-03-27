@@ -1,29 +1,26 @@
 <template>
-    <div id="centerChart2" style="width:100%;height:100%;" class="centerChart2"></div>
+  <div id="roundTemperature" style="width:100%;height:100%;" class="roundTemperature">
+  </div>
 </template>
-
 <script>
 import {defineComponent, onMounted, toRefs, reactive} from "vue";
 import * as echarts from "echarts";
 import axios from "axios";
-
-function handleQueryOnline() {
-  return axios.get("/ct/calculateOnLine")
+function handleQueryTemperatureNow(){
+  return axios.get("/fbg/temperatureNow")
 }
-
-
 export default defineComponent({
-  name: 'centerChart2',
+  name: 'roundTemperature',
   setup() {
-    const state  = reactive({
-      option : {
+    const state = reactive({
+      option: {
         title: [
           {
-            text: 0 + "%",
+            text: 0 + "℃",
             x: "center",
             y: "center",
             textStyle: {
-              color: "#67e0e3",
+              color: "#3fc0fb",
               fontSize: 16
             }
           }
@@ -34,7 +31,7 @@ export default defineComponent({
             radius: ["75%", "80%"],
             center: ["50%", "50%"],
             hoverAnimation: false,
-            color: ["#f3ffb070", "transparent"],
+            color: ["#00bcd44a", "transparent"],
             label: {
               normal: {
                 show: false
@@ -45,7 +42,7 @@ export default defineComponent({
                 value: 0,
                 itemStyle: {
                   normal: {
-                    color: "#ff9800",
+                    color: "#03a9f4",
                     shadowBlur: 10,
                     shadowColor: "#97e2f5"
                   }
@@ -59,16 +56,17 @@ export default defineComponent({
         ]
       }
     })
-    onMounted(async ()=>{
-      const { data } = await handleQueryOnline();
-      const newOption =  {
+
+    onMounted(async () => {
+      const {data} = await handleQueryTemperatureNow();
+      const newOption = {
         title: [
           {
-            text: data.content.onlineRate * 1 + "%",
+            text: data.content * 1 + "℃",
             x: "center",
             y: "center",
             textStyle: {
-              color: "#67e0e3",
+              color: "#3fc0fb",
               fontSize: 16
             }
           }
@@ -79,7 +77,7 @@ export default defineComponent({
             radius: ["75%", "80%"],
             center: ["50%", "50%"],
             hoverAnimation: false,
-            color: ["#f3ffb070", "transparent"],
+            color: ["#00bcd44a", "transparent"],
             label: {
               normal: {
                 show: false
@@ -87,10 +85,10 @@ export default defineComponent({
             },
             data: [
               {
-                value: data.content.onlineRate,
+                value: data.content,
                 itemStyle: {
                   normal: {
-                    color: "#ff9800",
+                    color: "#03a9f4",
                     shadowBlur: 10,
                     shadowColor: "#97e2f5"
                   }
@@ -101,19 +99,19 @@ export default defineComponent({
         ]
       };
       state.option = newOption;
-      const chart = echarts.init(document.getElementById('centerChart2'));
+      const chart = echarts.init(document.getElementById('roundTemperature'));
       window.onresize = chart.resize;
       chart.setOption(state.option);
     });
-    return{
-      ...toRefs(state)
+    return {
+      ...toRefs(state),
     }
   },
 })
 </script>
 
-<style  scoped>
-.centerChart2{
+<style scoped>
+.roundTemperature {
   display: flex;
 }
 </style>

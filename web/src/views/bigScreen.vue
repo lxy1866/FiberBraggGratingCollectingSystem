@@ -10,14 +10,11 @@
     </div>
     <div class="container" style="margin-top: 10px">
       <div class="box left">
-        <dv-border-box-8 class="border-box">
-          <line-chart-strain class="charts" style="height:300px;"/>
+        <dv-border-box-8 class="spacial-border-box">
+          <line-chart-strain class="charts" style="height: 450px"/>
         </dv-border-box-8>
-        <dv-border-box-8 class="border-box">
-          <temperature class="charts" style="height:300px; margin-left: 50px;"/>
-        </dv-border-box-8>
-        <dv-border-box-8 class="border-box">
-          <dv-capsule-chart :config="config7" class="charts" style="height:300px" />
+        <dv-border-box-8  class="border-box"  >
+          <temperature-gauge class="charts" style="height: 150px"/>
         </dv-border-box-8>
       </div>
       <div class="box center">
@@ -27,10 +24,6 @@
         <dv-border-box-8 class="border-box">
           <line-chart-temperature class="charts" style="height: 300px;"/>
         </dv-border-box-8>
-        <dv-border-box-8 class="border-box">
-          <div class="charts" style="height: 300px"><img   src="../assets/pipeline.jpg"/></div>
-
-        </dv-border-box-8>
       </div>
       <div class="box right">
         <dv-border-box-8 class="border-box">
@@ -39,9 +32,6 @@
         <dv-border-box-8  class="border-box">
           <line3d-shape class="charts" style="height: 300px;"/>
         </dv-border-box-8>
-        <dv-border-box-8 class="border-box">
-          <line-chart-vibration2 class="charts" style="height: 300px;"/>
-        </dv-border-box-8>
       </div>
     </div>
   </a-layout-content>
@@ -49,30 +39,27 @@
 
 <script>
 import {defineComponent, onMounted} from "vue";
-
 import {config1,config2,config3,config4,config5,config6,config7,option2} from "./config.js";
-import * as echarts from "echarts";
-import Temperature from '../components/temperature.vue'
+
 import CenterTop from '../components/center-top.vue'
 import LineChartTemperature from '../components/line-chart-temperature.vue'
 import LineChartStrain from '../components/line-chart-strain.vue'
 import Line3dShape from '../components/line-3d-shape.vue'
 import LineChartVibration from '../components/line-chart-vibration.vue'
-import LineChartVibration2 from '../components/line-chart-vibration2.vue'
+import TemperatureGauge from '../components/temperatureGauge.vue'
 
 export default defineComponent({
-
   components:{
-    Temperature,
     CenterTop,
     LineChartTemperature,
     LineChartVibration,
     LineChartStrain,
     Line3dShape,
-    LineChartVibration2
+    TemperatureGauge,
   },
   setup(){
     onMounted(()=>{
+
 
     });
     return{
@@ -84,11 +71,9 @@ export default defineComponent({
       config6,
       config7,
       option2,
-
     }
   }
 });
-
 </script>
 <style scoped>
 .container{
@@ -130,6 +115,11 @@ img{
 .border-box{
   width: 100%;
   height: 100%;
+  display: flex;
+}
+.spacial-border-box{
+  width: 100%;
+  height: fit-content;
   display: flex;
 }
 </style>

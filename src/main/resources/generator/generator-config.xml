@@ -25,6 +25,7 @@
                         connectionURL="jdbc:mysql://101.132.252.118:3306/modbustcpDev?serverTimezone=Asia/Shanghai"
                         userId="root"
                         password="yourpassword">
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
         <!-- domain类的位置 -->
@@ -42,11 +43,11 @@
 
 
 <!--        <table tableName="physical_value"/>-->
-<!--        <table tableName="user"/>-->
 <!--        <table tableName="breakpoint_record"></table>-->
 <!--        <table tableName="breakpoint_record_finish"></table>-->
 <!--        <table tableName="normal_range"></table>-->
-        <table tableName="fbg_value_info"/>
+<!--        <table tableName="fbg_value_info"/>-->
 <!--        <table tableName="fbg_value"/>-->
+        <table tableName="user"/>
     </context>
 </generatorConfiguration>

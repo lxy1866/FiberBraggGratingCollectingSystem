@@ -55,9 +55,12 @@ public class PhysicalValueJob {
         List<FbgValue> vibrationfbgValues = new ArrayList<>();
         List<FbgValue> strainfbgValues = new ArrayList<>();
         for(int i = 0; i < 5; i++){
-            vibrationfbgValues.add(new FbgValue(new Long(Long.toString(i)), new Long(Long.toString(i+7)), RandomUtil.From100TO1000(), (byte) 0, DateUtil.getNowTime().getTime()));
-            strainfbgValues.add(new FbgValue(new Long(Long.toString(i)), new Long(Long.toString(i+1)), RandomUtil.From100TO1000(), (byte) 0, DateUtil.getNowTime().getTime()));
+            vibrationfbgValues.add(new FbgValue(new Long(Long.toString(i)), new Long(Long.toString(i+22)), RandomUtil.From100TO1000(), (byte) 0, DateUtil.getNowTime().getTime()));
         }
+        for(int i = 0; i < 20; i++){
+            strainfbgValues.add(new FbgValue(new Long(Long.toString(i)), new Long(Long.toString(i+2)), RandomUtil.From100TO1000(), (byte) 0, DateUtil.getNowTime().getTime()));
+        }
+
         List<List<FbgValue>> list  = new ArrayList<>();
         list.add(vibrationfbgValues);
         list.add(strainfbgValues);

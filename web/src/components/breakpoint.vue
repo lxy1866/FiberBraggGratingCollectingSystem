@@ -137,7 +137,6 @@ export default defineComponent({
         state: 0
       })
       watch(value1,(newValue, oldValue)=>{
-
         console.log(newValue,oldValue);
         if(value1.value == '未处理'){
           handleQuery({
@@ -154,8 +153,6 @@ export default defineComponent({
         }
       });
     });
-
-
     return {
       value1,
       data,

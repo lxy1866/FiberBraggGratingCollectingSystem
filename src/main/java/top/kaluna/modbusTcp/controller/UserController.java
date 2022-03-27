@@ -36,7 +36,7 @@ public class UserController {
     private SnowFlake snowFlake;
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
@@ -51,26 +51,47 @@ public class UserController {
     public CommonResp save(@Valid @RequestBody UserSaveReq userSaveReq){
         userSaveReq.setPassword(DigestUtils.md5DigestAsHex(userSaveReq.getPassword().getBytes(StandardCharsets.UTF_8)));
         CommonResp resp = new CommonResp<>();
-        userService.save(userSaveReq);
+        final int save = userService.save(userSaveReq);
+        if(save != 0){
+            resp.setSuccess(true);
+            resp.setMessage("保存成功");
+        }else {
+            resp.setSuccess(false);
+            resp.setMessage("保存失败");
+        }
         return resp;
     }
     @DeleteMapping("/delete/{id}")
     public CommonResp delete(@PathVariable Long id){
         CommonResp resp = new CommonResp<>();
-        userService.delete(id);
+        final int delete = userService.delete(id);
+        if(delete != 0){
+            resp.setSuccess(true);
+            resp.setMessage("删除成功");
+        }else {
+            resp.setSuccess(false);
+            resp.setMessage("删除失败");
+        }
         return resp;
     }
-    @GetMapping("/reset-password")
+    @PostMapping("/reset-password")
     public CommonResp resetPassword(@Valid @RequestBody UserResetPasswordReq req){
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes(StandardCharsets.UTF_8)));
         CommonResp resp = new CommonResp();
-        userService.resetPassword(req);
+        final int i = userService.resetPassword(req);
+        if(i != 0){
+            resp.setSuccess(true);
+            resp.setMessage("更新成功");
+        }else {
+            resp.setSuccess(false);
+            resp.setMessage("更新失败");
+        }
         return resp;
     }
     @PostMapping("/login")
-    public CommonResp login(@Valid @RequestBody UserLoginReq req){
+    public CommonResp<UserLoginResp> login(@Valid @RequestBody UserLoginReq req){
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes(StandardCharsets.UTF_8)));
-        CommonResp<UserLoginResp> resp = new CommonResp();
+        CommonResp<UserLoginResp> resp = new CommonResp<>();
         UserLoginResp userLoginResp = userService.login(req);
         Long token = snowFlake.nextId();
         userLoginResp.setToken(token.toString());

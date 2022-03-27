@@ -38,14 +38,15 @@ public class UserService {
     private SnowFlake snowFlake;
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
-    public void save(UserSaveReq req) {
+    public int save(UserSaveReq req) {
         User user = CopyUtil.copy(req, User.class);
+        int result = 0;
         if (ObjectUtils.isEmpty(req.getId())) {
             User userDB = selectByLoginName(req.getLoginName());
             if (ObjectUtils.isEmpty(userDB)) {
                 // 新增
                 user.setId(snowFlake.nextId());
-                userMapper.insert(user);
+                result = userMapper.insert(user);
             } else {
                 // 用户名已存在
                 throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
@@ -54,12 +55,13 @@ public class UserService {
             // 更新
             user.setLoginName(null);
             user.setPassword(null);
-            userMapper.updateByPrimaryKeySelective(user);
+            result = userMapper.updateByPrimaryKeySelective(user);
         }
+        return result;
     }
 
-    public void delete(Long id) {
-        userMapper.deleteByPrimaryKey(id);
+    public int delete(Long id) {
+        return userMapper.deleteByPrimaryKey(id);
     }
 
     public PageResp<UserQueryResp> list(UserQueryReq userQueryReq) {
@@ -99,9 +101,12 @@ public class UserService {
      * 修改密码
      * @param req
      */
-    public void resetPassword(UserResetPasswordReq req) {
-        User user = CopyUtil.copy(req, User.class);
-        userMapper.updateByPrimaryKeySelective(user);
+    public int resetPassword(UserResetPasswordReq req) {
+        User copy = CopyUtil.copy(req, User.class);
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andIdEqualTo(req.getId());
+        return userMapper.updateByExample(copy,userExample);
     }
 
     public UserLoginResp login(UserLoginReq req) {
