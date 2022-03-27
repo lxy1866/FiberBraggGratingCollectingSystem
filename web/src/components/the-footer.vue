@@ -4,7 +4,7 @@
   </a-layout-footer>
 </template>
 <script lang="ts">
-import { defineComponent, computed, onMounted, ref } from 'vue';
+import { defineComponent, computed, onMounted, ref, onUnmounted } from 'vue';
 import store from "@/store";
 import {Tool} from "@/util/tool";
 import { notification } from 'ant-design-vue';
@@ -50,21 +50,26 @@ export default defineComponent({
       websocket.onclose = onClose;
     };
     onMounted(() => {
-      setInterval(() => {
+      const interval = setInterval(() => {
         const realTime = new Date();
         timeslot.value =
             resetTime(realTime.getFullYear()) +
             '/'+
-            resetTime(realTime.getMonth()) +
+            resetTime(realTime.getMonth()+1) +
             '/' +
-            resetTime(realTime.getDay()) +
+            resetTime(realTime.getDate()) +
             ' ' +
             resetTime(realTime.getHours()) +
             ':' +
             resetTime(realTime.getMinutes()) +
             ':' +
             resetTime(realTime.getSeconds())
-      }, 1000)
+      }, 1000);
+      onUnmounted(()=>{
+        if(interval){
+          clearInterval(interval)
+        }
+      })
       // WebSocket
       if ('WebSocket' in window) {
         token = Tool.uuid(10);

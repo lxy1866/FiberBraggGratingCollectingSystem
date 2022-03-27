@@ -10,11 +10,11 @@
     </div>
     <div class="container" style="margin-top: 10px">
       <div class="box left">
-        <dv-border-box-8 class="spacial-border-box">
-          <line-chart-strain class="charts" style="height: 450px"/>
+        <dv-border-box-8 class="border-box">
+          <line-chart-strain class="charts" style="height: 300px"/>
         </dv-border-box-8>
         <dv-border-box-8  class="border-box"  >
-          <temperature-gauge class="charts" style="height: 150px"/>
+          <real-temperature class="charts" style="height: 300px; margin-left: 90px"/>
         </dv-border-box-8>
       </div>
       <div class="box center">
@@ -47,6 +47,7 @@ import LineChartStrain from '../components/line-chart-strain.vue'
 import Line3dShape from '../components/line-3d-shape.vue'
 import LineChartVibration from '../components/line-chart-vibration.vue'
 import TemperatureGauge from '../components/temperatureGauge.vue'
+import RealTemperature from '../components/realTemperature.vue'
 
 export default defineComponent({
   components:{
@@ -56,6 +57,7 @@ export default defineComponent({
     LineChartStrain,
     Line3dShape,
     TemperatureGauge,
+    RealTemperature
   },
   setup(){
     onMounted(()=>{

@@ -16,7 +16,7 @@ export default defineComponent({
     const state = reactive({
       option : {
         title: {
-          text: '过去24小时的温度最大最小值',
+          text: '过去24小时温度最大最小值',
           textStyle:{
             color: '#ffffff',
             fontFamily: '宋体',
@@ -58,17 +58,15 @@ export default defineComponent({
             }
           }
         },
-        legend:[
-          {
+        legend: {
             orient:"vertical",
             backgroundColor: "transparent",
             inactiveColor: "white",
             textStyle:{
-              color: "blue"
-            }
-
-          }
-        ],
+              color: "blue",
+            },
+            left: '60%'
+        },
         series: [
           {
             name: 'Highest',

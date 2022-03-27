@@ -1,18 +1,14 @@
 <template>
-  <a-layout-content style=" background: #001529; height: 598px">
-    <div style="display: flex;justify-content: center" >
-      <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-        <div style="font-size: 20px; color: cadetblue;text-align:center;" >海底电缆智能健康监测系统</div>
-        <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
-      </div>
-    </div>
-    <div class="innerForm">
-      <div class="box left">
-<!--        <span>-->
-<!--          <img src="@/assets/pipeline.jpg"/>-->
-<!--        </span>-->
-      </div>
-      <div class="box right">
+  <a-layout-content :style="{padding: 0, background: '#001529', height: height_top.height}" style="backgroundImage: url(https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/)">
+    <div class="center">
+<!--      <img src="@/assets/pipeline.jpg"/>-->
+      <div class="center-right">
+        <div style="display: flex;justify-content: space-between" >
+          <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
+            <div style="font-size: 20px; color: cadetblue;text-align:center;" >海底电缆智能健康监测系统</div>
+            <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
+          </div>
+        </div>
         <n-card style="--n-color: #001529;--n-title-text-color: white; display: flex;">
           <a-form
               :model="LoginUser"
@@ -47,10 +43,15 @@
         </n-card>
       </div>
     </div>
+    <div class="logoImg">
+      <img src="@/assets/Logo_stu.png"/>&nbsp;
+      <img src="@/assets/zhejiangUniversity.png"/>&nbsp;
+      <img src="@/assets/guojiadianwang.png"/>
+    </div>
   </a-layout-content>
 </template>
 <script lang="ts">
-import {defineComponent, ref, computed, onMounted} from 'vue';
+import {defineComponent, ref, onMounted} from 'vue';
 import { useRouter } from 'vue-router'
 import axios from 'axios';
 import { message } from 'ant-design-vue';
@@ -72,7 +73,6 @@ export default defineComponent({
       if(window.innerHeight != null){
         height_top.value.height = window.innerHeight-134+'px';
       }
-
       window.onresize = () => {
         return (() => {
           height_top.value.height = window.innerHeight-70+'px';
@@ -108,26 +108,33 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.innerForm{
-  margin-top: 50px;
+.center{
   display: flex;
-}
-.left{
-  width: 100%;
-  margin-top: 71px;
-  margin-left: 100px;
-}
-.right{
-  width: 50%;
-  height: 100%;
-  margin-top: 70px;
-  margin-right: 100px;
-  z-index: 9999;
-}
-img{
-  width: 100%;
-  height: 260px;
-  border-radius: 5px;
-}
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
 
+}
+.center img{
+  width: 30%;
+}
+.center-right{
+  width: 30%;
+  height: 60%;
+  margin-left: 600px;
+
+}
+.logoImg img{
+  position: relative;
+  width: 45px;
+  height: 45px;
+}
+.logoImg{
+  display: flex;
+  flex-direction: row;
+  margin-top: 100px;
+  justify-content: center;
+  align-items: center;
+}
 </style>

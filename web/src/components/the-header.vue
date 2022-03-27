@@ -8,7 +8,6 @@
     >
       <div class="header-wrap">
         <div class="header-left">
-          <img src="../assets/Logo_stu.png">
           <div style=" font-size: 20px; color: cadetblue; font-weight: bolder">汕头大学</div>
           <a-menu-item key="/">
             <transition :name="transitionName">
@@ -39,9 +38,7 @@
             </transition>
           </a-menu-item>
           <a-menu-item key="/login">
-
               <router-link to="/login" v-show="!user.id">登录</router-link>
-
           </a-menu-item>
           <a-menu-item key="/logout" >
             <a-popconfirm

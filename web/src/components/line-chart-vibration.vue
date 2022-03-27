@@ -119,7 +119,7 @@ export default defineComponent({
             show: true,
             fontSize: 14,
             formatter: function (value: any){
-              return value + '{distance|' + distance(value)+'米}';
+              return '{distance|' + distance(value)+'米}';
             },
 
             rich: {
