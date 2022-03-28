@@ -1,15 +1,16 @@
 <template>
-  <a-layout-content :style="{padding: 0, background: '#001529', height: height_top.height}" style="backgroundImage: url(https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/)">
+  <a-layout-content :style="{padding: 0, height: height_top.height} " style="backgroundImage: url(https://regmedia.co.uk/2021/08/16/shutterstock_submarine_cable.jpg)">
     <div class="center">
-<!--      <img src="@/assets/pipeline.jpg"/>-->
       <div class="center-right">
-        <div style="display: flex;justify-content: space-between" >
+        <div style="display: flex;justify-content: space-between; " >
           <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-            <div style="font-size: 20px; color: cadetblue;text-align:center;" >海底电缆智能健康监测系统</div>
+            <div style="font-size: 20px; color: white;text-align:center;" >海底电缆智能健康监测系统</div>
             <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
           </div>
         </div>
-        <n-card style="--n-color: #001529;--n-title-text-color: white; display: flex;">
+        <n-card style="--n-color:#001529;
+        --n-title-text-color: white; display: flex;
+        --n-border-color: white;">
           <a-form
               :model="LoginUser"
               name="basic"
@@ -50,7 +51,7 @@
     </div>
   </a-layout-content>
 </template>
-<script lang="ts">
+<script lang="ts" >
 import {defineComponent, ref, onMounted} from 'vue';
 import { useRouter } from 'vue-router'
 import axios from 'axios';
@@ -114,16 +115,11 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   margin-top: 100px;
-
-}
-.center img{
-  width: 30%;
 }
 .center-right{
   width: 30%;
   height: 60%;
   margin-left: 600px;
-
 }
 .logoImg img{
   position: relative;
@@ -133,7 +129,7 @@ export default defineComponent({
 .logoImg{
   display: flex;
   flex-direction: row;
-  margin-top: 100px;
+  margin-top: 124px;
   justify-content: center;
   align-items: center;
 }
