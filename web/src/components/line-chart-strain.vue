@@ -42,7 +42,7 @@ export default defineComponent({
       25: '#759594',
       27: '#c56600'
     };
-    const request:any = inject('request');
+
 
     function getFbgValueInfoForDistance() {
       return axios.get("/nr/strainDistance")
@@ -50,12 +50,6 @@ export default defineComponent({
 
     onMounted(async () => {
       const {data} = await getFbgValueInfoForDistance();
-      watch(request,(newValue, oldValue)=>{
-        console.log("line-chart-strain传过来的click值request:",newValue,oldValue);
-        if(request.value == true){
-          myChart.setOption<echarts.EChartsOption>(option);
-        }
-      });
       const FbgValueInfo = data.content//数组 每一个元素是id, propertyName, min, max, distance, creatTime, category
       let y = []
       for (let i = 0; i < FbgValueInfo.length; i++) {

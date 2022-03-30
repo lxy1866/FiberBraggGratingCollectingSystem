@@ -109,4 +109,12 @@ on a.physical_value_info_id = b.id
 where b.category = 2
 and a.create_time between #{lastNHoursStart} and #{lastNHoursEnd}
 
+drop table if exists `arc`;
+create table `arc`(
+       `id` bigint not null comment 'ID',
+       `length` decimal(10,4) not null comment '弧长长度',
+        primary key (`id`)
+)engine = innodb default charset = utf8mb4 comment = '弧长参数设置';
+insert into arc (`id`, `length`) values (1, 0.3)
 
+select length from arc limit 1

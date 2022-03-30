@@ -1,49 +1,55 @@
 <template>
-  <a-layout-content :style="{padding: 0, height: height_top.height} " style="backgroundImage: url(https://regmedia.co.uk/2021/08/16/shutterstock_submarine_cable.jpg)">
-    <div class="center">
-      <div class="center-right">
-        <div style="display: flex;justify-content: space-between; " >
-          <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-            <div style="font-size: 20px; color: white;text-align:center;" >海底电缆智能健康监测系统</div>
-            <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
-          </div>
+  <a-layout-content :style="{padding: 0, height: height_top.height} " style="backgroundImage: url(https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/)">
+
+      <div class="center">
+        <div class="center-left">
+          <img src="@/assets/pipeline.jpg"/>
         </div>
-        <n-card style="--n-color:#001529;
+        <div class="center-right">
+          <div style="display: flex;justify-content: space-between; " >
+            <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
+              <div style="font-size: 20px; color: white;text-align:center;" >海底电缆智能健康监测系统</div>
+              <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
+            </div>
+          </div>
+          <n-card style="--n-color:#001529;
         --n-title-text-color: white; display: flex;
         --n-border-color: white;">
-          <a-form
-              :model="LoginUser"
-              name="basic"
-              :label-col="{ span: 8 }"
-              :wrapper-col="{ span: 16 }"
-              autocomplete="off"
-              @finish="onFinish"
-              @finishFailed="onFinishFailed"
-              style="margin-top: 50px;margin-left: -12.5px"
-          >
-            <a-form-item
-                label="NAME"
-                name="loginName"
-                :rules="[{ required: true, message: 'Please input your name!' }]"
+            <a-form
+                :model="LoginUser"
+                name="basic"
+                :label-col="{ span: 8 }"
+                :wrapper-col="{ span: 16 }"
+                autocomplete="off"
+                @finish="onFinish"
+                @finishFailed="onFinishFailed"
+                style="margin-top: 50px;margin-left: -12.5px"
             >
-              <a-input v-model:value="LoginUser.loginName" />
-            </a-form-item>
+              <a-form-item
+                  label="NAME"
+                  name="loginName"
+                  :rules="[{ required: true, message: 'Please input your name!' }]"
+              >
+                <a-input v-model:value="LoginUser.loginName" />
+              </a-form-item>
 
-            <a-form-item
-                label="PASSWORD"
-                name="password"
-                :rules="[{ required: true, message: 'Please input your password!' }]"
-            >
-              <a-input-password v-model:value="LoginUser.password" />
-            </a-form-item>
+              <a-form-item
+                  label="PASSWORD"
+                  name="password"
+                  :rules="[{ required: true, message: 'Please input your password!' }]"
+              >
+                <a-input-password v-model:value="LoginUser.password" />
+              </a-form-item>
 
-            <a-form-item :wrapper-col="{ offset: 14, span: 16 }">
-              <a-button  html-type="submit" >LOGIN</a-button>
-            </a-form-item>
-          </a-form>
-        </n-card>
+              <a-form-item :wrapper-col="{ offset: 14, span: 16 }">
+                <a-button  html-type="submit" >LOGIN</a-button>
+              </a-form-item>
+            </a-form>
+          </n-card>
+        </div>
       </div>
-    </div>
+
+
     <div class="logoImg">
       <img src="@/assets/Logo_stu.png"/>&nbsp;
       <img src="@/assets/zhejiangUniversity.png"/>&nbsp;
@@ -116,10 +122,16 @@ export default defineComponent({
   justify-content: center;
   margin-top: 100px;
 }
+.center-left{
+  width: 50%;
+  height: 50%;
+}
 .center-right{
   width: 30%;
   height: 60%;
-  margin-left: 600px;
+  position: relative;
+  margin-left: -15px;
+  margin-top: 76px;
 }
 .logoImg img{
   position: relative;
@@ -132,5 +144,10 @@ export default defineComponent({
   margin-top: 124px;
   justify-content: center;
   align-items: center;
+}
+.border-box{
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 </style>

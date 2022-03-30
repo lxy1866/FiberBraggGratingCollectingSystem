@@ -48,6 +48,7 @@
 <!--        <table tableName="normal_range"></table>-->
 <!--        <table tableName="fbg_value_info"/>-->
 <!--        <table tableName="fbg_value"/>-->
-        <table tableName="user"/>
+<!--        <table tableName="user"/>-->
+        <table tableName="arc"/>
     </context>
 </generatorConfiguration>
