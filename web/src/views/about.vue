@@ -1,4 +1,5 @@
 <template>
+  <the-header></the-header>
   <a-layout-content style=" margin-bottom: 70px ">
     <a-breadcrumb style="margin: 16px 0">
 
@@ -68,7 +69,23 @@
   </div>
     </a-layout>
   </a-layout-content>
+  <the-footer></the-footer>
+
 </template>
+<script lang="ts">
+import {defineComponent} from "vue";
+import TheHeader from '@/components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue';
+export default defineComponent({
+  components:{
+    TheHeader,
+    TheFooter
+  },
+  setup(){
+
+  }
+})
+</script>
 <style scoped>
 .wrapper{
   display: flex;

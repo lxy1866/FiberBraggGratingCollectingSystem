@@ -1,11 +1,7 @@
 <template>
-  <a-layout>
-    <a-layout-content :style="{background: '#fff'}">
-        <p style="color: red; font-family: 'Adobe 宋体 Std L';">弧长长度为：{{arcLength}}</p>
-        <p style="color: red; font-family: 'Adobe 宋体 Std L';">各点的曲率值：{{curvature}}</p>
-        <div id="twoDimension" class="twoDimension-chart"></div>
-    </a-layout-content>
-  </a-layout>
+  <p style="color: red; font-family: 'Adobe 宋体 Std L';">弧长长度为：{{arcLength}}</p>
+  <p style="color: red; font-family: 'Adobe 宋体 Std L';">各点的曲率值：{{curvature}}</p>
+  <div id="twoDimension" class="twoDimension-chart"></div>
 </template>
 <script lang="ts">
 import {all, create} from 'mathjs'
@@ -36,45 +32,45 @@ function handleGetArgLength(){
   return axios.get("/arc/length")
 }
 function generateData(arcLength:any) {
-    //let l = arcLength//0.3
-    let l = 0.3
-    const angle_raw = [0, 30, 30, -30, 30, 30, -30, -30, -30, 0]
-    const angle1 = angleToRadian(diff(angle_raw)); //通过曲率的倒数即大弧的半径求得圆心角
+  //let l = arcLength//0.3
+  let l = 0.3
+  const angle_raw = [0, 30, 30, -30, 30, 30, -30, -30, -30, 0]
+  const angle1 = angleToRadian(diff(angle_raw)); //通过曲率的倒数即大弧的半径求得圆心角
 
-    const l_inter = l / 10 //
-    let p_before_test = math.matrix([0, 0, 0]);//
-    let H1 = math.matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]) //
-    let p_test1 = math.matrix() //
-    for (let row = 0; row < angle1.length; row++) {
-      let R1 = math.abs(l / angle1[row])//大弧的半径 //通过曲率求得
-      let p_temp = math.matrix()
-      for (let i = 0; i < 10; i++) {
-        let angle = angle1[row] / 10
-        if (angle == 0) {
-          p_temp = math.transpose(math.matrix([l_inter, 0, 0]))
-        } else if (angle > 0) {
-          p_temp = math.transpose(math.matrix([R1 * Math.sin(angle), 0, -(R1 - R1 * Math.cos(angle))]))
-        } else {
-          p_temp = math.transpose(math.matrix([-R1 * Math.sin(angle), 0, (R1 - R1 * Math.cos(angle))]))
-        }
-        p_before_test = math.transpose(p_before_test)
-        let p_after_test = math.add(math.multiply(H1, p_temp), p_before_test)
-        //将矩阵拼接
-        p_test1 = math.matrix(math.concat(p_test1, p_after_test))
-        p_before_test = math.matrix(math.transpose(p_after_test));
-        let delta_R = [[Math.cos(angle), 0, Math.sin(angle)], [0, 1, 0], [-Math.sin(angle), 0, Math.cos(angle)]]
-        H1 = math.multiply(H1, delta_R);
+  const l_inter = l / 10 //
+  let p_before_test = math.matrix([0, 0, 0]);//
+  let H1 = math.matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]) //
+  let p_test1 = math.matrix() //
+  for (let row = 0; row < angle1.length; row++) {
+    let R1 = math.abs(l / angle1[row])//大弧的半径 //通过曲率求得
+    let p_temp = math.matrix()
+    for (let i = 0; i < 10; i++) {
+      let angle = angle1[row] / 10
+      if (angle == 0) {
+        p_temp = math.transpose(math.matrix([l_inter, 0, 0]))
+      } else if (angle > 0) {
+        p_temp = math.transpose(math.matrix([R1 * Math.sin(angle), 0, -(R1 - R1 * Math.cos(angle))]))
+      } else {
+        p_temp = math.transpose(math.matrix([-R1 * Math.sin(angle), 0, (R1 - R1 * Math.cos(angle))]))
       }
+      p_before_test = math.transpose(p_before_test)
+      let p_after_test = math.add(math.multiply(H1, p_temp), p_before_test)
+      //将矩阵拼接
+      p_test1 = math.matrix(math.concat(p_test1, p_after_test))
+      p_before_test = math.matrix(math.transpose(p_after_test));
+      let delta_R = [[Math.cos(angle), 0, Math.sin(angle)], [0, 1, 0], [-Math.sin(angle), 0, Math.cos(angle)]]
+      H1 = math.multiply(H1, delta_R);
     }
-    let data = [];
-    data.push([0, 0])
-    // console.log(p_test1)
-    // console.log(p_test1.get([0]), p_test1.get([2]))
-    for (let i = 0; i < 10 * angle1.length; i++) {
-      data.push([p_test1.get([3 * i]), p_test1.get([3 * i + 2])]);
-    }
-    // console.log(data)
-    return data;
+  }
+  let data = [];
+  data.push([0, 0])
+  // console.log(p_test1)
+  // console.log(p_test1.get([0]), p_test1.get([2]))
+  for (let i = 0; i < 10 * angle1.length; i++) {
+    data.push([p_test1.get([3 * i]), p_test1.get([3 * i + 2])]);
+  }
+  // console.log(data)
+  return data;
 }
 export default defineComponent({
   setup () {
@@ -197,8 +193,8 @@ export default defineComponent({
 </script>
 <style>
 .twoDimension-chart{
-  width: 500px;
-  height: 500px;
+  width: 300px;
+  height: 300px;
   display: flex;
 }
 </style>

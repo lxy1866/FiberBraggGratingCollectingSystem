@@ -1,9 +1,10 @@
 <template>
+  <the-header></the-header>
     <a-layout-content
         :style="{background: '#ffffff', padding: '24px', margin: 0, minHeight: '280px', height: height_top.height}"
     >
       <p>
-        <n-input v-model:value="searchLoginName" type="text" placeholder="登陆名" style="width: 182px"/>
+        <n-input v-model:value="searchLoginName" type="text" placeholder="请输入登录名搜索" style="width: 182px"/>
         &nbsp;&nbsp;&nbsp;
         <n-button strong secondary type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
           查询
@@ -44,7 +45,7 @@
         </template>
       </a-table>
     </a-layout-content>
-
+  <the-footer></the-footer>
   <n-modal
       v-model:show="addModalVisible"
       preset="dialog"
@@ -112,10 +113,18 @@ import { defineComponent, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import {Tool} from "@/util/tool";
+import TheHeader from '@/components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue';
+
 declare let hexMd5: any;
 declare let KEY: any;
+
 export default defineComponent({
   name: 'AdminUser',
+  components:{
+    TheHeader,
+    TheFooter
+  },
   setup() {
     const searchLoginName = ref();
     const users = ref();

@@ -9,38 +9,38 @@
       <div class="header-wrap">
         <div class="header-left">
           <div style=" font-size: 20px; color: cadetblue; font-weight: bolder">汕头大学</div>
-          <a-menu-item key="/">
+          <a-menu-item key="/p_index">
             <transition :name="transitionName">
-              <router-link to="/" :style="user.id? {} : {display:'none'}">首页</router-link>
+              <router-link to="/p_index" :style="user.id? {} : {display:'none'}">首页</router-link>
             </transition>
           </a-menu-item>
-          <a-menu-item key="/detail">
+          <a-menu-item key="/p_index/detail">
             <transition :name="transitionName">
-              <router-link to="/detail" :style="user.id? {} : {display:'none'}">传感器列表</router-link>
+              <router-link to="/p_index/detail" :style="user.id? {} : {display:'none'}">传感器列表</router-link>
             </transition>
           </a-menu-item>
-          <a-menu-item key="/admin/user">
+          <a-menu-item key="/p_index/admin/user">
             <transition :name="transitionName">
-              <router-link to="/admin/user" :style="user.id? {} : {display:'none'}">用户</router-link>
+              <router-link to="/p_index/admin/user" :style="user.id? {} : {display:'none'}">用户</router-link>
             </transition>
           </a-menu-item>
-          <a-menu-item key="/admin/physicalValue">
+          <a-menu-item key="/p_index/admin/physicalValue">
             <transition :name="transitionName">
-              <router-link to="/admin/physicalValue" :style="user.id? {} : {display:'none'}">参数</router-link>
+              <router-link to="/p_index/admin/physicalValue" :style="user.id? {} : {display:'none'}">参数</router-link>
             </transition>
           </a-menu-item>
 
         </div>
         <div class="header-right">
-          <a-menu-item key="/about" >
+          <a-menu-item key="/p_index/about" >
             <transition :name="transitionName">
-              <router-link to="/about" :style="user.id? {} : {display:'none'}">关于</router-link>
+              <router-link to="/p_index/about" :style="user.id? {} : {display:'none'}">关于</router-link>
             </transition>
           </a-menu-item>
-          <a-menu-item key="/login">
-              <router-link to="/login" v-show="!user.id">登录</router-link>
+          <a-menu-item key="/p_index/login">
+              <router-link to="/p_index/login" v-show="!user.id">登录</router-link>
           </a-menu-item>
-          <a-menu-item key="/logout" >
+          <a-menu-item key="/p_index/logout" >
             <a-popconfirm
                 title="确认退出登录?"
                 ok-text="是"
@@ -82,7 +82,7 @@ export default defineComponent({
         const data = response.data;
         console.log(data);
         if(data.success){
-          router.push({ path: '/login' })
+          router.push({ path: '/p_index/login' })
           message.success("退出登录成功");
           store.commit("setUser", {});
         }else {
@@ -157,5 +157,10 @@ img{
   height: 45px;
   margin-top: 10px;
   margin-right: 10px;
+}
+.header{
+  top: 0px;
+  left: 0px;
+  right: 0px;
 }
 </style>

@@ -1,4 +1,5 @@
 <template>
+  <the-header></the-header>
   <a-layout-content style="height: 744px;background: white">
       <div class="content-wrapper">
         <div class="content-left" style="margin-top: 30px; ">
@@ -147,12 +148,16 @@
         </div>
       </div>
   </a-layout-content>
+
+  <the-footer></the-footer>
 </template>
 
 <script lang="ts">
 import {defineComponent, onMounted, ref, watch} from 'vue'
 import {message} from "ant-design-vue";
 import axios from 'axios';
+import TheHeader from '@/components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue';
 const model = ref({
   dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:''}]
 })
@@ -178,6 +183,10 @@ const handlePositiveClick  = () =>{
   }
 };
 export default defineComponent({
+  components:{
+    TheHeader,
+    TheFooter
+  },
   setup () {
     const showModalRef = ref(false)
     const onNegativeClick =()=> {

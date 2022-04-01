@@ -1,14 +1,13 @@
 <template>
-  <a-layout-content :style="{padding: 0, height: height_top.height} " style="backgroundImage: url(https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/)">
-
+  <the-header></the-header>
+  <a-layout-content
+      :style="{margin: 0, height: height_top.height}"
+  style="background-image: url(https://cdnimgzh.vietnamplus.vn/uploaded/wbxx/2022_02_25/cap_quang.jpg)">
       <div class="center">
-        <div class="center-left">
-          <img src="@/assets/pipeline.jpg"/>
-        </div>
         <div class="center-right">
           <div style="display: flex;justify-content: space-between; " >
             <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-              <div style="font-size: 20px; color: white;text-align:center;" >海底电缆智能健康监测系统</div>
+              <div style="font-size: 32px; color: #b6c9dc;text-align:center;" >海底电缆智能健康监测系统</div>
               <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
             </div>
           </div>
@@ -48,14 +47,13 @@
           </n-card>
         </div>
       </div>
-
-
-    <div class="logoImg">
-      <img src="@/assets/Logo_stu.png"/>&nbsp;
-      <img src="@/assets/zhejiangUniversity.png"/>&nbsp;
-      <img src="@/assets/guojiadianwang.png"/>
-    </div>
+      <div class="logoImg">
+        <img src="@/assets/Logo_stu.png"/>&nbsp;
+        <img src="@/assets/zhejiangdaxue_bg_white.png"/>&nbsp;
+        <img src="@/assets/guojiadianwang_bg_white.png"/>
+      </div>
   </a-layout-content>
+  <the-footer></the-footer>
 </template>
 <script lang="ts" >
 import {defineComponent, ref, onMounted} from 'vue';
@@ -63,11 +61,17 @@ import { useRouter } from 'vue-router'
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import store from "@/store";
+import TheHeader from '@/components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue';
 declare let hexMd5: any;
 declare let KEY: any;
 
 export default defineComponent({
 
+  components:{
+    TheHeader,
+    TheFooter
+  },
   setup() {
     const router=useRouter()
     //用来登录
@@ -120,18 +124,13 @@ export default defineComponent({
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 100px;
-}
-.center-left{
-  width: 50%;
-  height: 50%;
 }
 .center-right{
   width: 30%;
-  height: 60%;
+  height: 58%;
   position: relative;
-  margin-left: -15px;
-  margin-top: 76px;
+  margin-left: 700px;
+  margin-top: 100px;
 }
 .logoImg img{
   position: relative;
@@ -141,7 +140,7 @@ export default defineComponent({
 .logoImg{
   display: flex;
   flex-direction: row;
-  margin-top: 124px;
+  margin-top: 100px;
   justify-content: center;
   align-items: center;
 }

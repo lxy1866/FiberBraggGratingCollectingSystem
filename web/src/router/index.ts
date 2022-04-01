@@ -1,95 +1,128 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import About from '../views/about.vue'
 import AdminPhysicalValue from '../views/admin/admin-physicalValue.vue'
+import AdminUser from '../views/admin/admin-user.vue'
 import Login from '../views/login.vue'
+
+import m_About from '../views/mobile/m_about.vue'
+import m_AdminPhysicalValue from '../views/admin/mobile/m_admin-physicalValue.vue'
+import m_AdminUser from '../views/admin/mobile/m_admin-user.vue'
+import m_Login from '../views/mobile/m_login.vue'
+
 import {Tool} from "@/util/tool";
 import store from "@/store";
-import AdminUser from '../views/admin/admin-user.vue'
+
+//首页用重定向的方式来进行适配的方案：
+const redirectPath = /Android |webos | iphone iPod BlackBerry liPad/i. test (navigator.userAgent) ? '/m_index' : '/p_index';
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'BigScreen',
+    path:'/',
+    redirect:redirectPath
+  },
+  {
+    path: '/p_index',
+    name: 'p_BigScreen',
     component: () => import('../views/bigScreen.vue'),
     meta:{
+      "type":'pc',
       loginRequire: true
     }
   },
   {
-    path: '/detail',
-    name: 'Detail',
+    path: '/p_index/detail',
+    name: 'p_Detail',
     component: () => import('../views/detail.vue'),
     meta: {
+      "type":'pc',
       loginRequire: true
     },
-    //定义嵌套路由
-    children:[
-        {
-          path: '/home',
-          name:'历史数据查询',
-          component:()=> import('../views/detail.vue'),
-          meta:{
-            loginRequire: true
-          }
-        },
-        {
-          path: '/abnormalDataQuery',
-          name:'异常波动数据查询',
-          component:()=> import('../components/abnormalDataQuery.vue'),
-          meta:{
-            loginRequire: true
-          }
-        },
-    ],
-  },
-
-  {
-    path: '/breakpoint',
-    name: '断点位置维修情况',
-    component: () => import(/* webpackChunkName: "about" */ '../components/breakpoint.vue'),
   },
   {
-    path: '/realTimeShapeSensor',
-    name: '实时形状传感',
-    component:()=>import('../components/realTimeShapeSensor.vue'),
-    children:[
-      {
-        path: '/twoDimension',
-        name:'二维形状传感',
-        component:() =>import('../components/twoDimension.vue')
-      },
-      {
-        path:'/threeDimension',
-        name:'三维形状传感',
-        component:()=>import('../components/threeDimension.vue')
-      }
-    ]
+    path: '/p_index/login',
+    name: 'p_Login',
+    component: Login,
+    meta: {
+      "type":'pc'
+    },
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/about',
-    name: 'About',
+    path: '/p_index/about',
+    name: 'p_About',
     component: About,
     meta:{
+      "type":'pc',
       loginRequire: true
     }
   },
   {
-    path: '/admin/physicalValue',
-    name: 'AdminPhysicalValue',
+    path: '/p_index/admin/physicalValue',
+    name: 'p_AdminPhysicalValue',
     component: AdminPhysicalValue,
     meta:{
+      "type":'pc',
       loginRequire: true
     }
   },
   {
-    path: '/admin/user',
-    name: 'AdminUser',
+    path: '/p_index/admin/user',
+    name: 'p_AdminUser',
     component: AdminUser,
     meta: {
+      "type":'pc',
+      loginRequire: true
+    }
+  },
+  //mobile
+  {
+    path: '/m_index',
+    name: 'm_BigScreen',
+    component: () => import('../views/mobile/m_bigScreen.vue'),
+    meta:{
+      "type":'mobile',
+      loginRequire: true
+    }
+  },
+  {
+    path: '/m_index/detail',
+    name: 'm_Detail',
+    component: () => import('../views/mobile/m_detail.vue'),
+    meta: {
+      "type":'mobile',
+      loginRequire: true
+    },
+  },
+  {
+    path: '/m_index/login',
+    name: 'm_Login',
+    component: m_Login,
+    meta:{
+      "type":'mobile',
+    }
+  },
+  {
+    path: '/m_index/about',
+    name: 'm_About',
+    component: m_About,
+    meta:{
+      "type":'mobile',
+      loginRequire: true
+    }
+  },
+  {
+    path: '/m_index/admin/physicalValue',
+    name: 'm_AdminPhysicalValue',
+    component: m_AdminPhysicalValue,
+    meta:{
+      "type":'mobile',
+      loginRequire: true
+    }
+  },
+  {
+    path: '/m_index/admin/user',
+    name: 'm_AdminUser',
+    component: m_AdminUser,
+    meta: {
+      "type":'mobile',
       loginRequire: true
     }
   },
@@ -100,19 +133,21 @@ const router = createRouter({
   routes
 })
 //路由登录拦截
-router.beforeEach((to, from, next) =>{
+router.beforeEach((to, from, next) => {
   // 要不要对meta.loginRequire属性做监控拦截
-  if(to.matched.some(function (item){
+  if (to.matched.some(function (item) {
     console.log(item, "是否需要登录校验：", item.meta.loginRequire);
     return item.meta.loginRequire
-  })){
+  })) {
     const loginUser = store.state.user;
-    if(Tool.isEmpty(loginUser)){
-      next('/login');
-    }else {
+    if (Tool.isEmpty(loginUser)) {
+      const path = redirectPath+"/login"
+      console.log(path)
+      next(path);
+    } else {
       next();
     }
-  }else {
+  } else {
     next();
   }
 })

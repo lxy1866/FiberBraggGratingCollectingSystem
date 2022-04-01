@@ -2,7 +2,7 @@
   <div id="center">
     <div class="up">
       <div class="bg-color-black item" v-for="item in titleItem" :key="item.title">
-        <p class="ml-3 colorBlue fw-b">{{item.title}}</p>
+        <p>{{item.title}}</p>
         <div>
           <dv-digital-flop :config="item.number" style="width:100px;height:50px;" />
         </div>
@@ -11,7 +11,7 @@
     <div class="down">
       <div class="percent">
         <div class="item  bg-color-black">
-          <span>今日在线率</span>
+          <span >今日在线率</span>
           <centerChart1 />
         </div>
         <div class="item  bg-color-black">
@@ -38,7 +38,6 @@ import centerChart1 from "./centerChart1.vue";
 import centerChart2 from "./centerChart2.vue";
 import {defineComponent, onMounted, ref, toRefs,reactive} from "vue";
 import axios from "axios";
-
 
 const warnMessage = '暂无'
 function handleQueryOnline() {
@@ -106,7 +105,7 @@ export default defineComponent({
     onMounted(async ()=>{
       const { data } = await handleQueryOnline();
       console.log(data.content)
-      const newTitleItem = [{
+      state.titleItem = [{
         title: "今日传感器总量",
         number: {
           number: [data.content.total],
@@ -155,14 +154,6 @@ export default defineComponent({
           }
         }
       ]
-      state.titleItem = newTitleItem
-
-      // console.log(state.titleItem[0])
-      // console.log(state.titleItem[0].number.number)
-      // console.log(state.titleItem[0].number.number[0])
-      // state.titleItem[0].number.number.shift();
-      // state.titleItem[0].number.number.push(data.content)
-      // console.log(state.titleItem[0].number.number)
     })
     return {
       ...toRefs(state),

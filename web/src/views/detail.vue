@@ -1,5 +1,6 @@
 <template>
-  <a-layout-content style="padding: 0 50px;margin-bottom: 70px">
+  <the-header></the-header>
+  <a-layout-content  class="components-layout-fixed">
     <a-breadcrumb style="margin: 16px 0">
 
     </a-breadcrumb>
@@ -125,6 +126,7 @@
       </a-layout-content>
     </a-layout>
   </a-layout-content>
+  <the-footer></the-footer>
 </template>
 <script>
 import { defineComponent, ref, watch, onMounted} from "vue";
@@ -134,6 +136,8 @@ import Breakpoint from "../components/breakpoint.vue";
 import TwoDimension from "../components/twoDimension.vue";
 import ThreeDimension from "../components/threeDimension.vue";
 import Introduction from "@/components/introduction.vue";
+import TheHeader from '@/components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue';
 export default defineComponent({
   components: {
     Introduction,
@@ -142,6 +146,8 @@ export default defineComponent({
     Breakpoint,
     TwoDimension,
     ThreeDimension,
+    TheHeader,
+    TheFooter
   },
   setup(){
     const selectedKeys = ref();
@@ -162,3 +168,10 @@ export default defineComponent({
 
 });
 </script>
+<style scoped>
+.components-layout-fixed{
+  min-height: 100%;
+  padding: 0 50px;
+  margin-bottom: 70px
+}
+</style>

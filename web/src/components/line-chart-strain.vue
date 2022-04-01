@@ -14,19 +14,19 @@ export default defineComponent({
   name: 'line-chart-vibration',
   setup() {
     const strainColors: Record<string, string> = {
-      0: '#ed2939',
+      0: '#3d2939',
       1: '#000',
-      2: '#003897',
+      2: '#403897',
       3: '#f93',
       4: '#bc002d',
-      5: '#024fa2',
-      6: '#000',
-      7: '#00247d',
+      5: '#924fa2',
+      6: '#044500',
+      7: '#09947d',
       8: '#ef2b2d',
-      9: '#dc143c',
-      10: '#d52b1e',
-      11: '#e30a17',
-      12: '#00247d',
+      9: '#82043c',
+      10: '#442b1e',
+      11: '#330a17',
+      12: '#70247d',
       13: '#b22234',
       14: '#ef7878',
       15: '#559069',
@@ -118,7 +118,8 @@ export default defineComponent({
           data: ['val6', 'val7', 'val8', 'val9', 'val10'],
           axisLine: {
             lineStyle: {
-              color: '#565c67'
+              color: '#565c67',
+              fontSize: 10
             }
           },
           axisLabel: {

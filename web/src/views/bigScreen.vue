@@ -1,6 +1,7 @@
 <template>
+  <the-header></the-header>
   <a-layout-content style="padding: 0; background: #001529" >
-    <div style="display: flex;justify-content: space-between" >
+    <div style="position: relative; display: flex;justify-content: space-between" >
       <dv-decoration-8 style="width:300px;height:50px;" />
       <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
         <div style="font-size: 20px; color: cadetblue;text-align:center;" >海底电缆智能健康监测系统</div>
@@ -35,11 +36,11 @@
       </div>
     </div>
   </a-layout-content>
+  <the-footer></the-footer>
 </template>
 
 <script>
 import {defineComponent, onMounted} from "vue";
-import {config1,config2,config3,config4,config5,config6,config7,option2} from "./config.js";
 
 import CenterTop from '../components/center-top.vue'
 import LineChartTemperature from '../components/line-chart-temperature.vue'
@@ -48,7 +49,8 @@ import Line3dShape from '../components/line-3d-shape.vue'
 import LineChartVibration from '../components/line-chart-vibration.vue'
 import TemperatureGauge from '../components/temperatureGauge.vue'
 import RealTemperature from '../components/realTemperature.vue'
-
+import TheHeader from '@/components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue';
 export default defineComponent({
   components:{
     CenterTop,
@@ -57,7 +59,9 @@ export default defineComponent({
     LineChartStrain,
     Line3dShape,
     TemperatureGauge,
-    RealTemperature
+    RealTemperature,
+    TheHeader,
+    TheFooter
   },
   setup(){
     onMounted(()=>{
@@ -65,14 +69,6 @@ export default defineComponent({
 
     });
     return{
-      config1,
-      config2,
-      config3,
-      config4,
-      config5,
-      config6,
-      config7,
-      option2,
     }
   }
 });
@@ -124,4 +120,24 @@ img{
   height: fit-content;
   display: flex;
 }
+/*@media screen and(max-device-width: 450px){*/
+/*  .container{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    padding-bottom: 75px;*/
+/*  }*/
+/*  .left{*/
+/*    width: 100%;*/
+/*  }*/
+/*  .right{*/
+/*    width: 100%;*/
+/*  }*/
+/*  .center{*/
+/*    width: 100%;*/
+/*  }*/
+/*  .box{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*  }*/
+/*}*/
 </style>

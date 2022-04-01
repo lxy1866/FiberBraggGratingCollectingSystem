@@ -1,17 +1,19 @@
 <template>
-  <div id="lineChartVibration" class="lineChartVibration"></div>
+  <div id="lineChartStrain" class="lineChartStrain"></div>
 </template>
+
 <script lang="ts">
 import * as echarts from 'echarts';
 import store from "@/store";
 import {Tool} from "@/util/tool";
-import {defineComponent, onMounted, computed} from "vue";
+import {defineComponent, onMounted, computed, inject, watch} from "vue";
 import axios from "axios";
-const user = computed(()=>store.state.user)
+
+const user = computed(() => store.state.user)
 export default defineComponent({
-  name: 'line-chart-vibration',
+  name: 'm_line-chart-vibration',
   setup() {
-    const vibrationColors: Record<string, string> = {
+    const strainColors: Record<string, string> = {
       0: '#3d2939',
       1: '#000',
       2: '#403897',
@@ -40,38 +42,42 @@ export default defineComponent({
       25: '#759594',
       27: '#c56600'
     };
-    function getFbgValueInfoForDistance(){
-      return axios.get("/nr/vibrationDistance")
+
+
+    function getFbgValueInfoForDistance() {
+      return axios.get("/nr/strainDistance")
     }
-    onMounted(async ()=>{
-      const { data } = await getFbgValueInfoForDistance();
+
+    onMounted(async () => {
+      const {data} = await getFbgValueInfoForDistance();
       const FbgValueInfo = data.content//数组 每一个元素是id, propertyName, min, max, distance, creatTime, category
       let y = []
       for (let i = 0; i < FbgValueInfo.length; i++) {
         y.push(FbgValueInfo[i].propertyName)
         //console.log(y)
       }
-      const chartDom = document.getElementById('lineChartVibration')!;
+      const chartDom = document.getElementById('lineChartStrain')!;
       const myChart = echarts.init(chartDom);
-      let option:any;
+      let option: any;
       let websocket: any;
       let token: any;
-      //通过propertyName得到对应的distance
-      function distance(propertyName:string){
-        if(!propertyName){
+
+      function distance(propertyName: string) {
+        if (!propertyName) {
           return '';
         }
         return (
-            FbgValueInfo.find(function (item:any){
+            FbgValueInfo.find(function (item: any) {
                   return item.propertyName == propertyName
                 }
             )).distance
       }
-      option =  {
+
+      option = {
         title: {
-          text: '海缆实时振动值',
-          textStyle:{
-            color: '#ffffff',
+          text: '海缆实时应变值',
+          textStyle: {
+            color: 'white',
             fontFamily: '宋体',
           },
         },
@@ -84,8 +90,8 @@ export default defineComponent({
         toolbox: {
           show: true,
           feature: {
-            dataView: { readOnly: false },
-            magicType: { type: ['line', 'bar'] },
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar']},
             restore: {},
             saveAsImage: {}
           }
@@ -97,9 +103,9 @@ export default defineComponent({
               return Math.round(n) + '';
             },
           },
-          axisLine:{
-            lineStyle:{
-              color:'#565c67'
+          axisLine: {
+            lineStyle: {
+              color: '#565c67'
             }
           },
         },
@@ -107,19 +113,19 @@ export default defineComponent({
           name: '初始位置',
           nameLocation: 'start',
           type: 'category',
-          max: 4,
+          max: 19,
           inverse: false,
-          data:['val6','val7','val8','val9','val10'],
-          axisLine:{
-            lineStyle:{
-              color:'#565c67'
+          data: ['val6', 'val7', 'val8', 'val9', 'val10'],
+          axisLine: {
+            lineStyle: {
+              color: '#565c67'
             }
           },
           axisLabel: {
             show: true,
             fontSize: 14,
-            formatter: function (value: any){
-              return '{distance|' + distance(value)+'米}';
+            formatter: function (value: any) {
+              return '{distance|' + distance(value) + '米}';
             },
 
             rich: {
@@ -139,9 +145,9 @@ export default defineComponent({
             type: 'bar',
             itemStyle: {
               //柱条的颜色
-              color: function (param:any) {
+              color: function (param: any) {
                 //console.log(param)
-                return vibrationColors[param.data.physicalValueInfoId] || '#003897';
+                return strainColors[param.data.physicalValueInfoId] || '#003897';
               }
             },
             label: {
@@ -151,7 +157,7 @@ export default defineComponent({
               valueAnimation: true,
               fontFamily: 'monospace',
             },
-            data:[100, 200, 300, 400, 500]
+            data: [100, 200, 300, 400, 500]
           }
         ],
         // Disable init animation.
@@ -162,21 +168,22 @@ export default defineComponent({
       };
       option.yAxis.data = y
       myChart.setOption<echarts.EChartsOption>(option);
-      const onOpen = () =>{
-        console.log('WebSocket连接成功，状态码：',websocket.readyState)
+      const onOpen = () => {
+        console.log('WebSocket连接成功，状态码：', websocket.readyState)
       };
-      const onMessage = function (msg:any){
+      const onMessage = function (msg: any) {
+        //console.log("WebSocket收到消息：",event.data);
         let data = JSON.parse(msg.data);
-        option.series[0].data = data[0];
+        option.series[0].data = data[1];
         myChart.setOption<echarts.EChartsOption>(option);
       };
-      const onError = ()=>{
+      const onError = () => {
         console.log('WebSocket连接错误，状态码：', websocket.readyState)
       };
-      const onClose = ()=>{
-        console.log('WebSocket连接关闭，状态码：',websocket.readyState)
+      const onClose = () => {
+        console.log('WebSocket连接关闭，状态码：', websocket.readyState)
       };
-      const initWebSocket = () =>{
+      const initWebSocket = () => {
         //连接成功
         websocket.onOpen = onOpen;
         // 收到消息的回调
@@ -186,16 +193,16 @@ export default defineComponent({
         // 连接关闭的回调
         websocket.onClose = onClose;
       }
-      if('WebSocket' in window){
+      if ('WebSocket' in window) {
         token = Tool.uuid(10);
         //连接地址：ws://127.0.0.1:8080/ws/xxx
-        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/ws/'+token);
+        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/ws/' + token);
         initWebSocket()
-      }else{
+      } else {
         alert('当前浏览器 不支持')
       }
     });
-    return{
+    return {
       user,
     }
   },
@@ -203,7 +210,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/*.lineChartVibration{*/
-/*  display: flex;*/
-/*}*/
+.lineChartStrain {
+  display: flex;
+}
 </style>

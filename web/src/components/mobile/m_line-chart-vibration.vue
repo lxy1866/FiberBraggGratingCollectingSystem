@@ -9,7 +9,7 @@ import {defineComponent, onMounted, computed} from "vue";
 import axios from "axios";
 const user = computed(()=>store.state.user)
 export default defineComponent({
-  name: 'line-chart-vibration',
+  name: 'm_line-chart-vibration',
   setup() {
     const vibrationColors: Record<string, string> = {
       0: '#3d2939',
@@ -71,7 +71,7 @@ export default defineComponent({
         title: {
           text: '海缆实时振动值',
           textStyle:{
-            color: '#ffffff',
+            color: 'white',
             fontFamily: '宋体',
           },
         },

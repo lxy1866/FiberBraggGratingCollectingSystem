@@ -5,7 +5,6 @@ const USER = "USER";
 const store =  createStore({
   state: {
     user:SessionStorage.get("USER") || {}
-
   },
   getters: {
 
