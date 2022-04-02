@@ -17,7 +17,6 @@ public class DateUtil {
         todayStart.set(Calendar.MILLISECOND, 0);
         return todayStart.getTime();
     }
-
     public static Date getEndTime() {
         Calendar todayEnd = Calendar.getInstance();
         todayEnd.set(Calendar.HOUR, 11);
@@ -29,7 +28,6 @@ public class DateUtil {
     public static Date getNowTime(){
         return new Date();
     }
-
     /**
      *
      * @return 获取某年的第一天
@@ -52,8 +50,6 @@ public class DateUtil {
         calendar.roll(Calendar.DAY_OF_YEAR, -1);
         return calendar.getTime();
     }
-
-
     /**
      * @return 获取过去N小时的开始时间
      */
