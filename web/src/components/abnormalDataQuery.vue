@@ -1,18 +1,19 @@
 <template>
-  <p style="color: red; font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
-  <n-space vertical>
-    <n-date-picker
-        v-model:value="range2"
-        type="datetimerange"
-        :shortcuts="rangeShortcuts"
-    />
-    <n-data-table
-        size="small"
-        :columns="columns"
-        :data="data"
-        :pagination="pagination"
-    />
-  </n-space>
+    <p style="color: red; font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
+    <n-space vertical>
+      <n-date-picker
+          v-model:value="range2"
+          type="datetimerange"
+          :shortcuts="rangeShortcuts"
+      />
+      <n-data-table
+          size="small"
+          :columns="columns"
+          :data="data"
+          :pagination="pagination"
+      />
+    </n-space>
+
 </template>
 
 <script lang="ts">

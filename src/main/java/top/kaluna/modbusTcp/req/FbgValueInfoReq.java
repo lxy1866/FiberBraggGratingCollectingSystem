@@ -1,8 +1,12 @@
-package top.kaluna.modbusTcp.domain;
+package top.kaluna.modbusTcp.req;
 
 import java.math.BigDecimal;
 
-public class FbgValueInfo {
+/**
+ * @author Yuery
+ * @date 2022/4/8/0008 - 11:32
+ */
+public class FbgValueInfoReq {
     private Long id;
 
     private String propertyName;
@@ -13,13 +17,29 @@ public class FbgValueInfo {
 
     private Long distance;
 
-    private Long createTime;
+    private String createTime;
 
     private Integer category;
 
-    private Integer channel;
+    private int channel;
 
-    private Integer arrayNum;
+    private int arrayNum;
+
+    public int getChannel() {
+        return channel;
+    }
+
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
+
+    public int getArrayNum() {
+        return arrayNum;
+    }
+
+    public void setArrayNum(int arrayNum) {
+        this.arrayNum = arrayNum;
+    }
 
     public Long getId() {
         return id;
@@ -61,13 +81,6 @@ public class FbgValueInfo {
         this.distance = distance;
     }
 
-    public Long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Long createTime) {
-        this.createTime = createTime;
-    }
 
     public Integer getCategory() {
         return category;
@@ -77,38 +90,27 @@ public class FbgValueInfo {
         this.category = category;
     }
 
-    public Integer getChannel() {
-        return channel;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setChannel(Integer channel) {
-        this.channel = channel;
-    }
-
-    public Integer getArrayNum() {
-        return arrayNum;
-    }
-
-    public void setArrayNum(Integer arrayNum) {
-        this.arrayNum = arrayNum;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", propertyName=").append(propertyName);
+        final StringBuilder sb = new StringBuilder("FbgValueInfoReq{");
+        sb.append("id=").append(id);
+        sb.append(", propertyName='").append(propertyName).append('\'');
         sb.append(", min=").append(min);
         sb.append(", max=").append(max);
         sb.append(", distance=").append(distance);
-        sb.append(", createTime=").append(createTime);
+        sb.append(", createTime='").append(createTime).append('\'');
         sb.append(", category=").append(category);
         sb.append(", channel=").append(channel);
         sb.append(", arrayNum=").append(arrayNum);
-        sb.append("]");
+        sb.append('}');
         return sb.toString();
     }
 }

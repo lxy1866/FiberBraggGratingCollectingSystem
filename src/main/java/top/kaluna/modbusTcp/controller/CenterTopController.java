@@ -6,7 +6,7 @@ import top.kaluna.modbusTcp.resp.CenterTopResp;
 import top.kaluna.modbusTcp.resp.CommonResp;
 import top.kaluna.modbusTcp.service.BreakpointRecordService;
 import top.kaluna.modbusTcp.service.FbgValueService;
-import top.kaluna.modbusTcp.service.NormalRangeService;
+import top.kaluna.modbusTcp.service.FbgValueInfoService;
 
 import javax.annotation.Resource;
 
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 @RequestMapping("/ct")
 public class CenterTopController {
     @Resource
-    private NormalRangeService normalRangeSaveService;
+    private FbgValueInfoService normalRangeSaveService;
     @Autowired
     private BreakpointRecordService breakpointRecordService;
     @Autowired

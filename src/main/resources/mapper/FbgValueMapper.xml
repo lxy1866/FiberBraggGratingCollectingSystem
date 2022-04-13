@@ -211,9 +211,9 @@
   <select id="selectForAbnormal" parameterType="Long" resultType="top.kaluna.modbusTcp.domain.FbgValue">
     select * from fbg_value a left join fbg_value_info b
     on a.physical_value_info_id = b.id
-    where a.value not between b.min
+    where a.value not between b.min and b.max
     and a.create_time between #{startTime} and #{endTime}
-    and b.max order by a.create_time
+     order by a.create_time
   </select>
   <insert id="multipleInsert">
     insert into fbg_value

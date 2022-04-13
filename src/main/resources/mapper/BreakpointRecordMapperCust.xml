@@ -4,10 +4,12 @@
 
 
 <insert id="insertBreakpointInfoByScanPhysicalValue" parameterType="long">
-    insert ignore into breakpoint_record (create_time, tag) select min(create_time) create_time, tag from fbg_value where create_time > #{createTime, jdbcType=BIGINT}-1800000 and tag != 0 group by tag;
+    insert ignore into breakpoint_record (create_time, array_num)
+    select min(create_time) create_time, array_num from fbg_value
+    where create_time > #{createTime, jdbcType=BIGINT}-1800000 and array_num != 0 group by array_num, channel;
 </insert>
-<select id="findTagForOnLine" resultType="java.lang.Byte">
-    select tag from breakpoint_record order by create_time desc limit 1
-</select>
 
+<select id="calculateOnline" resultType="top.kaluna.modbusTcp.domain.BreakpointRecord">
+    select * from breakpoint_record;
+</select>
 </mapper>

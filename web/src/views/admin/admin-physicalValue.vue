@@ -1,6 +1,6 @@
 <template>
   <the-header></the-header>
-  <a-layout-content style="height: 744px;background: white">
+  <a-layout-content>
       <div class="content-wrapper">
         <div class="content-left" style="margin-top: 30px; ">
           <n-space vertical>
@@ -10,11 +10,13 @@
                 :bordered="false"
             >
               每个光纤光栅传感器都有自己的应变量程（如果是温度传感器则为温度量程，如果是振动为振动量程），超出范围的记录会被展示到异常波动数据页面中。<br/>
-              参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。注意：先点击重新修改再点击确认提交。
+              参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。注意：先点击重新修改再点击确认提交，传感器类别：应变填1，温度填2，振动填3
             </n-card>
-              <p style="color: red">请先输入光纤光栅传感阵列的个数：</p>
+            <br>
+              <p class="fontClass">请先输入光纤光栅传感阵列的个数：</p>
               <n-input-number :style="{ width: '20%' }" v-model:value="inputNum" />
-              <p style="color: red">请输入每个光纤光栅传感阵列的应变值的量程（或者温度量程，振动量程）以及初始位置：</p>
+            <br><br>
+              <p class="fontClass">请输入每个光纤光栅传感阵列的应变值的量程（或者温度量程，振动量程）以及初始位置：</p>
             <dv-border-box-2>
               <n-form :model="model" >
               <n-dynamic-input
@@ -49,7 +51,7 @@
                   >
                     <n-input
                         v-model:value="model.dynamicInputValue[index].name"
-                        placeholder="请输入val+序号【1-10】"
+                        placeholder="val+序号【1-10】"
                         @keydown.enter.prevent
                     />
                     <!--
@@ -68,6 +70,7 @@
                     <n-input
                         v-model:value="model.dynamicInputValue[index].maxValue"
                         placeholder="maxValue"
+
                         @keydown.enter.prevent
                     />
                   </n-form-item>
@@ -93,7 +96,33 @@
                   >
                     <n-input
                         v-model:value="model.dynamicInputValue[index].category"
-                        placeholder="应变1，温度2，振动3"
+                        placeholder="传感器类别"
+                        @keydown.enter.prevent
+                    />
+                  </n-form-item>
+                  &nbsp;&nbsp;
+                  <n-form-item
+                      ignore-path-change
+                      :show-label="false"
+                      :path="`dynamicInputValue[${index}].channel`"
+                      :rul="dynamicInputRule"
+                  >
+                    <n-input
+                        v-model:value="model.dynamicInputValue[index].channel"
+                        placeholder="通道号"
+                        @keydown.enter.prevent
+                    />
+                  </n-form-item>
+                  &nbsp;&nbsp;
+                  <n-form-item
+                      ignore-path-change
+                      :show-label="false"
+                      :path="`dynamicInputValue[${index}].arrayNum`"
+                      :rul="dynamicInputRule"
+                  >
+                    <n-input
+                        v-model:value="model.dynamicInputValue[index].arrayNum"
+                        placeholder="阵列序号"
                         @keydown.enter.prevent
                     />
                   </n-form-item>
@@ -159,7 +188,7 @@ import axios from 'axios';
 import TheHeader from '@/components/the-header.vue';
 import TheFooter from '@/components/the-footer.vue';
 const model = ref({
-  dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:''}]
+  dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:'',channel:'',arrayNum:''}]
 })
 
 const code = ref();
@@ -234,7 +263,9 @@ export default defineComponent({
           name: '',
           maxValue:'',
           distance:'',
-          category:''
+          category:'',
+          channel:'',
+          arrayNum:''
         }
       },
       handlePositiveClick,
@@ -256,11 +287,18 @@ export default defineComponent({
   display: flex;
   position: relative;
   justify-content: space-evenly;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-bottom: 70px;
 }
 .content-right{
   height: 100%;
 }
 .content-left{
   height: 100%
+}
+.fontClass{
+  color: #001529;
+  font-family: 宋体;
 }
 </style>

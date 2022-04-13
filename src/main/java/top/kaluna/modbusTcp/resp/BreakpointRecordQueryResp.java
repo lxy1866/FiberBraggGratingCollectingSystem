@@ -7,13 +7,15 @@ package top.kaluna.modbusTcp.resp;
 public class BreakpointRecordQueryResp {
     private Long id;
 
-    private Byte tag;
+    private Integer  arrayNum;
 
     private Long createTime;
 
     private Byte state;
 
     private String detail;
+
+    private Integer channel;
 
     public Long getId() {
         return id;
@@ -23,12 +25,20 @@ public class BreakpointRecordQueryResp {
         this.id = id;
     }
 
-    public Byte getTag() {
-        return tag;
+    public Integer getArrayNum() {
+        return arrayNum;
     }
 
-    public void setTag(Byte tag) {
-        this.tag = tag;
+    public void setArrayNum(Integer arrayNum) {
+        this.arrayNum = arrayNum;
+    }
+
+    public int getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Integer channel) {
+        this.channel = channel;
     }
 
     public Long getCreateTime() {
@@ -55,18 +65,17 @@ public class BreakpointRecordQueryResp {
         this.detail = detail;
     }
 
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", tag=").append(tag);
+        final StringBuilder sb = new StringBuilder("BreakpointRecordQueryResp{");
+        sb.append("id=").append(id);
+        sb.append(", arrayNum=").append(arrayNum);
         sb.append(", createTime=").append(createTime);
         sb.append(", state=").append(state);
-        sb.append(", detail=").append(detail);
-        sb.append("]");
+        sb.append(", detail='").append(detail).append('\'');
+        sb.append(", channel=").append(channel);
+        sb.append('}');
         return sb.toString();
     }
 }

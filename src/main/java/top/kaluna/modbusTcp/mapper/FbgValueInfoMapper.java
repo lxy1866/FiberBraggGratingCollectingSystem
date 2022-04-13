@@ -23,4 +23,5 @@ public interface FbgValueInfoMapper {
     int total();
 
     List<FbgValueInfo> selectAllRecord();
+
 }

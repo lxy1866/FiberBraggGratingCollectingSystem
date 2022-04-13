@@ -2,6 +2,7 @@ package top.kaluna.modbusTcp.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.kaluna.modbusTcp.interceptor.LoginInterceptor;
 
@@ -31,7 +32,18 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/nr/total",
                         "/fbg/abnormalList",
                         "/fbg/temperatureNow"
-                        );
+                        )
+                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**","/doc.html", "/swagger-ui.html/**");
+    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("doc.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
     }
 
 }

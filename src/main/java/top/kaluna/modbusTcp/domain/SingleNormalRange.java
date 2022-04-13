@@ -12,6 +12,8 @@ public class SingleNormalRange {
     private String name;
     private Long distance;
     private int category;
+    private int channel;
+    private int arrayNum;
 
     public int getCategory() {
         return category;
@@ -53,6 +55,22 @@ public class SingleNormalRange {
         this.name = name;
     }
 
+    public int getChannel() {
+        return channel;
+    }
+
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
+
+    public int getArrayNum() {
+        return arrayNum;
+    }
+
+    public void setArrayNum(int arrayNum) {
+        this.arrayNum = arrayNum;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("SingleNormalRange{");
@@ -60,7 +78,9 @@ public class SingleNormalRange {
         sb.append(", maxValue=").append(maxValue);
         sb.append(", name='").append(name).append('\'');
         sb.append(", distance=").append(distance);
-        sb.append(", Category=").append(category);
+        sb.append(", category=").append(category);
+        sb.append(", channel=").append(channel);
+        sb.append(", arrayNum=").append(arrayNum);
         sb.append('}');
         return sb.toString();
     }

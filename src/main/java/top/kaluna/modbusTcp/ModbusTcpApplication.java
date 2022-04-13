@@ -8,11 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @SpringBootApplication
 @MapperScan("top.kaluna.modbusTcp.mapper")
 @EnableRabbit
 @EnableScheduling
+@EnableOpenApi
 public class ModbusTcpApplication {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ModbusTcpApplication.class);

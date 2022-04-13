@@ -25,7 +25,6 @@ import javax.annotation.Resource;
 @Order(1)
 public class ReceiveFromMqttRunner implements ApplicationRunner {
 
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
         receive();
@@ -49,7 +48,7 @@ public class ReceiveFromMqttRunner implements ApplicationRunner {
     }
     private static void receive() throws MqttException{
         int Qos  = 0;
-        String topic = "/tcp/fbg";
+        String topic = "/tcp/strain";
         MqttClient mqttClient = connect();
         mqttClient.subscribe(topic, Qos);
     }
@@ -98,7 +97,6 @@ class ReceiveCallback implements MqttCallback{
             LOG.info("推送新消息结束，耗时：{}毫秒",System.currentTimeMillis() - start);
         }
     }
-
 //    @Component
 //    static class SaveDataToMysql{
 //

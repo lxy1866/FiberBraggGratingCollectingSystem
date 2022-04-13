@@ -1,6 +1,6 @@
 <template>
   <a-layout-footer style="text-align: center; background:  #001529; color: cadetblue; position:fixed; bottom:0px;left:0px;right: 0px;">
-    海底电缆智能健康监测系统 ©2022 Created by Danly.  <span style="color: cadetblue">{{timeslot}}</span>
+    光纤光栅智能健康监测系统 ©2022 Created by Danly.  <span style="color: cadetblue">{{timeslot}}</span>
   </a-layout-footer>
 </template>
 <script lang="ts">

@@ -1,6 +1,8 @@
 package top.kaluna.modbusTcp.mapper;
 
-import org.apache.ibatis.annotations.Param;
+import top.kaluna.modbusTcp.domain.BreakpointRecord;
+
+import java.util.List;
 
 /**
  * @author Yuery
@@ -10,5 +12,5 @@ public interface BreakpointRecordCustMapper {
 
     void insertBreakpointInfoByScanPhysicalValue(Long createTime);
 
-    byte findTagForOnLine();
+    List<BreakpointRecord> calculateOnline();
 }

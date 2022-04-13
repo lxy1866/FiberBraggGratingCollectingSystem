@@ -33,7 +33,7 @@ export default defineComponent({
           }
         },
         title: {
-          text: '海缆实时形状',
+          text: '光纤光栅实时形状',
           textStyle:{
             color: '#ffffff',
             fontFamily: '宋体',

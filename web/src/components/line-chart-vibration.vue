@@ -69,7 +69,7 @@ export default defineComponent({
       }
       option =  {
         title: {
-          text: '海缆实时振动值',
+          text: '光纤光栅实时振动值',
           textStyle:{
             color: '#ffffff',
             fontFamily: '宋体',
@@ -167,7 +167,7 @@ export default defineComponent({
       };
       const onMessage = function (msg:any){
         let data = JSON.parse(msg.data);
-        option.series[0].data = data[0];
+        option.series[0].data = data[1];
         myChart.setOption<echarts.EChartsOption>(option);
       };
       const onError = ()=>{

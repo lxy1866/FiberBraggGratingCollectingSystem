@@ -5,12 +5,12 @@ import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import top.kaluna.modbusTcp.domain.BreakpointRecord;
-import top.kaluna.modbusTcp.domain.BreakpointRecordExample;
-import top.kaluna.modbusTcp.domain.BreakpointRecordFinish;
+import top.kaluna.modbusTcp.domain.*;
+
 import top.kaluna.modbusTcp.mapper.BreakpointRecordCustMapper;
 import top.kaluna.modbusTcp.mapper.BreakpointRecordFinishMapper;
 import top.kaluna.modbusTcp.mapper.BreakpointRecordMapper;
+import top.kaluna.modbusTcp.mapper.FbgValueInfoMapper;
 import top.kaluna.modbusTcp.req.BreakpointRecordQueryReq;
 import top.kaluna.modbusTcp.resp.BreakpointRecordQueryResp;
 import top.kaluna.modbusTcp.resp.PageResp;
@@ -18,6 +18,7 @@ import top.kaluna.modbusTcp.util.CopyUtil;
 import top.kaluna.modbusTcp.util.DateUtil;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ public class BreakpointRecordService {
     private BreakpointRecordMapper breakpointRecordMapper;
     @Resource
     private BreakpointRecordFinishMapper breakpointRecordFinishMapper;
+    @Resource
+    private FbgValueInfoMapper fbgValueInfoMapper;
     public void insertBreakpointInfoByScanFbgValue(){
         Long createTime = DateUtil.getNowTime().getTime();
         breakpointRecordCustMapper.insertBreakpointInfoByScanPhysicalValue(createTime);
@@ -65,20 +68,40 @@ public class BreakpointRecordService {
         List<BreakpointRecord> breakpointRecords = breakpointRecordMapper.selectByExample(breakpointRecordExample);
 
         Byte state = 1;
-        Byte tag = 0;
+        int arrayNum = 0;
 
         breakpointRecords.forEach((BreakpointRecord breakpointRecord)->{
             breakpointRecord.setState(state);
-            breakpointRecord.setTag(tag);
+            breakpointRecord.setArrayNum(arrayNum);
             BreakpointRecordFinish breakpointRecordFinish = CopyUtil.copy(breakpointRecord, BreakpointRecordFinish.class);
             breakpointRecordFinishMapper.insert(breakpointRecordFinish);
         });
         breakpointRecordMapper.deleteByExample(breakpointRecordExample);
     }
 
+    //在线的个数计算 将断点记录表中的所有(arrayNum-1)相加起来下来 由于有一些通道没有断点，将该通道下的所有传感器加起来
     public int calculateOnLine() {
-        int tag = (int) breakpointRecordCustMapper.findTagForOnLine();
-        //计算在线率 tag = 1 在线的0个 tag = 2 在线的1个
-        return tag - 1;
+        FbgValueInfoExample fbgValueInfoExample = new FbgValueInfoExample();
+        final FbgValueInfoExample.Criteria criteria = fbgValueInfoExample.createCriteria();
+
+        int sum = 0;
+        List channelList = new ArrayList();
+        final List<BreakpointRecord> breakpointRecords = breakpointRecordCustMapper.calculateOnline();
+        List<FbgValueInfo> fbgValueInfos = fbgValueInfoMapper.selectAllRecord();
+
+        for (int i = 0; i < breakpointRecords.size(); i++) {
+            channelList.add(breakpointRecords.get(i).getChannel());
+            sum += breakpointRecords.get(i).getArrayNum()-1;
+        }
+        for (int i = 0; i < fbgValueInfos.size(); i++) {
+            if(!channelList.contains(fbgValueInfos.get(i).getChannel())){
+
+                criteria.andChannelEqualTo(fbgValueInfos.get(i).getChannel());
+                //计算没有在断点记录表中的通道下的所有传感器个数
+                final List<FbgValueInfo> fbgValueInfos1 = fbgValueInfoMapper.selectByExample(fbgValueInfoExample);
+                sum += fbgValueInfos1.size();
+            }
+        }
+        return sum;
     }
 }

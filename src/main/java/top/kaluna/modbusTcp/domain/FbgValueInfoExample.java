@@ -534,6 +534,126 @@ public class FbgValueInfoExample {
             addCriterion("category not between", value1, value2, "category");
             return (Criteria) this;
         }
+
+        public Criteria andChannelIsNull() {
+            addCriterion("channel is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIsNotNull() {
+            addCriterion("channel is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelEqualTo(Integer value) {
+            addCriterion("channel =", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelNotEqualTo(Integer value) {
+            addCriterion("channel <>", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelGreaterThan(Integer value) {
+            addCriterion("channel >", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("channel >=", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelLessThan(Integer value) {
+            addCriterion("channel <", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelLessThanOrEqualTo(Integer value) {
+            addCriterion("channel <=", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIn(List<Integer> values) {
+            addCriterion("channel in", values, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelNotIn(List<Integer> values) {
+            addCriterion("channel not in", values, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelBetween(Integer value1, Integer value2) {
+            addCriterion("channel between", value1, value2, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelNotBetween(Integer value1, Integer value2) {
+            addCriterion("channel not between", value1, value2, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumIsNull() {
+            addCriterion("array_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumIsNotNull() {
+            addCriterion("array_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumEqualTo(Integer value) {
+            addCriterion("array_num =", value, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumNotEqualTo(Integer value) {
+            addCriterion("array_num <>", value, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumGreaterThan(Integer value) {
+            addCriterion("array_num >", value, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("array_num >=", value, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumLessThan(Integer value) {
+            addCriterion("array_num <", value, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumLessThanOrEqualTo(Integer value) {
+            addCriterion("array_num <=", value, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumIn(List<Integer> values) {
+            addCriterion("array_num in", values, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumNotIn(List<Integer> values) {
+            addCriterion("array_num not in", values, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumBetween(Integer value1, Integer value2) {
+            addCriterion("array_num between", value1, value2, "arrayNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrayNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("array_num not between", value1, value2, "arrayNum");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -9,6 +9,8 @@
     <result column="distance" jdbcType="BIGINT" property="distance" />
     <result column="create_time" jdbcType="BIGINT" property="createTime" />
     <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="channel" jdbcType="INTEGER" property="channel" />
+    <result column="array_num" jdbcType="INTEGER" property="arrayNum" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, property_name, `min`, `max`, distance, create_time, category
+    id, property_name, `min`, `max`, distance, create_time, category, channel, array_num
   </sql>
   <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfoExample" resultMap="BaseResultMap">
     select
@@ -94,10 +96,12 @@
   <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfo">
     insert into fbg_value_info (id, property_name, `min`, 
       `max`, distance, create_time, 
-      category)
+      category, channel, array_num
+      )
     values (#{id,jdbcType=BIGINT}, #{propertyName,jdbcType=VARCHAR}, #{min,jdbcType=DECIMAL}, 
       #{max,jdbcType=DECIMAL}, #{distance,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, 
-      #{category,jdbcType=INTEGER})
+      #{category,jdbcType=INTEGER}, #{channel,jdbcType=INTEGER}, #{arrayNum,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfo">
     insert into fbg_value_info
@@ -123,6 +127,12 @@
       <if test="category != null">
         category,
       </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="arrayNum != null">
+        array_num,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -145,6 +155,12 @@
       </if>
       <if test="category != null">
         #{category,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=INTEGER},
+      </if>
+      <if test="arrayNum != null">
+        #{arrayNum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -178,6 +194,12 @@
       <if test="record.category != null">
         category = #{record.category,jdbcType=INTEGER},
       </if>
+      <if test="record.channel != null">
+        channel = #{record.channel,jdbcType=INTEGER},
+      </if>
+      <if test="record.arrayNum != null">
+        array_num = #{record.arrayNum,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -191,7 +213,9 @@
       `max` = #{record.max,jdbcType=DECIMAL},
       distance = #{record.distance,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=BIGINT},
-      category = #{record.category,jdbcType=INTEGER}
+      category = #{record.category,jdbcType=INTEGER},
+      channel = #{record.channel,jdbcType=INTEGER},
+      array_num = #{record.arrayNum,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -202,5 +226,4 @@
   <select id="selectAllRecord" resultType="top.kaluna.modbusTcp.domain.FbgValueInfo">
     select * from fbg_value_info
   </select>
-
 </mapper>

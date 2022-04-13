@@ -90,7 +90,7 @@ public class FbgValueService {
         //联表查询出异常的数据
         final List<FbgValue> fbgValues = fbgValueMapper.selectForAbnormal(startTime, endTime);
 
-        //分组
+        //按日期分组
         final Collection<List<FbgValue>> collects = fbgValues.stream().collect(groupingBy(FbgValue::getCreateTime)).values();
         FbgValueQueryResp fbgValueQueryResp = new FbgValueQueryResp();
         Map<String, String> map = new HashMap<>();

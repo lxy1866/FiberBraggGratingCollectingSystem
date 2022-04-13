@@ -50,7 +50,9 @@ export default defineComponent({
 
     onMounted(async () => {
       const {data} = await getFbgValueInfoForDistance();
-      const FbgValueInfo = data.content//数组 每一个元素是id, propertyName, min, max, distance, creatTime, category
+
+      console.log(data.content)
+      const FbgValueInfo = data.content//数组 每一个元素是id, propertyName, min, max, distance, creatTime, category, channel
       let y = []
       for (let i = 0; i < FbgValueInfo.length; i++) {
         y.push(FbgValueInfo[i].propertyName)
@@ -72,10 +74,20 @@ export default defineComponent({
                 }
             )).distance
       }
+      function channel(propertyName: string) {
+        if (!propertyName) {
+          return '';
+        }
+        return (
+            FbgValueInfo.find(function (item: any) {
+                  return item.propertyName == propertyName
+                }
+            )).channel
+      }
 
       option = {
         title: {
-          text: '海缆实时应变值',
+          text: '光纤光栅实时应变值(单位με)',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -113,7 +125,7 @@ export default defineComponent({
           name: '初始位置',
           nameLocation: 'start',
           type: 'category',
-          max: 19,
+          max: 9,
           inverse: false,
           data: ['val6', 'val7', 'val8', 'val9', 'val10'],
           axisLine: {
@@ -126,9 +138,8 @@ export default defineComponent({
             show: true,
             fontSize: 14,
             formatter: function (value: any) {
-              return '{distance|' + distance(value) + '米}';
+              return '通道'+ channel(value);
             },
-
             rich: {
               distance: {
                 fontSize: 15,
@@ -146,9 +157,9 @@ export default defineComponent({
             type: 'bar',
             itemStyle: {
               //柱条的颜色
-              color: function (param: any) {
+              color: function (param:any) {
                 //console.log(param)
-                return strainColors[param.data.physicalValueInfoId] || '#003897';
+                return strainColors[param.data.channel];
               }
             },
             label: {
@@ -175,7 +186,8 @@ export default defineComponent({
       const onMessage = function (msg: any) {
         //console.log("WebSocket收到消息：",event.data);
         let data = JSON.parse(msg.data);
-        option.series[0].data = data[1];
+        //console.log("stain", data)
+        option.series[0].data = data[0];
         myChart.setOption<echarts.EChartsOption>(option);
       };
       const onError = () => {

@@ -7,16 +7,8 @@ create table `fbg_value`(
      `create_time` bigint(13) not null comment '创建时间-距离1970年1月1日的毫秒数',
      primary key (`id`)
 )engine=innodb default charset=utf8mb4  comment '应变值';
+ALTER TABLE fbg_value ADD channel int ;
 alter table fbg_value modify id int auto_increment;
-insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (1, 1, 11, 0, 1647907862069);
-insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (2, 1, 11, 0, 1647907862069);
-insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (3, 2, 22, 0, 1647907862069);
-insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (4, 2, 22, 0, 1647907862069);
-
-insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (5, 1, 11, 0, 1647907933365);
-insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (6, 1, 11, 0, 1647907933365);
-insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (7, 2, 22, 0, 1647907933365);
-insert into fbg_value (id, physical_value_info_id, value, tag, create_time) values (8, 2, 22, 0, 1647907933365);
 
 
 
@@ -32,6 +24,8 @@ create table `fbg_value_info`(
 alter table fbg_value_info add category int(4);
 alter table fbg_value_info add unique key(id);
 alter table fbg_value_info drop primary key;
+ALTER TABLE fbg_value_info ADD channel int ;
+ALTER TABLE fbg_value_info ADD arrayNum int ;
 
 drop table if exists `user`;
 create table `user`(
@@ -55,7 +49,8 @@ create table `breakpoint_record`(
 )engine = innodb default charset = utf8mb4 comment = '断点记录表（会不断生成同一个断点的位置记录）';
 #查询最新时间的记录：计算传感器在线率
 select tag from breakpoint_record order by create_time desc limit 1;
-
+alter table breakpoint_record add unique index channel_array_num_unique_idx(channel, array_num);
+select * from breakpoint_record;
 show variables like '%event_scheduler%';
 #获取前一小时的时间
 select date_sub(now(), interval 1 hour);

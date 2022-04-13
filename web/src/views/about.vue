@@ -1,9 +1,6 @@
 <template>
   <the-header></the-header>
-  <a-layout-content style=" margin-bottom: 70px ">
-    <a-breadcrumb style="margin: 16px 0">
-
-    </a-breadcrumb>
+  <a-layout-content style=" padding-bottom: 70px; ">
     <a-layout style="padding: 24px 0; background: #fff">
       <div class="wrapper" style="margin-left: 20px">
     <n-timeline>

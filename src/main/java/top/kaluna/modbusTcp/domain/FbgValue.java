@@ -12,6 +12,14 @@ public class FbgValue {
     private Byte tag;
 
     private Long createTime;
+
+    private int channel;
+
+    /**
+     * 断点位置，不是序号，序号统一在fbg_value_info维护
+     */
+    private int arrayNum;
+
     public FbgValue(){
 
     }
@@ -48,12 +56,13 @@ public class FbgValue {
         this.value = value;
     }
 
-    public Byte getTag() {
-        return tag;
+
+    public int getArrayNum() {
+        return arrayNum;
     }
 
-    public void setTag(Byte tag) {
-        this.tag = tag;
+    public void setArrayNum(int arrayNum) {
+        this.arrayNum = arrayNum;
     }
 
     public Long getCreateTime() {
@@ -62,6 +71,14 @@ public class FbgValue {
 
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    public int getChannel() {
+        return channel;
+    }
+
+    public void setChannel(int channel) {
+        this.channel = channel;
     }
 
     /**
@@ -108,11 +125,11 @@ public class FbgValue {
 
         /**
          * 赋值
-         * @param tag
+         * @param arrayNum
          * @return 返回 建造者
          */
-        public Builder withTag(Byte tag){
-            fbgValue.setTag(tag);
+        public Builder withArrayNum(int arrayNum){
+            fbgValue.setArrayNum(arrayNum);
             return this;
         }
 
@@ -125,22 +142,26 @@ public class FbgValue {
             fbgValue.setCreateTime(createTime);
             return this;
         }
+        public Builder withChannel(int channel){
+            fbgValue.setChannel(channel);
+            return this;
+        }
         public FbgValue build(){
             return fbgValue;
         }
     }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        final StringBuilder sb = new StringBuilder("FbgValue{");
+        sb.append("id=").append(id);
         sb.append(", physicalValueInfoId=").append(physicalValueInfoId);
         sb.append(", value=").append(value);
         sb.append(", tag=").append(tag);
         sb.append(", createTime=").append(createTime);
-        sb.append("]");
+        sb.append(", channel=").append(channel);
+        sb.append(", arrayNum=").append(arrayNum);
+        sb.append('}');
         return sb.toString();
     }
 }

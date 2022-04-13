@@ -3,13 +3,15 @@ package top.kaluna.modbusTcp.domain;
 public class BreakpointRecordFinish {
     private Long id;
 
-    private Byte tag;
+    private Integer arrayNum;
 
     private Long createTime;
 
     private Byte state;
 
     private String detail;
+
+    private Integer channel;
 
     public Long getId() {
         return id;
@@ -19,12 +21,12 @@ public class BreakpointRecordFinish {
         this.id = id;
     }
 
-    public Byte getTag() {
-        return tag;
+    public Integer getArrayNum() {
+        return arrayNum;
     }
 
-    public void setTag(Byte tag) {
-        this.tag = tag;
+    public void setArrayNum(Integer arrayNum) {
+        this.arrayNum = arrayNum;
     }
 
     public Long getCreateTime() {
@@ -51,6 +53,14 @@ public class BreakpointRecordFinish {
         this.detail = detail;
     }
 
+    public Integer getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Integer channel) {
+        this.channel = channel;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -58,10 +68,11 @@ public class BreakpointRecordFinish {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", tag=").append(tag);
+        sb.append(", arrayNum=").append(arrayNum);
         sb.append(", createTime=").append(createTime);
         sb.append(", state=").append(state);
         sb.append(", detail=").append(detail);
+        sb.append(", channel=").append(channel);
         sb.append("]");
         return sb.toString();
     }

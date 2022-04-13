@@ -26,7 +26,7 @@
           </a-menu-item>
           <a-menu-item key="/p_index/admin/physicalValue">
             <transition :name="transitionName">
-              <router-link to="/p_index/admin/physicalValue" :style="user.id? {} : {display:'none'}">参数</router-link>
+              <router-link to="/p_index/admin/physicalValue" :style="user.id? {} : {display:'none'}">新增传感器</router-link>
             </transition>
           </a-menu-item>
 

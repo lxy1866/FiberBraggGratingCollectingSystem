@@ -24,7 +24,6 @@
           :data-source="users"
           :pagination="pagination"
           :loading="loading"
-          @change="handleTableChange"
       >
         <template v-slot:action="{ text, record }">
           <a-space size="small">
@@ -32,10 +31,10 @@
               重置密码
             </a-button>
             <a-popconfirm
-                title="删除后不可恢复，确认删除?"
+                title="删除后你将退出登陆，是否继续?"
                 ok-text="是"
                 cancel-text="否"
-                @confirm="handleDelete(record.id)"
+                @confirm="handleDelete(record)"
             >
               <a-button type="danger" ghost :disabled="codeIsRight">
                 删除
@@ -109,23 +108,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import {computed, defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import {Tool} from "@/util/tool";
 import TheHeader from '@/components/the-header.vue';
 import TheFooter from '@/components/the-footer.vue';
-
+import store from "@/store";
+import { useRouter } from 'vue-router'
 declare let hexMd5: any;
 declare let KEY: any;
 
 export default defineComponent({
   name: 'AdminUser',
+
   components:{
     TheHeader,
     TheFooter
   },
   setup() {
+    const router=useRouter()
+    const storeUser = computed(()=>{
+      return store.state.user
+    });
     const searchLoginName = ref();
     const users = ref();
     const pagination = ref({
@@ -236,19 +241,40 @@ export default defineComponent({
       user.value = {};
     };
 
-    const handleDelete = (id: number) => {
-      axios.delete("/user/delete/" + id).then((response) => {
-        const data = response.data; // data = commonResp
-        if (data.success) {
-          // 重新加载列表
-          handleQuery({
-            page: pagination.value.current,
-            size: pagination.value.pageSize,
-          });
-        } else {
+    const logout = (storeUser: any) =>{
+      console.log("退出登录开始");
+      console.log(typeof storeUser.value.token)
+      axios.get('/user/logout/'+storeUser.value.token).then((response)=>{
+        const data = response.data;
+        console.log(data);
+        if(data.success){
+          router.push({ path: '/p_index/login' })
+          message.success("退出登录成功");
+          store.commit("setUser", {});
+        }else {
           message.error(data.message);
+          store.commit("setUser", {});
         }
-      });
+      })
+    }
+    const handleDelete = (record: any) => {
+      if(record.loginName === storeUser.value.loginName){
+        axios.delete("/user/delete/" + record.id).then((response) => {
+          const data = response.data; // data = commonResp
+          if (data.success) {
+            // // 重新加载列表
+            // handleQuery({
+            //   page: pagination.value.current,
+            //   size: pagination.value.pageSize,
+            // });
+            logout(storeUser);
+          } else {
+            message.error(data.message);
+          }
+        });
+      }else{
+        message.error("你没有删除别人账号密码的权限！")
+      }
     };
 
     // -------- 重置密码 ---------
@@ -276,9 +302,13 @@ export default defineComponent({
      * 重置密码
      */
     const resetPassword = (record:any) => {
-      resetModalVisible.value = true;
-      user.value = Tool.copy(record);
-      user.value.password = null;
+      if(record.loginName === storeUser.value.loginName){
+        resetModalVisible.value = true;
+        user.value = Tool.copy(record);
+        user.value.password = null;
+      }else{
+        message.error("你没有重置别人密码的权限！")
+      }
     };
     onMounted(() => {
       handleQuery({
@@ -313,7 +343,7 @@ export default defineComponent({
       pagination,
       columns,
       loading,
-      handleTableChange,
+
       handleQuery,
       add,
       user,

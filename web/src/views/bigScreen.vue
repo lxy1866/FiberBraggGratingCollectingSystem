@@ -4,7 +4,7 @@
     <div style="position: relative; display: flex;justify-content: space-between" >
       <dv-decoration-8 style="width:300px;height:50px;" />
       <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-        <div style="font-size: 20px; color: cadetblue;text-align:center;" >海底电缆智能健康监测系统</div>
+        <div style="font-size: 20px; color: cadetblue;text-align:center;" >光纤光栅智能健康监测系统</div>
         <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
       </div>
       <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />

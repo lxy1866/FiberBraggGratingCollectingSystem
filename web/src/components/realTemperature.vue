@@ -82,7 +82,7 @@ export default defineComponent({
       option : {
         backgroundColor: 'transparent',
         title: {
-          text: '海缆实时温度值',
+          text: '光纤光栅实时温度值',
           show: true,
           textStyle:{
             color: '#ffffff',

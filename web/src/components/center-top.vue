@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="card">
-        <n-card title="海缆健康状态预警信息"
+        <n-card title="光纤光栅健康状态预警信息"
                 font-color="white"
                 style="--n-color: #001529;
                   --n-title-font-size: 15px;

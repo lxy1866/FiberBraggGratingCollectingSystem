@@ -1,14 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import About from '../views/about.vue'
-import AdminPhysicalValue from '../views/admin/admin-physicalValue.vue'
-import AdminUser from '../views/admin/admin-user.vue'
-import Login from '../views/login.vue'
-
-import m_About from '../views/mobile/m_about.vue'
-import m_AdminPhysicalValue from '../views/admin/mobile/m_admin-physicalValue.vue'
-import m_AdminUser from '../views/admin/mobile/m_admin-user.vue'
-import m_Login from '../views/mobile/m_login.vue'
-
 import {Tool} from "@/util/tool";
 import store from "@/store";
 
@@ -40,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/p_index/login',
     name: 'p_Login',
-    component: Login,
+    component: ()=>import('../views/login.vue'),
     meta: {
       "type":'pc'
     },
@@ -48,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/p_index/about',
     name: 'p_About',
-    component: About,
+    component: ()=>import('../views/about.vue'),
     meta:{
       "type":'pc',
       loginRequire: true
@@ -57,7 +47,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/p_index/admin/physicalValue',
     name: 'p_AdminPhysicalValue',
-    component: AdminPhysicalValue,
+    component: ()=>import('../views/admin/admin-physicalValue.vue'),
     meta:{
       "type":'pc',
       loginRequire: true
@@ -66,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/p_index/admin/user',
     name: 'p_AdminUser',
-    component: AdminUser,
+    component: ()=>import('../views/admin/admin-user.vue'),
     meta: {
       "type":'pc',
       loginRequire: true
@@ -94,7 +84,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/m_index/login',
     name: 'm_Login',
-    component: m_Login,
+    component: ()=>import('../views/mobile/m_login.vue'),
     meta:{
       "type":'mobile',
     }
@@ -102,7 +92,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/m_index/about',
     name: 'm_About',
-    component: m_About,
+    component: ()=>import('../views/mobile/m_about.vue'),
     meta:{
       "type":'mobile',
       loginRequire: true
@@ -111,7 +101,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/m_index/admin/physicalValue',
     name: 'm_AdminPhysicalValue',
-    component: m_AdminPhysicalValue,
+    component: ()=>import('../views/admin/mobile/m_admin-physicalValue.vue'),
     meta:{
       "type":'mobile',
       loginRequire: true
@@ -120,7 +110,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/m_index/admin/user',
     name: 'm_AdminUser',
-    component: m_AdminUser,
+    component: ()=>import( '../views/admin/mobile/m_admin-user.vue'),
     meta: {
       "type":'mobile',
       loginRequire: true

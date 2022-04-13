@@ -1,6 +1,5 @@
 package top.kaluna.modbusTcp.req;
 
-import java.util.Date;
 
 /**
  * @author Yuery
