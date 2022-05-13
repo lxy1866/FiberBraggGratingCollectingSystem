@@ -5,11 +5,11 @@
         title="📖 断点位置维修情况"
         embedded
         :bordered="false"
-        style="--n-color: #001529;--n-text-color: rgb(77 112 148);--n-title-text-color: rgb(190 202 214);"
+        style="--n-text-color: rgb(77 112 148);--n-title-text-color: rgb(190 202 214);"
     >
       如果已经维修完成，请及时在本页面点击”完成维修“
-      <br/>tag表示光纤光栅的序号，0表示没有断点，1表示第一个光纤光栅断裂，以此类推
-      <br/>state表示处理状态，0表示为处理，1表示处理完成
+      <br/>阵列序号为0表示该通道没有断点，1表示第一个光纤光栅断裂，以此类推
+      <br/>维修状态为0表示为处理，1表示处理完成
     </n-card>
 
     <a-select
@@ -36,7 +36,7 @@
 <script lang="ts">
 import {h, defineComponent, onMounted, ref, watch, provide} from 'vue'
 
-import MThePopconfirm from './m_the-popconfirm.vue'
+import MThePopconfirm from './m_thePopconfirm.vue'
 import { useMessage } from 'naive-ui';
 import axios from "axios";
 type breakpoint = {
@@ -50,19 +50,23 @@ declare let formatDate: any;
 const createColumns = ({printRow}:any) => {
   return [
     {
-      title: 'id',
+      title: 'ID',
       key: 'id'
     },
     {
-      title: 'createTime',
+      title: '创建时间',
       key: 'createTime'
     },
     {
-      title: 'tag',
-      key: 'tag',
+      title:'通道号',
+      key:'channel',
     },
     {
-      title: 'state',
+      title: '阵列序号',
+      key: 'arrayNum',
+    },
+    {
+      title: '维修状态',
       key: 'state'
     },
     {
@@ -80,7 +84,6 @@ const createColumns = ({printRow}:any) => {
     }
   ]
 }
-const message = useMessage();
 /**
  * 数据查询
  * @param params

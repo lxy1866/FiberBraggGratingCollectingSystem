@@ -38,8 +38,7 @@
 </template>
 <script lang="ts">
 import {h, defineComponent, onMounted, ref, watch, provide} from 'vue'
-import ThePopconfirm from './the-popconfirm.vue';
-import { useMessage } from 'naive-ui';
+import ThePopconfirm from './thePopconfirm.vue';
 import axios from "axios";
 type breakpoint = {
   id: number
@@ -86,7 +85,7 @@ const createColumns = ({printRow}:any) => {
     }
   ]
 }
-const message = useMessage();
+
 /**
  * 数据查询
  * @param params

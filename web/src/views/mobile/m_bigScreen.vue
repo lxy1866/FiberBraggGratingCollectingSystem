@@ -1,72 +1,62 @@
 <template>
   <MTheHeader/>
-  <van-tabs v-model:active="activeName">
-    <van-tab title="海缆实时应变值" name="a">
+  <van-tabs>
+    <van-tab title="管道位移数据"  >
       <dv-border-box-8 class="border-box">
-      <m-line-chart-strain class="charts" style="height: 450px"/>
+      <m-bar-pipe-displayment class="charts" style="height: 400px;width: 360px"/>
       </dv-border-box-8>
     </van-tab>
-
-    <van-tab title="海缆统计概况" name="b">
-      <dv-border-box-8 class="border-box">
-        <m-center-top  class="charts" style="height: 370px"/>
-      </dv-border-box-8>
-    </van-tab>
-    <van-tab title="海缆实时振动值" name="c">
-      <dv-border-box-8 class="border-box">
-        <m-line-chart-vibration  class="charts" style="height: 300px"/>
-      </dv-border-box-8>
+    <van-tab title="统计概况" >
+        <dv-border-box-8 class="border-box">
+          <m-center-top class="charts" style="height: 400px"></m-center-top>
+        </dv-border-box-8>
     </van-tab>
   </van-tabs>
-  <van-tabs v-model:active="activeName">
-    <van-tab title="海缆实时温度值" name="a">
+  <van-tabs>
+    <van-tab title="一个月内管道位移曲线图" >
       <dv-border-box-8 class="border-box">
-        <m-real-time-temperature  class="charts" style=" width: 300px; height: 300px; margin-left: 80px"/>
+        <m-line-chart-displayment class="charts" style="height: 300px;width: 360px"/>
       </dv-border-box-8>
     </van-tab>
-    <van-tab title="过去24小时温度最大最小值" name="b">
+    <van-tab title="管道三维形状" >
       <dv-border-box-8 class="border-box">
-        <m-line-chart-temperature  class="charts" style="height: 300px;"/>
-      </dv-border-box-8>
-    </van-tab>
-    <van-tab title="海缆实时形状" name="c">
-      <dv-border-box-8 class="border-box">
-        <m-line-3d-shape  class="charts" style="height: 300px; width: 300px; margin-left: 30px"/>
+        <m-line3d-shape  class="charts" style="height: 300px;width: 360px"/>
       </dv-border-box-8>
     </van-tab>
   </van-tabs>
   <div style="height: 50px"></div>
-  <MTheFooter/>
+  <MTheFooter style="z-index: 1000;"/>
 </template>
 <script>
 import { defineComponent } from "vue";
-import MTheHeader from '@/components/mobile/m_the-header.vue';
-import MTheFooter from '@/components/mobile/m_the-footer.vue';
-import MLineChartStrain from '@/components/mobile/m_line-chart-strain.vue'
-import MCenterTop from '@/components/mobile/m_center-top.vue';
-import MRealTimeTemperature from '@/components/mobile/m_realTemperature.vue'
-import MLineChartVibration from '@/components/mobile/m_line-chart-vibration.vue'
-import MLineChartTemperature from '@/components/mobile/m_line-chart-temperature.vue'
-import MLine3dShape from '@/components/mobile/m_line-3d-shape.vue'
+import MTheHeader from '@/components/mobile/m_theHeader.vue';
+import MTheFooter from '@/components/mobile/m_theFooter.vue';
+import MBarPipeDisplayment from '@/components/mobile/m_leftTopChart.vue'
+import MCenterTop from '@/components/mobile/m_centerTopChart.vue'
+import MLine3dShape from '@/components/mobile/m_rightTopChart'
+import MLineChartDisplayment from '@/components/mobile/m_centerBottomChart.vue'
 export default defineComponent({
   name:'m_bigScreen',
   components:{
     MTheHeader,
     MTheFooter,
-    MLineChartStrain,
+    MBarPipeDisplayment,
     MCenterTop,
-    MRealTimeTemperature,
-    MLineChartVibration,
-    MLineChartTemperature,
-    MLine3dShape
+    MLine3dShape,
+    MLineChartDisplayment
   }
 })
 </script>
-<style>
+<style scoped>
 .border-box{
   width: 100%;
   height: 100%;
   display: flex;
+  background-color: #053343;
+  z-index: 999;
+}
+.fontClass{
+  font-family: 宋体;
 }
 .charts{
   width: 94%;

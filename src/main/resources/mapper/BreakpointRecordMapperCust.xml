@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.kaluna.modbusTcp.mapper.BreakpointRecordCustMapper">
+<mapper namespace="top.kaluna.pipelineMonitor.mapper.BreakpointRecordCustMapper">
 
 
 <insert id="insertBreakpointInfoByScanPhysicalValue" parameterType="long">
@@ -9,7 +9,7 @@
     where create_time > #{createTime, jdbcType=BIGINT}-1800000 and array_num != 0 group by array_num, channel;
 </insert>
 
-<select id="calculateOnline" resultType="top.kaluna.modbusTcp.domain.BreakpointRecord">
+<select id="calculateOnline" resultType="top.kaluna.pipelineMonitor.domain.BreakpointRecord">
     select * from breakpoint_record;
 </select>
 </mapper>

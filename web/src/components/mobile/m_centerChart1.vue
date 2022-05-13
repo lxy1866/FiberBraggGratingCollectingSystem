@@ -58,11 +58,12 @@ export default defineComponent({
     })
 
     onMounted(async ()=>{
-      const { data } = await handleQueryOnline();
+      //const { data } = await handleQueryOnline();
       const newOption = {
         title: [
           {
-            text: data.content.onlineRate * 1 + "%",
+            // text: data.content.onlineRate * 1 + "%",
+            text: "100%",
             x: "center",
             y: "center",
             textStyle: {
@@ -85,7 +86,8 @@ export default defineComponent({
             },
             data: [
               {
-                value: data.content.onlineRate,
+                //value: data.content.onlineRate,
+                value: '100%',
                 itemStyle: {
                   normal: {
                     color: "#03a9f4",

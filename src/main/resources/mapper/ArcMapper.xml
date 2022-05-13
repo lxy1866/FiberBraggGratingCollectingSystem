@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.kaluna.modbusTcp.mapper.ArcMapper">
-  <resultMap id="BaseResultMap" type="top.kaluna.modbusTcp.domain.Arc">
+<mapper namespace="top.kaluna.pipelineMonitor.mapper.ArcMapper">
+  <resultMap id="BaseResultMap" type="top.kaluna.pipelineMonitor.domain.Arc">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="length" jdbcType="DECIMAL" property="length" />
   </resultMap>
@@ -66,7 +66,7 @@
   <sql id="Base_Column_List">
     id, `length`
   </sql>
-  <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.ArcExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="top.kaluna.pipelineMonitor.domain.ArcExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -90,17 +90,17 @@
     delete from arc
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="top.kaluna.modbusTcp.domain.ArcExample">
+  <delete id="deleteByExample" parameterType="top.kaluna.pipelineMonitor.domain.ArcExample">
     delete from arc
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.Arc">
+  <insert id="insert" parameterType="top.kaluna.pipelineMonitor.domain.Arc">
     insert into arc (id, `length`)
     values (#{id,jdbcType=BIGINT}, #{length,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.Arc">
+  <insert id="insertSelective" parameterType="top.kaluna.pipelineMonitor.domain.Arc">
     insert into arc
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -119,7 +119,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="top.kaluna.modbusTcp.domain.ArcExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="top.kaluna.pipelineMonitor.domain.ArcExample" resultType="java.lang.Long">
     select count(*) from arc
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -147,7 +147,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.modbusTcp.domain.Arc">
+  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.pipelineMonitor.domain.Arc">
     update arc
     <set>
       <if test="length != null">
@@ -156,7 +156,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.kaluna.modbusTcp.domain.Arc">
+  <update id="updateByPrimaryKey" parameterType="top.kaluna.pipelineMonitor.domain.Arc">
     update arc
     set `length` = #{length,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}

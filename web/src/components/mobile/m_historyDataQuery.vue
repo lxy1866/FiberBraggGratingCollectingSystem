@@ -20,11 +20,6 @@ import {defineComponent, onMounted, ref, watch} from 'vue'
 import axios from "axios";
 let data = ref();
 let range2 = ref();
-interface f {
-  title: string;
-  dataIndex: string;
-  key: string;
-}
 let columns = ref([
   {
     title: 'val1',

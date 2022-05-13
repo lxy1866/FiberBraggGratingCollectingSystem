@@ -1,0 +1,65 @@
+package top.kaluna.pipelineMonitor.controller;
+
+import org.springframework.web.bind.annotation.*;
+import top.kaluna.pipelineMonitor.req.DateRangeReq;
+import top.kaluna.pipelineMonitor.resp.CommonResp;
+import top.kaluna.pipelineMonitor.resp.LastNHoursMinAndMaxResp;
+import top.kaluna.pipelineMonitor.resp.PageResp;
+import top.kaluna.pipelineMonitor.service.FbgValueService;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * @author Yuery
+ * @date 2022/3/21/0021 - 19:35
+ */
+@RestController
+@RequestMapping("/fbg")
+public class FbgValueController {
+    @Resource
+    private FbgValueService fbgValueService;
+
+    @GetMapping("/list")
+    @ResponseBody
+    public CommonResp<PageResp<String>> list(@Valid DateRangeReq req){
+        CommonResp<PageResp<String>> resp = new CommonResp<>();
+        PageResp<String> list = fbgValueService.list(req);
+        resp.setContent(list);
+        return resp;
+    }
+    @GetMapping("/abnormalList")
+    @ResponseBody
+    public CommonResp<PageResp<String>> abnormalList(@Valid DateRangeReq req){
+        CommonResp<PageResp<String>> resp = new CommonResp<>();
+        PageResp<String> list = fbgValueService.abnormalList(req);
+        resp.setContent(list);
+        return resp;
+    }
+
+    /**
+     * 查询此时此刻温度传感器的温度值
+     */
+    @GetMapping("/temperatureNow")
+    public CommonResp<BigDecimal> temperatureNow(){
+        CommonResp<BigDecimal> resp = new CommonResp<>();
+        BigDecimal temperatureNow = fbgValueService.temperatureNow();
+        resp.setContent(temperatureNow);
+        return resp;
+    }
+    /**
+     * 查询过去24小时的温度最大最小值
+     * 传入时间参数
+     * 要得到每个小时的最小值以及最大值
+     */
+    @GetMapping("/minAndMaxFromLast24Hours")
+    public CommonResp<List<LastNHoursMinAndMaxResp>> minAndMaxFromLast24Hours(){
+        CommonResp<List<LastNHoursMinAndMaxResp>> resp = new CommonResp<>();
+        List<LastNHoursMinAndMaxResp> lists = fbgValueService.minAndMaxFromLast24Hours();
+        resp.setContent(lists);
+        return resp;
+    }
+
+}

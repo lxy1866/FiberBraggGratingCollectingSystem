@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.kaluna.modbusTcp.mapper.FbgValueInfoMapper">
-  <resultMap id="BaseResultMap" type="top.kaluna.modbusTcp.domain.FbgValueInfo">
+<mapper namespace="top.kaluna.pipelineMonitor.mapper.FbgValueInfoMapper">
+  <resultMap id="BaseResultMap" type="top.kaluna.pipelineMonitor.domain.FbgValueInfo">
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="property_name" jdbcType="VARCHAR" property="propertyName" />
     <result column="min" jdbcType="DECIMAL" property="min" />
@@ -73,7 +73,7 @@
   <sql id="Base_Column_List">
     id, property_name, `min`, `max`, distance, create_time, category, channel, array_num
   </sql>
-  <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="top.kaluna.pipelineMonitor.domain.FbgValueInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -87,13 +87,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfoExample">
+  <delete id="deleteByExample" parameterType="top.kaluna.pipelineMonitor.domain.FbgValueInfoExample">
     delete from fbg_value_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfo">
+  <insert id="insert" parameterType="top.kaluna.pipelineMonitor.domain.FbgValueInfo">
     insert into fbg_value_info (id, property_name, `min`, 
       `max`, distance, create_time, 
       category, channel, array_num
@@ -103,7 +103,7 @@
       #{category,jdbcType=INTEGER}, #{channel,jdbcType=INTEGER}, #{arrayNum,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfo">
+  <insert id="insertSelective" parameterType="top.kaluna.pipelineMonitor.domain.FbgValueInfo">
     insert into fbg_value_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -164,7 +164,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="top.kaluna.modbusTcp.domain.FbgValueInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="top.kaluna.pipelineMonitor.domain.FbgValueInfoExample" resultType="java.lang.Long">
     select count(*) from fbg_value_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -223,7 +223,7 @@
   <select id="total" resultType="java.lang.Integer">
     select count(*) from fbg_value_info
   </select>
-  <select id="selectAllRecord" resultType="top.kaluna.modbusTcp.domain.FbgValueInfo">
+  <select id="selectAllRecord" resultType="top.kaluna.pipelineMonitor.domain.FbgValueInfo">
     select * from fbg_value_info
   </select>
 </mapper>
