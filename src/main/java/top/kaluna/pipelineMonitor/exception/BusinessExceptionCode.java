@@ -13,7 +13,11 @@ public enum BusinessExceptionCode {
      * 用户名不存在或密码错误
      */
     LOGIN_USER_ERROR("用户名不存在或密码错误"),
-;
+
+    /**
+     * 文件相关
+     */
+    FILE_UPLOAD_FAIL("文件上传失败");
 
     private String desc;
 

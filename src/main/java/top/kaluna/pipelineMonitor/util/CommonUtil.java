@@ -1,5 +1,7 @@
 package top.kaluna.pipelineMonitor.util;
 
+import java.util.UUID;
+
 /**
  * @author Yuery
  * @date 2022/3/4/0004 - 21:55
@@ -18,6 +20,13 @@ public class CommonUtil {
                 | ((src[offset+2] & 0xFF) << 8)
                 | ((src[offset+3] & 0xFF));
         return value;
+    }
+    /**
+     * 生成uuid
+     * @return
+     */
+    public static String generateUUID() {
+        return UUID.randomUUID().toString().replaceAll("-","").substring(0,32);
     }
 }
 

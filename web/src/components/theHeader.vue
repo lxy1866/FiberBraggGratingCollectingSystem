@@ -23,17 +23,11 @@
               <router-link to="/p_index/admin/user" :style="user.id? {} : {display:'none'}">用户</router-link>
             </transition>
           </a-menu-item>
-          <a-menu-item key="/p_index/admin/physicalValue">
+          <a-menu-item key="/p_index/admin/settingDetail">
             <transition :name="transitionName">
-              <router-link to="/p_index/admin/physicalValue" :style="user.id? {} : {display:'none'}">新增传感器</router-link>
+              <router-link to="/p_index/settingDetail" :style="user.id? {} : {display:'none'}">设置</router-link>
             </transition>
           </a-menu-item>
-          <a-menu-item key="/p_index/admin/fileDetail">
-            <transition :name="transitionName">
-              <router-link to="/p_index/fileDetail" :style="user.id? {} : {display:'none'}">文件设置</router-link>
-            </transition>
-          </a-menu-item>
-
         </div>
         <div class="header-right">
           <a-menu-item key="/p_index/about" >

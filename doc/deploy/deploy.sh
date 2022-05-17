@@ -8,7 +8,7 @@ fi
 
 source /etc/profile
 nohup java -jar -Dspring.profiles.active=prod ~/fbg/modbusTcp.jar > /dev/null 2>&1 &
-nohup java -jar -Dspring.profiles.active=prod ~/pipeline/pipelineMonitor.jar > /dev/null 2>&1 &
+nohup java -jar -Dspring.profiles.active=prod ~/pipeline/pipeline-monitor.jar > /dev/null 2>&1 &
 echo "end publish"
 
 
@@ -19,3 +19,10 @@ mvn install -Dmaven.test.skip=true dockerfile:build
 docker tag pipeline-monitor/pipeline-monitor:latest registry.cn-shanghai.aliyuncs.com/xucunyin-springboot-kaluna/pipeline-danly-top:v1.1
 docker push registry.cn-shanghai.aliyuncs.com/xucunyin-springboot-kaluna/pipeline-danly-top:v1.1
 echo "pipeline构建推送成功"
+
+#登录腾讯云镜像仓
+docker login ccr.ccs.tencentyun.com --username=100020119215 --password=2012T20Tyear
+docker tag pipeline-monitor/pipeline-monitor:latest ccr.ccs.tencentyun.com/xuchunying/pipeline-monitor:v1.1
+docker push ccr.ccs.tencentyun.com/xuchunying/pipeline-monitor:v1.1
+echo "pipeline构建推送成功"
+

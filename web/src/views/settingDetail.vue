@@ -10,18 +10,29 @@
               mode="inline"
               :style="{ height: '100%', borderRight: 0 }"
           >
-            <a-sub-menu key="设置">
+            <a-sub-menu key="传感器设置">
               <template #title>
               <span>
                 <database-outlined />
-                设置
+                传感器设置
+              </span>
+              </template>
+              <a-menu-item key="新增传感器" >
+                新增传感器
+              </a-menu-item>
+            </a-sub-menu>
+            <a-sub-menu key="文件读取设置">
+              <template #title>
+              <span>
+                <database-outlined />
+                读取路径设置
               </span>
               </template>
               <a-menu-item key="文件上传" >
                 文件上传
               </a-menu-item>
-              <a-menu-item key="文件读取">
-                文件路径读取
+              <a-menu-item key="读取" >
+                读取
               </a-menu-item>
             </a-sub-menu>
           </a-menu>
@@ -30,7 +41,18 @@
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
         >
           <div>
-            <div v-if="'文件上传' === selectedKey">
+            <div v-if="'新增传感器' === selectedKey">
+              <n-loading-bar-provider>
+                <n-message-provider>
+                  <n-notification-provider>
+                    <n-dialog-provider>
+                      <admin-physical-value/>
+                    </n-dialog-provider>
+                  </n-notification-provider>
+                </n-message-provider>
+              </n-loading-bar-provider>
+            </div>
+            <div v-else-if="'文件上传' === selectedKey">
               <n-loading-bar-provider>
                 <n-message-provider>
                   <n-notification-provider>
@@ -41,12 +63,12 @@
                 </n-message-provider>
               </n-loading-bar-provider>
             </div>
-            <div v-else-if="'文件读取' === selectedKey">
+            <div v-else-if="'读取' === selectedKey">
               <n-loading-bar-provider>
                 <n-message-provider>
                   <n-notification-provider>
                     <n-dialog-provider>
-                      <AbnormalDataQuery />
+                      <FileSetting />
                     </n-dialog-provider>
                   </n-notification-provider>
                 </n-message-provider>
@@ -61,15 +83,21 @@
   <the-footer></the-footer>
 </template>
 <script>
+
 import { defineComponent, ref, watch, onMounted} from "vue";
 import FileUpload from '@/components/fileUpload.vue'
 import TheHeader from '@/components/theHeader.vue';
 import TheFooter from '@/components/theFooter.vue';
+import AdminPhysicalValue from './admin/adminPhysicalValue.vue';
+import FileSetting from '@/components/fileSetting.vue'
+
 export default defineComponent({
   components: {
     FileUpload,
     TheHeader,
-    TheFooter
+    TheFooter,
+    AdminPhysicalValue,
+    FileSetting
   },
   setup(){
     const selectedKeys = ref();

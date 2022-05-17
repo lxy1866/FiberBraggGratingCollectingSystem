@@ -28,9 +28,9 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/p_index/fileDetail',
-    name: 'p_fileDetail',
-    component: () => import('../views/fileDetail.vue'),
+    path: '/p_index/settingDetail',
+    name: 'p_settingDetail',
+    component: () => import('../views/settingDetail.vue'),
     meta: {
       "type":'pc',
       loginRequire: true

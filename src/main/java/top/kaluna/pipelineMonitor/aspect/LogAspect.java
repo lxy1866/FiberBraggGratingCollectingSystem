@@ -21,6 +21,8 @@ import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Yuery
@@ -53,11 +55,24 @@ public class LogAspect {
         LOG.info("请求地址:{}{}",request.getRequestURL().toString(), request.getMethod());
         LOG.info("类名方法:{}.{}",signature.getDeclaringTypeName(), name);
         LOG.info("远程地址:{}",request.getRemoteAddr());
-
         //打印请求参数
         Object[] args = joinPoint.getArgs();
-        LOG.info("请求参数:{}", JSONObject.toJSON(args));
+        // 请求参数处理
 
+        final Map<String, Object> paraMap = new HashMap<>(16);
+        for (Object arg : args) {
+            if (arg instanceof MultipartFile) {
+                MultipartFile multipartFile = (MultipartFile) arg;
+                String getName = multipartFile.getName();
+                String getOriginalFilename = multipartFile.getOriginalFilename();
+                paraMap.put(getName, getOriginalFilename);
+            }
+        }
+        if(paraMap.size() == 0){
+            LOG.info("请求参数:{}", JSONObject.toJSON(args.toString()));
+        }else{
+            LOG.info("请求参数:{}", JSONObject.toJSON(paraMap.toString()));
+        }
         Object[] arguments = new Object[args.length];
         for (int i = 0; i < args.length; i++) {
             if(args[i] instanceof ServletRequest || args[i] instanceof ServletResponse || args[i] instanceof MultipartFile){

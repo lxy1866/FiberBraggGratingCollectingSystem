@@ -1,5 +1,4 @@
 <template>
-  <the-header></the-header>
   <a-layout-content>
       <div class="content-wrapper">
         <div class="content-left" style="margin-top: 30px; ">
@@ -177,8 +176,6 @@
         </div>
       </div>
   </a-layout-content>
-
-  <the-footer></the-footer>
 </template>
 
 <script lang="ts">
