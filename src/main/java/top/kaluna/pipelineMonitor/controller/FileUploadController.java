@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import top.kaluna.pipelineMonitor.resp.CommonResp;
 import top.kaluna.pipelineMonitor.resp.FileResp;
 import top.kaluna.pipelineMonitor.service.FileUploadService;
 
@@ -26,18 +25,32 @@ public class FileUploadController {
      * @return url
      */
     @PostMapping(value = "uploadOneFile")
-    public CommonResp<FileResp> uploadOneFile(@RequestPart("file") MultipartFile file){
+    public FileResp uploadOneFile(@RequestPart("file") MultipartFile file){
         String result = fileUploadService.fileUploadOneFile(file);
-        CommonResp<FileResp> commonResp = new CommonResp<>();
+
         FileResp fileResp = new FileResp();
         fileResp.setUrl(result);
         fileResp.setName(file.getName());
-        commonResp.setContent(fileResp);
-        if(result==null){
-            commonResp.setSuccess(false);
-            commonResp.setContent(null);
-        }
-        return  commonResp;
+        fileResp.setResponse("{status:success}");
+        fileResp.setStatus("done");
+        return fileResp;
     }
+//    /**
+//     * 上传文件到oss
+//     * @param file 文件
+//     * @return url
+//     */
+//    @PostMapping(value = "uploadOneFile")
+//    public FileResp uploadFolder(@RequestPart("file") MultipartFile file){
+//        String result = fileUploadService.fileUploadOneFile(file);
+//
+//        FileResp fileResp = new FileResp();
+//        fileResp.setUrl(result);
+//        fileResp.setName(file.getName());
+//        fileResp.setResponse("{status:success}");
+//        fileResp.setStatus("done");
+//        return fileResp;
+//    }
+
 
 }

@@ -10,4 +10,6 @@ import lombok.Data;
 public class FileResp {
     private String url;
     private String name;
+    private String status;//: 'done', // 状态有：uploading done error removed
+    private String response;//: '{"status": "success"}', // 服务端响应内容
 }
