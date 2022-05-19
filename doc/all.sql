@@ -132,7 +132,7 @@ drop table if exists `home_page_middle_bottom`;
 create table `home_page_middle_bottom`(
          `id` bigint not null auto_increment comment 'ID',
          `curve_total` bigint(13) not null comment '曲线条数',
-         `array_node` varchar(40) not null comment '阵列号以及内部编号用_分割',
+         `array_node` varchar(100) not null comment '阵列号以及内部编号用_分割',
          `file_format` varchar(13) not null comment  '每条阵列的传感器数量',
          `col_num` bigint(13) not null comment '读取文件的第几列数据',
          primary key (`id`)

@@ -28,6 +28,15 @@ public class HomeService {
     public Boolean leftTopAttributeSave(LeftTopAttributeReq req){
 
         HomePageLeftTop homePageLeftTop = CopyUtil.copy(req, HomePageLeftTop.class);
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0 ; i < req.getEachArrayNum().size(); i++){
+            stringBuilder.append(req.getEachArrayNum().get(i));
+            stringBuilder.append('_');
+            if(i != req.getEachArrayNum().size() - 1){
+                stringBuilder.append('_');
+            }
+        }
+        homePageLeftTop.setEachArrayNum(stringBuilder.toString());
         homePageLeftTop.setEachArrayNum(req.getEachArrayNum().toString());
 
         HomePageLeftTopExample homePageLeftTopExample = new HomePageLeftTopExample();
@@ -46,7 +55,17 @@ public class HomeService {
     public Boolean middleBottomAttributeSave(MiddleBottomAttributeReq req){
 
         HomePageMiddleBottom homePageMiddleBottom = CopyUtil.copy(req, HomePageMiddleBottom.class);
-        homePageMiddleBottom.setArrayNode(req.getArrayNode().toString());
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(int i = 0 ; i < req.getArrayNode().size(); i++){
+            stringBuilder.append(req.getArrayNode().get(i).getKey());
+            stringBuilder.append('_');
+            stringBuilder.append(req.getArrayNode().get(i).getValue());
+            if(i != req.getArrayNode().size() - 1){
+                stringBuilder.append('_');
+            }
+        }
+        homePageMiddleBottom.setArrayNode(stringBuilder.toString());
 
         HomePageMiddleBottomExample homePageMiddleBottomExample = new HomePageMiddleBottomExample();
         HomePageMiddleBottomExample.Criteria criteria = homePageMiddleBottomExample.createCriteria();
