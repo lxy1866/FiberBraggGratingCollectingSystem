@@ -1,6 +1,6 @@
 <template>
   <n-card
-      title="📖 上传文件到阿里云OSS对象存储【测试中】"
+      title="📖 上传文件到阿里云OSS对象存储【测试中】，默认是本地程序定时每天中午12点晚上00点上传数据。"
       embedded
       :bordered="false"
   >
@@ -27,7 +27,7 @@
         </p>
       </a-upload-dragger>
     </div>
-    <p class="middlePart">或者</p>
+    <p class="middlePart">或者选择</p>
     <div class="rightPart">
       <a-upload
           v-model:fileList="fileList2"
@@ -44,6 +44,7 @@
       </a-upload>
     </div>
   </div>
+
 </template>
 <script lang="ts">
 import TheHeader from "@/components/theHeader.vue"

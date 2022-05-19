@@ -1,7 +1,7 @@
 <template>
   <a-layout-content>
       <div class="content-wrapper">
-        <div class="content-left" style="margin-top: 30px; ">
+        <div class="content-left" >
           <n-space vertical>
             <n-card
                 title="📖 设置光纤光栅传感器阵列的参数量程以及初始位置"
@@ -69,7 +69,6 @@
                     <n-input
                         v-model:value="model.dynamicInputValue[index].maxValue"
                         placeholder="maxValue"
-
                         @keydown.enter.prevent
                     />
                   </n-form-item>

@@ -22,24 +22,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.digitalpetri.modbus/modbus-master-tcp -->
-		<dependency>
-			<groupId>com.digitalpetri.modbus</groupId>
-			<artifactId>modbus-master-tcp</artifactId>
-			<version>1.2.0</version>
-		</dependency>
 
-		<dependency>
-			<groupId>com.intelligt.modbus</groupId>
-			<artifactId>jlibmodbus</artifactId>
-			<version>1.2.9.7</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.digitalpetri.modbus/modbus-slave-tcp -->
-		<dependency>
-			<groupId>com.digitalpetri.modbus</groupId>
-			<artifactId>modbus-slave-tcp</artifactId>
-			<version>1.2.0</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.sling/org.apache.sling.testing.osgi-mock.junit5 -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -92,7 +75,7 @@
 			<!-- fastjson -->
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.47</version>
+			<version>1.2.69</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
 		<dependency>

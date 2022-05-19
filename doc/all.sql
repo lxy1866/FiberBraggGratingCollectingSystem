@@ -113,3 +113,28 @@ create table `arc`(
 insert into arc (`id`, `length`) values (1, 0.3)
 
 select length from arc limit 1
+
+
+drop table if exists `home_page_left_top`;
+create table `home_page_left_top`(
+                                     `id` bigint not null auto_increment comment 'ID',
+                                     `frequency` varchar(20) not null comment '读取展示频率',
+                                     `array_total` bigint(13) not null comment '阵列条数',
+                                     `each_array_num` varchar(40) not null comment  '每条阵列的传感器数量，用_分割',
+                                     `group_num_am` bigint(13) not null comment '上午采集几组数据',
+                                     `group_num_pm` bigint(13) not null comment '下午采集几组数据',
+                                     `file_format` varchar(20) not null comment '读取文件的格式',
+                                     `col_num` bigint(13) not null comment '读取文件的第几列数据',
+                                     primary key (`id`)
+)engine = innodb default charset = utf8mb4 comment = '首页管道位移数据相关属性';
+
+drop table if exists `home_page_middle_bottom`;
+create table `home_page_middle_bottom`(
+         `id` bigint not null auto_increment comment 'ID',
+         `curve_total` bigint(13) not null comment '曲线条数',
+         `array_node` varchar(40) not null comment '阵列号以及内部编号用_分割',
+         `file_format` varchar(13) not null comment  '每条阵列的传感器数量',
+         `col_num` bigint(13) not null comment '读取文件的第几列数据',
+         primary key (`id`)
+)engine = innodb default charset = utf8mb4 comment = '首页一个月内管道位移变化曲线图相关属性';
+

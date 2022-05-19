@@ -25,14 +25,14 @@
               <template #title>
               <span>
                 <database-outlined />
-                读取路径设置
+                首页展示读取设置
               </span>
               </template>
               <a-menu-item key="文件上传" >
                 文件上传
               </a-menu-item>
               <a-menu-item key="读取" >
-                读取
+                图表相关设置
               </a-menu-item>
             </a-sub-menu>
           </a-menu>
@@ -115,7 +115,6 @@ export default defineComponent({
       selectedKey
     }
   },
-
 });
 </script>
 <style scoped>

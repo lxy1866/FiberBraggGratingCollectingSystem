@@ -1,135 +1,227 @@
-<!--<template>-->
-<!--  <a-button type="primary" @click="showDrawer">-->
-<!--    <template #icon><appstore-two-tone /></template>-->
-<!--    设置-->
-<!--  </a-button>-->
-<!--  <a-drawer-->
-<!--      title="文件读取相关设置"-->
-<!--      :width="720"-->
-<!--      :visible="visible"-->
-<!--      :body-style="{ paddingBottom: '80px' }"-->
-<!--      :footer-style="{ textAlign: 'right' }"-->
-<!--      @close="onClose"-->
-<!--  >-->
-<!--    <a-form :model="form" :rules="rules" layout="vertical">-->
-<!--      <a-row :gutter="16">-->
-<!--        <a-col :span="12">-->
-<!--          <a-form-item label="Name" name="name">-->
-<!--            <a-input v-model:value="form.name" placeholder="Please enter user name" />-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
-<!--        <a-col :span="12">-->
-<!--          <a-form-item label="Url" name="url">-->
-<!--            <a-input-->
-<!--                v-model:value="form.url"-->
-<!--                style="width: 100%"-->
-<!--                addon-before="http://"-->
-<!--                addon-after=".com"-->
-<!--                placeholder="please enter url"-->
-<!--            />-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
-<!--      </a-row>-->
-<!--      <a-row :gutter="16">-->
-<!--        <a-col :span="12">-->
-<!--          <a-form-item label="Owner" name="owner">-->
-<!--            <a-select v-model:value="form.owner" placeholder="Please a-s an owner">-->
-<!--              <a-select-option value="xiao">Xiaoxiao Fu</a-select-option>-->
-<!--              <a-select-option value="mao">Maomao Zhou</a-select-option>-->
-<!--            </a-select>-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
-<!--        <a-col :span="12">-->
-<!--          <a-form-item label="Type" name="type">-->
-<!--            <a-select v-model:value="form.type" placeholder="Please choose the type">-->
-<!--              <a-select-option value="private">Private</a-select-option>-->
-<!--              <a-select-option value="public">Public</a-select-option>-->
-<!--            </a-select>-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
-<!--      </a-row>-->
-<!--      <a-row :gutter="16">-->
-<!--        <a-col :span="12">-->
-<!--          <a-form-item label="更新频率" name="approver">-->
-<!--            <a-select v-model:value="form.approver" placeholder="Please choose the approver">-->
-<!--              <a-select-option value="jack">一周</a-select-option>-->
-<!--              <a-select-option value="tom">一个月</a-select-option>-->
-<!--            </a-select>-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
-<!--        <a-col :span="12">-->
-<!--          <a-form-item label="DateTime" name="dateTime">-->
-<!--            <a-date-picker-->
-<!--                v-model:value="form.dateTime"-->
-<!--                style="width: 100%"-->
-<!--                :get-popup-container="trigger => trigger.parentElement"-->
-<!--            />-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
-<!--      </a-row>-->
-<!--      <a-row :gutter="16">-->
-<!--        <a-col :span="24">-->
-<!--          <a-form-item label="Description" name="description">-->
-<!--            <a-textarea-->
-<!--                v-model:value="form.description"-->
-<!--                :rows="4"-->
-<!--                placeholder="please enter url description"-->
-<!--            />-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
-<!--      </a-row>-->
-<!--    </a-form>-->
-<!--    <a-space>-->
-<!--      <a-button @click="onClose">Cancel</a-button>-->
-<!--      <a-button type="primary" @click="onClose">Submit</a-button>-->
-<!--    </a-space>-->
-<!--  </a-drawer>-->
-<!--</template>-->
-<!--<script lang="ts">-->
-<!--import { PlusOutlined } from '@ant-design/icons-vue';-->
-<!--import { defineComponent, reactive, ref } from 'vue';-->
-<!--import Rule from 'ant-design-vue/es/form';-->
-<!--export default defineComponent({-->
-<!--  components: {-->
-<!--    PlusOutlined,-->
-<!--  },-->
-<!--  setup() {-->
-<!--    const form = reactive({-->
-<!--      name: '',-->
-<!--      url: '',-->
-<!--      owner: '',-->
-<!--      type: '',-->
-<!--      approver: '',-->
-<!--      dateTime: null,-->
-<!--      description: '',-->
-<!--    });-->
+<template>
+  <a-button type="primary" @click="showDrawer1">
+    <template #icon><appstore-two-tone /></template>
+    设置首页管道位移数据相关属性
+  </a-button>
+  <br/>
+  <br/>
+  <a-button type="primary" @click="showDrawer2">
+    <template #icon><appstore-two-tone /></template>
+    设置首页一个月内管道位移变化曲线图相关属性
+  </a-button>
+  
+  <a-drawer
+      title="首页管道位移数据相关属性"
+      :width="720"
+      :visible="visible1"
+      :body-style="{ paddingBottom: '80px' }"
+      :footer-style="{ textAlign: 'right' }"
+      @close="onClose1"
+  >
+    <a-form :model="form1" :rules="rules" layout="vertical">
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="设置读取展示频率" name="frequence">
+            <a-select v-model:value="form1.frequency" >
+              <a-select-option value="a">循环昨天【上午下午】</a-select-option>
+              <a-select-option value="b">循环上一周【上一周每天上午下午】</a-select-option>
+              <a-select-option value="c">循环上个月【上个月每天上午下午】</a-select-option>
+              <a-select-option value="d">循环去年【去年每天上午下午】</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="阵列条数" name="arrayTotal">
+            <n-input v-model:value="form1.arrayTotal" placeholder="请输入阵列条数" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="每条阵列的传感器数量" name="eachArrayNum">
+            <n-dynamic-input
+                v-model:value="form1.eachArrayNum"
+                placeholder="请输入数量"
+                :min="form1.arrayTotal"
+                :max="form1.arrayTotal"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="上午采集几组数据" name="groupNumAm">
+            <n-input v-model:value="form1.groupNumAm" placeholder="请输入组数" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="下午采集几组数据" name="groupNumPm">
+            <n-input v-model:value="form1.groupNumPm" placeholder="请输入组数" />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="读取文件的格式" name="fileFormat">
+            <n-input v-model:value="form1.fileFormat" placeholder="请输入文件格式" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="读取文件的第几列数据" name="colNum">
+            <n-input v-model:value="form1.colNum" placeholder="请输入排第几列" />
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
+    <a-space>
+      <a-button @click="onClose1">Cancel</a-button>
+      <n-popconfirm
+          @positive-click="handlePositiveClick1"
+          @negative-click="handleNegativeClick"
+      >
+        <template #trigger>
+          <n-button type="primary">Submit</n-button>
+        </template>
+        是否设置完成？
+      </n-popconfirm>
+    </a-space>
+  </a-drawer>
+  <a-drawer
+      title="首页一个月内管道位移变化曲线图相关属性"
+      :width="720"
+      :visible="visible2"
+      :body-style="{ paddingBottom: '80px' }"
+      :footer-style="{ textAlign: 'right' }"
+      @close="onClose2"
+  >
+    <a-form :model="form2" :rules="rules" layout="vertical">
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="曲线条数" name="curveTotal">
+            <n-input v-model:value="form2.curveTotal" placeholder="请输入曲线条数" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="阵列号以及内部编号" name="arrayNode">
+            <n-dynamic-input
+                v-model:value="form2.arrayNode"
+                preset="pair"
+                key-placeholder="阵列号"
+                value-placeholder="内部节点编号"
+                :min="form2.curveTotal"
+                :max="form2.curveTotal"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="读取文件的格式" name="fileFormat">
+            <n-input v-model:value="form2.fileFormat" placeholder="请输入文件格式" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="读取文件的第几列数据" name="colNum">
+            <n-input v-model:value="form2.colNum" placeholder="请输入排第几列" />
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
 
-<!--    const rules: Record<string, Rule[]> = {-->
-<!--      name: [{ required: true, message: 'Please enter user name' }],-->
-<!--      url: [{ required: true, message: 'please enter url' }],-->
-<!--      owner: [{ required: true, message: 'Please select an owner' }],-->
-<!--      type: [{ required: true, message: 'Please choose the type' }],-->
-<!--      approver: [{ required: true, message: 'Please choose the approver' }],-->
-<!--      dateTime: [{ required: true, message: 'Please choose the dateTime', type: 'object' }],-->
-<!--      description: [{ required: true, message: 'Please enter url description' }],-->
-<!--    };-->
+    <a-space>
+      <a-button @click="onClose2">Cancel</a-button>
+      <n-popconfirm
+          @positive-click="handlePositiveClick2"
+          @negative-click="handleNegativeClick"
+      >
+        <template #trigger>
+          <n-button type="primary" >Submit</n-button>
+        </template>
+        是否设置完成？
+      </n-popconfirm>
+    </a-space>
+  </a-drawer>
+</template>
+<script lang="ts">
+import { PlusOutlined } from '@ant-design/icons-vue';
+import { defineComponent, reactive, ref } from 'vue';
+import axios from "axios";
+import {message} from "ant-design-vue";
+export default defineComponent({
+  components: {
+    PlusOutlined,
+  },
+  setup() {
 
-<!--    const visible = ref<boolean>(false);-->
-
-<!--    const showDrawer = () => {-->
-<!--      visible.value = true;-->
-<!--    };-->
-
-<!--    const onClose = () => {-->
-<!--      visible.value = false;-->
-<!--    };-->
-<!--    return {-->
-<!--      form,-->
-<!--      rules,-->
-<!--      visible,-->
-<!--      showDrawer,-->
-<!--      onClose,-->
-<!--    };-->
-<!--  },-->
-<!--});-->
-<!--</script>-->
+    const form1 = reactive({
+      frequency: '',
+      arrayTotal: 2,
+      eachArrayNum:[13,11],
+      groupNumAm:10,
+      groupNumPm:10,
+      fileFormat:'xslx',
+      colNum:4,
+    });
+    const form2 = reactive({
+      curveTotal:2,
+      arrayNode:[{key:0,value: 15}],
+      fileFormat:'xlsx',
+      colNum:4
+    });
+    const visible1 = ref<boolean>(false);
+    const visible2 = ref<boolean>(false);
+    const showDrawer1 = () => {
+      visible1.value = true;
+    };
+    const showDrawer2 = () => {
+      visible2.value = true;
+    };
+    const onClose1 = () => {
+      visible1.value = false;
+    };
+    const onClose2 = () => {
+      visible2.value = false;
+    };
+    const handlePositiveClick1  = () =>{
+        axios.post("/home/leftTopAttributeSave", form1).then((response) => {
+          const data = response.data;
+          if (data.success) {
+            message.success("保存成功");
+          } else {
+            message.error(data.message);
+          }
+        });
+    };
+    const handlePositiveClick2  = () =>{
+      axios.post("/home/middleBottomAttributeSave", form2).then((response) => {
+        const data = response.data;
+        if (data.success) {
+          message.success("保存成功");
+        } else {
+          message.error(data.message);
+        }
+      });
+    };
+    const handleNegativeClick =()=> {
+      message.info('取消成功')
+    }
+    const value1 = ref<string>('a');
+    const value2 = ref<string>('c');
+    return {
+      form1,
+      form2,
+      visible1,
+      visible2,
+      showDrawer1,
+      showDrawer2,
+      onClose1,
+      onClose2,
+      value1,
+      value2,
+      handleNegativeClick,
+      handlePositiveClick1,
+      handlePositiveClick2
+    };
+  },
+});
+</script>
