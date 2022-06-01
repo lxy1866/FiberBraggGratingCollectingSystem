@@ -9,8 +9,7 @@ import top.kaluna.pipelineMonitor.config.FileConfig;
 import top.kaluna.pipelineMonitor.service.AvgService;
 import top.kaluna.pipelineMonitor.service.BreakpointRecordService;
 import top.kaluna.pipelineMonitor.service.FileUploadAndDownloadService;
-import top.kaluna.pipelineMonitor.util.CustomParserTxtUtil;
-import top.kaluna.pipelineMonitor.util.ParseExcelUtil;
+import top.kaluna.pipelineMonitor.util.ParseCsvUtil;
 import top.kaluna.pipelineMonitor.util.SnowFlake;
 import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
@@ -92,18 +91,39 @@ public class PhysicalValueJob {
         final List<String> completeSaveFilePathList = fileUploadAndDownloadService.fileDownload();
         LOG.info("拉取oss文件结束，耗时：{}毫秒",System.currentTimeMillis() - start1);
 
-
         LOG.info("解析文件开始");
         long start2 = System.currentTimeMillis();
         //这里是通过解析excel文件后将数据插入excelData表的
-        completeSaveFilePathList.forEach((completeSaveFilePath)->{
-            try {
-                ParseExcelUtil.simpleRead(completeSaveFilePath);
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        });
-        //文件名判断后修改arraySn
+//        completeSaveFilePathList.forEach((completeSaveFilePath)->{
+//            try {
+//                ParseExcelUtil.simpleRead(completeSaveFilePath);
+//            } catch (IOException exception) {
+//                exception.printStackTrace();
+//            }
+//        });
+        //这里是通过解析txt文件， 文件名判断后修改arraySn
+//        completeSaveFilePathList.forEach((completeSaveFilePath)->{
+//            try {
+//                String[] completeSaveFilePathArray = completeSaveFilePath.split("/");
+//                int arraySn = 0;
+//                int sensorNums = 0;
+//                if(fileConfig.getName2().equals(completeSaveFilePathArray[completeSaveFilePath.length() - 1])){
+//                    arraySn = 2;
+//                    sensorNums = 10;
+//                    CustomParserTxtUtil.simpleRead(completeSaveFilePath,sensorNums, arraySn);
+//                    avgService.getAvgAndInsert(sensorNums, arraySn);
+//                }else if(fileConfig.getName1().equals(completeSaveFilePathArray[completeSaveFilePath.length() - 1])){
+//                    arraySn = 1;
+//                    sensorNums = 12;
+//                    CustomParserTxtUtil.simpleRead(completeSaveFilePath,sensorNums, arraySn);
+//                    //插入
+//                    avgService.getAvgAndInsert(sensorNums, arraySn);
+//                }
+//            } catch (IOException | ParseException exception) {
+//                exception.printStackTrace();
+//            }
+//        });
+        //这里是通过解析csv
         completeSaveFilePathList.forEach((completeSaveFilePath)->{
             try {
                 String[] completeSaveFilePathArray = completeSaveFilePath.split("/");
@@ -112,16 +132,15 @@ public class PhysicalValueJob {
                 if(fileConfig.getName2().equals(completeSaveFilePathArray[completeSaveFilePath.length() - 1])){
                     arraySn = 2;
                     sensorNums = 10;
-                    CustomParserTxtUtil.simpleRead(completeSaveFilePath,sensorNums, arraySn);
+                    ParseCsvUtil.readCsvByCsvReader(completeSaveFilePath,sensorNums, arraySn);
                     avgService.getAvgAndInsert(sensorNums, arraySn);
                 }else if(fileConfig.getName1().equals(completeSaveFilePathArray[completeSaveFilePath.length() - 1])){
                     arraySn = 1;
                     sensorNums = 12;
-                    CustomParserTxtUtil.simpleRead(completeSaveFilePath,sensorNums, arraySn);
-                    //插入
+                    ParseCsvUtil.readCsvByCsvReader(completeSaveFilePath,sensorNums, arraySn);
                     avgService.getAvgAndInsert(sensorNums, arraySn);
                 }
-            } catch (IOException | ParseException exception) {
+            } catch (ParseException | IOException exception) {
                 exception.printStackTrace();
             }
         });

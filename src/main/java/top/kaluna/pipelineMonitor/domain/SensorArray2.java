@@ -3,7 +3,6 @@ package top.kaluna.pipelineMonitor.domain;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,11 +10,11 @@ import java.util.Date;
 
 /**
  * @author Yuery
- * @date 2022/6/1/0001 - 12:37
+ * @date 2022/6/1/0001 - 14:12
  */
 @Data
 @NoArgsConstructor
-public class SensorArray1 {
+public class SensorArray2 {
     private Long id;
 
     private Integer arraySn;
@@ -94,22 +93,8 @@ public class SensorArray1 {
     private Double sensorNode10y;
     @ExcelProperty(index = 30)
     private Double sensorNode10z;
-    //节点11
-    @ExcelProperty(index = 31)
-    private Double sensorNode11x;
-    @ExcelProperty(index = 32)
-    private Double sensorNode11y;
-    @ExcelProperty(index = 33)
-    private Double sensorNode11z;
-    //节点12
-    @ExcelProperty(index = 34)
-    private Double sensorNode12x;
-    @ExcelProperty(index = 35)
-    private Double sensorNode12y;
-    @ExcelProperty(index = 36)
-    private Double sensorNode12z;
 
-    public SensorArray1(Integer arraySn, Date date, Double sensorNode1x, Double sensorNode1y, Double sensorNode1z, Double sensorNode2x, Double sensorNode2y, Double sensorNode2z, Double sensorNode3x, Double sensorNode3y, Double sensorNode3z, Double sensorNode4x, Double sensorNode4y, Double sensorNode4z, Double sensorNode5x, Double sensorNode5y, Double sensorNode5z, Double sensorNode6x, Double sensorNode6y, Double sensorNode6z, Double sensorNode7x, Double sensorNode7y, Double sensorNode7z, Double sensorNode8x, Double sensorNode8y, Double sensorNode8z, Double sensorNode9x, Double sensorNode9y, Double sensorNode9z, Double sensorNode10x, Double sensorNode10y, Double sensorNode10z, Double sensorNode11x, Double sensorNode11y, Double sensorNode11z, Double sensorNode12x, Double sensorNode12y, Double sensorNode12z) {
+    public SensorArray2(Integer arraySn, Date date, Double sensorNode1x, Double sensorNode1y, Double sensorNode1z, Double sensorNode2x, Double sensorNode2y, Double sensorNode2z, Double sensorNode3x, Double sensorNode3y, Double sensorNode3z, Double sensorNode4x, Double sensorNode4y, Double sensorNode4z, Double sensorNode5x, Double sensorNode5y, Double sensorNode5z, Double sensorNode6x, Double sensorNode6y, Double sensorNode6z, Double sensorNode7x, Double sensorNode7y, Double sensorNode7z, Double sensorNode8x, Double sensorNode8y, Double sensorNode8z, Double sensorNode9x, Double sensorNode9y, Double sensorNode9z, Double sensorNode10x, Double sensorNode10y, Double sensorNode10z) {
         this.arraySn = arraySn;
         this.date = date;
         this.sensorNode1x = sensorNode1x;
@@ -142,11 +127,6 @@ public class SensorArray1 {
         this.sensorNode10x = sensorNode10x;
         this.sensorNode10y = sensorNode10y;
         this.sensorNode10z = sensorNode10z;
-        this.sensorNode11x = sensorNode11x;
-        this.sensorNode11y = sensorNode11y;
-        this.sensorNode11z = sensorNode11z;
-        this.sensorNode12x = sensorNode12x;
-        this.sensorNode12y = sensorNode12y;
-        this.sensorNode12z = sensorNode12z;
     }
 }
+
