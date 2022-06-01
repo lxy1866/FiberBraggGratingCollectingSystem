@@ -51,6 +51,8 @@
 <!--        <table tableName="user"/>-->
 <!--        <table tableName="arc"/>-->
 <!--        <table tableName="home_page_left_top"/>-->
-        <table tableName="home_page_middle_bottom"/>
+<!--        <table tableName="home_page_middle_bottom"/>-->
+<!--        <table tableName="excel_data"/>-->
+        <table tableName="avg_sensor"/>
     </context>
 </generatorConfiguration>

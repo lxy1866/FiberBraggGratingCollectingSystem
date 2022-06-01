@@ -1,50 +1,54 @@
 <template>
-  <n-card
-      title="📖 上传文件到阿里云OSS对象存储【测试中】，默认是本地程序定时每天中午12点晚上00点上传数据。"
-      embedded
-      :bordered="false"
-  >
-  </n-card>
-  <div class="upload">
-    <div class="leftPart">
-      <a-upload-dragger
-          v-model:fileList="fileList"
-          accept=".xlsx, .xls, .csv"
-          name="file"
-          @change="handleChange"
-          :multiple="true"
-          @drop="handleDrop"
-          :remove="handleDownloadFileRemove"
-          :customRequest="uploadFilesCustomRequest"
-
+  <a-layout-content>
+    <div class="outermost">
+      <n-card
+          title="📖 上传文件到阿里云OSS对象存储【测试中】，默认是本地程序定时每周周一凌晨1点上传数据。"
+          embedded
+          :bordered="false"
       >
-        <p class="ant-upload-drag-icon">
-          <inbox-outlined></inbox-outlined>
-        </p>
-        <p class="ant-upload-text">点击或者拖拽到此区域进行上传</p>
-        <p class="ant-upload-hint">
-          支持单个或批量文件上传
-        </p>
-      </a-upload-dragger>
-    </div>
-    <p class="middlePart">或者选择</p>
-    <div class="rightPart">
-      <a-upload
-          v-model:fileList="fileList2"
-          accept=".xlsx, .xls, .csv"
-          @change="handleChange2"
-          @drop="handleDrop2"
-          :remove="handleDownloadFileRemove2"
-          :customRequest="uploadFilesCustomRequest2"
-          directory>
-        <a-button>
-          <upload-outlined></upload-outlined>
-          上传整个文件夹
-        </a-button>
-      </a-upload>
-    </div>
-  </div>
+      </n-card>
+      <div class="upload">
+        <div class="leftPart">
+          <a-upload-dragger
+              v-model:fileList="fileList"
+              accept=".xlsx, .xls, .csv .txt"
+              name="file"
+              @change="handleChange"
+              :multiple="true"
+              @drop="handleDrop"
+              :remove="handleDownloadFileRemove"
+              :customRequest="uploadFilesCustomRequest"
 
+          >
+            <p class="ant-upload-drag-icon">
+              <inbox-outlined></inbox-outlined>
+            </p>
+            <p class="ant-upload-text">点击或者拖拽到此区域进行上传</p>
+            <p class="ant-upload-hint">
+              支持单个或批量文件上传
+            </p>
+          </a-upload-dragger>
+        </div>
+        <p class="middlePart">或者选择</p>
+        <div class="rightPart">
+          <a-upload
+              v-model:fileList="fileList2"
+              accept=".xlsx, .xls, .csv"
+              @change="handleChange2"
+              @drop="handleDrop2"
+              :remove="handleDownloadFileRemove2"
+              :customRequest="uploadFilesCustomRequest2"
+              directory>
+            <a-button>
+              <upload-outlined></upload-outlined>
+              上传整个文件夹
+            </a-button>
+          </a-upload>
+        </div>
+      </div>
+    </div>
+
+  </a-layout-content>
 </template>
 <script lang="ts">
 import TheHeader from "@/components/theHeader.vue"

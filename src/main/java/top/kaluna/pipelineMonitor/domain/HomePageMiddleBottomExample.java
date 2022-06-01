@@ -364,63 +364,73 @@ public class HomePageMiddleBottomExample {
             return (Criteria) this;
         }
 
-        public Criteria andColNumIsNull() {
-            addCriterion("col_num is null");
+        public Criteria andColNameIsNull() {
+            addCriterion("col_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andColNumIsNotNull() {
-            addCriterion("col_num is not null");
+        public Criteria andColNameIsNotNull() {
+            addCriterion("col_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andColNumEqualTo(Long value) {
-            addCriterion("col_num =", value, "colNum");
+        public Criteria andColNameEqualTo(String value) {
+            addCriterion("col_name =", value, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumNotEqualTo(Long value) {
-            addCriterion("col_num <>", value, "colNum");
+        public Criteria andColNameNotEqualTo(String value) {
+            addCriterion("col_name <>", value, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumGreaterThan(Long value) {
-            addCriterion("col_num >", value, "colNum");
+        public Criteria andColNameGreaterThan(String value) {
+            addCriterion("col_name >", value, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumGreaterThanOrEqualTo(Long value) {
-            addCriterion("col_num >=", value, "colNum");
+        public Criteria andColNameGreaterThanOrEqualTo(String value) {
+            addCriterion("col_name >=", value, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumLessThan(Long value) {
-            addCriterion("col_num <", value, "colNum");
+        public Criteria andColNameLessThan(String value) {
+            addCriterion("col_name <", value, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumLessThanOrEqualTo(Long value) {
-            addCriterion("col_num <=", value, "colNum");
+        public Criteria andColNameLessThanOrEqualTo(String value) {
+            addCriterion("col_name <=", value, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumIn(List<Long> values) {
-            addCriterion("col_num in", values, "colNum");
+        public Criteria andColNameLike(String value) {
+            addCriterion("col_name like", value, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumNotIn(List<Long> values) {
-            addCriterion("col_num not in", values, "colNum");
+        public Criteria andColNameNotLike(String value) {
+            addCriterion("col_name not like", value, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumBetween(Long value1, Long value2) {
-            addCriterion("col_num between", value1, value2, "colNum");
+        public Criteria andColNameIn(List<String> values) {
+            addCriterion("col_name in", values, "colName");
             return (Criteria) this;
         }
 
-        public Criteria andColNumNotBetween(Long value1, Long value2) {
-            addCriterion("col_num not between", value1, value2, "colNum");
+        public Criteria andColNameNotIn(List<String> values) {
+            addCriterion("col_name not in", values, "colName");
+            return (Criteria) this;
+        }
+
+        public Criteria andColNameBetween(String value1, String value2) {
+            addCriterion("col_name between", value1, value2, "colName");
+            return (Criteria) this;
+        }
+
+        public Criteria andColNameNotBetween(String value1, String value2) {
+            addCriterion("col_name not between", value1, value2, "colName");
             return (Criteria) this;
         }
     }

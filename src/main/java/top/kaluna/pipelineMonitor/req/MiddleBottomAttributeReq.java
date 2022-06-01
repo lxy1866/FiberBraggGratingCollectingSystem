@@ -21,5 +21,5 @@ public class MiddleBottomAttributeReq {
 
     private String fileFormat;
 
-    private Long colNum;
+    private String colName;
 }

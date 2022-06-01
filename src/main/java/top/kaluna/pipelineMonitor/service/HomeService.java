@@ -1,44 +1,49 @@
 package top.kaluna.pipelineMonitor.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import top.kaluna.pipelineMonitor.domain.HomePageLeftTop;
-import top.kaluna.pipelineMonitor.domain.HomePageLeftTopExample;
-import top.kaluna.pipelineMonitor.domain.HomePageMiddleBottom;
-import top.kaluna.pipelineMonitor.domain.HomePageMiddleBottomExample;
+import top.kaluna.pipelineMonitor.domain.*;
+import top.kaluna.pipelineMonitor.mapper.AvgSensorMapper;
 import top.kaluna.pipelineMonitor.mapper.HomePageLeftTopMapper;
 import top.kaluna.pipelineMonitor.mapper.HomePageMiddleBottomMapper;
 import top.kaluna.pipelineMonitor.req.LeftTopAttributeReq;
 import top.kaluna.pipelineMonitor.req.MiddleBottomAttributeReq;
 import top.kaluna.pipelineMonitor.util.CopyUtil;
+import top.kaluna.pipelineMonitor.util.DateUtil;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Yuery
  * @date 2022/5/18/0018 - 21:34
  */
 @Service
+@Slf4j
 public class HomeService {
 
     @Resource
     private HomePageLeftTopMapper homePageLeftTopMapper;
     @Resource
     private HomePageMiddleBottomMapper homePageMiddleBottomMapper;
+    @Resource
+    private AvgSensorMapper avgSensorMapper;
+
     public Boolean leftTopAttributeSave(LeftTopAttributeReq req){
 
         HomePageLeftTop homePageLeftTop = CopyUtil.copy(req, HomePageLeftTop.class);
         StringBuilder stringBuilder = new StringBuilder();
         for(int i = 0 ; i < req.getEachArrayNum().size(); i++){
             stringBuilder.append(req.getEachArrayNum().get(i));
-            stringBuilder.append('_');
             if(i != req.getEachArrayNum().size() - 1){
                 stringBuilder.append('_');
+            }else {
+                break;
             }
         }
         homePageLeftTop.setEachArrayNum(stringBuilder.toString());
-        homePageLeftTop.setEachArrayNum(req.getEachArrayNum().toString());
-
         HomePageLeftTopExample homePageLeftTopExample = new HomePageLeftTopExample();
         HomePageLeftTopExample.Criteria criteria = homePageLeftTopExample.createCriteria();
         criteria.andIdEqualTo(1L);
@@ -46,6 +51,7 @@ public class HomeService {
         final List<HomePageLeftTop> homePageLeftTops = homePageLeftTopMapper.selectByExample(homePageLeftTopExample);
 
         if(homePageLeftTops.size()!=0){
+            homePageLeftTop.setId(1L);
             homePageLeftTopMapper.updateByExample(homePageLeftTop,homePageLeftTopExample);
         }else{
             homePageLeftTopMapper.insert(homePageLeftTop);
@@ -72,10 +78,105 @@ public class HomeService {
         criteria.andIdEqualTo(1L);
         final List<HomePageMiddleBottom> homePageMiddleBottoms = homePageMiddleBottomMapper.selectByExample(homePageMiddleBottomExample);
         if(homePageMiddleBottoms.size()!=0){
+            homePageMiddleBottom.setId(1L);
             homePageMiddleBottomMapper.updateByExample(homePageMiddleBottom,homePageMiddleBottomExample);
         }else{
             homePageMiddleBottomMapper.insert(homePageMiddleBottom);
         }
         return true;
+    }
+
+
+    public HomePageLeftTop leftTopAttributeGet() {
+        HomePageLeftTopExample example = new HomePageLeftTopExample();
+        final List<HomePageLeftTop> homePageLeftTops = homePageLeftTopMapper.selectByExample(example);
+        return homePageLeftTops.get(0);
+    }
+
+    public List<Object> leftTopDataGet() {
+        //返回前一周的数据
+        AvgSensorExample avgSensorExample = new AvgSensorExample();
+        AvgSensorExample.Criteria criteria = avgSensorExample.createCriteria();
+        criteria.andDateBetween(DateUtil.getLastWeekMonday(DateUtil.getStartTime()), DateUtil.getThisWeekMonday(DateUtil.getStartTime()));
+        final List<AvgSensor> list = avgSensorMapper.selectByExample(avgSensorExample);
+        final List<AvgSensor> collect1 = list.stream().sorted(Comparator.comparing(AvgSensor::getDate)).collect(Collectors.toList());
+        final List<AvgSensor> collect2 = collect1.stream().sorted(Comparator.comparing(obj -> Integer.valueOf(obj.getSensorNodeName().split("节点")[1]))).collect(Collectors.toList());
+        final List<AvgSensor> collect3 = collect2.stream().sorted(Comparator.comparing(AvgSensor::getArraySn)).collect(Collectors.toList());
+        final List<Object> values = Arrays.asList(collect3.stream().collect(Collectors.groupingBy(AvgSensor::getDate,LinkedHashMap::new, Collectors.toCollection(ArrayList::new))).values().toArray());
+        return values;
+    }
+
+    public List<List<Double>> middleBottomGet() {
+        final String[] arrayNodeNums = getArrayNodeNums();
+        //存储结果
+        List<List<Double>> avgList = new ArrayList<>();
+        for(int i = 0; i < arrayNodeNums.length/2; i++){
+            avgList.add(middleBottomGetForSingleNode(arrayNodeNums[i*2+1], i+1));
+        }
+        //System.err.println(avgList);
+        return avgList;
+    }
+    public List<Double> middleBottomGetForSingleNode(String s, Integer arraySn){
+        //返回前一个月的数据 每个阵列最后一个节点的值
+        AvgSensorExample avgSensorExample = new AvgSensorExample();
+        AvgSensorExample.Criteria criteria = avgSensorExample.createCriteria();
+        //前一个月的第一天 到 这个月的第一天
+        criteria.andDateBetween(DateUtil.getLastMonthStartTime(), DateUtil.getThisMonthStartTime());
+        //匹配节点名称
+        criteria.andSensorNodeNameEqualTo("节点"+Integer.parseInt(s));
+        //匹配阵列序号
+        criteria.andArraySnEqualTo(arraySn);
+        final List<AvgSensor> avgSensors = avgSensorMapper.selectByExample(avgSensorExample);
+        //按照日期排序
+        final List<AvgSensor> collect1 = avgSensors.stream().sorted(Comparator.comparing(AvgSensor::getDate)).collect(Collectors.toList());
+        //System.err.println("collect1:"+collect1.toString());
+        //按照年月日分组
+        final Map<String, List<AvgSensor>> collect = collect1.stream().collect(Collectors.groupingBy(obj -> {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(obj.getDate());
+            final int i = cal.get(Calendar.DAY_OF_YEAR);
+            return Integer.toString(i);
+        }, LinkedHashMap::new, Collectors.toCollection(ArrayList::new)));
+        //System.out.println("collect:"+collect.toString());
+        //存储其中一个阵列的最后一个节点的前一个月数据
+        List<Double> doubles = new ArrayList<>();
+        for(String key : collect.keySet()){
+            final Double aDouble = collect.get(key).stream().collect(Collectors.averagingDouble(AvgSensor::getAvg));
+            doubles.add(aDouble);
+        }
+        return doubles;
+    }
+    public List<Double> rightTopGetForLatestData(){
+        final String[] arrayNodeNums = getArrayNodeNums();
+        //存储结果
+        List<Double> avgList = new ArrayList<>();
+        for(int i = 0; i < arrayNodeNums.length/2; i++){
+            avgList.add(rightTopGetForSingleValue(arrayNodeNums[i*2+1], i+1));
+        }
+        System.err.println(avgList);
+        return avgList;
+    }
+    public Double rightTopGetForSingleValue(String s, Integer arraySn){
+        AvgSensorExample avgSensorExample = new AvgSensorExample();
+        AvgSensorExample.Criteria criteria = avgSensorExample.createCriteria();
+        //匹配节点名称
+        criteria.andSensorNodeNameEqualTo("节点"+Integer.parseInt(s));
+        //匹配阵列序号
+        criteria.andArraySnEqualTo(arraySn);
+        //找到上周最后一个时间范围的数据
+        criteria.andDateBetween(DateUtil.GivenTimeLastNHoursStart(DateUtil.getThisWeekMonday(DateUtil.getStartTime()), 12),DateUtil.getThisWeekMonday(DateUtil.getStartTime()));
+        final List<AvgSensor> avgSensors = avgSensorMapper.selectByExample(avgSensorExample);
+        if(avgSensors.size() != 0){
+            return avgSensors.get(0).getAvg();
+        }
+        return null;
+    }
+    public String[] getArrayNodeNums(){
+        //查询各个阵列节点数量 获得每个阵列最后一个节点名称
+        HomePageMiddleBottomExample homePageMiddleBottomExample = new HomePageMiddleBottomExample();
+        final List<HomePageMiddleBottom> homePageMiddleBottoms = homePageMiddleBottomMapper.selectByExample(homePageMiddleBottomExample);
+        final String arrayNode = homePageMiddleBottoms.get(0).getArrayNode();
+        final String[] s = arrayNode.split("_");
+        return  s;
     }
 }

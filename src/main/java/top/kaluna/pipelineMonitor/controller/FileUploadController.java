@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import top.kaluna.pipelineMonitor.resp.FileResp;
-import top.kaluna.pipelineMonitor.service.FileUploadService;
+import top.kaluna.pipelineMonitor.service.FileUploadAndDownloadService;
 
 import javax.annotation.Resource;
 
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 @RequestMapping("/fileUpload")
 public class FileUploadController {
     @Resource
-    FileUploadService fileUploadService;
+    FileUploadAndDownloadService fileUploadService;
     /**
      * 上传文件到oss
      * @param file 文件
@@ -26,7 +26,7 @@ public class FileUploadController {
      */
     @PostMapping(value = "uploadOneFile")
     public FileResp uploadOneFile(@RequestPart("file") MultipartFile file){
-        String result = fileUploadService.fileUploadOneFile(file);
+        String result = fileUploadService.fileUploadFileWeb(file);
 
         FileResp fileResp = new FileResp();
         fileResp.setUrl(result);

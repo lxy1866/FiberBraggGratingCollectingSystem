@@ -12,4 +12,14 @@ public class RandomUtil {
         // 产生一个2~100的数
         return new BigDecimal(Double.toString(500 + Math.random() * (1000 - 500)));
     }
+    //生成100-1000的随机数
+    public static Double doubleFrom100TO1000(){
+        // 产生一个2~100的数
+        return (500 + Math.random() * (1000 - 500));
+    }
+    //生成100-1000的随机数
+    public static Double doubleFrom30TO4O(){
+        // 产生一个2~100的数
+        return (30 + Math.random() * (40 - 30));
+    }
 }

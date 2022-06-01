@@ -15,7 +15,7 @@ public class HomePageLeftTop {
 
     private String fileFormat;
 
-    private Long colNum;
+    private String colName;
 
     public Long getId() {
         return id;
@@ -73,12 +73,12 @@ public class HomePageLeftTop {
         this.fileFormat = fileFormat;
     }
 
-    public Long getColNum() {
-        return colNum;
+    public String getColName() {
+        return colName;
     }
 
-    public void setColNum(Long colNum) {
-        this.colNum = colNum;
+    public void setColName(String colName) {
+        this.colName = colName;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class HomePageLeftTop {
         sb.append(", groupNumAm=").append(groupNumAm);
         sb.append(", groupNumPm=").append(groupNumPm);
         sb.append(", fileFormat=").append(fileFormat);
-        sb.append(", colNum=").append(colNum);
+        sb.append(", colName=").append(colName);
         sb.append("]");
         return sb.toString();
     }

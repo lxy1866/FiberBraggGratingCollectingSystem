@@ -1,12 +1,10 @@
-//package top.kaluna.modbusTcp;
+//package top.kaluna.pipelineMonitor;
 //
 //import org.junit.jupiter.api.Test;
 //import org.springframework.boot.test.context.SpringBootTest;
 //
-//import java.time.LocalDate;
-//
 //@SpringBootTest
-//class ModbusTcpApplicationTests {
+//class PipelineMonitorApplicationTests {
 //
 //	@Test
 //	void contextLoads() {

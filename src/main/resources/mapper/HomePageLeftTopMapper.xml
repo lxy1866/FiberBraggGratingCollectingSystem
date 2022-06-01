@@ -9,7 +9,7 @@
     <result column="group_num_am" jdbcType="BIGINT" property="groupNumAm" />
     <result column="group_num_pm" jdbcType="BIGINT" property="groupNumPm" />
     <result column="file_format" jdbcType="VARCHAR" property="fileFormat" />
-    <result column="col_num" jdbcType="BIGINT" property="colNum" />
+    <result column="col_name" jdbcType="VARCHAR" property="colName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +71,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, frequency, array_total, each_array_num, group_num_am, group_num_pm, file_format, 
-    col_num
+    col_name
   </sql>
   <select id="selectByExample" parameterType="top.kaluna.pipelineMonitor.domain.HomePageLeftTopExample" resultMap="BaseResultMap">
     select
@@ -106,10 +106,10 @@
   <insert id="insert" parameterType="top.kaluna.pipelineMonitor.domain.HomePageLeftTop">
     insert into home_page_left_top (id, frequency, array_total, 
       each_array_num, group_num_am, group_num_pm, 
-      file_format, col_num)
+      file_format, col_name)
     values (#{id,jdbcType=BIGINT}, #{frequency,jdbcType=VARCHAR}, #{arrayTotal,jdbcType=BIGINT}, 
       #{eachArrayNum,jdbcType=VARCHAR}, #{groupNumAm,jdbcType=BIGINT}, #{groupNumPm,jdbcType=BIGINT}, 
-      #{fileFormat,jdbcType=VARCHAR}, #{colNum,jdbcType=BIGINT})
+      #{fileFormat,jdbcType=VARCHAR}, #{colName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="top.kaluna.pipelineMonitor.domain.HomePageLeftTop">
     insert into home_page_left_top
@@ -135,8 +135,8 @@
       <if test="fileFormat != null">
         file_format,
       </if>
-      <if test="colNum != null">
-        col_num,
+      <if test="colName != null">
+        col_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -161,8 +161,8 @@
       <if test="fileFormat != null">
         #{fileFormat,jdbcType=VARCHAR},
       </if>
-      <if test="colNum != null">
-        #{colNum,jdbcType=BIGINT},
+      <if test="colName != null">
+        #{colName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -196,8 +196,8 @@
       <if test="record.fileFormat != null">
         file_format = #{record.fileFormat,jdbcType=VARCHAR},
       </if>
-      <if test="record.colNum != null">
-        col_num = #{record.colNum,jdbcType=BIGINT},
+      <if test="record.colName != null">
+        col_name = #{record.colName,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -213,7 +213,7 @@
       group_num_am = #{record.groupNumAm,jdbcType=BIGINT},
       group_num_pm = #{record.groupNumPm,jdbcType=BIGINT},
       file_format = #{record.fileFormat,jdbcType=VARCHAR},
-      col_num = #{record.colNum,jdbcType=BIGINT}
+      col_name = #{record.colName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -239,8 +239,8 @@
       <if test="fileFormat != null">
         file_format = #{fileFormat,jdbcType=VARCHAR},
       </if>
-      <if test="colNum != null">
-        col_num = #{colNum,jdbcType=BIGINT},
+      <if test="colName != null">
+        col_name = #{colName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -253,7 +253,7 @@
       group_num_am = #{groupNumAm,jdbcType=BIGINT},
       group_num_pm = #{groupNumPm,jdbcType=BIGINT},
       file_format = #{fileFormat,jdbcType=VARCHAR},
-      col_num = #{colNum,jdbcType=BIGINT}
+      col_name = #{colName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

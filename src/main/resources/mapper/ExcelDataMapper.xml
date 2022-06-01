@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.kaluna.pipelineMonitor.mapper.ExcelDataMapper">
+  <resultMap id="BaseResultMap" type="top.kaluna.pipelineMonitor.domain.ExcelData">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="array_sn" jdbcType="INTEGER" property="arraySn" />
+    <result column="sensor_node_name" jdbcType="VARCHAR" property="sensorNodeName" />
+    <result column="x_value" jdbcType="DOUBLE" property="xValue" />
+    <result column="y_value" jdbcType="DOUBLE" property="yValue" />
+    <result column="z_value" jdbcType="DOUBLE" property="zValue" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, array_sn, sensor_node_name, x_value, y_value, z_value, `date`
+  </sql>
+  <select id="selectByExample" parameterType="top.kaluna.pipelineMonitor.domain.ExcelDataExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from excel_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from excel_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from excel_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="top.kaluna.pipelineMonitor.domain.ExcelDataExample">
+    delete from excel_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="top.kaluna.pipelineMonitor.domain.ExcelData">
+    insert into excel_data (id, array_sn, sensor_node_name, 
+      x_value, y_value, z_value, 
+      `date`)
+    values (#{id,jdbcType=BIGINT}, #{arraySn,jdbcType=INTEGER}, #{sensorNodeName,jdbcType=VARCHAR}, 
+      #{xValue,jdbcType=DOUBLE}, #{yValue,jdbcType=DOUBLE}, #{zValue,jdbcType=DOUBLE}, 
+      #{date,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="top.kaluna.pipelineMonitor.domain.ExcelData">
+    insert into excel_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="arraySn != null">
+        array_sn,
+      </if>
+      <if test="sensorNodeName != null">
+        sensor_node_name,
+      </if>
+      <if test="xValue != null">
+        x_value,
+      </if>
+      <if test="yValue != null">
+        y_value,
+      </if>
+      <if test="zValue != null">
+        z_value,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="arraySn != null">
+        #{arraySn,jdbcType=INTEGER},
+      </if>
+      <if test="sensorNodeName != null">
+        #{sensorNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="xValue != null">
+        #{xValue,jdbcType=DOUBLE},
+      </if>
+      <if test="yValue != null">
+        #{yValue,jdbcType=DOUBLE},
+      </if>
+      <if test="zValue != null">
+        #{zValue,jdbcType=DOUBLE},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="top.kaluna.pipelineMonitor.domain.ExcelDataExample" resultType="java.lang.Long">
+    select count(*) from excel_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update excel_data
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.arraySn != null">
+        array_sn = #{record.arraySn,jdbcType=INTEGER},
+      </if>
+      <if test="record.sensorNodeName != null">
+        sensor_node_name = #{record.sensorNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xValue != null">
+        x_value = #{record.xValue,jdbcType=DOUBLE},
+      </if>
+      <if test="record.yValue != null">
+        y_value = #{record.yValue,jdbcType=DOUBLE},
+      </if>
+      <if test="record.zValue != null">
+        z_value = #{record.zValue,jdbcType=DOUBLE},
+      </if>
+      <if test="record.date != null">
+        `date` = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update excel_data
+    set id = #{record.id,jdbcType=BIGINT},
+      array_sn = #{record.arraySn,jdbcType=INTEGER},
+      sensor_node_name = #{record.sensorNodeName,jdbcType=VARCHAR},
+      x_value = #{record.xValue,jdbcType=DOUBLE},
+      y_value = #{record.yValue,jdbcType=DOUBLE},
+      z_value = #{record.zValue,jdbcType=DOUBLE},
+      `date` = #{record.date,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.pipelineMonitor.domain.ExcelData">
+    update excel_data
+    <set>
+      <if test="arraySn != null">
+        array_sn = #{arraySn,jdbcType=INTEGER},
+      </if>
+      <if test="sensorNodeName != null">
+        sensor_node_name = #{sensorNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="xValue != null">
+        x_value = #{xValue,jdbcType=DOUBLE},
+      </if>
+      <if test="yValue != null">
+        y_value = #{yValue,jdbcType=DOUBLE},
+      </if>
+      <if test="zValue != null">
+        z_value = #{zValue,jdbcType=DOUBLE},
+      </if>
+      <if test="date != null">
+        `date` = #{date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.kaluna.pipelineMonitor.domain.ExcelData">
+    update excel_data
+    set array_sn = #{arraySn,jdbcType=INTEGER},
+      sensor_node_name = #{sensorNodeName,jdbcType=VARCHAR},
+      x_value = #{xValue,jdbcType=DOUBLE},
+      y_value = #{yValue,jdbcType=DOUBLE},
+      z_value = #{zValue,jdbcType=DOUBLE},
+      `date` = #{date,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertExcelDataList" parameterType="java.util.List">
+    insert into excel_data (array_sn, sensor_node_name, x_value, y_value, z_value, date) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.arraySn}, #{item.sensorNodeName},#{item.xValue},#{item.yValue},#{item.zValue},#{item.date})
+    </foreach>
+  </insert>
+</mapper>

@@ -9,7 +9,7 @@ public class HomePageMiddleBottom {
 
     private String fileFormat;
 
-    private Long colNum;
+    private String colName;
 
     public Long getId() {
         return id;
@@ -43,12 +43,12 @@ public class HomePageMiddleBottom {
         this.fileFormat = fileFormat;
     }
 
-    public Long getColNum() {
-        return colNum;
+    public String getColName() {
+        return colName;
     }
 
-    public void setColNum(Long colNum) {
-        this.colNum = colNum;
+    public void setColName(String colName) {
+        this.colName = colName;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class HomePageMiddleBottom {
         sb.append(", curveTotal=").append(curveTotal);
         sb.append(", arrayNode=").append(arrayNode);
         sb.append(", fileFormat=").append(fileFormat);
-        sb.append(", colNum=").append(colNum);
+        sb.append(", colName=").append(colName);
         sb.append("]");
         return sb.toString();
     }

@@ -1,4 +1,5 @@
 <template>
+
   <a-button type="primary" @click="showDrawer1">
     <template #icon><appstore-two-tone /></template>
     设置首页管道位移数据相关属性
@@ -67,8 +68,8 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="读取文件的第几列数据" name="colNum">
-            <n-input v-model:value="form1.colNum" placeholder="请输入排第几列" />
+          <a-form-item label="读取文件的哪一列数据（如z轴就填写z轴）" name="colName">
+            <n-input v-model:value="form1.colName" placeholder="请输入" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -121,8 +122,8 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="读取文件的第几列数据" name="colNum">
-            <n-input v-model:value="form2.colNum" placeholder="请输入排第几列" />
+          <a-form-item label="读取文件的哪一列数据（如z轴就填写z轴）" name="colName">
+            <n-input v-model:value="form2.colName" placeholder="请输入排第几列" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -154,19 +155,19 @@ export default defineComponent({
   setup() {
 
     const form1 = reactive({
-      frequency: '',
+      frequency: 'b',
       arrayTotal: 2,
-      eachArrayNum:[13,11],
+      eachArrayNum:[12,10],
       groupNumAm:10,
       groupNumPm:10,
-      fileFormat:'xslx',
-      colNum:4,
+      fileFormat:'txt',
+      colName:'z轴',
     });
     const form2 = reactive({
       curveTotal:2,
       arrayNode:[{key:0,value: 15}],
-      fileFormat:'xlsx',
-      colNum:4
+      fileFormat:'txt',
+      colName:'z轴'
     });
     const visible1 = ref<boolean>(false);
     const visible2 = ref<boolean>(false);

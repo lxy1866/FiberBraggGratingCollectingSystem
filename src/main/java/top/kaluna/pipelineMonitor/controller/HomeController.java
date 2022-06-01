@@ -1,15 +1,14 @@
 package top.kaluna.pipelineMonitor.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import top.kaluna.pipelineMonitor.domain.HomePageLeftTop;
 import top.kaluna.pipelineMonitor.req.LeftTopAttributeReq;
 import top.kaluna.pipelineMonitor.req.MiddleBottomAttributeReq;
 import top.kaluna.pipelineMonitor.resp.CommonResp;
 import top.kaluna.pipelineMonitor.service.HomeService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Yuery
@@ -29,11 +28,44 @@ public class HomeController {
         return resp;
     }
 
+    @GetMapping("/leftTopAttributeGet")
+    public CommonResp<HomePageLeftTop> leftTopAttributeGet(){
+        CommonResp<HomePageLeftTop> resp = new CommonResp<>();
+        HomePageLeftTop homePageLeftTop = homeService.leftTopAttributeGet();
+        resp.setContent(homePageLeftTop);
+        return resp;
+    }
+
     @PostMapping("/middleBottomAttributeSave")
     public CommonResp middleBottomSave(@RequestBody MiddleBottomAttributeReq req){
         CommonResp resp = new CommonResp<>();
         Boolean tag = homeService.middleBottomAttributeSave(req);
         resp.setSuccess(tag);
+        return resp;
+    }
+
+    @GetMapping("/leftTopDataGet")
+    @ResponseBody
+    public CommonResp<List<Object>> leftTopDataGet(){
+        CommonResp<List<Object>> resp = new CommonResp<>();
+        List<Object> list = homeService.leftTopDataGet();
+        resp.setContent(list);
+        return resp;
+    }
+    @GetMapping("/middleBottomGet")
+    @ResponseBody
+    public CommonResp<List<List<Double>>> middleBottomGet(){
+        CommonResp<List<List<Double>>> resp = new CommonResp<>();
+        List<List<Double>> avgList = homeService.middleBottomGet();
+        resp.setContent(avgList);
+        return resp;
+    }
+    @GetMapping("/rightTopGetForLatestData")
+    @ResponseBody
+    public CommonResp<List<Double>> rightTopGetForLatestData(){
+        CommonResp<List<Double>> resp = new CommonResp<>();
+        List<Double> avgList = homeService.rightTopGetForLatestData();
+        resp.setContent(avgList);
         return resp;
     }
 }

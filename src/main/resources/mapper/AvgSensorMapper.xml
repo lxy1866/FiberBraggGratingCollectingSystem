@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.kaluna.pipelineMonitor.mapper.AvgSensorMapper">
+  <resultMap id="BaseResultMap" type="top.kaluna.pipelineMonitor.domain.AvgSensor">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="array_sn" jdbcType="INTEGER" property="arraySn" />
+    <result column="sensor_node_name" jdbcType="VARCHAR" property="sensorNodeName" />
+    <result column="avg" jdbcType="DOUBLE" property="avg" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, array_sn, sensor_node_name, `avg`, `date`
+  </sql>
+  <select id="selectByExample" parameterType="top.kaluna.pipelineMonitor.domain.AvgSensorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from avg_sensor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from avg_sensor
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from avg_sensor
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="top.kaluna.pipelineMonitor.domain.AvgSensorExample">
+    delete from avg_sensor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="top.kaluna.pipelineMonitor.domain.AvgSensor">
+    insert into avg_sensor (id, array_sn, sensor_node_name, 
+      `avg`, `date`)
+    values (#{id,jdbcType=BIGINT}, #{arraySn,jdbcType=INTEGER}, #{sensorNodeName,jdbcType=VARCHAR}, 
+      #{avg,jdbcType=DOUBLE}, #{date,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="top.kaluna.pipelineMonitor.domain.AvgSensor">
+    insert into avg_sensor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="arraySn != null">
+        array_sn,
+      </if>
+      <if test="sensorNodeName != null">
+        sensor_node_name,
+      </if>
+      <if test="avg != null">
+        `avg`,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="arraySn != null">
+        #{arraySn,jdbcType=INTEGER},
+      </if>
+      <if test="sensorNodeName != null">
+        #{sensorNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="avg != null">
+        #{avg,jdbcType=DOUBLE},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="top.kaluna.pipelineMonitor.domain.AvgSensorExample" resultType="java.lang.Long">
+    select count(*) from avg_sensor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update avg_sensor
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.arraySn != null">
+        array_sn = #{record.arraySn,jdbcType=INTEGER},
+      </if>
+      <if test="record.sensorNodeName != null">
+        sensor_node_name = #{record.sensorNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avg != null">
+        `avg` = #{record.avg,jdbcType=DOUBLE},
+      </if>
+      <if test="record.date != null">
+        `date` = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update avg_sensor
+    set id = #{record.id,jdbcType=BIGINT},
+      array_sn = #{record.arraySn,jdbcType=INTEGER},
+      sensor_node_name = #{record.sensorNodeName,jdbcType=VARCHAR},
+      `avg` = #{record.avg,jdbcType=DOUBLE},
+      `date` = #{record.date,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.pipelineMonitor.domain.AvgSensor">
+    update avg_sensor
+    <set>
+      <if test="arraySn != null">
+        array_sn = #{arraySn,jdbcType=INTEGER},
+      </if>
+      <if test="sensorNodeName != null">
+        sensor_node_name = #{sensorNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="avg != null">
+        `avg` = #{avg,jdbcType=DOUBLE},
+      </if>
+      <if test="date != null">
+        `date` = #{date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.kaluna.pipelineMonitor.domain.AvgSensor">
+    update avg_sensor
+    set array_sn = #{arraySn,jdbcType=INTEGER},
+      sensor_node_name = #{sensorNodeName,jdbcType=VARCHAR},
+      `avg` = #{avg,jdbcType=DOUBLE},
+      `date` = #{date,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into avg_sensor (array_sn, sensor_node_name, avg, date) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.arraySn}, #{item.sensorNodeName},#{item.avg},#{item.date})
+    </foreach>
+  </insert>
+</mapper>

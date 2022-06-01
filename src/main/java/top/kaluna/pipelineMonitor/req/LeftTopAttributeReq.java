@@ -25,6 +25,6 @@ public class LeftTopAttributeReq {
 
     private String fileFormat;
 
-    private Long colNum;
+    private String colName;
 
 }
