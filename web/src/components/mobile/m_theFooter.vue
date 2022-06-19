@@ -1,9 +1,9 @@
 <template>
   <van-tabbar route >
     <van-tabbar-item replace to="/m_index" icon="home-o">首页</van-tabbar-item>
-    <van-tabbar-item replace to="/m_index/detail" icon="home-o">传感器列表</van-tabbar-item>
+    <van-tabbar-item replace to="/m_index/sensorDetail" icon="home-o">传感器列表</van-tabbar-item>
     <van-tabbar-item replace to="/m_index/admin/user" icon="home-o">用户</van-tabbar-item>
-    <van-tabbar-item replace to="/m_index/admin/physicalValue" icon="home-o">新增传感器</van-tabbar-item>
+    <van-tabbar-item replace to="/m_index/settingDetail" icon="home-o">设置</van-tabbar-item>
     <van-tabbar-item replace to="/m_index/about" icon="home-o">关于</van-tabbar-item>
     <van-tabbar-item icon="home-o">
       <a-popconfirm
@@ -26,7 +26,7 @@ import axios from "axios";
 import router from "@/router";
 import {message} from "ant-design-vue";
 export default defineComponent({
-  name: 'm_the-footer',
+  name: 'm_theFooter',
   setup(){
     const user = computed(()=>{
       return store.state.user
@@ -54,4 +54,16 @@ export default defineComponent({
   }
 })
 </script>
+<style scoped>
+.van-tabbar {
+  background-color: #053343;
+}
+.van-tabbar-item--active {
+  color: white;
+  background-color: darkslateblue;
+}
+.van-tabbar-item {
+  color: cadetblue;
+}
+</style>
 

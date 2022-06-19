@@ -6,6 +6,7 @@
 import * as echarts from 'echarts';
 import {defineComponent, onMounted} from "vue";
 import axios from "axios";
+import {message} from "ant-design-vue";
 //多少天 多少个传感器 第一天所有的传感器都赋值
 interface avgSensor {
   id:number,
@@ -75,12 +76,18 @@ export default defineComponent({
       array = await handleQueryAvg().then(res =>{
         leftTopDataGet = res.data.content
         console.log("res.data.content", leftTopDataGet)
+        if(!res.data.success){
+          message.info("左图后端数据被污染，请联系管理员")
+        }
         return leftTopDataGet;
       })
+      let day = 14
+      if(array.length == getLastMonthTotalDay()*2){
+        day = getLastMonthTotalDay() *2;
+      }
       let sensorNum1 = Number(leftTopAttributeContent.eachArrayNum.split("_")[0])
       let sensorNum2 = Number(leftTopAttributeContent.eachArrayNum.split("_")[1])
       let  sensorNum = sensorNum1 + sensorNum2
-      let day = 14
       let data :number[][] = [];
       for(let i = 0; i < day; i++){
         data[i] = [];
@@ -181,42 +188,85 @@ export default defineComponent({
       }
       let timelineData = [];
       let optionsData = [];
-      for(let i = 0 ; i < day; i++){
-        timelineData.push((i+1).toString())
-        if(i % 2 == 0){
-          optionsData.push(
-              {
-                title:{
-                  text: year + '年' + (getLastWeekFirstDay().getMonth()+1)+ '月' +
-                      (getLastWeekFirstDay().getDate()+(Math.floor(i/2)))+'日'+
-                      ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
-                      '上午管道位移数据'
-                },
-                series: [
-                  {
-                    data: data[i],
+      //day应该按照后端的数据长度来设置
+      if(day == 14){
+        //day是上一周天数的2倍
+        for(let i = 0 ; i < day; i++){
+          //时间线
+          timelineData.push((i+1).toString())
+          if(i % 2 == 0){
+            //一周的话就插入7次
+            optionsData.push(
+                {
+                  title:{
+                    text: year + '年' + (((getLastWeekFirstDay().getDate()+(Math.floor(i/2))) <= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getMonth()+1):(getLastWeekFirstDay().getMonth()+2))+ '月' +
+                        (((getLastWeekFirstDay().getDate()+(Math.floor(i/2)))<= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getDate()+(Math.floor(i/2))):(getLastWeekFirstDay().getDate()+(Math.floor(i/2)) - getLastMonthTotalDay()))+'日'+
+                        ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
+                        '上午管道位移数据'
                   },
-                ]
-              }
-          )
-        }else {
-          optionsData.push(
-              {
-                title:{
-                  text: year + '年' + (getLastWeekFirstDay().getMonth()+1)+ '月' +
-                      (getLastWeekFirstDay().getDate()+(Math.floor(i/2)))+'日'+
-                      ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
-                      '下午管道位移数据'
-                },
-                series: [
-                  {
-                    data: data[i],
+                  series: [
+                    {
+                      data: data[i],
+                    },
+                  ]
+                }
+            )
+          }else {
+            optionsData.push(
+                {
+                  title:{
+                    text: year + '年' + (((getLastWeekFirstDay().getDate()+(Math.floor(i/2))) <= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getMonth()+1):(getLastWeekFirstDay().getMonth()+2))+ '月' +
+                        (((getLastWeekFirstDay().getDate()+(Math.floor(i/2)))<= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getDate()+(Math.floor(i/2))):(getLastWeekFirstDay().getDate()+(Math.floor(i/2)) - getLastMonthTotalDay()))+'日'+
+                        ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
+                        '下午管道位移数据'
                   },
-                ]
-              }
-          )
+                  series: [
+                    {
+                      data: data[i],
+                    },
+                  ]
+                }
+            )
+          }
+        }
+      }else {
+        //day是上个月的天数的2倍
+        for(let i = 0 ; i < day; i++){
+          //时间线
+          timelineData.push((i+1).toString())
+          if(i % 2 == 0){
+            //一周的话就插入7次
+            optionsData.push(
+                {
+                  title:{
+                    text: year + '年' + lastMonth + '月'+ (Math.floor(i/2)+1 )  +'日'+
+                        '上午管道位移数据'
+                  },
+                  series: [
+                    {
+                      data: data[i],
+                    },
+                  ]
+                }
+            )
+          }else {
+            optionsData.push(
+                {
+                  title:{
+                    text: year + '年' + lastMonth + '月' + (Math.floor(i/2)+1)  +'日'+
+                        '下午管道位移数据'
+                  },
+                  series: [
+                    {
+                      data: data[i],
+                    },
+                  ]
+                }
+            )
+          }
         }
       }
+
       let yData = [];
       for(let i = 1; i <= leftTopAttributeContent.arrayTotal; i++){
         let nums = Number(leftTopAttributeContent.eachArrayNum.split("_")[i-1])

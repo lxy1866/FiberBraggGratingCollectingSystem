@@ -74,8 +74,7 @@ public class FileUploadAndDownloadService {
      * 下载oss文件
      * @return 所有文件的完整保存路径
      */
-    public List<String> fileDownload(){
-
+    public List<String> fileDownload(String folder){
         String saveFilePath = fileConfig.getPath();
         //获取相关配置
         String bucketname = ossConfig.getBucketname();
@@ -83,7 +82,7 @@ public class FileUploadAndDownloadService {
         String accessKeyId = ossConfig.getAccessKeyId();
         String accessKeySecret = ossConfig.getAccessKeySecret();
         // 2022/5/20
-        String folder = FileUtil.getYesterdayFolder();
+
         //获取昨天文件的所有文件名
         final List<String> ossFileNames = getOSSFileNames(folder);
         // 创建OSSClient实例
@@ -192,7 +191,7 @@ public class FileUploadAndDownloadService {
      * 删除昨天的文件
      * @return 是否删除完成
      */
-    public boolean deleteFileFromOss(){
+    public boolean deleteFileFromOss(String folder){
         //获取相关配置
         String bucketname = ossConfig.getBucketname();
         String endpoint = ossConfig.getEndpoint();
@@ -200,7 +199,7 @@ public class FileUploadAndDownloadService {
         String accessKeySecret = ossConfig.getAccessKeySecret();
 
         //拼装路径,oss上存储的路径 2022/5/20
-        String folder = FileUtil.getYesterdayFolder();
+
         //获取昨天文件的所有文件名
         final List<String> ossFileNames = getOSSFileNames(folder);
         // 创建OSSClient实例。
@@ -235,10 +234,10 @@ public class FileUploadAndDownloadService {
      * 删除昨天
      * @return 是否删除完成
      */
-    public boolean deleteFileFromLocal() throws IOException {
+    public boolean deleteFileFromLocal(String folder) throws IOException {
         final String basePath = fileConfig.getPath();
         //D:/desktop/demandAnalysis/downloadfile/
-        String completerPath = basePath + FileUtil.getYesterdayFolder()+"/";
+        String completerPath = basePath + folder +"/";
         FileUtil.deleteSaveFileDir1(completerPath);
         return true;
     }

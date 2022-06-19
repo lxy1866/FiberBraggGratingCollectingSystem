@@ -1,5 +1,4 @@
 <template>
-
   <a-button type="primary" @click="showDrawer1">
     <template #icon><appstore-two-tone /></template>
     设置首页管道位移数据相关属性

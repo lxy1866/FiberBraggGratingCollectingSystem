@@ -35,8 +35,8 @@
   </div>
 </template>
 <script lang="ts">
-import { Toast } from 'vant';
 import { useRouter } from 'vue-router'
+import { Toast } from 'vant'
 import axios from 'axios';
 import store from "@/store";
 import MTheHeader from '@/components/mobile/m_theHeader.vue';

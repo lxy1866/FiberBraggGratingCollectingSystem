@@ -8,8 +8,7 @@ import * as Icons from '@ant-design/icons-vue';
 import naive from "naive-ui";
 import axios from "axios";
 import dataV from '@jiaminghi/data-view';
-import Vant from 'vant';
-import 'vant/lib/index.css';
+import {vant} from '@/util/vant.js'
 axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 import '../static/reset.less'
 import {Tool} from "@/util/tool";
@@ -39,12 +38,12 @@ axios.interceptors.response.use(function (response){
 })
 const app = createApp(App)
 
-app.use(store).use(router).use(Antd).use(naive).use(dataV).use(Vant).mount('#app');
-//全局使用图标
-const icons : any = Icons;
-for(const i in icons){
-    app.component(i, icons[i]);
-}
+app.use(store).use(router).use(Antd).use(naive).use(dataV).use(vant).mount('#app');
+// //全局使用图标
+// const icons : any = Icons;
+// for(const i in icons){
+//     app.component(i, icons[i]);
+// }
 // console.log('环境:',process.env.NODE_ENV)
 // console.log('服务端',process.env.VUE_APP_SERVER)
 

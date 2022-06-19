@@ -49,7 +49,13 @@ public class HomeController {
     public CommonResp<List<Object>> leftTopDataGet(){
         CommonResp<List<Object>> resp = new CommonResp<>();
         List<Object> list = homeService.leftTopDataGet();
-        resp.setContent(list);
+        if(list != null){
+            resp.setContent(list);
+        }else {
+            resp.setSuccess(false);
+            resp.setMessage("后端数据污染，请联系管理员");
+            resp.setContent(null);
+        }
         return resp;
     }
     @GetMapping("/middleBottomGet")

@@ -55,12 +55,22 @@ export default defineComponent({
   background-color: #053343;
   z-index: 999;
 }
-.fontClass{
-  font-family: 宋体;
-}
 .charts{
   width: 94%;
   margin: 3%;
   display: flex;
+}
+.van-tab{
+  color: cadetblue;
+}
+/deep/.van-tabs__nav {
+  background: #053343;
+}
+/deep/.van-tab__text{
+  color:cadetblue;
+}
+/deep/.van-tab--active {
+  color: cadetblue;
+  font-weight: var(--van-font-weight-bold);
 }
 </style>

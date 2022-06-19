@@ -82,9 +82,18 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/m_index/detail',
-    name: 'm_Detail',
-    component: () => import('../views/mobile/m_detail.vue'),
+    path: '/m_index/sensorDetail',
+    name: 'm_sensorDetail',
+    component: () => import('../views/mobile/m_sensorDetail.vue'),
+    meta: {
+      "type":'mobile',
+      loginRequire: true
+    },
+  },
+  {
+    path: '/m_index/settingDetail',
+    name: 'm_settingDetail',
+    component: () => import('../views/mobile/m_settingDetail.vue'),
     meta: {
       "type":'mobile',
       loginRequire: true

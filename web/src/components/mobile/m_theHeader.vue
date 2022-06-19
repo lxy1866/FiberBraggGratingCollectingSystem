@@ -16,6 +16,12 @@ export default defineComponent({
 <style scoped>
 .fontClass{
   background: #053343;
+  color: white;
+  font-family: 宋体;
+}
+
+/deep/.van-nav-bar__title{
+  color: cadetblue;
   font-family: 宋体;
 }
 </style>

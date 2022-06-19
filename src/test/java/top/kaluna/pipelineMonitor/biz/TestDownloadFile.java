@@ -25,7 +25,7 @@
 //    private FileUploadAndDownloadService fileUploadService;
 //    @Test
 //    public void testDownloadFile(){
-//        fileUploadService.fileDownload();
+//        fileUploadService.fileDownload(FileUtil.getYesterdayFolder());
 //    }
 //    @Test
 //    public void testListFileNames(){
@@ -33,7 +33,7 @@
 //    }
 //    @Test
 //    public void testDeleteFileFromOss(){
-//        fileUploadService.deleteFileFromOss();
+//        fileUploadService.deleteFileFromOss(FileUtil.getYesterdayFolder());
 //    }
 //    @Test
 //    public void testDeleteFileFromLocal1() throws IOException {
@@ -43,7 +43,7 @@
 //    @Test
 //    public void testDeleteFileFromLocal2() throws IOException {
 //        //这个方法里面自动添加了2022/05/20 目录
-//        fileUploadService.deleteFileFromLocal();
+//        fileUploadService.deleteFileFromLocal(FileUtil.getYesterdayFolder());
 //    }
 //    @Test
 //    public void createLocalDir(){

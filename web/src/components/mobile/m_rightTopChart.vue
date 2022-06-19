@@ -2,39 +2,68 @@
   <div id="line-3d-pipe" class="line-3d-pipe"></div>
 </template>
 
-<script>
-import {defineComponent, onMounted} from "vue";
+<script lang="ts">
+import {defineComponent, onMounted, reactive, toRefs} from "vue";
 import * as echarts from 'echarts';
 import 'echarts-gl';
-
+import axios from "axios";
+function handleQuery(){
+  return axios.get("/home/rightTopGetForLatestData")
+}
 export default defineComponent({
   name: 'line-3d-pipe',
   setup() {
-    onMounted(()=>{
-      const chartDom = document.getElementById('line-3d-pipe');
-      const myChart = echarts.init(chartDom);
-      let option;
-      option = {
-        tooltip: {},
-        visualMap: {
-          show: false,
-          dimension: 2,
-          min: -1,
-          max: 1,
-          inRange: {
-            color: [
-              '#313695',
-              '#4575b4',
-              '#74add1',
-              '#abd9e9',
-              '#e0f3f8',
-              '#ffffbf',
-              '#fee090',
-              '#fdae61',
-              '#f46d43',
-              '#d73027',
-              '#a50026'
-            ]
+    const state = reactive({
+      option: {
+        tooltip: {
+          axisPointer: {
+            type: 'cross'
+          }
+        },
+        xAxis3D: {
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize: 12      //更改坐标轴文字大小
+            },
+            formatter: '{value} cm'
+          },
+          min:0,
+          max: 1500,
+          nameTextStyle: {
+            color: '#ffffff'
+          }
+        },
+        yAxis3D: {
+          max: 1500,
+          min: -1500,
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize: 12      //更改坐标轴文字大小
+            },
+            formatter: '{value} mm'
+          },
+
+          nameTextStyle: {
+            color: '#ffffff'
+          }
+        },
+        zAxis3D: {
+          max: 1500,
+          min: -1500,
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize: 12      //更改坐标轴文字大小
+            },
+            formatter: '{value} mm'
+          },
+          nameTextStyle: {
+            color: '#ffffff'
           }
         },
         toolbox: {
@@ -52,83 +81,144 @@ export default defineComponent({
             fontFamily: '宋体',
           },
         },
-        xAxis3D: {
-          axisLabel: {
-            show: true,
-            textStyle: {
-              color: '#ffffff',  //更改坐标轴文字颜色
-              fontSize: 12      //更改坐标轴文字大小
-            }
-          },
-          max: 15,
-          nameTextStyle: {
-            color: '#ffffff'
-          }
-        },
-        yAxis3D: {
-          max:60,
-          min:-60,
-          axisLabel: {
-            show: true,
-            textStyle: {
-              color: '#ffffff',  //更改坐标轴文字颜色
-              fontSize: 12      //更改坐标轴文字大小
-            }
-          },
-          nameTextStyle: {
-            color: '#ffffff'
-          }
-        },
-        zAxis3D: {
-          max:60,
-          min:-60,
-          axisLabel: {
-            show: true,
-            textStyle: {
-              color: '#ffffff',  //更改坐标轴文字颜色
-              fontSize: 12      //更改坐标轴文字大小
-            }
-          },
-          nameTextStyle: {
-            color: '#ffffff'
-          }
-        },
         grid3D: {},
         series: [
           {
             type: 'surface',
             parametric: true,
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                console.log("params:", params)
+                // return '定位环z轴: '+params.data[2]+"mm";
+              },
+              color:'white',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            shading: 'realistic',
             // shading: 'albedo',
             parametricEquation: {
               u: {
-                min:0,
-                max: 2*Math.PI,
+                min: 0,
+                max: 2 * Math.PI,
                 step: Math.PI / 20
               },
               v: {
                 min: 0,
-                max: 15,
-                step: 15 / 20
+                max: 1500,
+                step: 1500 / 20
               },
-              x: function (u, v) {
+              x: function (u: any, v: any) {
                 return v;
               },
-              y: function (u, v) {
-                return 10 * Math.sin(u);
+              y: function (u: number, v: any) {
+                return 461 * Math.sin(u)+461;
               },
-              z: function (u, v) {
-                return 10 * Math.cos(u);
+              z: function (u: number, v: any) {
+                return 461 * Math.cos(u)+461;
               }
+            },
+            tooltip: {},
+          },
+          {
+            type: 'surface',
+            parametric: true,
+            shading: 'realistic',
+            // shading: 'albedo',
+            parametricEquation: {
+              u: {
+                min: 0,
+                max: 2 * Math.PI,
+                step: Math.PI / 20
+              },
+              k:{},
+              w:{
+                min: 0,
+                max: 2 * Math.PI,
+                step: Math.PI / 20
+              },
+              x: function (w:number) {
+                return 300+Math.sin(w);
+              },
+              y: function (u: number, w: number) {
+                return (420+70*Math.cos(w))*Math.cos(u)+461;
+              },
+              z: function (u:number,w:number) {
+                return (420+70*Math.cos(w))*Math.sin(u)+461;
+              }
+            },
+            tooltip: {
+              trigger: 'axis',
+            },
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return '结构管卡z轴: '+params.data[2]+"mm";
+              },
+              color:'white',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'white'
+            },
+            data:[[750,-480,461]],
+            tooltip:{
+              trigger:'item',
             }
-          }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return '定位环z轴: '+params.data[2]+"mm";
+              },
+              color:'white',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'white'
+            },
+            data:[
+              [300,0,920]
+            ],
+            tooltip:{
+              trigger:'item'
+            }
+          },
         ]
-      };
-
-      window.onresize = myChart.resize;
-      option && myChart.setOption(option);
-
+      }
+    })
+    onMounted(async ()=>{
+      const chartDom = document.getElementById('line-3d-pipe')!;
+      const myChart = echarts.init(chartDom);
+      const {data} = await handleQuery();
+      const array1_12 = data.content[0];
+      const array2_10 = data.content[1];
+      //定位环
+      state.option.series[3].data = [[300,0,Number(array1_12.toFixed(2))]];
+      //结构管卡
+      state.option.series[2].data = [[750,0,Number(array2_10.toFixed(2))]];
+      state.option && myChart.setOption(state.option);
     })
     return{
+      ...toRefs(state)
     }
   },
 })

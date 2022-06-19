@@ -9,6 +9,7 @@ import top.kaluna.pipelineMonitor.config.FileConfig;
 import top.kaluna.pipelineMonitor.service.AvgService;
 import top.kaluna.pipelineMonitor.service.BreakpointRecordService;
 import top.kaluna.pipelineMonitor.service.FileUploadAndDownloadService;
+import top.kaluna.pipelineMonitor.util.FileUtil;
 import top.kaluna.pipelineMonitor.util.ParseCsvUtil;
 import top.kaluna.pipelineMonitor.util.SnowFlake;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,8 +79,8 @@ public class PhysicalValueJob {
 //    }
 
     /**
-     * 每天1点定时拉取昨天的oss文件并解析删除oss的文件和本地的文件 旧的
-     *  这里要改成定时一周拉取一次解析一次 因为一条阵列的数据每周一个文件 固定周一1点的时候拉取上周的数据
+     * 每周一1点定时拉取昨天的oss文件并解析删除oss的文件和本地的文件 旧的
+     * 这里要改成定时一周拉取一次解析一次 因为一条阵列的数据每周一个文件 固定周一1点的时候拉取上周的数据
      */
     @Transactional(rollbackFor = Exception.class)
     @Scheduled(cron = "0 0 1 ? * MON" )
@@ -88,7 +89,8 @@ public class PhysicalValueJob {
         MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
         LOG.info("拉取oss文件开始");
         long start1 = System.currentTimeMillis();
-        final List<String> completeSaveFilePathList = fileUploadAndDownloadService.fileDownload();
+        //下载指定时间的oss文件
+        final List<String> completeSaveFilePathList = fileUploadAndDownloadService.fileDownload(FileUtil.getYesterdayFolder());
         LOG.info("拉取oss文件结束，耗时：{}毫秒",System.currentTimeMillis() - start1);
 
         LOG.info("解析文件开始");
@@ -147,8 +149,8 @@ public class PhysicalValueJob {
         LOG.info("解析文件结束，耗时：{}毫秒",System.currentTimeMillis() - start2);
         LOG.info("删除oss上的文件和本地文件开始");
         long start3 = System.currentTimeMillis();
-        fileUploadAndDownloadService.deleteFileFromOss();
-        fileUploadAndDownloadService.deleteFileFromLocal();
+        fileUploadAndDownloadService.deleteFileFromOss(FileUtil.getYesterdayFolder());
+        fileUploadAndDownloadService.deleteFileFromLocal(FileUtil.getYesterdayFolder());
         LOG.info("删除oss上的文件和本地文件结束，耗时：{}毫秒",System.currentTimeMillis() - start3);
     }
 }

@@ -6,5 +6,5 @@ declare module '*.vue' {
 }
 declare module '@jiaminghi/data-view';
 declare module '@jiaminghi/charts';
-declare module 'vue-3d-model';
 declare module 'vuejs-thermometer';
+declare module '@/util/vant.js';

@@ -47,13 +47,13 @@ import axios from 'axios';
 
 import MTheHeader from '@/components/mobile/m_theHeader.vue';
 import MTheFooter from '@/components/mobile/m_theFooter.vue';
-import {Toast} from "vant";
 import {message} from "ant-design-vue";
 declare let hexMd5: any;
 declare let KEY: any;
 const user = ref();
 import store from "@/store";
 import {Tool} from "@/util/tool";
+import {Toast} from "vant";
 export default defineComponent({
   name: 'm_admin-user',
   setup(){
@@ -153,7 +153,7 @@ export default defineComponent({
   }
 })
 </script>
-<style>
+<style scoped>
 .resetClass{
   display: flex;
   justify-content: center;
@@ -167,5 +167,29 @@ export default defineComponent({
   width:100%;
   position: absolute;
   margin-bottom: 50px;
+}
+.van-cell {
+  color: white;
+}
+.van-search {
+  background-color: #053343;
+}
+/deep/.van-search__content{
+  background-color: #053343;
+}
+/deep/.van-search__action{
+  color: white;
+}
+.van-cell-group--inset {
+  border: 1px solid white;
+}
+/deep/.van-field__label{
+  color:white;
+}
+.van-cell {
+  background: #053343;
+}
+/deep/.van-field__control{
+  color: white;
 }
 </style>

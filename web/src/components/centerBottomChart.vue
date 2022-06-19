@@ -199,7 +199,7 @@ export default defineComponent({
     }
   },
 })
-</script>we
+</script>
 <style scoped>
 .lineChartDisplayment{
   display: flex;

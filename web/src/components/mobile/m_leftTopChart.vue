@@ -5,8 +5,15 @@
 <script lang="ts">
 import * as echarts from 'echarts';
 import {defineComponent, onMounted} from "vue";
+import axios from "axios";
 //多少天 多少个传感器 第一天所有的传感器都赋值
-const data :any[] = [];
+interface avgSensor {
+  id:number,
+  arraySn:number,
+  sensorNodeName: string,
+  avg: number,
+  date: string
+}
 const myDate = new Date();
 let year = myDate.getFullYear(); //获取完整的年份(4位,1970-???)
 let lastMonth = myDate.getMonth();
@@ -14,6 +21,7 @@ if(lastMonth == 0){
   lastMonth=12;
   year=year-1;
 }
+
 function getLastMonthTotalDay(){
   const date = new Date();
   const year = date.getFullYear();
@@ -21,52 +29,65 @@ function getLastMonthTotalDay(){
   const d = new Date(year, month, 0);
   return d.getDate();
 }
-let day = getLastMonthTotalDay() // 31
-
-let sensorNum = 26
-for(let i = 0; i < day; i++){
-  data[i]  = [];
-  for(let j = 0; j < sensorNum; j++){
-    data[i].push(Math.floor(Math.random()*1000+500))
-  }
+function getLastWeekFirstDay(){
+  // 获取当前时间
+  let currentDate = new Date()
+  // 返回date是一周中的某一天
+  let week = currentDate.getDay()
+  // 返回date是一个月中的某一天
+  // let month = currentDate.getDate()
+  // 一天的毫秒数
+  let millisecond = 1000 * 60 * 60 * 24
+  // 减去的天数
+  let minusDay = week !== 0 ? week - 1 : 6
+  // 获得当前周的第一天
+  let currentWeekDayOne = new Date(currentDate.getTime() - (millisecond * minusDay))
+  // 上周最后一天即本周开始的前一天
+  let priorWeekLastDay = new Date(currentWeekDayOne.getTime() - millisecond)
+  // 上周的第一天
+  let priorWeekFirstDay = new Date(priorWeekLastDay.getTime() - (millisecond * 6))
+  return priorWeekFirstDay;
 }
+//原来是统计一个月
+//let day = getLastMonthTotalDay() // 31
+
+//const title = myDate.getFullYear() + '年' + (myDate.getMonth()) + '月管道位移数据';
 const title = myDate.getFullYear() + '年' + (myDate.getMonth()) + '月管道位移数据';
+function handleQueryLeftTopAttribute() {
+  return axios.get("/home/leftTopAttributeGet")
+}
+function handleQueryAvg(){
+  return axios.get("/home/leftTopDataGet")
+}
 export default defineComponent({
   name: 'line-pipe-displayment',
   setup() {
-    const strainColors: Record<string, string> = {
-      0: '#3d2939',
-      1: '#000',
-      2: '#403897',
-      3: '#f93',
-      4: '#bc002d',
-      5: '#924fa2',
-      6: '#044500',
-      7: '#09947d',
-      8: '#ef2b2d',
-      9: '#82043c',
-      10: '#442b1e',
-      11: '#330a17',
-      12: '#70247d',
-      13: '#b22234',
-      14: '#ef7878',
-      15: '#559069',
-      16: '#a45060',
-      17: '#670044',
-      18: '#565965',
-      19: '#340569',
-      20: '#586042',
-      21: '#619405',
-      22: '#945006',
-      23: '#586473',
-      24: '#124995',
-      25: '#759594',
-      27: '#c56600',
-      28: '#4899e7',
-      29: '#678900',
-      30: '#895697',
-    };
     onMounted( async ()=>{
+      let leftTopAttributeContent = {
+        eachArrayNum:'',
+        arrayTotal:2
+      };
+      let leftTopDataGet;
+      await handleQueryLeftTopAttribute().then(res => {
+        leftTopAttributeContent = res.data.content
+      })
+      let array: avgSensor[][];
+      array = await handleQueryAvg().then(res =>{
+        leftTopDataGet = res.data.content
+        console.log("res.data.content", leftTopDataGet)
+        return leftTopDataGet;
+      })
+      let sensorNum1 = Number(leftTopAttributeContent.eachArrayNum.split("_")[0])
+      let sensorNum2 = Number(leftTopAttributeContent.eachArrayNum.split("_")[1])
+      let  sensorNum = sensorNum1 + sensorNum2
+      let day = 14
+      let data :number[][] = [];
+      for(let i = 0; i < day; i++){
+        data[i] = [];
+        for(let j = 0; j < sensorNum; j++){
+          data[i][j] = Number((array[i][j].avg).toFixed(2))
+        }
+      }
       const chartDom = document.getElementById('barPipeDisplayment')!;
       const myChart = echarts.init(chartDom);
       const option={
@@ -87,13 +108,12 @@ export default defineComponent({
             show: true,
             feature: {
               dataView: {readOnly: false},
-              restore: {},
               magicType: { type: ['line', 'bar'] },
-              saveAsImage: {}
-            }
+            },
+            top: '5%'
           },
           title: {
-            text: '管道位移数据',
+            text: '管道位移数据(单位：mm)',
             textStyle: {
               color: '#ffffff',
               fontFamily: '宋体',
@@ -102,8 +122,8 @@ export default defineComponent({
           calculable: true,
           grid: {
             top: 60,
-            left:50,
-            right:60,
+            left:100,
+            right:50,
             bottom: 70,
             tooltip: {
               trigger: 'axis',
@@ -151,7 +171,7 @@ export default defineComponent({
                 precision: 0,
                 position: 'right',
                 valueAnimation: true,
-                fontFamily: 'monospace'
+                fontFamily: 'monospace',
               }
             },
           ],
@@ -160,24 +180,48 @@ export default defineComponent({
       }
       let timelineData = [];
       let optionsData = [];
-      for(let i = 1 ; i <= day; i++){
-        timelineData.push(i.toString())
-        optionsData.push(
-            {
-              title:{
-                text: year + '年' + lastMonth + '月' + i +'日管道位移数据'
-              },
-              series: [
-                {
-                  data: data[i],
+      for(let i = 0 ; i < day; i++){
+        timelineData.push((i+1).toString())
+        if(i % 2 == 0){
+          optionsData.push(
+              {
+                title:{
+                  text: year + '年' + (getLastWeekFirstDay().getMonth()+1)+ '月' +
+                      (getLastWeekFirstDay().getDate()+(Math.floor(i/2)))+'日'+
+                      ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
+                      '上午管道位移数据'
                 },
-              ]
-            }
-        )
+                series: [
+                  {
+                    data: data[i],
+                  },
+                ]
+              }
+          )
+        }else {
+          optionsData.push(
+              {
+                title:{
+                  text: year + '年' + (getLastWeekFirstDay().getMonth()+1)+ '月' +
+                      (getLastWeekFirstDay().getDate()+(Math.floor(i/2)))+'日'+
+                      ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
+                      '下午管道位移数据'
+                },
+                series: [
+                  {
+                    data: data[i],
+                  },
+                ]
+              }
+          )
+        }
       }
       let yData = [];
-      for(let j = 1; j < sensorNum; j++){
-        yData.push(j.toString())
+      for(let i = 1; i <= leftTopAttributeContent.arrayTotal; i++){
+        let nums = Number(leftTopAttributeContent.eachArrayNum.split("_")[i-1])
+        for(let j = 1; j <= nums; j++){
+          yData.push("阵列"+i+"编号"+j)
+        }
       }
       option.baseOption.timeline.data = timelineData;
       option.baseOption.yAxis[0].data = yData
@@ -190,7 +234,6 @@ export default defineComponent({
   },
 })
 </script>
-
 <style scoped>
 .barPipeDisplayment {
   display: flex;

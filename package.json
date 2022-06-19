@@ -3,5 +3,8 @@
     "echarts": "^5.3.1",
     "echarts-gl": "^2.0.9",
     "three": "^0.138.3"
+  },
+  "devDependencies": {
+    "unplugin-vue-components": "^0.19.6"
   }
 }
