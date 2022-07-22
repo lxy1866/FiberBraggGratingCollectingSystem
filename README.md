@@ -1,1 +1,3 @@
-"# FiberBraggGratingCollectingSystem" 
+# FiberBraggGratingCollectingSystem
+
+题目：基于光纤光栅传感阵列的形状监测采集系统研制
