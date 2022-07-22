@@ -160,7 +160,6 @@ declare let formatDate: any;
 let dataVibration = ref();
 let dataStrain = ref();
 let dataTemperature = ref();
-let range2 = ref();
 const modalCodeVisible = ref(false);
 let addModalVisible = ref(false);
 // -------- 表单 ---------

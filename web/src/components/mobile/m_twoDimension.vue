@@ -5,11 +5,9 @@
 </template>
 <script lang="ts">
 import {all, create} from 'mathjs'
-import {computed, defineComponent, onMounted, ref,watch} from "vue";
+import { defineComponent, onMounted, ref} from "vue";
 import * as echarts from 'echarts';
 import axios from "axios";
-import store from "@/store";
-const user = computed(() => store.state.user)
 
 const config = {}
 const math = create(all, config)
@@ -83,8 +81,6 @@ export default defineComponent({
 
       const myChart = echarts.init(chartDom);
       let option: EChartsOption;
-      let websocket: any;
-      let token: any;
 
       option = {
         animation: false,

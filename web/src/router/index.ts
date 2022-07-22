@@ -47,7 +47,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/p_index/admin/physicalValue',
     name: 'p_AdminPhysicalValue',
-    component: ()=>import('../views/admin/admin-physicalValue.vue'),
+    component: ()=>import('../views/admin/adminPhysicalValue.vue'),
     meta:{
       "type":'pc',
       loginRequire: true
@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/p_index/admin/user',
     name: 'p_AdminUser',
-    component: ()=>import('../views/admin/admin-user.vue'),
+    component: ()=>import('../views/admin/adminUser.vue'),
     meta: {
       "type":'pc',
       loginRequire: true
@@ -101,7 +101,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/m_index/admin/physicalValue',
     name: 'm_AdminPhysicalValue',
-    component: ()=>import('../views/admin/mobile/m_admin-physicalValue.vue'),
+    component: ()=>import('../views/admin/mobile/m_adminPhysicalValue.vue'),
     meta:{
       "type":'mobile',
       loginRequire: true
@@ -110,7 +110,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/m_index/admin/user',
     name: 'm_AdminUser',
-    component: ()=>import( '../views/admin/mobile/m_admin-user.vue'),
+    component: ()=>import( '../views/admin/mobile/m_adminUser.vue'),
     meta: {
       "type":'mobile',
       loginRequire: true
@@ -126,7 +126,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 要不要对meta.loginRequire属性做监控拦截
   if (to.matched.some(function (item) {
-    console.log(item, "是否需要登录校验：", item.meta.loginRequire);
+    //console.log(item, "是否需要登录校验：", item.meta.loginRequire);
     return item.meta.loginRequire
   })) {
     const loginUser = store.state.user;

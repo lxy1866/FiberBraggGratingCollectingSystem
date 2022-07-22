@@ -1,10 +1,9 @@
 <template>
-    <p style="color: red; font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
+    <p style="color:  cadetblue;font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
     <n-space vertical>
       <n-date-picker
           v-model:value="range2"
           type="datetimerange"
-          :shortcuts="rangeShortcuts"
       />
       <n-data-table
           size="small"
@@ -49,12 +48,15 @@ const handleQuery = (params:any)=>{
   }).then(function (response){
     let resultList: any[] = []
     console.log(response);
-    response.data.content.list.forEach((item:any)=>{
-      let obj = JSON.parse(item)
-      obj.createTime =  formatDateWrapper(Number(obj.createTime));
-      resultList.push(obj);
-    })
-    data.value = resultList;
+    if(response.data.content !== null){
+      response.data.content.list.forEach((item:any)=>{
+        let obj = JSON.parse(item)
+        obj.createTime =  formatDateWrapper(Number(obj.createTime));
+        resultList.push(obj);
+      })
+      data.value = resultList;
+    }
+
   })
 };
 export default defineComponent({

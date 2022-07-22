@@ -112,8 +112,8 @@ import {computed, defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import {Tool} from "@/util/tool";
-import TheHeader from '@/components/the-header.vue';
-import TheFooter from '@/components/the-footer.vue';
+import TheHeader from '@/components/theHeader.vue';
+import TheFooter from '@/components/theFooter.vue';
 import store from "@/store";
 import { useRouter } from 'vue-router'
 declare let hexMd5: any;

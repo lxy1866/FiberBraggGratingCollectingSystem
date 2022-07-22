@@ -185,8 +185,8 @@
 import {defineComponent, onMounted, ref, watch} from 'vue'
 import {message} from "ant-design-vue";
 import axios from 'axios';
-import TheHeader from '@/components/the-header.vue';
-import TheFooter from '@/components/the-footer.vue';
+import TheHeader from '@/components/theHeader.vue';
+import TheFooter from '@/components/theFooter.vue';
 const model = ref({
   dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:'',channel:'',arrayNum:''}]
 })

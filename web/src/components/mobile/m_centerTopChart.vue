@@ -2,26 +2,26 @@
   <div id="center">
     <div class="up">
       <div class="bg-color-white item" v-for="item in titleItem" :key="item.title">
-        <p style="font-size: 14px">{{item.title}}</p>
+        <p style="font-size: 14px" class="fontClass">{{item.title}}</p>
         <div  style="width:70%;height: 70%; color: wheat; display: flex; justify-content: center; align-items: center" >{{item.number}}</div>
       </div>
     </div>
     <div class="down">
       <div class="percent">
         <div class="item  bg-color-white">
-          <span style="font-size: 12px">今日在线率</span>
+          <span style="font-size: 12px" class="fontClass">今日在线率</span>
           <MCenterChart1 />
         </div>
         <div class="item  bg-color-white">
-          <span style="font-size: 12px">今日任务达标率</span>
+          <span style="font-size: 12px" class="fontClass">今日任务达标率</span>
           <MCenterChart2 />
         </div>
       </div>
       <div class="card">
         <n-card
         style="background: #001529">
-          <div style="font-size: 10px;color: white">海缆健康状态预警信息</div>
-          <p style="color: red">{{warnMessage}}</p>
+          <div style="font-size: 10px;color: white" class="fontClass">海缆健康状态预警信息</div>
+          <p style="color: red" class="fontClass">{{warnMessage}}</p>
         </n-card>
       </div>
     </div>
@@ -30,7 +30,7 @@
 <script>
 import MCenterChart1 from './m_centerChart1.vue';
 import MCenterChart2 from './m_centerChart2.vue';
-import {defineComponent, onMounted, ref, toRefs,reactive} from "vue";
+import {defineComponent, onMounted, toRefs,reactive} from "vue";
 import axios from "axios";
 
 const warnMessage = '暂无'
@@ -48,19 +48,19 @@ export default defineComponent({
       titleItem: [
         {
           title: "今日传感器总量",
-          number: 0
+          number: 16
         },
         {
           title: "今日传感器在线个数",
-          number: 0
+          number: 16
         },
         {
           title: "今日累计异常波动次数",
-          number: 0
+          number: 15
         },
         {
           title: "今年累计异常波动次数",
-          number: 0
+          number: 15
         },
         {
           title: "今年成功任务次数",
@@ -79,31 +79,31 @@ export default defineComponent({
     onMounted(async ()=>{
       const { data } = await handleQueryOnline();
       console.log(data.content)
-      state.titleItem = [{
-        title: "今日传感器总量",
-        number: data.content.total
-      },
-        {
-          title: "今日传感器在线个数",
-          number: data.content.onLine
-        },
-        {
-          title: "今日累计异常波动次数",
-          number: data.content.abnormalTimes
-        },
-        {
-          title: "今年累计异常波动次数",
-          number: data.content.thisYearAbnormalTimes
-        },
-        {
-          title: "今年成功任务次数",
-          number: data.content.onLine
-        },
-        {
-          title: "今年达标任务个数",
-          number: data.content.onLine
-        }
-      ]
+      // state.titleItem = [{
+      //   title: "今日传感器总量",
+      //   number: data.content.total
+      // },
+      //   {
+      //     title: "今日传感器在线个数",
+      //     number: data.content.onLine
+      //   },
+      //   {
+      //     title: "今日累计异常波动次数",
+      //     number: data.content.abnormalTimes
+      //   },
+      //   {
+      //     title: "今年累计异常波动次数",
+      //     number: data.content.thisYearAbnormalTimes
+      //   },
+      //   {
+      //     title: "今年成功任务次数",
+      //     number: data.content.onLine
+      //   },
+      //   {
+      //     title: "今年达标任务个数",
+      //     number: data.content.onLine
+      //   }
+      // ]
     })
     return {
       ...toRefs(state),
@@ -115,6 +115,9 @@ export default defineComponent({
 
 
 <style  scoped>
+.fontClass{
+  font-family: 宋体;
+}
 #center {
   color: white;
   display: flex;

@@ -9,7 +9,7 @@
         <div class="center-right">
           <div style="display: flex;justify-content: space-between; " >
             <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-              <div style="font-size: 32px; color: #b6c9dc;text-align:center;" >海底电缆智能健康监测系统</div>
+              <div class="fontClass" >海底电缆智能健康监测系统</div>
               <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
             </div>
           </div>
@@ -63,8 +63,8 @@ import { useRouter } from 'vue-router'
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import store from "@/store";
-import TheHeader from '@/components/the-header.vue';
-import TheFooter from '@/components/the-footer.vue';
+import TheHeader from '@/components/theHeader.vue';
+import TheFooter from '@/components/theFooter.vue';
 declare let hexMd5: any;
 declare let KEY: any;
 
@@ -95,13 +95,13 @@ export default defineComponent({
     })
     const onFinish = () => {
       LoginUser.value.password = hexMd5(LoginUser.value.password + KEY);
+      //console.log("mima", LoginUser.value.password)
       axios.post("/user/login", LoginUser.value).then((response) => {
         const data = response.data; // data = commonResp
         if (data.success) {
           router.push({ path: '/' })
           store.commit("setUser", data.content)
           message.success("登录成功");
-
         } else {
           message.error(data.message);
         }
@@ -150,5 +150,11 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   display: flex;
+}
+.fontClass{
+  font-size: 32px;
+  color:white;
+  text-align: center;
+  font-family: 宋体;
 }
 </style>

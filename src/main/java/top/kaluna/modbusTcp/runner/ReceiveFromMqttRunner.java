@@ -40,7 +40,7 @@ public class ReceiveFromMqttRunner implements ApplicationRunner {
         connOpts.setKeepAliveInterval(20);
 //         connOpts.setServerURIs(uris);
 //         connOpts.setWill(topic, "close".getBytes(), 2, true);
-        String broker = "tcp://101.132.252.118:1883";
+        String broker = "tcp://43.138.101.236:1883";
         MqttClient mqttClient = new MqttClient(broker, "client-id-1", persistence);
         mqttClient.setCallback(new ReceiveCallback("test1"));
         mqttClient.connect(connOpts);
@@ -48,7 +48,8 @@ public class ReceiveFromMqttRunner implements ApplicationRunner {
     }
     private static void receive() throws MqttException{
         int Qos  = 0;
-        String topic = "/tcp/strain";
+        //String topic = "/tcp/strain";
+        String topic = "/tcp/fbg";
         MqttClient mqttClient = connect();
         mqttClient.subscribe(topic, Qos);
     }

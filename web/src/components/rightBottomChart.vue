@@ -5,25 +5,24 @@
 <script>
 import {defineComponent, onMounted} from "vue";
 import * as echarts from 'echarts';
-import 'echarts-gl';
-
+import "echarts-gl"
 export default defineComponent({
   name: 'line-3d-Shape',
   setup() {
     onMounted(()=>{
-      var chartDom = document.getElementById('line-3d-shape');
-      var myChart = echarts.init(chartDom);
-      var option;
+      const chartDom = document.getElementById('line-3d-shape');
+      const myChart = echarts.init(chartDom);
+      let option;
 
-      var data = [];
+      const data = [];
 // Parametric curve
       for (let t = 0; t < 25; t += 0.001) {
         const x = (1 + 0.25 * Math.cos(t)) * Math.cos(t);
-        var y = (1 + 0.25 * Math.cos(t)) * Math.sin(t);
-        var z = t + 2.0 * Math.sin(t);
+        const y = (1 + 0.25 * Math.cos(t)) * Math.sin(t);
+        const z = t + 2.0 * Math.sin(t);
         data.push([x, y, z]);
       }
-      console.log(data.length);
+      //console.log(data.length);
       option = {
         toolbox: {
           feature: {
@@ -33,7 +32,7 @@ export default defineComponent({
           }
         },
         title: {
-          text: '光纤光栅实时形状',
+          text: '海底电缆实时形状',
           textStyle:{
             color: '#ffffff',
             fontFamily: '宋体',

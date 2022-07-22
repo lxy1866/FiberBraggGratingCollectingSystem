@@ -70,9 +70,9 @@
 
 </template>
 <script>
-import { defineComponent, ref, computed, watch } from 'vue';
-import MTheHeader from '@/components/mobile/m_the-header.vue';
-import MTheFooter from '@/components/mobile/m_the-footer.vue';
+import { defineComponent} from 'vue';
+import MTheHeader from '@/components/mobile/m_theHeader.vue';
+import MTheFooter from '@/components/mobile/m_theFooter.vue';
 
 export default defineComponent({
   name:'m_about',

@@ -2,7 +2,7 @@
   <div id="center">
     <div class="up">
       <div class="bg-color-black item" v-for="item in titleItem" :key="item.title">
-        <p>{{item.title}}</p>
+        <p class="fontClass">{{item.title}}</p>
         <div>
           <dv-digital-flop :config="item.number" style="width:100px;height:50px;" />
         </div>
@@ -11,20 +11,22 @@
     <div class="down">
       <div class="percent">
         <div class="item  bg-color-black">
-          <span >今日在线率</span>
+          <span class="fontClass">今日在线率</span>
           <centerChart1 />
         </div>
         <div class="item  bg-color-black">
-          <span>今日任务达标率</span>
+          <span class="fontClass">今日任务达标率</span>
           <centerChart2 />
         </div>
       </div>
       <div class="card">
-        <n-card title="光纤光栅健康状态预警信息"
+        <n-card title="海缆健康状态预警信息"
                 font-color="white"
                 style="--n-color: #001529;
                   --n-title-font-size: 15px;
-                  --n-title-text-color: white"
+                  --n-title-text-color: white;
+                  --n-title-font-family:宋体;"
+
         >
           <p style="color: red">{{warnMessage}}</p>
         </n-card>
@@ -36,7 +38,7 @@
 <script>
 import centerChart1 from "./centerChart1.vue";
 import centerChart2 from "./centerChart2.vue";
-import {defineComponent, onMounted, ref, toRefs,reactive} from "vue";
+import {defineComponent, onMounted, toRefs,reactive} from "vue";
 import axios from "axios";
 
 const warnMessage = '暂无'
@@ -104,7 +106,7 @@ export default defineComponent({
      */
     onMounted(async ()=>{
       const { data } = await handleQueryOnline();
-      console.log(data.content)
+      //console.log(data.content)
       state.titleItem = [{
         title: "今日传感器总量",
         number: {
@@ -211,5 +213,8 @@ export default defineComponent({
   margin-left: 20px;
   width: 60%;
   display: flex;
+}
+.fontClass{
+  font-family: 宋体;
 }
 </style>

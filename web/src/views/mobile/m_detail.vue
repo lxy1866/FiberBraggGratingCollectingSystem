@@ -30,13 +30,12 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import MTheHeader from '@/components/mobile/m_the-header.vue';
-import MTheFooter from '@/components/mobile/m_the-footer.vue';
+import MTheHeader from '@/components/mobile/m_theHeader.vue';
+import MTheFooter from '@/components/mobile/m_theFooter.vue';
 import MHistoryDataQuery from '@/components/mobile/m_historyDataQuery.vue';
 import MAbnormalDataQuery from '@/components/mobile/m_abnormalDataQuery.vue';
 import MBreakpoint from '@/components/mobile/m_breakpoint.vue'
 import MTwoDimension from '@/components/mobile/m_twoDimension.vue'
-import {Toast} from "vant";
 export default defineComponent({
   name: 'm_detail',
   components:{

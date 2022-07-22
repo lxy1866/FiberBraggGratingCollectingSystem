@@ -2,7 +2,6 @@ package top.kaluna.modbusTcp.mapper;
 
 import java.math.BigDecimal;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import top.kaluna.modbusTcp.domain.FbgValue;
 import top.kaluna.modbusTcp.domain.FbgValueExample;
@@ -13,7 +12,7 @@ public interface FbgValueMapper {
 
     int deleteByExample(FbgValueExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(FbgValue record);
 
@@ -21,7 +20,7 @@ public interface FbgValueMapper {
 
     List<FbgValue> selectByExample(FbgValueExample example);
 
-    FbgValue selectByPrimaryKey(Long id);
+    FbgValue selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") FbgValue record, @Param("example") FbgValueExample example);
 

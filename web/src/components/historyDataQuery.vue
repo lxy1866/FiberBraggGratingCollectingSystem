@@ -1,5 +1,5 @@
 <template>
-  <p style="color: red; font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
+  <p style="color: cadetblue; font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
 
   <n-space vertical>
     <n-date-picker
@@ -20,11 +20,6 @@ import {defineComponent, onMounted, ref, watch} from 'vue'
 import axios from "axios";
 let data = ref();
 let range2 = ref();
-interface f {
-  title: string;
-  dataIndex: string;
-  key: string;
-}
 let columns = ref([
   {
     title: 'val1',

@@ -115,52 +115,52 @@ public class FbgValueExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Long value) {
+        public Criteria andIdEqualTo(Integer value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Long value) {
+        public Criteria andIdNotEqualTo(Integer value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Long value) {
+        public Criteria andIdGreaterThan(Integer value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Long value) {
+        public Criteria andIdLessThan(Integer value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Long value) {
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Long> values) {
+        public Criteria andIdIn(List<Integer> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Long> values) {
+        public Criteria andIdNotIn(List<Integer> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Long value1, Long value2) {
+        public Criteria andIdBetween(Integer value1, Integer value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Long value1, Long value2) {
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -285,63 +285,63 @@ public class FbgValueExample {
             return (Criteria) this;
         }
 
-        public Criteria andTagIsNull() {
-            addCriterion("tag is null");
+        public Criteria andArrayNumIsNull() {
+            addCriterion("array_num is null");
             return (Criteria) this;
         }
 
-        public Criteria andTagIsNotNull() {
-            addCriterion("tag is not null");
+        public Criteria andArrayNumIsNotNull() {
+            addCriterion("array_num is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTagEqualTo(Byte value) {
-            addCriterion("tag =", value, "tag");
+        public Criteria andArrayNumEqualTo(Integer value) {
+            addCriterion("array_num =", value, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagNotEqualTo(Byte value) {
-            addCriterion("tag <>", value, "tag");
+        public Criteria andArrayNumNotEqualTo(Integer value) {
+            addCriterion("array_num <>", value, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagGreaterThan(Byte value) {
-            addCriterion("tag >", value, "tag");
+        public Criteria andArrayNumGreaterThan(Integer value) {
+            addCriterion("array_num >", value, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagGreaterThanOrEqualTo(Byte value) {
-            addCriterion("tag >=", value, "tag");
+        public Criteria andArrayNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("array_num >=", value, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagLessThan(Byte value) {
-            addCriterion("tag <", value, "tag");
+        public Criteria andArrayNumLessThan(Integer value) {
+            addCriterion("array_num <", value, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagLessThanOrEqualTo(Byte value) {
-            addCriterion("tag <=", value, "tag");
+        public Criteria andArrayNumLessThanOrEqualTo(Integer value) {
+            addCriterion("array_num <=", value, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagIn(List<Byte> values) {
-            addCriterion("tag in", values, "tag");
+        public Criteria andArrayNumIn(List<Integer> values) {
+            addCriterion("array_num in", values, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagNotIn(List<Byte> values) {
-            addCriterion("tag not in", values, "tag");
+        public Criteria andArrayNumNotIn(List<Integer> values) {
+            addCriterion("array_num not in", values, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagBetween(Byte value1, Byte value2) {
-            addCriterion("tag between", value1, value2, "tag");
+        public Criteria andArrayNumBetween(Integer value1, Integer value2) {
+            addCriterion("array_num between", value1, value2, "arrayNum");
             return (Criteria) this;
         }
 
-        public Criteria andTagNotBetween(Byte value1, Byte value2) {
-            addCriterion("tag not between", value1, value2, "tag");
+        public Criteria andArrayNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("array_num not between", value1, value2, "arrayNum");
             return (Criteria) this;
         }
 
@@ -402,6 +402,66 @@ public class FbgValueExample {
 
         public Criteria andCreateTimeNotBetween(Long value1, Long value2) {
             addCriterion("create_time not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIsNull() {
+            addCriterion("channel is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIsNotNull() {
+            addCriterion("channel is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelEqualTo(Integer value) {
+            addCriterion("channel =", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelNotEqualTo(Integer value) {
+            addCriterion("channel <>", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelGreaterThan(Integer value) {
+            addCriterion("channel >", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("channel >=", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelLessThan(Integer value) {
+            addCriterion("channel <", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelLessThanOrEqualTo(Integer value) {
+            addCriterion("channel <=", value, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIn(List<Integer> values) {
+            addCriterion("channel in", values, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelNotIn(List<Integer> values) {
+            addCriterion("channel not in", values, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelBetween(Integer value1, Integer value2) {
+            addCriterion("channel between", value1, value2, "channel");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelNotBetween(Integer value1, Integer value2) {
+            addCriterion("channel not between", value1, value2, "channel");
             return (Criteria) this;
         }
     }

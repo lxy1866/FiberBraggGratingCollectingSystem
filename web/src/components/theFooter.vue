@@ -1,13 +1,12 @@
 <template>
   <a-layout-footer style="text-align: center; background:  #001529; color: cadetblue; position:fixed; bottom:0px;left:0px;right: 0px;">
-    光纤光栅智能健康监测系统 ©2022 Created by Danly.  <span style="color: cadetblue">{{timeslot}}</span>
+    海底电缆智能健康监测系统 ©2022 Created by Danly.  <span style="color: cadetblue">{{timeslot}}</span>
   </a-layout-footer>
 </template>
 <script lang="ts">
 import { defineComponent, computed, onMounted, ref, onUnmounted } from 'vue';
 import store from "@/store";
 import {Tool} from "@/util/tool";
-import { notification } from 'ant-design-vue';
 
 let timeslot = ref();
 function resetTime(i:any) {
@@ -24,7 +23,7 @@ export default defineComponent({
     let websocket:any;
     let token: any;
     const onOpen = () => {
-      console.log('WebSocket连接成功，状态码：', websocket.readyState)
+      //console.log('WebSocket连接成功，状态码：', websocket.readyState)
     };
     const onMessage = (event: any) => {
       //console.log('WebSocket收到消息：', event.data);
@@ -34,10 +33,10 @@ export default defineComponent({
       // });
     };
     const onError = () => {
-      console.log('WebSocket连接错误，状态码：', websocket.readyState)
+      //console.log('WebSocket连接错误，状态码：', websocket.readyState)
     };
     const onClose = () => {
-      console.log('WebSocket连接关闭，状态码：', websocket.readyState)
+      //console.log('WebSocket连接关闭，状态码：', websocket.readyState)
     };
     const initWebSocket = () => {
       // 连接成功

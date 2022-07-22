@@ -4,7 +4,7 @@
     <div style="position: relative; display: flex;justify-content: space-between" >
       <dv-decoration-8 style="width:300px;height:50px;" />
       <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-        <div style="font-size: 20px; color: cadetblue;text-align:center;" >光纤光栅智能健康监测系统</div>
+        <div style="font-size: 20px; color: cadetblue;text-align:center;" class="fontClass" >海底电缆智能健康监测系统</div>
         <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
       </div>
       <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />
@@ -36,21 +36,20 @@
       </div>
     </div>
   </a-layout-content>
-  <the-footer></the-footer>
+  <the-footer ></the-footer>
 </template>
 
 <script>
 import {defineComponent, onMounted} from "vue";
 
-import CenterTop from '../components/center-top.vue'
-import LineChartTemperature from '../components/line-chart-temperature.vue'
-import LineChartStrain from '../components/line-chart-strain.vue'
-import Line3dShape from '../components/line-3d-shape.vue'
-import LineChartVibration from '../components/line-chart-vibration.vue'
-import TemperatureGauge from '../components/temperatureGauge.vue'
-import RealTemperature from '../components/realTemperature.vue'
-import TheHeader from '@/components/the-header.vue';
-import TheFooter from '@/components/the-footer.vue';
+import CenterTop from '../components/centerTopChart.vue'
+import LineChartTemperature from '../components/centerBottomChart.vue'
+import LineChartStrain from '../components/leftTopChart.vue'
+import Line3dShape from '../components/rightBottomChart.vue'
+import LineChartVibration from '../components/rightTopChart.vue'
+import RealTemperature from '../components/leftBottomChart.vue'
+import TheHeader from '@/components/theHeader.vue';
+import TheFooter from '@/components/theFooter.vue';
 export default defineComponent({
   components:{
     CenterTop,
@@ -58,7 +57,6 @@ export default defineComponent({
     LineChartVibration,
     LineChartStrain,
     Line3dShape,
-    TemperatureGauge,
     RealTemperature,
     TheHeader,
     TheFooter
@@ -74,6 +72,9 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.fontClass{
+  font-font: 宋体;
+}
 .container{
   display: flex;
   flex-direction: row;

@@ -1,11 +1,11 @@
 <template>
   <van-nav-bar
       title="海底电缆智能健康监测系统"
-      style="background: #001529;"
+      class="fontClass"
   />
 </template>
 <script>
-import { defineComponent, ref, computed, watch } from 'vue';
+import { defineComponent} from 'vue';
 export default defineComponent({
   name:'m_the_header',
   setup(){
@@ -13,3 +13,9 @@ export default defineComponent({
   }
 })
 </script>
+<style scoped>
+.fontClass{
+  background: #001529;
+  font-family: 宋体;
+}
+</style>

@@ -137,8 +137,8 @@ import Breakpoint from "../components/breakpoint.vue";
 import TwoDimension from "../components/twoDimension.vue";
 import ThreeDimension from "../components/threeDimension.vue";
 import Introduction from "@/components/sensorlist.vue";
-import TheHeader from '@/components/the-header.vue';
-import TheFooter from '@/components/the-footer.vue';
+import TheHeader from '@/components/theHeader.vue';
+import TheFooter from '@/components/theFooter.vue';
 export default defineComponent({
   components: {
     Introduction,

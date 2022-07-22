@@ -6,7 +6,7 @@
 import * as echarts from 'echarts';
 import store from "@/store";
 import {Tool} from "@/util/tool";
-import {defineComponent, onMounted, computed, inject, watch} from "vue";
+import {defineComponent, onMounted, computed} from "vue";
 import axios from "axios";
 
 const user = computed(() => store.state.user)
@@ -50,7 +50,9 @@ export default defineComponent({
 
     onMounted(async () => {
       const {data} = await getFbgValueInfoForDistance();
-      const FbgValueInfo = data.content//数组 每一个元素是id, propertyName, min, max, distance, creatTime, category
+
+      //console.log(data.content)
+      const FbgValueInfo = data.content//数组 每一个元素是id, propertyName, min, max, distance, creatTime, category, channel
       let y = []
       for (let i = 0; i < FbgValueInfo.length; i++) {
         y.push(FbgValueInfo[i].propertyName)
@@ -72,19 +74,29 @@ export default defineComponent({
                 }
             )).distance
       }
+      function channel(propertyName: string) {
+        if (!propertyName) {
+          return '';
+        }
+        return (
+            FbgValueInfo.find(function (item: any) {
+                  return item.propertyName == propertyName
+                }
+            )).channel
+      }
 
       option = {
         title: {
-          text: '海缆实时应变值',
+          text: '海缆实时应变值(με)',
           textStyle: {
-            color: 'white',
+            color: '#ffffff',
             fontFamily: '宋体',
           },
         },
         grid: {
           top: 40,
           bottom: 28,
-          left: 100,
+          left: 70,
           right: 30
         },
         toolbox: {
@@ -118,7 +130,8 @@ export default defineComponent({
           data: ['val6', 'val7', 'val8', 'val9', 'val10'],
           axisLine: {
             lineStyle: {
-              color: '#565c67'
+              color: '#565c67',
+              fontSize: 10
             }
           },
           axisLabel: {
@@ -127,7 +140,6 @@ export default defineComponent({
             formatter: function (value: any) {
               return '{distance|' + distance(value) + '米}';
             },
-
             rich: {
               distance: {
                 fontSize: 15,
@@ -145,7 +157,7 @@ export default defineComponent({
             type: 'bar',
             itemStyle: {
               //柱条的颜色
-              color: function (param: any) {
+              color: function (param:any) {
                 //console.log(param)
                 return strainColors[param.data.physicalValueInfoId] || '#003897';
               }
@@ -169,19 +181,20 @@ export default defineComponent({
       option.yAxis.data = y
       myChart.setOption<echarts.EChartsOption>(option);
       const onOpen = () => {
-        console.log('WebSocket连接成功，状态码：', websocket.readyState)
+        //console.log('WebSocket连接成功，状态码：', websocket.readyState)
       };
       const onMessage = function (msg: any) {
         //console.log("WebSocket收到消息：",event.data);
         let data = JSON.parse(msg.data);
+        //console.log("stain", data)
         option.series[0].data = data[1];
         myChart.setOption<echarts.EChartsOption>(option);
       };
       const onError = () => {
-        console.log('WebSocket连接错误，状态码：', websocket.readyState)
+        //console.log('WebSocket连接错误，状态码：', websocket.readyState)
       };
       const onClose = () => {
-        console.log('WebSocket连接关闭，状态码：', websocket.readyState)
+        //console.log('WebSocket连接关闭，状态码：', websocket.readyState)
       };
       const initWebSocket = () => {
         //连接成功

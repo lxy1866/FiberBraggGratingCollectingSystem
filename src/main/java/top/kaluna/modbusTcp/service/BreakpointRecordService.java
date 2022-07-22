@@ -74,6 +74,7 @@ public class BreakpointRecordService {
             breakpointRecord.setState(state);
             breakpointRecord.setArrayNum(arrayNum);
             BreakpointRecordFinish breakpointRecordFinish = CopyUtil.copy(breakpointRecord, BreakpointRecordFinish.class);
+            breakpointRecordFinish.setId(null);
             breakpointRecordFinishMapper.insert(breakpointRecordFinish);
         });
         breakpointRecordMapper.deleteByExample(breakpointRecordExample);

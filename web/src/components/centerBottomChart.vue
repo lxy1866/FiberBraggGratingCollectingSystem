@@ -11,16 +11,15 @@ function handleQuery(){
   return axios.get("/fbg/minAndMaxFromLast24Hours")
 }
 export default defineComponent({
-  name: 'm_line-chart-temperature',
+  name: 'line-chart-temperature',
   setup() {
     const state = reactive({
       option : {
         title: {
           text: '过去24小时温度最大最小值',
           textStyle:{
-            color: 'white',
+            color: '#ffffff',
             fontFamily: '宋体',
-            fontSize: 10
           }
         },
         tooltip: {
@@ -42,7 +41,7 @@ export default defineComponent({
           axisLabel: {
             show: true,
             textStyle: {
-              color: 'white',  //更改坐标轴文字颜色
+              color: '#ffffff',  //更改坐标轴文字颜色
               fontSize : 12      //更改坐标轴文字大小
             }
           },
@@ -54,20 +53,19 @@ export default defineComponent({
             formatter: '{value} °C',
             show: true,
             textStyle: {
-              color: 'white',  //更改坐标轴文字颜色
-              fontSize : 10     //更改坐标轴文字大小
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize : 12      //更改坐标轴文字大小
             }
           }
         },
         legend: {
-          orient:"vertical",
-          backgroundColor: "transparent",
-          inactiveColor: "white",
-          textStyle:{
-            color: "blue",
-            fontSize: 10
-          },
-          left: '40%'
+            orient:"vertical",
+            backgroundColor: "transparent",
+            inactiveColor: "white",
+            textStyle:{
+              color: "blue",
+            },
+            left: '60%'
         },
         series: [
           {
@@ -120,9 +118,6 @@ export default defineComponent({
       }
     })
     onMounted(async ()=>{
-      const {data} = await handleQuery();
-      const minArray = []
-      const maxArray = []
       // data.content.forEach((item) => {
       //     maxArray.push(item.max)
       // })

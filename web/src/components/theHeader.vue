@@ -3,7 +3,6 @@
     <a-menu
         theme="dark"
         mode="horizontal"
-        v-model:selectedKeys="selectedKeys1"
         :style="{ lineHeight: '64px' }"
     >
       <div class="header-wrap">
@@ -60,7 +59,7 @@
   </a-layout-header>
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed, watch } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import store from "@/store";
 import axios from "axios";
 import {message} from "ant-design-vue";

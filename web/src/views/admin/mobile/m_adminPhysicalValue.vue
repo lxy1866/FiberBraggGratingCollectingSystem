@@ -1,15 +1,16 @@
 <template>
   <MTheHeader/>
-    <n-card title="📖 设置光纤光栅传感器阵列的参数量程以及初始位置" embedded :bordered="false"
-       style="--n-color: #001529;--n-text-color: rgb(77 112 148);--n-title-text-color: rgb(190 202 214);
-    "
-    >
-      每个光纤光栅传感器都有自己的应变量程（如果是温度传感器则为温度量程，如果是振动为振动量程），超出范围的记录会被展示到异常波动数据页面中。<br/>
-      参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。注意：先点击重新修改再点击确认提交。输入name的格式为val+序号【1-10】
-    </n-card>
+  <n-card
+      title="📖 设置光纤光栅传感器阵列的参数量程以及初始位置"
+      embedded
+      :bordered="false"
+  >
+    每个光纤光栅传感器都有自己的应变量程（如果是温度传感器则为温度量程，如果是振动为振动量程），超出范围的记录会被展示到异常波动数据页面中。<br/>
+    参数一旦设置就不能修改，如果真的需要修改，请联系管理员获取授权码。注意：先点击重新修改再点击确认提交，传感器类别：应变填1，温度填2，振动填3
+  </n-card>
     <!-- 每个元素的两侧间隔相等 -->
 
-    <div style="background: #001529; padding-top: 10px">
+    <div style="padding-top: 10px">
       <van-row justify="space-between" >
         <van-col span="16" offset="1">
           <p class="fontClass">请先输入光纤光栅传感阵列的个数：</p>
@@ -105,7 +106,33 @@
               >
                 <n-input
                     v-model:value="model.dynamicInputValue[index].category"
-                    placeholder="应变1，温度2，振动3"
+                    placeholder="传感器类别"
+                    @keydown.enter.prevent
+                    style="height: 100%;"
+                />
+              </n-form-item>
+              <n-form-item
+                  ignore-path-change
+                  :show-label="false"
+                  :path="`dynamicInputValue[${index}].channel`"
+                  :rul="dynamicInputRule"
+              >
+                <n-input
+                    v-model:value="model.dynamicInputValue[index].channel"
+                    placeholder="通道号"
+                    @keydown.enter.prevent
+                    style="height: 100%;"
+                />
+              </n-form-item>
+              <n-form-item
+                  ignore-path-change
+                  :show-label="false"
+                  :path="`dynamicInputValue[${index}].arrayNum`"
+                  :rul="dynamicInputRule"
+              >
+                <n-input
+                    v-model:value="model.dynamicInputValue[index].arrayNum"
+                    placeholder="阵列序号"
                     @keydown.enter.prevent
                     style="height: 100%;"
                 />
@@ -160,14 +187,13 @@
   <MTheFooter/>
 </template>
 <script lang="ts">
-import MTheHeader from '@/components/mobile/m_the-header.vue';
-import MTheFooter from '@/components/mobile/m_the-footer.vue';
-import {Toast} from "vant";
+import MTheHeader from '@/components/mobile/m_theHeader.vue';
+import MTheFooter from '@/components/mobile/m_theFooter.vue';
 import axios from 'axios';
 import {defineComponent, onMounted, ref, watch} from "vue";
 import {message} from "ant-design-vue";
 const model = ref({
-  dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:''}]
+  dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:'',channel:'',arrayNum:''}]
 })
 
 const code = ref();
@@ -231,10 +257,10 @@ export default defineComponent({
     return {
       dynamicInputRule: {
         trigger: 'input',
-        validator (rule: unknown, value: string) {
-          //if (value.length >= 15) return new Error('最多输入15个字符')
-          return true
-        }
+        // validator (rule: unknown, value: string) {
+        //   //if (value.length >= 15) return new Error('最多输入15个字符')
+        //   return true
+        // }
       },
       model,
       onCreate () {
@@ -243,7 +269,9 @@ export default defineComponent({
           name: '',
           maxValue:'',
           distance:'',
-          category:''
+          category:'',
+          channel:'',
+          arrayNum:''
         }
       },
       handlePositiveClick,
