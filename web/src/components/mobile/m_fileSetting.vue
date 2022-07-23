@@ -1,4 +1,4 @@
-van<template>
+<template>
 <div class="outerClass">
   <a-button type="primary" @click="showDrawer1">
     <template #icon><appstore-two-tone /></template>
@@ -11,7 +11,6 @@ van<template>
     设置首页一个月内管道位移变化曲线图相关属性
   </a-button>
 </div>
-
   <van-popup
       v-model:show="visible1"
       round

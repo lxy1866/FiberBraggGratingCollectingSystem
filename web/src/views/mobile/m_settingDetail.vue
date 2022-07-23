@@ -1,5 +1,5 @@
 <template>
-  <M_the_header/>
+  <MTheHeader/>
   <van-tabs v-model:active="activeName">
     <van-tab title="新增传感器" name="a">
       <van-row justify="space-around">
@@ -26,24 +26,22 @@
       <div style="height: 50px"></div>
     </van-tab>
   </van-tabs>
-  <the-footer></the-footer>
+  <MTheFooter/>
 </template>
 <script lang="ts">
 
 import { defineComponent, ref, watch, onMounted} from "vue";
 import FileUpload from '@/components/mobile/m_fileUpload.vue'
-import TheHeader from '@/components/mobile/m_theHeader.vue';
-import TheFooter from '@/components/mobile/m_theFooter.vue';
+import MTheHeader from '@/components/mobile/m_theHeader.vue';
+import MTheFooter from '@/components/mobile/m_theFooter.vue';
 import AdminPhysicalValue from '../admin/mobile/m_adminPhysicalValue.vue';
 import FileSetting from '@/components/mobile/m_fileSetting.vue'
-import M_the_header from "@/components/mobile/m_theHeader.vue";
 
 export default defineComponent({
   components: {
-    M_the_header,
     FileUpload,
-    TheHeader,
-    TheFooter,
+    MTheHeader,
+    MTheFooter,
     AdminPhysicalValue,
     FileSetting
   },

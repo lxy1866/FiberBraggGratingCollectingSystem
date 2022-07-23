@@ -156,4 +156,115 @@ export default defineComponent({
   text-align: center;
   font-family: 宋体;
 }
+/deep/.ant-form {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #053343;
+  font-size: 25px;
+  font-variant: contextual;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum';
+}
+/deep/.ant-form-item-label {
+  display: inline-block;
+  flex-grow: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: right;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+/deep/.ant-form-item-label > label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  color: cadetblue;
+  font-size: 15px;
+  font-style: normal;
+}
+/deep/.ant-input {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 4px 11px;
+  color: white;
+  font-size: 14px;
+  line-height: 1.5715;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid cadetblue;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+/deep/.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  content: '';
+}
+/deep/.ant-btn {
+  line-height: 1.5715;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  height: 32px;
+  padding: 4px 15px;
+  font-size: 14px;
+  border-radius: 2px;
+  color: cadetblue;
+  background: transparent;
+}
+/deep/.ant-btn:hover, .ant-btn:focus {
+  color: #ff4d4f;
+  background: transparent;
+  border-color: white;
+}
+/deep/.ant-form-item-has-error .ant-input, .ant-form-item-has-error .ant-input-affix-wrapper, .ant-form-item-has-error .ant-input:hover, .ant-form-item-has-error .ant-input-affix-wrapper:hover {
+  background-color: transparent;
+  border-color: white;
+}
+/deep/.ant-input-affix-wrapper {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  display: flex;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 4px 11px;
+  width: 100%;
+  text-align: start;
+  background-color: #053343;
+  background-image: none;
+  color: white;
+  font-size: 14px;
+  line-height: 1.5715;
+}
+/deep/.ant-input-password-icon {
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/deep/#basic_password.ant-input{
+  background:#053343;
+}
 </style>

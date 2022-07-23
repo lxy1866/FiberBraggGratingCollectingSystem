@@ -32,8 +32,8 @@
     </div>
 </template>
 <script lang="ts">
-import TheHeader from "@/components/theHeader.vue"
-import TheFooter from "@/components/theFooter.vue";
+import TheHeader from "@/components/mobile/m_theHeader.vue"
+import TheFooter from "@/components/mobile/m_theFooter.vue";
 import { InboxOutlined, UploadOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 import { defineComponent, ref } from 'vue';
@@ -172,7 +172,7 @@ export default defineComponent({
   },
 });
 </script>
-<style>
+<style scoped>
 .leftPart{
   width: 90%;
   height: 250px

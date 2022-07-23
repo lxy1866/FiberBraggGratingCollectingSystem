@@ -9,31 +9,22 @@
       <div class="header-wrap">
         <div class="header-left">
           <a-menu-item key="/p_index">
-            <transition :name="transitionName">
               <router-link to="/p_index" :style="user.id? {} : {display:'none'}">首页</router-link>
-            </transition>
           </a-menu-item>
           <a-menu-item key="/p_index/sensorDetail">
-            <transition :name="transitionName">
               <router-link to="/p_index/sensorDetail" :style="user.id? {} : {display:'none'}">传感器列表</router-link>
-            </transition>
+
           </a-menu-item>
           <a-menu-item key="/p_index/admin/user">
-            <transition :name="transitionName">
               <router-link to="/p_index/admin/user" :style="user.id? {} : {display:'none'}">用户</router-link>
-            </transition>
           </a-menu-item>
           <a-menu-item key="/p_index/admin/settingDetail">
-            <transition :name="transitionName">
               <router-link to="/p_index/settingDetail" :style="user.id? {} : {display:'none'}">设置</router-link>
-            </transition>
           </a-menu-item>
         </div>
         <div class="header-right">
           <a-menu-item key="/p_index/about" >
-            <transition :name="transitionName">
               <router-link to="/p_index/about" :style="user.id? {} : {display:'none'}">关于</router-link>
-            </transition>
           </a-menu-item>
           <a-menu-item key="/p_index/login">
               <router-link to="/p_index/login" v-show="!user.id">登录</router-link>
@@ -89,22 +80,8 @@ export default defineComponent({
         }
       })
     }
-    // watch: {
-    //   //使用watch 监听$router的变化
-    //   $route(to, from) {
-    //     //如果to索引大于from索引,判断为前进状态,反之则为后退状态
-    //     console.log(to, "to");
-    //     console.log(from, "from");
-    //     if (to.meta.index > from.meta.index) {
-    //       //设置动画名称
-    //       transitionName.value = "slide-left";
-    //     } else {
-    //       transitionName.value = "slide-right";
-    //     }
-    //   }
-    // }
     return {
-      transitionName,
+
       logout,
       user
     }
@@ -126,30 +103,7 @@ export default defineComponent({
   display: flex;
   justify-content: left;
 }
-.slide-right-enter-active, .slide-right-leave-active, .slide-left-enter-active, .slide-left-leave-active {
-  will-change: transform;
-  transition: all 500ms;
-  position: absolute;
-}
-.slide-right-enter {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
-}
 
-.slide-right-leave-active {
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
-}
-
-.slide-left-enter {
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
-}
-
-.slide-left-leave-active {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
-}
 img{
   position: relative;
   width: 45px;
@@ -162,5 +116,10 @@ img{
   left: 0px;
   right: 0px;
 }
-
+.ant-layout-header{
+  height: 40px;
+  padding-left: 30px;
+  padding-right: 0;
+  background: #053343;
+}
 </style>

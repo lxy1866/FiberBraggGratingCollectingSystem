@@ -88,3 +88,9 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped>
+.ant-layout-footer{
+  height:40px;
+  padding: 10px 50px;
+}
+</style>

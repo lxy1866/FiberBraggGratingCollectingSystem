@@ -371,4 +371,10 @@ img {
   width: 50px;
   height: 50px;
 }
+.ant-table-thead > tr > th {
+  text-align: center;
+}
+.ant-table-tbody > tr > td {
+  text-align: center;
+}
 </style>

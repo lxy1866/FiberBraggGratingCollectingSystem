@@ -13,7 +13,6 @@
           :pagination="pagination"
       />
     </n-space>
-
 </template>
 
 <script lang="ts">

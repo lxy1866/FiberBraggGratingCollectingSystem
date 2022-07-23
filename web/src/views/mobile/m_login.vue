@@ -101,4 +101,21 @@ export default defineComponent({
   padding-top: 40px;
 
 }
+.van-cell-group--inset {
+  border: 1px solid white;
+}
+/deep/.van-field__label{
+  color:white;
+}
+.van-cell {
+  background: #053343;
+}
+/deep/.van-field__control{
+  color: white;
+}
+.van-button--primary {
+  color: var(--van-button-primary-color);
+  background: #053343;
+  border: var(--van-button-border-width) solid white;
+}
 </style>

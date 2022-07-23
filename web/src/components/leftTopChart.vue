@@ -285,7 +285,6 @@ export default defineComponent({
   },
 })
 </script>
-
 <style scoped>
 .barPipeDisplayment {
   display: flex;

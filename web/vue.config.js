@@ -7,6 +7,7 @@ module.exports = {
             ComponentsPlugin({
                 resolvers: [VantResolver()],
             }),
+
         ],
     },
 };

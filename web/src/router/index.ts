@@ -3,7 +3,7 @@ import {Tool} from "@/util/tool";
 import store from "@/store";
 
 //首页用重定向的方式来进行适配的方案：
-const redirectPath = /Android |webos | iphone iPod BlackBerry liPad/i. test (navigator.userAgent) ? '/m_index' : '/p_index';
+const redirectPath = /Android|webOS|iPhone|iPod|iPad|BlackBerry|liPad/i.test(navigator.userAgent) ? '/m_index' : '/p_index';
 const routes: Array<RouteRecordRaw> = [
   {
     path:'/',

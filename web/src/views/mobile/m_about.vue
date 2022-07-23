@@ -1,7 +1,7 @@
 <template>
   <div style="margin-bottom: 70px">
     <MTheHeader/>
-    <div style="background: #001529; padding-top: 20px">
+    <div style="padding-top: 20px">
       <n-timeline>
         <n-timeline-item
             type="success"
@@ -67,7 +67,6 @@
     <div style="height: 50px"></div>
     <MTheFooter/>
   </div>
-
 </template>
 <script>
 import { defineComponent} from 'vue';

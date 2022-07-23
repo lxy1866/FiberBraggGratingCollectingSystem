@@ -1,4 +1,4 @@
-v<template>
+<template>
   <div id="center">
     <div class="up">
       <div class="bg-color-white item" v-for="item in titleItem" :key="item.title">

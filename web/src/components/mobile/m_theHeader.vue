@@ -9,7 +9,6 @@ import { defineComponent} from 'vue';
 export default defineComponent({
   name:'m_the_header',
   setup(){
-
   }
 })
 </script>
@@ -19,7 +18,6 @@ export default defineComponent({
   color: white;
   font-family: 宋体;
 }
-
 /deep/.van-nav-bar__title{
   color: cadetblue;
   font-family: 宋体;

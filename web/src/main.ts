@@ -2,17 +2,18 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
-import * as Icons from '@ant-design/icons-vue';
-import naive from "naive-ui";
 import axios from "axios";
-import dataV from '@jiaminghi/data-view';
-import {vant} from '@/util/vant.js'
+
+import 'ant-design-vue/dist/antd.css'
+import naive from 'naive-ui'
+import {decoration8, decoration3, digitalFlop, borderBox8} from '@jiaminghi/data-view';
+
+import setupVant from '@/util/vant';
+import setupAtnd from '@/util/antDesignVue';
+
 axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 import '../static/reset.less'
 import {Tool} from "@/util/tool";
-
 /**
  * axios拦截器
  */
@@ -37,13 +38,8 @@ axios.interceptors.response.use(function (response){
     return Promise.reject(error);
 })
 const app = createApp(App)
+setupAtnd(app)
+setupVant(app)
+app.use(store).use(router).use(decoration8).use(decoration3).use(digitalFlop).use(borderBox8).use(naive).mount('#app');
 
-app.use(store).use(router).use(Antd).use(naive).use(dataV).use(vant).mount('#app');
-// //全局使用图标
-// const icons : any = Icons;
-// for(const i in icons){
-//     app.component(i, icons[i]);
-// }
-// console.log('环境:',process.env.NODE_ENV)
-// console.log('服务端',process.env.VUE_APP_SERVER)
 
