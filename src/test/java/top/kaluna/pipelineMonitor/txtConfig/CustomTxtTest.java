@@ -47,7 +47,7 @@ public class CustomTxtTest {
     @Test
     public void testAvgService() throws ParseException {
         avgService.getAvgAndInsert(12,1);
-        avgService.getAvgAndInsert(10,2);
+        //avgService.getAvgAndInsert(10,2);
     }
 
     /**

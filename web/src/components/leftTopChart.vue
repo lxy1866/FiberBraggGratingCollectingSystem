@@ -1,292 +1,430 @@
 <template>
-  <div id="barPipeDisplayment" class="barPipeDisplayment"></div>
+  <div id="line-3d-pipe" class="line-3d-pipe"></div>
 </template>
 
 <script lang="ts">
+import {defineComponent, onMounted, reactive, toRefs} from "vue";
 import * as echarts from 'echarts';
-import {defineComponent, onMounted} from "vue";
+import 'echarts-gl';
 import axios from "axios";
-import {message} from "ant-design-vue";
-//多少天 多少个传感器 第一天所有的传感器都赋值
-interface avgSensor {
-  id:number,
-  arraySn:number,
-  sensorNodeName: string,
-  avg: number,
-  date: string
-}
-const myDate = new Date();
-let year = myDate.getFullYear(); //获取完整的年份(4位,1970-???)
-let lastMonth = myDate.getMonth();
-if(lastMonth == 0){
-  lastMonth=12;
-  year=year-1;
-}
-
-function getLastMonthTotalDay(){
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const d = new Date(year, month, 0);
-  return d.getDate();
-}
-function getLastWeekFirstDay(){
-  // 获取当前时间
-  let currentDate = new Date()
-  // 返回date是一周中的某一天
-  let week = currentDate.getDay()
-  // 返回date是一个月中的某一天
-  // let month = currentDate.getDate()
-  // 一天的毫秒数
-  let millisecond = 1000 * 60 * 60 * 24
-  // 减去的天数
-  let minusDay = week !== 0 ? week - 1 : 6
-  // 获得当前周的第一天
-  let currentWeekDayOne = new Date(currentDate.getTime() - (millisecond * minusDay))
-  // 上周最后一天即本周开始的前一天
-  let priorWeekLastDay = new Date(currentWeekDayOne.getTime() - millisecond)
-  // 上周的第一天
-  let priorWeekFirstDay = new Date(priorWeekLastDay.getTime() - (millisecond * 6))
-  return priorWeekFirstDay;
-}
-//原来是统计一个月
-//let day = getLastMonthTotalDay() // 31
-
-//const title = myDate.getFullYear() + '年' + (myDate.getMonth()) + '月管道位移数据';
-const title = myDate.getFullYear() + '年' + (myDate.getMonth()) + '月管道位移数据';
-function handleQueryLeftTopAttribute() {
-  return axios.get("/home/leftTopAttributeGet")
-}
-function handleQueryAvg(){
-  return axios.get("/home/leftTopDataGet")
+function handleQuery(){
+  return axios.get("/home/rightTopGetForLatestData")
 }
 export default defineComponent({
-  name: 'line-pipe-displayment',
+  name: 'line-3d-pipe',
   setup() {
-    onMounted( async ()=>{
-      let leftTopAttributeContent = {
-        eachArrayNum:'',
-        arrayTotal:2
-      };
-      let leftTopDataGet;
-      await handleQueryLeftTopAttribute().then(res => {
-        leftTopAttributeContent = res.data.content
-      })
-      let array: avgSensor[][];
-      array = await handleQueryAvg().then(res =>{
-        leftTopDataGet = res.data.content
-        console.log("res.data.content", leftTopDataGet)
-        if(!res.data.success){
-          message.info("左图后端数据被污染，请联系管理员")
-        }
-        return leftTopDataGet;
-      })
-      let day = 14
-      if(array.length == getLastMonthTotalDay()*2){
-        day = getLastMonthTotalDay() *2;
-      }
-      let sensorNum1 = Number(leftTopAttributeContent.eachArrayNum.split("_")[0])
-      let sensorNum2 = Number(leftTopAttributeContent.eachArrayNum.split("_")[1])
-      let  sensorNum = sensorNum1 + sensorNum2
-      let data :number[][] = [];
-      for(let i = 0; i < day; i++){
-        data[i] = [];
-        for(let j = 0; j < sensorNum; j++){
-          data[i][j] = Number((array[i][j].avg).toFixed(2))
-        }
-      }
-      const chartDom = document.getElementById('barPipeDisplayment')!;
-      const myChart = echarts.init(chartDom);
-      const option={
-        baseOption: {
-          timeline: {
-            axisType: 'category',
-            // realtime: false,
-            // loop: false,
-            autoPlay: true,
-            // currentIndex: 2,
-            playInterval: 1000,
-            // controlStyle: {
-            //     position: 'left'
-            // },
-            data: [''],
-          },
-          toolbox: {
-            show: true,
-            feature: {
-              dataView: {readOnly: false},
-              restore: {},
-              magicType: { type: ['line', 'bar'] },
-              saveAsImage: {}
-            }
-          },
-          title: {
-            text: '管道位移数据(单位：mm)',
-            textStyle: {
-              color: '#ffffff',
-              fontFamily: '宋体',
-            },
-          },
-          calculable: true,
-          grid: {
-            top: 60,
-            left:100,
-            right:50,
-            bottom: 70,
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-                type: 'shadow',
-                label: {
-                  show: true
-                }
-              }
-            }
-          },
-          yAxis: [
-            {
-              name:'管道传感器编号',
-              type: 'category',
-              axisLabel: {interval: 0},
-              data: [''],
-              splitLine: {show: false}
-            }
-          ],
-          xAxis: [
-            {
-              type: 'value',
-              name: '位移值',
-              nameLocation:'end',
-            }
-          ],
-          visualMap:{
-            orient: 'vertical',
-            inRange: {
-              color: ['#ef2b2d','#82043c', '#442b1e', '#330a17','#70247d',
-                '#b22234','#ef7878', '#559069', '#a45060', '#670044','#565965',
-                '#340569', '#586042','#619405', '#945006','#586473', '#124995',
-                '#759594', '#c56600','#4899e7', '#678900', '#895697',]
-            },
-            min: 0,
-            max: 30,
-          },
-          series: [
-            {
-              name: '位移值',
-              type: 'bar',
-              label: {
-                show: true,
-                precision: 0,
-                position: 'right',
-                valueAnimation: true,
-                fontFamily: 'monospace',
-              }
-            },
-          ],
+    const state = reactive({
+      option: {
+        tooltip: {
+          axisPointer: {
+            type: 'cross'
+          }
         },
-        options:[{}]
-      }
-      let timelineData = [];
-      let optionsData = [];
-      //day应该按照后端的数据长度来设置
-      if(day == 14){
-        //day是上一周天数的2倍
-        for(let i = 0 ; i < day; i++){
-          //时间线
-          timelineData.push((i+1).toString())
-          if(i % 2 == 0){
-            //一周的话就插入7次
-            optionsData.push(
-                {
-                  title:{
-                    text: year + '年' + (((getLastWeekFirstDay().getDate()+(Math.floor(i/2))) <= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getMonth()+1):(getLastWeekFirstDay().getMonth()+2))+ '月' +
-                        (((getLastWeekFirstDay().getDate()+(Math.floor(i/2)))<= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getDate()+(Math.floor(i/2))):(getLastWeekFirstDay().getDate()+(Math.floor(i/2)) - getLastMonthTotalDay()))+'日'+
-                        ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
-                        '上午管道位移数据'
-                  },
-                  series: [
-                    {
-                      data: data[i],
-                    },
-                  ]
-                }
-            )
-          }else {
-            optionsData.push(
-                {
-                  title:{
-                    text: year + '年' + (((getLastWeekFirstDay().getDate()+(Math.floor(i/2))) <= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getMonth()+1):(getLastWeekFirstDay().getMonth()+2))+ '月' +
-                        (((getLastWeekFirstDay().getDate()+(Math.floor(i/2)))<= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getDate()+(Math.floor(i/2))):(getLastWeekFirstDay().getDate()+(Math.floor(i/2)) - getLastMonthTotalDay()))+'日'+
-                        ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
-                        '下午管道位移数据'
-                  },
-                  series: [
-                    {
-                      data: data[i],
-                    },
-                  ]
-                }
-            )
+        xAxis3D: {
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize: 12      //更改坐标轴文字大小
+            },
+            formatter: '{value} cm'
+          },
+          min:1500,
+          max: -1500,
+          nameTextStyle: {
+            color: '#ffffff'
           }
-        }
-      }else {
-        //day是上个月的天数的2倍
-        for(let i = 0 ; i < day; i++){
-          //时间线
-          timelineData.push((i+1).toString())
-          if(i % 2 == 0){
-            //一周的话就插入7次
-            optionsData.push(
-                {
-                  title:{
-                    text: year + '年' + lastMonth + '月'+ (Math.floor(i/2)+1 )  +'日'+
-                        '上午管道位移数据'
-                  },
-                  series: [
-                    {
-                      data: data[i],
-                    },
-                  ]
-                }
-            )
-          }else {
-            optionsData.push(
-                {
-                  title:{
-                    text: year + '年' + lastMonth + '月' + (Math.floor(i/2)+1)  +'日'+
-                        '下午管道位移数据'
-                  },
-                  series: [
-                    {
-                      data: data[i],
-                    },
-                  ]
-                }
-            )
-          }
-        }
-      }
+        },
+        yAxis3D: {
+          max: 1500,
+          min: -1500,
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize: 12      //更改坐标轴文字大小
+            },
+            formatter: '{value} mm'
+          },
 
-      let yData = [];
-      for(let i = 1; i <= leftTopAttributeContent.arrayTotal; i++){
-        let nums = Number(leftTopAttributeContent.eachArrayNum.split("_")[i-1])
-        for(let j = 1; j <= nums; j++){
-          yData.push("阵列"+i+"编号"+j)
-        }
+          nameTextStyle: {
+            color: '#ffffff'
+          }
+        },
+        zAxis3D: {
+          max: 0,
+          min: 1500,
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#ffffff',  //更改坐标轴文字颜色
+              fontSize: 12      //更改坐标轴文字大小
+            },
+            formatter: '{value} mm'
+          },
+          nameTextStyle: {
+            color: '#ffffff'
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: {readOnly: false},
+            restore: {},
+            saveAsImage: {}
+          }
+        },
+        title: {
+          text: '基于光纤光栅阵列的桩基应变监测',
+          textStyle: {
+            color: '#ffffff',
+            fontFamily: '宋体',
+          },
+        },
+        grid3D: {},
+        series: [
+          {
+            type: 'surface',
+            parametric: true,
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                console.log("params:", params)
+                // return '定位环z轴: '+params.data[2]+"mm";
+              },
+              color:'white',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            shading: 'realistic',
+            // shading: 'albedo',
+            parametricEquation: {
+              v: {
+                min: 0,
+                max: 1500,
+                step: 1500 / 20
+              },
+              u: {
+                min: 0,
+                max: 2 * Math.PI,
+                step: Math.PI / 20
+              },
+              x: function (u: any, v: any) {
+                return 461 * Math.cos(u)+461;
+              },
+              y: function (u: number, v: any) {
+                return 461 * Math.sin(u)+461;
+              },
+              z: function (u: number, v: any) {
+                return v;
+
+              }
+            },
+            tooltip: {},
+          },
+          // {
+          //   type: 'surface',
+          //   parametric: true,
+          //   shading: 'realistic',
+          //   // shading: 'albedo',
+          //   parametricEquation: {
+          //     u: {
+          //       min: 0,
+          //       max: 2 * Math.PI,
+          //       step: Math.PI / 20
+          //     },
+          //     k:{},
+          //     w:{
+          //       min: 0,
+          //       max: 2 * Math.PI,
+          //       step: Math.PI / 20
+          //     },
+          //     x: function (u:number,w:number) {
+          //       return (420+70*Math.cos(w))*Math.sin(u)+461;
+          //     },
+          //     y: function (u: number, w: number) {
+          //       return 300+Math.sin(w);
+          //     },
+          //     z: function (u:number,w:number) {
+          //       return (420+70*Math.cos(w))*Math.cos(u)+461;
+          //     }
+          //   },
+          //   tooltip: {
+          //     trigger: 'axis',
+          //   },
+          // },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return "z轴: "+params.data[2]+"mm应变值为299uξ";
+              },
+              color:'red',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'red'
+            },
+            data:[[1140,88,731]],
+            tooltip:{
+              trigger:'item',
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为80uξ";
+              },
+              color:'orange',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'orange'
+            },
+            data:[
+              [300,0,920]
+            ],
+            tooltip:{
+              trigger:'item'
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为33uξ";
+              },
+              color:'yellow',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'yellow'
+            },
+            data:[[750,-480,461]],
+            tooltip:{
+              trigger:'item',
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为1223uξ";
+              },
+              color:'green',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'green'
+            },
+            data:[[750,-480,461]],
+            tooltip:{
+              trigger:'item',
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为600uξ";
+              },
+              color:'purple',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'purple'
+            },
+            data:[[750,-480,461]],
+            tooltip:{
+              trigger:'item',
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为278uξ";
+              },
+              color:'cyan',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'cyan'
+            },
+            data:[[1140,88,731]],
+            tooltip:{
+              trigger:'item',
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为298uξ";
+              },
+              color:'#577889',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: '#577889'
+            },
+            data:[
+              [300,0,920]
+            ],
+            tooltip:{
+              trigger:'item'
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为450uξ";
+              },
+              color:'#080888',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: '#080888'
+            },
+            data:[[750,-480,461]],
+            tooltip:{
+              trigger:'item',
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为189uξ";
+              },
+              color:'black',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'black'
+            },
+            data:[[750,-480,461]],
+            tooltip:{
+              trigger:'item',
+            }
+          },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return 'z轴: '+params.data[2]+"mm应变值为798uξ";
+              },
+              color:'#ffdddd',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: '#ffdddd'
+            },
+            data:[[750,-480,461]],
+            tooltip:{
+              trigger:'item',
+            }
+          },
+        ]
       }
-      option.baseOption.timeline.data = timelineData;
-      option.baseOption.yAxis[0].data = yData
-      option.options = optionsData;
-      //@ts-ignore
-      myChart.setOption(option)
-    });
-    return {
+    })
+    onMounted(async ()=>{
+      const chartDom = document.getElementById('line-3d-pipe')!;
+      const myChart = echarts.init(chartDom);
+      const {data} = await handleQuery();
+      const array1_12 = data.content[0];
+      const array2_10 = data.content[1];
+      // //定位环
+      // state.option.series[3].data = [[300,0,Number(array1_12.toFixed(2))]];
+      // //结构管卡
+      // state.option.series[2].data = [[750,0,Number(array2_10.toFixed(2))]];
+
+
+      state.option.series[1].data = [[916, 533, 1350]]
+      state.option.series[2].data = [[786, 135, 1200]]
+      state.option.series[3].data = [[922, 461, 1050]]
+      state.option.series[4].data = [[786, 135, 900]]
+      state.option.series[5].data = [[916, 388, 750]]
+      state.option.series[6].data = [[899, 318, 675]]
+      state.option.series[7].data = [[833, 190, 375]]
+      state.option.series[8].data = [[833, 190, 525]]
+      state.option.series[9].data = [[899, 318, 225]]
+      state.option.series[10].data = [[899, 603, 75]]
+
+      state.option && myChart.setOption(state.option);
+    })
+    return{
+      ...toRefs(state)
     }
   },
 })
 </script>
 <style scoped>
-.barPipeDisplayment {
+.line-3d-pipe{
   display: flex;
 }
 </style>

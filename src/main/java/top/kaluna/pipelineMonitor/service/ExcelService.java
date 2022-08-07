@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import top.kaluna.pipelineMonitor.domain.ExcelData;
 import top.kaluna.pipelineMonitor.mapper.ExcelDataMapper;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;

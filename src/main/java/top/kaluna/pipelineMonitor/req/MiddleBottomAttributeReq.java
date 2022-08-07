@@ -3,7 +3,6 @@ package top.kaluna.pipelineMonitor.req;
 import lombok.Data;
 import top.kaluna.pipelineMonitor.domain.ArrayCombineSensorSerialNum;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
