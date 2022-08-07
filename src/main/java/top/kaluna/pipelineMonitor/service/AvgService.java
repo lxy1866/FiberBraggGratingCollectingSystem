@@ -1,6 +1,4 @@
 package top.kaluna.pipelineMonitor.service;
-import org.apache.commons.collections.ArrayStack;
-import org.apache.commons.collections.list.AbstractLinkedList;
 import org.springframework.stereotype.Service;
 import top.kaluna.pipelineMonitor.domain.AvgSensor;
 import top.kaluna.pipelineMonitor.domain.ExcelData;
@@ -12,7 +10,6 @@ import top.kaluna.pipelineMonitor.util.DateUtil;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -82,4 +79,8 @@ public class AvgService {
         avgSensor.setDate(DateUtil.GivenTimeLastNHoursStart(start, -1));
         return avgSensor;
     }
+    /**
+     * 将excel_data的数据插入avg_sensor表中 TODO 只是为了演示日期不规律的数据
+     * @param sensorNum
+     */
 }

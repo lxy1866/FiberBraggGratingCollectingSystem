@@ -9,18 +9,18 @@
       </div>
     </div>
     <div class="down">
-      <div class="percent">
-        <div class="item  bg-color-black">
-          <span style="font-family: '宋体';">今日在线率</span>
-          <centerChart1 />
-        </div>
-        <div class="item  bg-color-black">
-          <span style="font-family: '宋体';">今日任务达标率</span>
-          <centerChart2 />
-        </div>
-      </div>
+<!--      <div class="percent">-->
+<!--        <div class="item  bg-color-black">-->
+<!--          <span style="font-family: '宋体';">今日在线率</span>-->
+<!--          <centerChart1 />-->
+<!--        </div>-->
+<!--        <div class="item  bg-color-black">-->
+<!--          <span style="font-family: '宋体';">今日任务达标率</span>-->
+<!--          <centerChart2 />-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="card">
-        <n-card title="管道位移预警信息"
+        <n-card title="位移预警信息"
                 font-color="white"
                 style="--n-color: #053343;
                   --n-title-font-size: 15px;
@@ -58,7 +58,7 @@ export default defineComponent({
     const state =  reactive({
       titleItem: [
         {
-          title: "今日传感器总量",
+          title: "光纤传感器数量",
           number: {
             number: [0],
             toFixed: 0,
@@ -66,7 +66,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今日传感器在线个数",
+          title: "最大应变值",
           number: {
             number: [0],
             toFixed: 0,
@@ -74,7 +74,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今日累计异常波动次数",
+          title: "最大应变值的位置",
           number: {
             number: [0],
             toFixed: 0,
@@ -82,7 +82,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今年累计异常波动次数",
+          title: " MEMS传感器数量",
           number: {
             number: [0],
             toFixed: 0,
@@ -90,7 +90,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今年成功任务次数",
+          title: "X-Y的最大位移变形量",
           number: {
             number: [0],
             toFixed: 0,
@@ -98,7 +98,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今年达标任务个数",
+          title: "最大变形量的位置",
           number: {
             number: [0],
             toFixed: 0,
@@ -115,7 +115,7 @@ export default defineComponent({
       const { data } = await handleQueryOnline();
       console.log(data.content)
       state.titleItem = [{
-        title: "今日传感器总量",
+        title: "光纤传感器数量",
         number: {
           number: [data.content.total],
           toFixed: 0,
@@ -123,7 +123,7 @@ export default defineComponent({
         }
       },
         {
-          title: "今日传感器在线个数",
+          title: "最大应变值",
           number: {
             number: [data.content.onLine],
             toFixed: 0,
@@ -131,7 +131,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今日累计异常波动次数",
+          title: "最大应变值的位置",
           number: {
             number: [data.content.abnormalTimes],
             toFixed: 0,
@@ -139,7 +139,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今年累计异常波动次数",
+          title: "MEMS传感器数量",
           number: {
             number: [data.content.thisYearAbnormalTimes],
             toFixed: 0,
@@ -147,7 +147,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今年成功任务次数",
+          title: "X-Y的最大位移变形量",
           number: {
             number: [data.content.onLine],
             toFixed: 0,
@@ -155,7 +155,7 @@ export default defineComponent({
           }
         },
         {
-          title: "今年达标任务个数",
+          title: "最大变形量的位置",
           number: {
             number: [data.content.onLine],
             toFixed: 0,
@@ -237,9 +237,9 @@ export default defineComponent({
   justify-content: center;
 }
 .down .card{
-  margin-top: 14px;
-  margin-left: 20px;
-  width: 60%;
+  margin-top: 28px;
+  margin-left: 2%;
+  width: 96%;
   display: flex;
 }
 </style>

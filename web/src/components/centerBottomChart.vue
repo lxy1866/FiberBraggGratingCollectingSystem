@@ -56,7 +56,7 @@ export default defineComponent({
     const state = reactive({
       option : {
         title: {
-          text: year + '年' + lastMonth+ '月管道位移变化曲线图',
+          text: year + '年' + lastMonth+ '月位移变化曲线图',
           textStyle:{
             color: '#ffffff',
             fontFamily: '宋体',

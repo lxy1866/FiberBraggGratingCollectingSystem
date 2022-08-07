@@ -4,7 +4,7 @@
     <div style="position: relative; display: flex;justify-content: space-between" >
       <dv-decoration-8 style="width:300px;height:50px;" />
       <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-        <div style="font-size: 20px; color: cadetblue;text-align:center;font-family: 宋体" >册镇海底管道位移监测</div>
+        <div style="font-size: 20px; color: cadetblue;text-align:center;font-family: 宋体" >码头后方清淤减载智能监控系统</div>
         <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
       </div>
       <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />
@@ -12,7 +12,7 @@
     <div class="container" style="margin-top: 10px">
       <div class="box left">
         <dv-border-box-8 class="border-box">
-          <bar-pipe-displayment class="charts" style="height: 650px"/>
+          <line3d-pipe class="charts" style="height: 600px;"/>
         </dv-border-box-8>
       </div>
       <div class="box center">
@@ -25,7 +25,10 @@
       </div>
       <div class="box right">
         <dv-border-box-8  class="border-box">
-          <line3d-pipe class="charts" style="height: 600px;"/>
+          <right-top-chart class="charts" style="height: 300px" />
+        </dv-border-box-8>
+        <dv-border-box-8  class="border-box">
+          <right-buttom-chart class="charts" style=" height: 300px"/>
         </dv-border-box-8>
       </div>
     </div>
@@ -36,15 +39,17 @@
 <script lang="ts">
 import {defineComponent, onMounted} from "vue";
 
-import Line3dPipe from '../components/rightTopChart.vue'
+import Line3dPipe from '../components/leftTopChart.vue'
 import TheHeader from '@/components/theHeader.vue';
 import TheFooter from '@/components/theFooter.vue';
-import BarPipeDisplayment from "@/components/leftTopChart.vue";
+import RightTopChart from "@/components/rightTopChart.vue";
+import RightButtomChart from "@/components/rightButtomChart.vue";
 import PipeCenterTop from '@/components/centerTopChart.vue'
 import LineChartDisplayment from '@/components/centerBottomChart.vue';
 export default defineComponent({
   components:{
-    BarPipeDisplayment,
+    RightTopChart,
+    RightButtomChart,
     LineChartDisplayment,
     Line3dPipe,
     PipeCenterTop,

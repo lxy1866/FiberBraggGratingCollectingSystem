@@ -1,5 +1,5 @@
 <template>
-  <div id="rightTopChart" class="RightTopChart"></div>
+  <div id="rightButtomChart" class="RightButtomChart"></div>
 </template>
 
 <script lang="ts">
@@ -61,7 +61,7 @@ function handleQueryAvg(){
   return axios.get("/home/leftTopDataGet")
 }
 export default defineComponent({
-  name: 'RightTopChart',
+  name: 'RightButtomChart',
   setup() {
     onMounted( async ()=>{
       let leftTopAttributeContent = {
@@ -95,7 +95,7 @@ export default defineComponent({
           data[i][j] = Number((array[i][j].avg).toFixed(2))
         }
       }
-      const chartDom = document.getElementById('rightTopChart')!;
+      const chartDom = document.getElementById('rightButtomChart')!;
       const myChart = echarts.init(chartDom);
       const option={
         baseOption: {
@@ -116,12 +116,12 @@ export default defineComponent({
             feature: {
               dataView: {readOnly: false},
               restore: {},
-              magicType: { type: ['line','bar'] },
+              magicType: { type: ['line', 'bar'] },
               saveAsImage: {}
             }
           },
           title: {
-            text: '基于MEMS传感阵列的岸坡位移变形监测 x-z曲线',
+            text: '基于MEMS传感阵列的岸坡位移变形监测 y-z曲线',
             textStyle: {
               color: '#ffffff',
               fontFamily: '宋体',
@@ -145,7 +145,7 @@ export default defineComponent({
           },
           xAxis: [
             {
-              name:'x轴间隔0.5米',
+              name:'y轴间隔0.5米',
               type: 'category',
               axisLabel: {interval: 0},
               data: [''],
@@ -291,7 +291,7 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.RightTopChart {
+.RightButtomChart {
   display: flex;
 }
 </style>
