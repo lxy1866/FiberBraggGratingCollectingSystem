@@ -1,6 +1,5 @@
 package top.kaluna.pipelineMonitor;
 
-import com.alibaba.fastjson.parser.ParserConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,16 +11,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @SpringBootApplication
-@MapperScan("top.kaluna.pipelineMonitor.mapper")
+@MapperScan("top.kaluna.modbusTcp.mapper")
 @EnableRabbit
 @EnableScheduling
 @EnableOpenApi
 public class PipelineMonitorApplication {
 
-
 	private static final Logger LOG = LoggerFactory.getLogger(PipelineMonitorApplication.class);
 	public static void main(String[] args) {
-		ParserConfig.getGlobalInstance().setSafeMode(true);
 		SpringApplication app = new SpringApplication(PipelineMonitorApplication.class);
 		Environment environment = app.run(args).getEnvironment();
 		LOG.info("启动成功！！");
