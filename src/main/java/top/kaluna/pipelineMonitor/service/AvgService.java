@@ -1,11 +1,9 @@
 package top.kaluna.pipelineMonitor.service;
+import com.alibaba.excel.util.DateUtils;
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.list.AbstractLinkedList;
 import org.springframework.stereotype.Service;
-import top.kaluna.pipelineMonitor.domain.AvgSensor;
-import top.kaluna.pipelineMonitor.domain.ExcelData;
-import top.kaluna.pipelineMonitor.domain.ExcelDataExample;
-import top.kaluna.pipelineMonitor.domain.QueryTimeStartAndEnd;
+import top.kaluna.pipelineMonitor.domain.*;
 import top.kaluna.pipelineMonitor.mapper.AvgSensorMapper;
 import top.kaluna.pipelineMonitor.mapper.ExcelDataMapper;
 import top.kaluna.pipelineMonitor.util.DateUtil;
@@ -13,11 +11,12 @@ import top.kaluna.pipelineMonitor.util.DateUtil;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 /**
  * @author Yuery
@@ -81,5 +80,38 @@ public class AvgService {
         avgSensor.setArraySn(arraySn);
         avgSensor.setDate(DateUtil.GivenTimeLastNHoursStart(start, -1));
         return avgSensor;
+    }
+    /**
+     * 将excel_data的数据插入avg_sensor表中 TODO
+     */
+    public void getAvgAndInsertForCommonData(int arraySn) throws ParseException {
+        //构造一个List
+        ExcelDataExample example = new ExcelDataExample();
+        ExcelDataExample.Criteria criteria = example.createCriteria();
+        criteria.andArraySnEqualTo(arraySn);
+        final List<ExcelData> excelDataList = excelDataMapper.selectByExample(example);
+        //分组
+        final ArrayList<List<ExcelData>> groupList = new ArrayList<>(excelDataList.stream().collect(groupingBy((obj) -> {
+            return DateUtils.format(obj.getDate()).split(" ")[0];
+        })).values());
+        //给每个时间中的每个节点计算平均值
+        final List<AvgSensor> avgSensorList = calculateAvg(groupList, arraySn);
+
+        avgSensorMapper.insertBatch(avgSensorList);
+    }
+
+    public List<AvgSensor> calculateAvg(ArrayList<List<ExcelData>> dateGroupList, int arraySn){
+        //通过arraySn来判断节点的个数 arraySn为1的时候，节点个数为12
+        List<AvgSensor> avgSensors = new ArrayList<>();
+        dateGroupList.forEach((obj)->{
+            final LinkedHashMap<String, ArrayList<ExcelData>> sensorNodeNameGroupbyData = obj.stream().collect(groupingBy(ExcelData::getSensorNodeName,
+                    LinkedHashMap::new, Collectors.toCollection(ArrayList::new)));
+            for(int i = 0; i < sensorNodeNameGroupbyData.size(); i++) {
+                final ArrayList<ExcelData> arrayList = sensorNodeNameGroupbyData.get("节点"+(i+1));
+                final double average = arrayList.stream().collect(Collectors.summarizingDouble(ExcelData::getZValue)).getAverage();
+                avgSensors.add(new AvgSensor(arraySn, arrayList.get(0).getSensorNodeName(), average, arrayList.get(0).getDate()));
+            }
+        });
+        return avgSensors;
     }
 }

@@ -166,4 +166,5 @@ public class FbgValueService {
         System.out.println(minAndMaxFromLast24Hours.toString());
         return minAndMaxFromLast24Hours;
     }
+
 }

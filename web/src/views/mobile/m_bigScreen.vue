@@ -3,7 +3,8 @@
   <van-tabs>
     <van-tab title="管道位移数据"  >
       <dv-border-box-8 class="border-box">
-      <m-bar-pipe-displayment class="charts" style="height: 400px;width: 360px"/>
+<!--      <m-bar-pipe-displayment class="charts" style="height: 400px;width: 360px"/>-->
+        <m-left-top-temp class="charts" style="height: 600px;width: 360px"/>
       </dv-border-box-8>
     </van-tab>
     <van-tab title="统计概况" >
@@ -35,6 +36,7 @@ import MBarPipeDisplayment from '@/components/mobile/m_leftTopChart.vue'
 import MCenterTop from '@/components/mobile/m_centerTopChart.vue'
 import MLine3dShape from '@/components/mobile/m_rightTopChart'
 import MLineChartDisplayment from '@/components/mobile/m_centerBottomChart.vue'
+import MLeftTopTemp from '@/components/mobile/m_leftTopTemp.vue'
 export default defineComponent({
   name:'m_bigScreen',
   components:{
@@ -43,7 +45,8 @@ export default defineComponent({
     MBarPipeDisplayment,
     MCenterTop,
     MLine3dShape,
-    MLineChartDisplayment
+    MLineChartDisplayment,
+    MLeftTopTemp
   }
 })
 </script>

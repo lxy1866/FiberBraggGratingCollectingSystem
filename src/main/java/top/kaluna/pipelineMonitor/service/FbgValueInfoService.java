@@ -59,6 +59,8 @@ public class FbgValueInfoService {
                 fbgValueInfo.setId(Long.parseLong(singleNormalRange.getName().substring(3)));
                 fbgValueInfo.setDistance(singleNormalRange.getDistance());
                 fbgValueInfo.setCategory(singleNormalRange.getCategory());
+                fbgValueInfo.setArrayNum(singleNormalRange.getArrayNum());
+                fbgValueInfo.setChannel(singleNormalRange.getChannel());
                 fbgValueInfoMapper.insert(fbgValueInfo);
             }
         }

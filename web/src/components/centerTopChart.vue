@@ -89,22 +89,22 @@ export default defineComponent({
             content: "{nt}"
           }
         },
-        {
-          title: "今年成功任务次数",
-          number: {
-            number: [0],
-            toFixed: 0,
-            content: "{nt}"
-          }
-        },
-        {
-          title: "今年达标任务个数",
-          number: {
-            number: [0],
-            toFixed: 0,
-            content: "{nt}"
-          }
-        }
+        // {
+        //   title: "今年成功任务次数",
+        //   number: {
+        //     number: [0],
+        //     toFixed: 0,
+        //     content: "{nt}"
+        //   }
+        // },
+        // {
+        //   title: "今年达标任务个数",
+        //   number: {
+        //     number: [0],
+        //     toFixed: 0,
+        //     content: "{nt}"
+        //   }
+        // }
       ]
     })
 
@@ -117,7 +117,7 @@ export default defineComponent({
       state.titleItem = [{
         title: "今日传感器总量",
         number: {
-          number: [data.content.total],
+          number: [12],//[data.content.total],
           toFixed: 0,
           content: "{nt}"
         }
@@ -125,7 +125,7 @@ export default defineComponent({
         {
           title: "今日传感器在线个数",
           number: {
-            number: [data.content.onLine],
+            number: [12],//[data.content.onLine],
             toFixed: 0,
             content: "{nt}"
           }
@@ -146,22 +146,22 @@ export default defineComponent({
             content: "{nt}"
           }
         },
-        {
-          title: "今年成功任务次数",
-          number: {
-            number: [data.content.onLine],
-            toFixed: 0,
-            content: "{nt}"
-          }
-        },
-        {
-          title: "今年达标任务个数",
-          number: {
-            number: [data.content.onLine],
-            toFixed: 0,
-            content: "{nt}"
-          }
-        }
+        // {
+        //   title: "今年成功任务次数",
+        //   number: {
+        //     number: [12],//[data.content.onLine],
+        //     toFixed: 0,
+        //     content: "{nt}"
+        //   }
+        // },
+        // {
+        //   title: "今年达标任务个数",
+        //   number: {
+        //     number: [12],//[data.content.onLine],
+        //     toFixed: 0,
+        //     content: "{nt}"
+        //   }
+        // }
       ]
       const interval = setInterval(() => {
         const realTime = new Date();

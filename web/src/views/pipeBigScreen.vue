@@ -12,7 +12,8 @@
     <div class="container" style="margin-top: 10px">
       <div class="box left">
         <dv-border-box-8 class="border-box">
-          <bar-pipe-displayment class="charts" style="height: 650px"/>
+<!--          <bar-pipe-displayment class="charts" style="height: 650px"/>-->
+          <left-top-temp  class="charts" style="height: 650px"/>
         </dv-border-box-8>
       </div>
       <div class="box center">
@@ -42,6 +43,7 @@ import TheFooter from '@/components/theFooter.vue';
 import BarPipeDisplayment from "@/components/leftTopChart.vue";
 import PipeCenterTop from '@/components/centerTopChart.vue'
 import LineChartDisplayment from '@/components/centerBottomChart.vue';
+import LeftTopTemp from '@/components/leftTopTemp.vue';
 export default defineComponent({
   components:{
     BarPipeDisplayment,
@@ -49,7 +51,8 @@ export default defineComponent({
     Line3dPipe,
     PipeCenterTop,
     TheHeader,
-    TheFooter
+    TheFooter,
+    LeftTopTemp
   },
   setup(){
     onMounted(()=>{

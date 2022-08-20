@@ -29,4 +29,6 @@ public interface AvgSensorMapper {
     int updateByPrimaryKey(AvgSensor record);
 
     void insertBatch(List<AvgSensor> avgSensors);
+
+
 }

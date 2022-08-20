@@ -129,7 +129,22 @@ public class HomeService {
         }
         return null;
     }
+    public List<Object> leftTopTempDataGet() {
+        //返回前一周的数据的查询条件
+        AvgSensorExample avgSensorExample = new AvgSensorExample();
+        AvgSensorExample.Criteria criteria = avgSensorExample.createCriteria();
 
+        final List<AvgSensor> listForMonth = avgSensorMapper.selectByExample(avgSensorExample);
+        final Map<Date, List<AvgSensor>> collectForMonthUnsorted = listForMonth.stream().collect(Collectors.groupingBy(AvgSensor::getDate));
+
+        //按时间排序
+        final List<AvgSensor> collectForMonth1 = listForMonth.stream().sorted(Comparator.comparing(AvgSensor::getDate)).collect(Collectors.toList());
+        //按节点名称排序
+        final List<AvgSensor> collectForMonth2 = collectForMonth1.stream().sorted(Comparator.comparing(obj -> Integer.valueOf(obj.getSensorNodeName().split("节点")[1]))).collect(Collectors.toList());
+        final List<Object> objects = Arrays.asList(collectForMonth2.stream().collect(Collectors.groupingBy(AvgSensor::getDate, LinkedHashMap::new, Collectors.toCollection(ArrayList::new))).values().toArray());
+        log.info("左上角的图表轮播临时数据");
+        return objects;
+    }
     public List<List<Double>> middleBottomGet() {
         //1_12_2_10
         final String[] arrayNodeNums = getArrayNodeNums();

@@ -176,7 +176,6 @@
       </div>
   </a-layout-content>
 </template>
-
 <script lang="ts">
 import {defineComponent, onMounted, ref, watch} from 'vue'
 import {message} from "ant-design-vue";
@@ -186,7 +185,6 @@ import TheFooter from '@/components/theFooter.vue';
 const model = ref({
   dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:'',channel:'',arrayNum:''}]
 })
-
 const code = ref();
 let inputNum = ref(null);
 const handlePositiveClick  = () =>{

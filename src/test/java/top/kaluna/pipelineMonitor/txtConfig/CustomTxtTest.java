@@ -49,6 +49,10 @@ public class CustomTxtTest {
         avgService.getAvgAndInsert(12,1);
         avgService.getAvgAndInsert(10,2);
     }
+    @Test
+    public void testAvgServiceForCommonCsvData() throws ParseException {
+        avgService.getAvgAndInsertForCommonData(1);
+    }
 
     /**
      * 给曲线赋值
@@ -70,7 +74,7 @@ public class CustomTxtTest {
         avgSensorMapper.insertBatch(list1);
         avgSensorMapper.insertBatch(list2);
     }
-    //生成这个月的数据 假设是7月
+    //生成这个月的数据 假设是8月
     @Test
     public void testGenerateLastMonthData(){
         List<AvgSensor> list = new ArrayList<>();
@@ -95,8 +99,8 @@ public class CustomTxtTest {
     @Test
     public void testGenerateThisMonthData(){
         List<AvgSensor> list = new ArrayList<>();
-        //生成上个月的数据 假设是6月
-        for(int i = 1; i <= 30; i++){
+        //生成上个月的数据 假设是7月
+        for(int i = 1; i <= 31; i++){
             for(int  j = 1; j <= 10; j++){
                 AvgSensor avgSensor1 = new AvgSensor(2, "节点"+(j), RandomUtil.doubleFrom30TO4O(), DateUtil.GivenDayAndHourGetLastMonthStartTime(i, 1));
                 AvgSensor avgSensor2 = new AvgSensor(2, "节点"+(j), RandomUtil.doubleFrom30TO4O(), DateUtil.GivenDayAndHourGetLastMonthStartTime(i, 14));

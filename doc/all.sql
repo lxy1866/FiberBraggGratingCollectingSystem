@@ -160,3 +160,6 @@ create table `avg_sensor`(
     `date` datetime not null comment  '创建时间',
     primary key (`id`)
 )engine = innodb default charset = utf8mb4 comment = '记录每天上午下午所有节点的平均值，通过查询这个表来展示图表';
+select count(*) from avg_sensor group by array_sn and sensor_node_name
+
+truncate table avg_sensor;

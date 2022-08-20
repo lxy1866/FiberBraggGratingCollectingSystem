@@ -58,6 +58,21 @@ public class HomeController {
         }
         return resp;
     }
+    @GetMapping("/leftTopTempDataGet")
+    @ResponseBody
+    public CommonResp<List<Object>> leftTopTempDataGet(){
+        CommonResp<List<Object>> resp = new CommonResp<>();
+        List<Object> list = homeService.leftTopTempDataGet();
+        if(list != null){
+            resp.setContent(list);
+        }else {
+            resp.setSuccess(false);
+            resp.setMessage("后端数据污染，请联系管理员");
+            resp.setContent(null);
+        }
+        return resp;
+    }
+
     @GetMapping("/middleBottomGet")
     @ResponseBody
     public CommonResp<List<List<Double>>> middleBottomGet(){
