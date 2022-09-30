@@ -59,9 +59,10 @@ public class FbgValueInfoService {
                 fbgValueInfo.setMin(singleNormalRange.getMinValue());
                 fbgValueInfo.setMax(singleNormalRange.getMaxValue());
                 fbgValueInfo.setCreateTime(DateUtil.getNowTime().getTime());
-                fbgValueInfo.setId(Long.parseLong(singleNormalRange.getName().substring(3)));
                 fbgValueInfo.setDistance(singleNormalRange.getDistance());
                 fbgValueInfo.setCategory(singleNormalRange.getCategory());
+                fbgValueInfo.setChannel(singleNormalRange.getChannel());
+                fbgValueInfo.setArrayNum(singleNormalRange.getArrayNum());
                 fbgValueInfoMapper.insert(fbgValueInfo);
             }
         }

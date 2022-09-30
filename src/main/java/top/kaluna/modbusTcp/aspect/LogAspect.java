@@ -37,7 +37,6 @@ public class LogAspect {
      */
     @Pointcut("execution(public * top.kaluna.*.controller..*Controller.*(..))")
     public void controllerPointcut(){
-
     }
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable{

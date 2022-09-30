@@ -51,7 +51,7 @@
                   >
                     <n-input
                         v-model:value="model.dynamicInputValue[index].name"
-                        placeholder="val+序号【1-10】"
+                        placeholder="名称+序号（数字）"
                         @keydown.enter.prevent
                     />
                     <!--
@@ -177,8 +177,6 @@
         </div>
       </div>
   </a-layout-content>
-
-  <the-footer></the-footer>
 </template>
 
 <script lang="ts">

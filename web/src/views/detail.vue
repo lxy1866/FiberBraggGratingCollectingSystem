@@ -127,7 +127,6 @@
     </a-layout-content>
   </div>
 
-  <the-footer></the-footer>
 </template>
 <script>
 import { defineComponent, ref, watch, onMounted} from "vue";

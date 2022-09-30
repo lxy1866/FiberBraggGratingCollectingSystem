@@ -55,7 +55,6 @@
         <img src="@/assets/guojiadianwang_bg_white.png"/>
       </div>
   </a-layout-content>
-  <the-footer></the-footer>
 </template>
 <script lang="ts" >
 import {defineComponent, ref, onMounted} from 'vue';
@@ -84,11 +83,11 @@ export default defineComponent({
     });
     onMounted(()=>{
       if(window.innerHeight != null){
-        height_top.value.height = window.innerHeight-134+'px';
+        height_top.value.height = window.innerHeight+'px';
       }
       window.onresize = () => {
         return (() => {
-          height_top.value.height = window.innerHeight-70+'px';
+          height_top.value.height = window.innerHeight+'px';
         })();
       };
 

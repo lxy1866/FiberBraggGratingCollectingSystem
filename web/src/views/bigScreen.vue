@@ -1,6 +1,6 @@
 <template>
   <the-header></the-header>
-  <a-layout-content style="padding: 0; background: #001529" >
+  <a-layout-content style="padding: 0; background: #001529" :style="{margin: 0, height: height_top.height}">
     <div style="position: relative; display: flex;justify-content: space-between" >
       <dv-decoration-8 style="width:300px;height:50px;" />
       <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
@@ -36,11 +36,10 @@
       </div>
     </div>
   </a-layout-content>
-  <the-footer ></the-footer>
 </template>
 
 <script>
-import {defineComponent, onMounted} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 
 import CenterTop from '../components/centerTopChart.vue'
 import LineChartTemperature from '../components/centerBottomChart.vue'
@@ -62,11 +61,22 @@ export default defineComponent({
     TheFooter
   },
   setup(){
-    onMounted(()=>{
-
-
+    const height_top = ref({
+      height: ''
     });
+    onMounted(()=>{
+      if(window.innerHeight != null){
+        height_top.value.height = window.innerHeight+'px';
+      }
+      window.onresize = () => {
+        return (() => {
+          height_top.value.height = window.innerHeight+'px';
+        })();
+      };
+
+    })
     return{
+      height_top
     }
   }
 });
@@ -78,7 +88,6 @@ export default defineComponent({
 .container{
   display: flex;
   flex-direction: row;
-  padding-bottom: 75px;
 }
 .left{
   width: 30%;

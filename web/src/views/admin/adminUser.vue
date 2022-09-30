@@ -44,7 +44,6 @@
         </template>
       </a-table>
     </a-layout-content>
-  <the-footer></the-footer>
   <n-modal
       v-model:show="addModalVisible"
       preset="dialog"
