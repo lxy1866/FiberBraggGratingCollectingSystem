@@ -66,7 +66,7 @@
   </div>
     </a-layout>
   </a-layout-content>
-  <the-footer></the-footer>
+<!--  <the-footer></the-footer>-->
 
 </template>
 <script lang="ts">

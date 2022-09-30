@@ -1,5 +1,5 @@
 <template>
-  <div id="leftTopChart" class="leftTopChart"></div>
+  <div id="leftBottomChart" class="leftBottomChart"></div>
 </template>
 
 <script lang="ts">
@@ -61,7 +61,7 @@ function handleQueryAvg(){
   return axios.get("/home/leftTopDataGet")
 }
 export default defineComponent({
-  name: 'leftTopChart',
+  name: 'leftBottomChart',
   setup() {
     onMounted( async ()=>{
       let leftTopAttributeContent = {
@@ -95,7 +95,7 @@ export default defineComponent({
           data[i][j] = Number((array[i][j].avg).toFixed(2))
         }
       }
-      const chartDom = document.getElementById('leftTopChart')!;
+      const chartDom = document.getElementById('leftBottomChart')!;
       const myChart = echarts.init(chartDom);
       const option={
         baseOption: {
@@ -202,7 +202,7 @@ export default defineComponent({
                     text: year + '年' + (((getLastWeekFirstDay().getDate()+(Math.floor(i/2))) <= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getMonth()+1):(getLastWeekFirstDay().getMonth()+2))+ '月' +
                         (((getLastWeekFirstDay().getDate()+(Math.floor(i/2)))<= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getDate()+(Math.floor(i/2))):(getLastWeekFirstDay().getDate()+(Math.floor(i/2)) - getLastMonthTotalDay()))+'日'+
                         ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
-                        '上午22%变形点管道位移数据'
+                        '上午12%变形点管道位移数据'
                   },
                   series: [
                     {
@@ -218,7 +218,7 @@ export default defineComponent({
                     text: year + '年' + (((getLastWeekFirstDay().getDate()+(Math.floor(i/2))) <= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getMonth()+1):(getLastWeekFirstDay().getMonth()+2))+ '月' +
                         (((getLastWeekFirstDay().getDate()+(Math.floor(i/2)))<= getLastMonthTotalDay()) ? (getLastWeekFirstDay().getDate()+(Math.floor(i/2))):(getLastWeekFirstDay().getDate()+(Math.floor(i/2)) - getLastMonthTotalDay()))+'日'+
                         ("星期"+"一二三四五六日".charAt(getLastWeekFirstDay().getDay()+(Math.floor(i/2))-1))+
-                        '下午22%变形点管道位移数据'
+                        '下午12%变形点管道位移数据'
                   },
                   series: [
                     {
@@ -240,7 +240,7 @@ export default defineComponent({
                 {
                   title:{
                     text: year + '年' + lastMonth + '月'+ (Math.floor(i/2)+1 )  +'日'+
-                        '上午22%变形点管道位移数据'
+                        '上午12%变形点管道位移数据'
                   },
                   series: [
                     {
@@ -254,7 +254,7 @@ export default defineComponent({
                 {
                   title:{
                     text: year + '年' + lastMonth + '月' + (Math.floor(i/2)+1)  +'日'+
-                        '下午22%变形点管道位移数据'
+                        '下午12%变形点管道位移数据'
                   },
                   series: [
                     {
@@ -286,7 +286,7 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.leftTopChart {
+.leftBottomChart {
   display: flex;
 }
 </style>

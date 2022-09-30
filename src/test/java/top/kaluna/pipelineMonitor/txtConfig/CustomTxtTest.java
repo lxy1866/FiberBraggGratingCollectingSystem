@@ -44,6 +44,14 @@ public class CustomTxtTest {
         CustomParserTxtUtil.simpleRead("D:/desktop/demandAnalysis/data/sensor1.txt",12,1);
         CustomParserTxtUtil.simpleRead("D:/desktop/demandAnalysis/data/sensor2.txt",10,2);
     }
+    //2022.8.19-12%变形点1管道位移原始数据最后一个节点是定位环一共是10个节点
+    //2022.8.19-12%变形点2传感阵列原始数据最后一个节点是管卡一共是10个节点
+    //2022.8.19-22%变形点管道位移原始数据最后一个节点是管卡一共是12个节点
+    @Test
+    public void testCustomParserTxt20220819() throws IOException, ParseException {
+        CustomParserTxtUtil.simpleRead("D:/desktop/demandAnalysis/data/20220819/2022.8.19-12%变形点1管道位移原始数据最后一个节点是定位环一共是10个节点.csv",12,1);
+        CustomParserTxtUtil.simpleRead("D:/desktop/demandAnalysis/data/sensor2.txt",10,2);
+    }
     @Test
     public void testAvgService() throws ParseException {
         avgService.getAvgAndInsert(12,1);

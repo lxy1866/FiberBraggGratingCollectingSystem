@@ -12,7 +12,10 @@
     <div class="container" style="margin-top: 10px">
       <div class="box left">
         <dv-border-box-8 class="border-box">
-          <bar-pipe-displayment class="charts" style="height: 650px"/>
+          <left-top-chart class="charts" style="height: 450px"/>
+        </dv-border-box-8>
+        <dv-border-box-8 class="border-box">
+          <left-bottom-chart class="charts" style="height: 450px"/>
         </dv-border-box-8>
       </div>
       <div class="box center">
@@ -20,33 +23,46 @@
           <PipeCenterTop  class="charts" style="height:300px;"/>
         </dv-border-box-8>
         <dv-border-box-8 class="border-box">
-          <line-chart-displayment class="charts" style="height: 300px;"/>
+          <center-bottom-chart class="charts" style="height: 300px;"/>
+        </dv-border-box-8>
+        <dv-border-box-8 class="border-box">
+          <center-bottom-bottom-chart class="charts" style="height: 300px;"/>
         </dv-border-box-8>
       </div>
       <div class="box right">
         <dv-border-box-8  class="border-box">
-          <line3d-pipe class="charts" style="height: 600px;"/>
+          <right-top-chart class="charts" style="height: 450px;"/>
+        </dv-border-box-8>
+        <dv-border-box-8  class="border-box">
+          <right-bottom-chart class="charts" style="height: 450px;"/>
         </dv-border-box-8>
       </div>
     </div>
   </a-layout-content>
-  <the-footer></the-footer>
+<!--  <the-footer></the-footer>-->
 </template>
 
 <script lang="ts">
 import {defineComponent, onMounted} from "vue";
 
-import Line3dPipe from '../components/rightTopChart.vue'
+
 import TheHeader from '@/components/theHeader.vue';
 import TheFooter from '@/components/theFooter.vue';
-import BarPipeDisplayment from "@/components/leftTopChart.vue";
+import LeftTopChart from "@/components/leftTopChart.vue";
+import LeftBottomChart from "@/components/leftBottomChart.vue";
+import RightTopChart from '../components/rightTopChart.vue'
+import RightBottomChart from '../components/rightBottomChart.vue'
 import PipeCenterTop from '@/components/centerTopChart.vue'
-import LineChartDisplayment from '@/components/centerBottomChart.vue';
+import CenterBottomChart from '@/components/centerBottomChart.vue';
+import CenterBottomBottomChart from '@/components/centerBottomBottomChart.vue';
 export default defineComponent({
   components:{
-    BarPipeDisplayment,
-    LineChartDisplayment,
-    Line3dPipe,
+    LeftTopChart,
+    LeftBottomChart,
+    CenterBottomChart,
+    CenterBottomBottomChart,
+    RightTopChart,
+    RightBottomChart,
     PipeCenterTop,
     TheHeader,
     TheFooter

@@ -80,7 +80,7 @@
     </a-layout-content>
   </div>
 
-  <the-footer></the-footer>
+<!--  <the-footer></the-footer>-->
 </template>
 <script>
 

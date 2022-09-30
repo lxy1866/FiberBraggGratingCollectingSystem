@@ -1,5 +1,5 @@
 <template>
-  <a-layout-footer style="text-align: center; background:  #053343; color: cadetblue; position:fixed; bottom:0px;left:0px;right: 0px;">
+  <a-layout-footer style="text-align: center; background:  #053343; color: cadetblue; position:relative; bottom:0px;left:0px;right: 0px;">
     册镇海底管道位移监测 ©2022 Created by Danly.  <span style="color: cadetblue">{{timeslot}}</span>
   </a-layout-footer>
 </template>

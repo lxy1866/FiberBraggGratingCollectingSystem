@@ -1,5 +1,5 @@
 <template>
-  <div id="rightTopChart" class="rightTopChart"></div>
+  <div id="rightBottomChart" class="rightBottomChart"></div>
 </template>
 
 <script lang="ts">
@@ -11,7 +11,7 @@ function handleQuery(){
   return axios.get("/home/rightTopGetForLatestData")
 }
 export default defineComponent({
-  name: 'rightTopChart',
+  name: 'line-3d-pipe',
   setup() {
     const state = reactive({
       option: {
@@ -75,7 +75,7 @@ export default defineComponent({
           }
         },
         title: {
-          text: '22%变形点结构管卡位移值',
+          text: '12%变形点定位环位移值，结构管卡位移值',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -177,42 +177,42 @@ export default defineComponent({
               trigger:'item',
             }
           },
-          // {
-          //   type: 'scatter3D',
-          //   symbol: ['arrow','circle'],
-          //   label:{
-          //     show:true,
-          //     formatter:(params:any)=>{
-          //       return '定位环z轴: '+params.data[2]+"mm";
-          //     },
-          //     color:'white',
-          //     position:'left',
-          //     textStyle:{
-          //       fontSize:15
-          //     }
-          //   },
-          //   zlevel: 999,
-          //   itemStyle:{
-          //     color: 'white'
-          //   },
-          //   data:[
-          //     [300,0,920]
-          //   ],
-          //   tooltip:{
-          //     trigger:'item'
-          //   }
-          // },
+          {
+            type: 'scatter3D',
+            symbol: ['arrow','circle'],
+            label:{
+              show:true,
+              formatter:(params:any)=>{
+                return '定位环z轴: '+params.data[2]+"mm";
+              },
+              color:'white',
+              position:'left',
+              textStyle:{
+                fontSize:15
+              }
+            },
+            zlevel: 999,
+            itemStyle:{
+              color: 'white'
+            },
+            data:[
+              [300,0,920]
+            ],
+            tooltip:{
+              trigger:'item'
+            }
+          },
         ]
       }
     })
     onMounted(async ()=>{
-      const chartDom = document.getElementById('rightTopChart')!;
+      const chartDom = document.getElementById('rightBottomChart')!;
       const myChart = echarts.init(chartDom);
       const {data} = await handleQuery();
       const array1_12 = data.content[0];
       const array2_10 = data.content[1];
-      // //定位环
-      // state.option.series[3].data = [[300,0,Number(array1_12.toFixed(2))]];
+      //定位环
+      state.option.series[3].data = [[300,0,Number(array1_12.toFixed(2))]];
       //结构管卡
       state.option.series[2].data = [[750,0,Number(array2_10.toFixed(2))]];
       state.option && myChart.setOption(state.option);
@@ -224,7 +224,7 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.rightTopChart{
+.rightBottomChart{
   display: flex;
 }
 </style>

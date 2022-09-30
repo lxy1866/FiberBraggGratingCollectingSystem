@@ -20,15 +20,26 @@
         </div>
       </div>
       <div class="card">
-        <n-card title="管道位移预警信息"
+        <n-card title="12%变形点预警信息"
                 font-color="white"
                 style="--n-color: #053343;
-                  --n-title-font-size: 15px;
+                  --n-title-font-size: 10px;
                   --n-title-font-family:'宋体';
                   --n-title-text-color: white"
         >
-          <span style="color: azure">{{timeslot}}</span>&nbsp;&nbsp;
-          <span style="color: azure">位移：mm</span>
+<!--          <span style="color: azure">{{timeslot}}</span>&nbsp;&nbsp;-->
+          <span style="color: azure;font-size: 10px">定位环位移：mm</span><br/>
+          <span style="color: azure;font-size: 10px">结构管卡位移：mm</span>
+        </n-card>
+        <n-card title="22%变形点预警信息"
+                font-color="white"
+                style="--n-color: #053343;
+                  --n-title-font-size: 10px;
+                  --n-title-font-family:'宋体';
+                  --n-title-text-color: white"
+        >
+<!--          <span style="color: azure">{{timeslot}}</span>&nbsp;&nbsp;-->
+          <span style="color: azure;font-size: 10px">位移：mm</span>
         </n-card>
       </div>
     </div>
@@ -240,6 +251,8 @@ export default defineComponent({
   margin-top: 14px;
   margin-left: 20px;
   width: 60%;
+  height: 80%;
+  margin-bottom: 14px;
   display: flex;
 }
 </style>
