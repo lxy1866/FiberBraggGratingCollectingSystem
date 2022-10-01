@@ -1,5 +1,5 @@
 <template>
-  <div id="lineChartVibration" class="lineChartVibration"></div>
+  <div id="rightTopChart" class="rightTopChart"></div>
 </template>
 <script lang="ts">
 import * as echarts from 'echarts';
@@ -9,7 +9,7 @@ import {defineComponent, onMounted, computed} from "vue";
 import axios from "axios";
 const user = computed(()=>store.state.user)
 export default defineComponent({
-  name: 'line-chart-vibration',
+  name: 'rightTopChart',
   setup() {
     const vibrationColors: Record<string, string> = {
       0: '#3d2939',
@@ -51,7 +51,7 @@ export default defineComponent({
         y.push(FbgValueInfo[i].propertyName)
         //console.log(y)
       }
-      const chartDom = document.getElementById('lineChartVibration')!;
+      const chartDom = document.getElementById('rightTopChart')!;
       const myChart = echarts.init(chartDom);
       let option:any;
       let websocket: any;
@@ -174,7 +174,7 @@ export default defineComponent({
       option.yAxis.data = y
       myChart.setOption<echarts.EChartsOption>(option);
       const onOpen = () =>{
-        console.log('WebSocket连接成功，状态码：',websocket.readyState)
+        //console.log('WebSocket连接成功，状态码：',websocket.readyState)
       };
       const onMessage = function (msg:any){
         let data = JSON.parse(msg.data);
@@ -182,10 +182,10 @@ export default defineComponent({
         myChart.setOption<echarts.EChartsOption>(option);
       };
       const onError = ()=>{
-        console.log('WebSocket连接错误，状态码：', websocket.readyState)
+        //console.log('WebSocket连接错误，状态码：', websocket.readyState)
       };
       const onClose = ()=>{
-        console.log('WebSocket连接关闭，状态码：',websocket.readyState)
+        //console.log('WebSocket连接关闭，状态码：',websocket.readyState)
       };
       const initWebSocket = () =>{
         //连接成功
@@ -214,7 +214,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/*.lineChartVibration{*/
-/*  display: flex;*/
-/*}*/
+.rightTopChart{
+  display: flex;
+}
 </style>

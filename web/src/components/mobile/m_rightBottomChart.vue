@@ -23,7 +23,7 @@ export default defineComponent({
         var z = t + 2.0 * Math.sin(t);
         data.push([x, y, z]);
       }
-      console.log(data.length);
+      //console.log(data.length);
       option = {
         toolbox: {
           feature: {

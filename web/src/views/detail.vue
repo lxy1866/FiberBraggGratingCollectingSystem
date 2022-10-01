@@ -155,7 +155,7 @@ export default defineComponent({
     const selectedKey = ref();
     onMounted(()=>{
       watch(selectedKeys,()=>{
-        console.log('selectedKeys=',selectedKeys.value)
+        //console.log('selectedKeys=',selectedKeys.value)
         selectedKey.value = selectedKeys.value[0];
       })
     });

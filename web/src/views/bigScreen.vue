@@ -2,37 +2,37 @@
   <the-header></the-header>
   <a-layout-content style="padding: 0; background: #001529" :style="{margin: 0, height: height_top.height}">
     <div style="position: relative; display: flex;justify-content: space-between" >
-      <dv-decoration-8 style="width:300px;height:50px;" />
+      <dv-decoration-6 style="width:300px;height:50px;" />
       <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
         <div style="font-size: 20px; color: cadetblue;text-align:center;" class="fontClass" >海底电缆智能健康监测系统</div>
         <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
       </div>
-      <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />
+      <dv-decoration-6 :reverse="true" style="width:300px;height:50px;" />
     </div>
     <div class="container" style="margin-top: 10px">
       <div class="box left">
-        <dv-border-box-8 class="border-box">
-          <line-chart-strain class="charts" style="height: 300px"/>
-        </dv-border-box-8>
-        <dv-border-box-8  class="border-box"  >
-          <real-temperature class="charts" style="height: 300px; margin-left: 90px"/>
-        </dv-border-box-8>
+        <dv-border-box-7 class="border-box">
+          <line-chart-strain class="charts" style="height: 350px"/>
+        </dv-border-box-7>
+        <dv-border-box-7  class="border-box"  >
+          <real-temperature class="charts" style="height: 350px; margin-left: 90px"/>
+        </dv-border-box-7>
       </div>
       <div class="box center">
-        <dv-border-box-8 class="border-box" >
-          <CenterTop   class="charts" style="height:300px;"/>
-        </dv-border-box-8>
-        <dv-border-box-8 class="border-box">
-          <line-chart-temperature class="charts" style="height: 300px;"/>
-        </dv-border-box-8>
+        <dv-border-box-7 class="border-box" >
+          <CenterTop   class="charts" style="height:350px;"/>
+        </dv-border-box-7>
+        <dv-border-box-7 class="border-box">
+          <line-chart-temperature class="charts" style="height: 350px;"/>
+        </dv-border-box-7>
       </div>
       <div class="box right">
-        <dv-border-box-8 class="border-box">
-          <line-chart-vibration class="charts" style="height: 300px;"/>
-        </dv-border-box-8>
-        <dv-border-box-8  class="border-box">
-          <line3d-shape class="charts" style="height: 300px;"/>
-        </dv-border-box-8>
+        <dv-border-box-7 class="border-box">
+          <line-chart-vibration class="charts" style="height: 350px;"/>
+        </dv-border-box-7>
+        <dv-border-box-7  class="border-box">
+          <line3d-shape class="charts" style="height: 350px;"/>
+        </dv-border-box-7>
       </div>
     </div>
   </a-layout-content>

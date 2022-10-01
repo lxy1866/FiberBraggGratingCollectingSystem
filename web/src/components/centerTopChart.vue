@@ -26,7 +26,6 @@
                   --n-title-font-size: 15px;
                   --n-title-text-color: white;
                   --n-title-font-family:宋体;"
-
         >
           <p style="color: red">{{warnMessage}}</p>
         </n-card>
@@ -189,7 +188,7 @@ export default defineComponent({
   height: 70px;
 }
 .down {
-  padding-top: 3px;
+  padding-top: 5%;
   width: 100%;
   display: flex;
   justify-content: space-between;

@@ -78,7 +78,7 @@ export default defineComponent({
      */
     onMounted(async ()=>{
       const { data } = await handleQueryOnline();
-      console.log(data.content)
+      //console.log(data.content)
       // state.titleItem = [{
       //   title: "今日传感器总量",
       //   number: data.content.total

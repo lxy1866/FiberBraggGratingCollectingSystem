@@ -2,7 +2,7 @@
   <the-header></the-header>
   <a-layout-content
       :style="{margin: 0, height: height_top.height}"
-  style="background-image: url(https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/)">
+  style="">
 <!--    https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/-->
 <!--    https://cdnimgzh.vietnamplus.vn/uploaded/wbxx/2022_02_25/cap_quang.jpg-->
       <div class="center">
@@ -108,7 +108,7 @@ export default defineComponent({
     };
 
     const onFinishFailed = (errorInfo: any) => {
-      console.log('Failed:', errorInfo);
+      //console.log('Failed:', errorInfo);
     };
     return {
       onFinish,

@@ -163,7 +163,7 @@ export default defineComponent({
       option.yAxis.data = y
       myChart.setOption<echarts.EChartsOption>(option);
       const onOpen = () =>{
-        console.log('WebSocket连接成功，状态码：',websocket.readyState)
+        //console.log('WebSocket连接成功，状态码：',websocket.readyState)
       };
       const onMessage = function (msg:any){
         let data = JSON.parse(msg.data);
@@ -171,10 +171,10 @@ export default defineComponent({
         myChart.setOption<echarts.EChartsOption>(option);
       };
       const onError = ()=>{
-        console.log('WebSocket连接错误，状态码：', websocket.readyState)
+        //console.log('WebSocket连接错误，状态码：', websocket.readyState)
       };
       const onClose = ()=>{
-        console.log('WebSocket连接关闭，状态码：',websocket.readyState)
+        //console.log('WebSocket连接关闭，状态码：',websocket.readyState)
       };
       const initWebSocket = () =>{
         //连接成功

@@ -1,5 +1,5 @@
 <template>
-  <div id="lineChartStrain" class="lineChartStrain"></div>
+  <div id="leftTopChart" class="leftTopChart"></div>
 </template>
 
 <script lang="ts">
@@ -11,7 +11,7 @@ import axios from "axios";
 
 const user = computed(() => store.state.user)
 export default defineComponent({
-  name: 'line-chart-vibration',
+  name: 'leftTopChart',
   setup() {
     const strainColors: Record<string, string> = {
       0: '#3d2939',
@@ -55,7 +55,7 @@ export default defineComponent({
         y.push(FbgValueInfo[i].propertyName)
         //console.log(y)
       }
-      const chartDom = document.getElementById('lineChartStrain')!;
+      const chartDom = document.getElementById('leftTopChart')!;
       const myChart = echarts.init(chartDom);
       let option: any;
       let websocket: any;
@@ -220,7 +220,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.lineChartStrain {
+.leftTopChart {
   display: flex;
 }
 </style>

@@ -18,7 +18,7 @@ import {Tool} from "@/util/tool";
  * axios拦截器
  */
 axios.interceptors.request.use(function (config){
-    console.log('请求参数:',config);
+    //console.log('请求参数:',config);
     const token = store.state.user.token;
     if(Tool.isNotEmpty(token)){
         //console.log("token不为空");
@@ -31,10 +31,10 @@ axios.interceptors.request.use(function (config){
     return Promise.reject(error);
 });
 axios.interceptors.response.use(function (response){
-    console.log('返回结果:',response);
+    //console.log('返回结果:',response);
     return response;
 }, error => {
-    console.log('返回错误:',error)
+    //console.log('返回错误:',error)
     return Promise.reject(error);
 })
 const app = createApp(App)

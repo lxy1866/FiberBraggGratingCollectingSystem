@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform" xmlns:v-model="">
   <n-card
       title="📖 如果想要新增传感器，请到点击菜单栏上的新增传感器"
       embedded
@@ -258,7 +258,7 @@ const onPositiveClickCode = ()=> {
 }
 const handleQueryVibration = ()=>{
   axios.get("/nr/vibrationDistance").then(function (response){
-    console.log(response);
+    //console.log(response);
     response.data.content.forEach((item:any)=>{
       item.createTime =  formatDateWrapper(Number(item.createTime));
     })
@@ -267,7 +267,7 @@ const handleQueryVibration = ()=>{
 }
 const handleQueryStrain = ()=>{
   axios.get("/nr/strainDistance").then(function (response){
-    console.log(response);
+    //console.log(response);
     response.data.content.forEach((item:any)=>{
       item.createTime =  formatDateWrapper(Number(item.createTime));
     })
@@ -276,7 +276,7 @@ const handleQueryStrain = ()=>{
 }
 const handleQueryTemperature = () => {
   axios.get("/nr/temperature").then(function (response){
-    console.log(response);
+    //console.log(response);
     response.data.content.forEach((item:any)=>{
       item.createTime =  formatDateWrapper(Number(item.createTime));
     })
