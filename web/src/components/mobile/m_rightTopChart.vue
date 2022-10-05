@@ -89,7 +89,7 @@ export default defineComponent({
             label:{
               show:true,
               formatter:(params:any)=>{
-                console.log("params:", params)
+                //console.log("params:", params)
                 // return '定位环z轴: '+params.data[2]+"mm";
               },
               color:'white',

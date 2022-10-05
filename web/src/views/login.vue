@@ -94,7 +94,7 @@ export default defineComponent({
     })
     const onFinish = () => {
       LoginUser.value.password = hexMd5(LoginUser.value.password + KEY);
-      console.log("mima", LoginUser.value.password)
+      //console.log("mima", LoginUser.value.password)
       axios.post("/user/login", LoginUser.value).then((response) => {
         const data = response.data; // data = commonResp
         if (data.success) {
@@ -108,7 +108,7 @@ export default defineComponent({
     };
 
     const onFinishFailed = (errorInfo: any) => {
-      console.log('Failed:', errorInfo);
+      //console.log('Failed:', errorInfo);
     };
     return {
       onFinish,

@@ -32,11 +32,11 @@ export default defineComponent({
       return store.state.user
     });
     const logout = () =>{
-      console.log("退出登录开始");
-      console.log(typeof user.value.token)
+      //console.log("退出登录开始");
+      //console.log(typeof user.value.token)
       axios.get('/user/logout/'+user.value.token).then((response)=>{
         const data = response.data;
-        console.log(data);
+        //console.log(data);
         if(data.success){
           router.push({ path: '/m_index/login' })
           message.success("退出登录成功");

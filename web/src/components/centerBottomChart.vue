@@ -174,7 +174,7 @@ export default defineComponent({
     })
     onMounted(async ()=>{
       const {data} = await handleQuery();
-      console.log(data.content)
+      //console.log(data.content)
       for(let i = 0; i < 2; i++){
         for(let j = 0; j < getLastMonthTotalDay(); j++){
           data.content[i][j] = Number(data.content[i][j].toFixed(2))

@@ -150,7 +150,7 @@ router.beforeEach((to, from, next) => {
     const loginUser = store.state.user;
     if (Tool.isEmpty(loginUser)) {
       const path = redirectPath+"/login"
-      console.log(path)
+      //console.log(path)
       next(path);
     } else {
       next();

@@ -207,7 +207,7 @@ export default defineComponent({
      * 表格点击页码时触发
      */
     const handleTableChange = (pagination: any) => {
-      console.log("看看自带的分页参数都有啥：" + pagination);
+      //console.log("看看自带的分页参数都有啥：" + pagination);
       handleQuery({
         page: pagination.current,
         size: pagination.pageSize
@@ -242,11 +242,11 @@ export default defineComponent({
     };
 
     const logout = (storeUser: any) =>{
-      console.log("退出登录开始");
-      console.log(typeof storeUser.value.token)
+      // console.log("退出登录开始");
+      // console.log(typeof storeUser.value.token)
       axios.get('/user/logout/'+storeUser.value.token).then((response)=>{
         const data = response.data;
-        console.log(data);
+        //console.log(data);
         if(data.success){
           router.push({ path: '/p_index/login' })
           message.success("退出登录成功");

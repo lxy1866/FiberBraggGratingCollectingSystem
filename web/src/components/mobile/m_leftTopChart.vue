@@ -74,7 +74,7 @@ export default defineComponent({
       let array: avgSensor[][];
       array = await handleQueryAvg().then(res =>{
         leftTopDataGet = res.data.content
-        console.log("res.data.content", leftTopDataGet)
+        //console.log("res.data.content", leftTopDataGet)
         return leftTopDataGet;
       })
       let sensorNum1 = Number(leftTopAttributeContent.eachArrayNum.split("_")[0])

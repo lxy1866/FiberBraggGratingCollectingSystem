@@ -75,7 +75,7 @@ export default defineComponent({
       let array: avgSensor[][];
       array = await handleQueryAvg().then(res =>{
         leftTopDataGet = res.data.content
-        console.log("res.data.content", leftTopDataGet)
+        //console.log("res.data.content", leftTopDataGet)
         if(!res.data.success){
           message.info("左图后端数据被污染，请联系管理员")
         }

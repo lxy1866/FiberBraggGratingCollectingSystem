@@ -43,11 +43,11 @@ export default defineComponent({
       }
       handleQueryAvgX().then(res =>{
         option.xAxis.data = res.data.content;
-        console.log(res.data.content);
+        //console.log(res.data.content);
       })
       handleQueryAvgY().then(res =>{
         option.series[0].data = res.data.content;
-        console.log(res.data.content);
+        //console.log(res.data.content);
       })
       myChart.setOption(option)
     })

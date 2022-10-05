@@ -22,7 +22,7 @@ const data = ref();
 
 const handleUpdate = (rowDataId:any)=> {
   axios.get("/bpr/update/"+Number(rowDataId)).then(function (response) {
-    console.log(response);
+    //console.log(response);
     data.value = response.data.content;
   });
 }
@@ -31,7 +31,7 @@ export default defineComponent({
   setup () {
     const selectData:any = inject('selectData');
     let rowDataId:any = inject('rowDataId');
-    console.log(rowDataId.value)
+    //console.log(rowDataId.value)
     return {
       handlePositiveClick () {
         message.info('确认成功')

@@ -198,7 +198,7 @@ const model = ref({
 const code = ref();
 let inputNum = ref(null);
 const handlePositiveClick  = () =>{
-  console.log(inputNum.value)
+  //console.log(inputNum.value)
   if(model.value.dynamicInputValue.length === inputNum.value){
     //请求后端接口保存6个范围值
     axios.post("/nr/save", model.value.dynamicInputValue).then((response) => {
@@ -211,7 +211,7 @@ const handlePositiveClick  = () =>{
       }
     });
   }else{
-    console.log("model.value.dynamicInputValue的类型", typeof model.value.dynamicInputValue)
+    //console.log("model.value.dynamicInputValue的类型", typeof model.value.dynamicInputValue)
     message.info("输入的光纤光栅传感阵列的个数与设置的参数范围个数不匹配！")
   }
 };
@@ -250,7 +250,7 @@ export default defineComponent({
     })
     onMounted(()=>{
       watch(inputNum,(newValue, oldValue)=>{
-        console.log(newValue,oldValue);
+        //console.log(newValue,oldValue);
       })
     })
     return {

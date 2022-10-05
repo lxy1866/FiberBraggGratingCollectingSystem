@@ -48,7 +48,7 @@ const handleQuery = (params:any)=>{
     }
   }).then(function (response){
     let resultList: any[] = []
-    console.log(response);
+    //console.log(response);
     response.data.content.list.forEach((item:any)=>{
       let obj = JSON.parse(item)
       obj.createTime =  formatDateWrapper(Number(obj.createTime));
@@ -65,15 +65,15 @@ export default defineComponent({
      * @param params
      */
     onMounted(()=>{
-      console.log("onMounted")
+      //console.log("onMounted")
       handleQuery({
         page: 1,
         size: 10
       })
       watch(range2,(newValue, oldValue)=>{
-        console.log(newValue,oldValue);
-        console.log("range2.value[0]"+range2.value[0]);
-        console.log("range2.value[1]"+range2.value[1])
+        //console.log(newValue,oldValue);
+        //console.log("range2.value[0]"+range2.value[0]);
+        //console.log("range2.value[1]"+range2.value[1])
         handleQuery({
           page:1,
           size:10,

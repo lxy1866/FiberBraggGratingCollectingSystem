@@ -133,14 +133,14 @@ export default defineComponent({
     provide('selectData', value1);
     provide('rowDataId',rowDataId)
     onMounted(()=>{
-      console.log("onMounted")
+      //console.log("onMounted")
       handleQuery({
         page: 1,
         size: 10,
         state: 0
       })
       watch(value1,(newValue, oldValue)=>{
-        console.log(newValue,oldValue);
+        //console.log(newValue,oldValue);
         if(value1.value == '未处理'){
           handleQuery({
             page:1,

@@ -102,9 +102,9 @@ export default defineComponent({
     };
     const handleChange = (info: FileInfo) => {
       const status = info.file.status;
-      console.log(info.file)
+      //console.log(info.file)
       if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
+        //console.log(info.file, info.fileList);
       }
       if (status === 'done') {
         message.success(`${info.file.name} file uploaded successfully.`);
@@ -142,9 +142,9 @@ export default defineComponent({
     };
     const handleChange2 = (info: FileInfo) => {
       const status = info.file.status;
-      console.log(info.file)
+      //console.log(info.file)
       if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
+        //console.log(info.file, info.fileList);
       }
       if (status === 'done') {
         message.success(`${info.file.name} file uploaded successfully.`);
@@ -155,7 +155,7 @@ export default defineComponent({
     return {
       handleChange,
       handleDrop: (e: DragEvent) => {
-        console.log("DragEvent",e);
+        //console.log("DragEvent",e);
       },
       uploadFilesCustomRequest,
       handleDownloadFileRemove,
@@ -163,7 +163,7 @@ export default defineComponent({
 
       handleChange2,
       handleDrop2: (e: DragEvent) => {
-        console.log("DragEvent",e);
+        //console.log("DragEvent",e);
       },
       uploadFilesCustomRequest2,
       handleDownloadFileRemove2,

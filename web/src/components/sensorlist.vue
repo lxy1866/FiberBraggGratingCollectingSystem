@@ -258,7 +258,7 @@ const onPositiveClickCode = ()=> {
 }
 const handleQueryVibration = ()=>{
   axios.get("/nr/vibrationDistance").then(function (response){
-    console.log(response);
+    //console.log(response);
     response.data.content.forEach((item:any)=>{
       item.createTime =  formatDateWrapper(Number(item.createTime));
     })
@@ -267,7 +267,7 @@ const handleQueryVibration = ()=>{
 }
 const handleQueryStrain = ()=>{
   axios.get("/nr/strainDistance").then(function (response){
-    console.log(response);
+    //console.log(response);
     response.data.content.forEach((item:any)=>{
       item.createTime =  formatDateWrapper(Number(item.createTime));
     })
@@ -276,7 +276,7 @@ const handleQueryStrain = ()=>{
 }
 const handleQueryTemperature = () => {
   axios.get("/nr/temperature").then(function (response){
-    console.log(response);
+    //console.log(response);
     response.data.content.forEach((item:any)=>{
       item.createTime =  formatDateWrapper(Number(item.createTime));
     })
