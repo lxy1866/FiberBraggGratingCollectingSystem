@@ -24,7 +24,7 @@ public class EchartsController {
     @GetMapping("/leftTopX")
     public CommonResp<List<String>> getX() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("D:\\browserDownload\\ycy\\data\\1ED4AE00.xls",0);
+        List<String> list = readxlsStr("F:\\数据\\6月18日至7月27日-12%变形点施工期间管道位移监测数据-显示B列.xls",0);
         resp.setContent(list);
         return resp;
     }
@@ -32,7 +32,7 @@ public class EchartsController {
     @GetMapping("/leftTopY")
     public CommonResp<List<Double>> getY() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("D:\\browserDownload\\ycy\\data\\1ED4AE00.xls",1);
+        List<Double> list = readxlsDou("F:\\数据\\6月18日至7月27日-12%变形点施工期间管道位移监测数据-显示B列.xls",1);
         resp.setContent(list);
         return resp;
     }
@@ -66,6 +66,7 @@ public class EchartsController {
         int rows = sheet.getRows();
         for (int i = 2;i < rows;i++){
             Cell cell = sheet.getCell(index,i);
+
             if(cell.getContents().contains("﹢")){
                 value = Double.valueOf(cell.getContents().replace("﹢",""));
             }else{
