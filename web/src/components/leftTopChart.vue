@@ -9,7 +9,6 @@ import axios from "axios";
 interface Xvalue {
   date: string
 }
-
 interface Yvalue {
   date: number
 }
@@ -41,11 +40,11 @@ export default defineComponent({
           }
         ]
       }
-      handleQueryAvgX().then(res =>{
+      await handleQueryAvgX().then(res =>{
         option.xAxis.data = res.data.content;
         console.log("handleQueryAvgX", res);
       })
-      handleQueryAvgY().then(res =>{
+      await handleQueryAvgY().then(res =>{
         option.series[0].data = res.data.content;
         console.log("handleQueryAvgY", res);
       })
