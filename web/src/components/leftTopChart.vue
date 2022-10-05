@@ -6,10 +6,10 @@
 import * as echarts from 'echarts';
 import {defineComponent, onMounted} from "vue";
 import axios from "axios";
-import {message} from "ant-design-vue";
 interface Xvalue {
   date: string
 }
+
 interface Yvalue {
   date: number
 }
@@ -43,11 +43,11 @@ export default defineComponent({
       }
       handleQueryAvgX().then(res =>{
         option.xAxis.data = res.data.content;
-        //console.log(res.data.content);
+        console.log("handleQueryAvgX", res);
       })
       handleQueryAvgY().then(res =>{
         option.series[0].data = res.data.content;
-        //console.log(res.data.content);
+        console.log("handleQueryAvgY", res);
       })
       myChart.setOption(option)
     })
