@@ -25,28 +25,87 @@ export default defineComponent({
       const chartDom = document.getElementById('leftTopChart')!;
       const myChart = echarts.init(chartDom);
       const option = {
+        title: {
+          text: '12%施工期间管道位移变化曲线图',
+          textStyle:{
+            color: '#ffffff',
+            fontFamily: '宋体',
+          }
+        },
+        animation: false,
+        grid: {
+          left: '2%',
+          right: '2%',
+          bottom: '10%',
+          containLabel: true,
+          show:'true',
+          borderWidth:'0'
+        },
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: 'rgba(32, 33, 36,.7)',
+          borderColor: 'rgba(32, 33, 36,0.20)',
+          borderWidth: 1,
+          textStyle: {
+            color: '#fff',
+            fontSize: '12'
+          },
+          axisPointer: {
+            type: 'cross'
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: {readOnly: false},
+            restore: {},
+            saveAsImage: {},
+            magicType: { type: ['line', 'bar'] },
+          }
+        },
         xAxis: {
           type: 'category',
           data: []
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            formatter: '{value} mm'
+          },
         },
+        dataZoom: [
+          {
+            show: true,
+            type: 'inside',
+            filterMode: 'none',
+          },
+          {
+            show: true,
+            type: 'inside',
+            filterMode: 'none',
+          }
+        ],
         series: [
           {
             data: [],
             type: 'line',
-            smooth: true
+            smooth: true,
+            markPoint: {
+              data: [
+                { type: 'max', name: 'Max' },
+                { type: 'min', name: 'Min' }
+              ]
+            },
           }
         ]
       }
       await handleQueryAvgX().then(res =>{
         option.xAxis.data = res.data.content;
-        console.log("handleQueryAvgX", res);
+        console.log(res.data.content);
       })
       await handleQueryAvgY().then(res =>{
         option.series[0].data = res.data.content;
-        console.log("handleQueryAvgY", res);
+        console.log(res.data.content);
       })
       myChart.setOption(option)
     })

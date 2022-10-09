@@ -8,7 +8,7 @@ import * as echarts from 'echarts';
 import 'echarts-gl';
 import axios from "axios";
 function handleQuery(){
-  return axios.get("/home/rightTopGetForLatestData")
+  return axios.get("/echarts/rightBottom")
 }
 export default defineComponent({
   name: 'line-3d-pipe',
@@ -75,7 +75,7 @@ export default defineComponent({
           }
         },
         title: {
-          text: '12%变形点定位环位移值，结构管卡位移值',
+          text: '22%结构管卡与定位环位置',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -209,6 +209,7 @@ export default defineComponent({
       const chartDom = document.getElementById('rightBottomChart')!;
       const myChart = echarts.init(chartDom);
       const {data} = await handleQuery();
+      console.log(data);
       const array1_12 = data.content[0];
       const array2_10 = data.content[1];
       //定位环

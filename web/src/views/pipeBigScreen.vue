@@ -3,9 +3,13 @@
   <a-layout-content style="padding: 0; background: #053343" >
     <div style="position: relative; display: flex;justify-content: space-between" >
       <dv-decoration-8 style="width:300px;height:50px;" />
-      <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
+      <div style="display: flex; flex-flow: column wrap; justify-content: center; margin-top: -6px">
         <div style="font-size: 20px; color: cadetblue;text-align:center;font-family: 宋体" >册镇海底管道位移监测</div>
-        <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
+
+        <div style="margin-left: 265px;"><dv-decoration-3 style="width:250px;height:30px;" /></div>
+        <div style="margin-left: 700px"><button @click="clickBtn" style="width:80px;height:30px;">加载数据</button></div>
+
+
       </div>
       <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />
     </div>
@@ -66,6 +70,11 @@ export default defineComponent({
     PipeCenterTop,
     TheHeader,
     TheFooter
+  },
+  methods:{
+    clickBtn(){
+      window.location.reload();
+    }
   },
   setup(){
     onMounted(()=>{
