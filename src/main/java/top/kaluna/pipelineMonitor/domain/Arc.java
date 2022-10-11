@@ -1,27 +1,14 @@
 package top.kaluna.pipelineMonitor.domain;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class Arc {
     private Long id;
 
     private BigDecimal length;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BigDecimal getLength() {
-        return length;
-    }
-
-    public void setLength(BigDecimal length) {
-        this.length = length;
-    }
 
     @Override
     public String toString() {

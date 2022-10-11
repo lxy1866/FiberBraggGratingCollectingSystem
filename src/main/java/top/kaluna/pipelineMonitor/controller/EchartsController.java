@@ -28,7 +28,7 @@ public class EchartsController {
     @GetMapping("/leftTopX")
     public CommonResp<List<String>> getleftTopX() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("F:\\数据\\6月18日至7月27日-12%变形点施工期间管道位移监测数据-显示B列.xls",0,2);
+        List<String> list = readxlsStr("/root/ycyData/6.xls",0,2);
         resp.setContent(list);
         return resp;
     }
@@ -36,7 +36,7 @@ public class EchartsController {
     @GetMapping("/leftTopY")
     public CommonResp<List<Double>> getleftTopY() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("F:\\数据\\6月18日至7月27日-12%变形点施工期间管道位移监测数据-显示B列.xls",1,2);
+        List<Double> list = readxlsDou("/root/ycyData/6.xls",1,2);
         resp.setContent(list);
         return resp;
     }
@@ -44,7 +44,7 @@ public class EchartsController {
     @GetMapping("/leftBottomX")
     public CommonResp<List<String>> getleftBottomX() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("F:\\数据\\7月13日至7月27日-22%变形点施工期间管道位移监测数据-显示B列.xls",0,2);
+        List<String> list = readxlsStr("/root/ycyData/7.xls",0,2);
         resp.setContent(list);
         return resp;
     }
@@ -52,7 +52,7 @@ public class EchartsController {
     @GetMapping("/leftBottomY")
     public CommonResp<List<Double>> getleftBottomY() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("F:\\数据\\7月13日至7月27日-22%变形点施工期间管道位移监测数据-显示B列.xls",1,2);
+        List<Double> list = readxlsDou("/root/ycyData/7.xls",1,2);
         resp.setContent(list);
         return resp;
     }
@@ -60,7 +60,7 @@ public class EchartsController {
     @GetMapping("/centerBottomBottomX")
     public CommonResp<List<String>> getCenterBottomBottomX() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("F:\\数据\\2022.9.26-22%变形点运行期间管道位移原始数据-显示AP列-后期值不更新.xls",0,2);
+        List<String> list = readxlsStr("/root/ycyData/2022.xls",0,2);
         System.out.println(list);
         resp.setContent(list);
         return resp;
@@ -69,7 +69,7 @@ public class EchartsController {
     @GetMapping("/centerBottomBottomY")
     public CommonResp<List<Double>> getCenterBottomBottomY() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("F:\\数据\\2022.9.26-22%变形点运行期间管道位移原始数据-显示AP列-后期值不更新.xls",41,2);
+        List<Double> list = readxlsDou("/root/ycyData/2022.xls",41,2);
         resp.setContent(list);
         return resp;
     }
@@ -77,7 +77,7 @@ public class EchartsController {
     @GetMapping("/centerBottomX1")
     public CommonResp<List<String>> getCenterBottomX1() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("F:\\数据\\2022.9.26-12%变形点1#运行期间管道位移原始数据(2).xls",0,3);
+        List<String> list = readxlsStr("/root/ycyData/20229262.xls",0,3);
         resp.setContent(list);
         return resp;
     }
@@ -85,7 +85,7 @@ public class EchartsController {
     @GetMapping("/centerBottomY1")
     public CommonResp<List<Double>> getCenterBottomY1() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("F:\\数据\\2022.9.26-12%变形点1#运行期间管道位移原始数据(2).xls",37,3);
+        List<Double> list = readxlsDou("/root/ycyData/20229262.xls",37,3);
         resp.setContent(list);
         return resp;
     }
@@ -93,7 +93,7 @@ public class EchartsController {
     @GetMapping("/centerBottomX2")
     public CommonResp<List<String>> getCenterBottomX2() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("F:\\数据\\2022.9.26-12%变形点2#运行期间传感阵列原始数据(1).xls",0,3);
+        List<String> list = readxlsStr("/root/ycyData/20229261.xls",0,3);
         resp.setContent(list);
         return resp;
     }
@@ -101,7 +101,7 @@ public class EchartsController {
     @GetMapping("/centerBottomY2")
     public CommonResp<List<Double>> getCenterBottomY2() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("F:\\数据\\2022.9.26-12%变形点2#运行期间传感阵列原始数据(1).xls",37,3);
+        List<Double> list = readxlsDou("/root/ycyData/20229261.xls",37,3);
         resp.setContent(list);
         return resp;
     }
@@ -110,8 +110,8 @@ public class EchartsController {
     public CommonResp<List<Double>> getRightBottomData() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
         ArrayList<Double> list = new ArrayList<>();
-        double valueOfPipeClamp = readLastValue("F:\\数据\\2022.9.26-22%变形点运行期间管道位移原始数据-显示AP列-后期值不更新.xls",41);
-        double valueOfLocatingRing = readLastValue("F:\\数据\\2022.9.26-22%变形点运行期间管道位移原始数据-显示AP列-后期值不更新.xls",1);
+        double valueOfPipeClamp = readLastValue("/root/ycyData/2022.xls",41);
+        double valueOfLocatingRing = readLastValue("/root/ycyData/2022.xls",1);
         list.add(valueOfPipeClamp);
         list.add(valueOfLocatingRing);
         System.out.println(list);
@@ -123,8 +123,8 @@ public class EchartsController {
     public CommonResp<List<Double>> getRightTopData() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
         ArrayList<Double> list = new ArrayList<>();
-        double valueOfPipeClamp = readLastValue("F:\\数据\\2022.9.26-12%变形点2#运行期间传感阵列原始数据(1).xls",37);
-        double valueOfLocatingRing = readLastValue("F:\\数据\\2022.9.26-12%变形点1#运行期间管道位移原始数据(2).xls",37);
+        double valueOfPipeClamp = readLastValue("/root/ycyData/20229261.xls",37);
+        double valueOfLocatingRing = readLastValue("/root/ycyData/20229262.xls",37);
         list.add(valueOfPipeClamp);
         list.add(valueOfLocatingRing);
         System.out.println(list);

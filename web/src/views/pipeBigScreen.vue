@@ -43,7 +43,6 @@
       </div>
     </div>
   </a-layout-content>
-<!--  <the-footer></the-footer>-->
 </template>
 
 <script lang="ts">
@@ -78,8 +77,6 @@ export default defineComponent({
   },
   setup(){
     onMounted(()=>{
-
-
     });
     return{
     }
