@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static top.kaluna.pipelineMonitor.util.ReadXlsUtil.*;
+import static top.kaluna.pipelineMonitor.util.FileUtil.*;
 import static top.kaluna.pipelineMonitor.util.ReadXlsxUtil.readxlsxDou;
 import static top.kaluna.pipelineMonitor.util.ReadXlsxUtil.readxlsxStr;
 
@@ -28,7 +29,7 @@ public class EchartsController {
     @GetMapping("/leftTopX")
     public CommonResp<List<String>> getleftTopX() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("/root/ycyData/6.xls",0,2);
+        List<String> list = readxlsStr(getLastModified("/root/ycyData/twelveconstruction").toString(),0,2);
         resp.setContent(list);
         return resp;
     }
@@ -36,7 +37,7 @@ public class EchartsController {
     @GetMapping("/leftTopY")
     public CommonResp<List<Double>> getleftTopY() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("/root/ycyData/6.xls",1,2);
+        List<Double> list = readxlsDou(getLastModified("/root/ycyData/twelveconstruction").toString(),1,2);
         resp.setContent(list);
         return resp;
     }
@@ -44,7 +45,7 @@ public class EchartsController {
     @GetMapping("/leftBottomX")
     public CommonResp<List<String>> getleftBottomX() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("/root/ycyData/7.xls",0,2);
+        List<String> list = readxlsStr(getLastModified("/root/ycyData/twentytwoconstruction").toString(),0,2);
         resp.setContent(list);
         return resp;
     }
@@ -52,7 +53,7 @@ public class EchartsController {
     @GetMapping("/leftBottomY")
     public CommonResp<List<Double>> getleftBottomY() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("/root/ycyData/7.xls",1,2);
+        List<Double> list = readxlsDou(getLastModified("/root/ycyData/twentytwoconstruction").toString(),1,2);
         resp.setContent(list);
         return resp;
     }
@@ -60,7 +61,7 @@ public class EchartsController {
     @GetMapping("/centerBottomBottomX")
     public CommonResp<List<String>> getCenterBottomBottomX() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("/root/ycyData/2022.xls",0,2);
+        List<String> list = readxlsStr(getLastModified("/root/ycyData/twentytwooperation").toString(),0,2);
         System.out.println(list);
         resp.setContent(list);
         return resp;
@@ -69,7 +70,7 @@ public class EchartsController {
     @GetMapping("/centerBottomBottomY")
     public CommonResp<List<Double>> getCenterBottomBottomY() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("/root/ycyData/2022.xls",41,2);
+        List<Double> list = readxlsDou(getLastModified("/root/ycyData/twentytwooperation").toString(),41,2);
         resp.setContent(list);
         return resp;
     }
@@ -77,7 +78,7 @@ public class EchartsController {
     @GetMapping("/centerBottomX1")
     public CommonResp<List<String>> getCenterBottomX1() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("/root/ycyData/20229262.xls",0,3);
+        List<String> list = readxlsStr(getLastModified("/root/ycyData/twelveoneoperation").toString(),0,3);
         resp.setContent(list);
         return resp;
     }
@@ -85,7 +86,7 @@ public class EchartsController {
     @GetMapping("/centerBottomY1")
     public CommonResp<List<Double>> getCenterBottomY1() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("/root/ycyData/20229262.xls",37,3);
+        List<Double> list = readxlsDou(getLastModified("/root/ycyData/twelveoneoperation").toString(),37,3);
         resp.setContent(list);
         return resp;
     }
@@ -93,7 +94,7 @@ public class EchartsController {
     @GetMapping("/centerBottomX2")
     public CommonResp<List<String>> getCenterBottomX2() throws BiffException, IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsStr("/root/ycyData/20229261.xls",0,3);
+        List<String> list = readxlsStr(getLastModified("/root/ycyData/twelvetwooperation").toString(),0,3);
         resp.setContent(list);
         return resp;
     }
@@ -101,7 +102,7 @@ public class EchartsController {
     @GetMapping("/centerBottomY2")
     public CommonResp<List<Double>> getCenterBottomY2() throws BiffException, IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsDou("/root/ycyData/20229261.xls",37,3);
+        List<Double> list = readxlsDou(getLastModified("/root/ycyData/twelvetwooperation").toString(),37,3);
         resp.setContent(list);
         return resp;
     }

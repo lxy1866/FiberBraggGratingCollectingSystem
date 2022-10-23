@@ -19,7 +19,7 @@
     "axios": "^0.26.0",
     "compression-webpack-plugin": "^9.2.0",
     "echarts-gl": "^2.0.9",
-    "element-ui": "^2.15.10",
+    "element-plus": "^2.2.18",
     "jquery": "^3.6.0",
     "mathjs": "^10.4.1",
     "vant": "^3.4.3",

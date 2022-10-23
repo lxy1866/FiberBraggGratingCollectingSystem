@@ -25,7 +25,7 @@ function handleQueryAvgY(){
       const myChart = echarts.init(chartDom);
       const option = {
         title: {
-          text: '22%施工期间管道位移变化曲线图',
+          text: '22%运行期间管道位移变化曲线图',
           textStyle:{
             color: '#ffffff',
             fontFamily: '宋体',

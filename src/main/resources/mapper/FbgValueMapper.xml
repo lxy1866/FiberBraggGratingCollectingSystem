@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, physical_value_info_id, `value`, array_num, create_time, channel
+    id, twelve_construction_value, twentytwo_construction_value, twelve_one_operation_value, twelve_two_operation_value, twentytwo_operation_value
   </sql>
   <select id="selectByExample" parameterType="top.kaluna.pipelineMonitor.domain.FbgValueExample" resultMap="BaseResultMap">
     select

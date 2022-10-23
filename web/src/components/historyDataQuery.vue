@@ -1,93 +1,64 @@
 <template>
   <p style="color: red; font-family: 'Adobe 宋体 Std L';">请选择你要查询的日期范围：</p>
 
-  <n-space vertical>
-    <n-date-picker
-        v-model:value="range2"
-        type="datetimerange"
-        :shortcuts="rangeShortcuts"
+  <div class="block">
+    <el-date-picker
+      v-model="range2"
+      type="datetimerange"
+      value-format="YYYY-MM-DD HH:mm:ss"
+      format="YYYY-MM-DD HH:mm:ss"
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      style="width: 100%"
+      size="large"
     />
-    <n-data-table
-        size="small"
-        :columns="columns"
-        :data="data"
-        :pagination="pagination"
-    />
-  </n-space>
-</template>
+  </div>
+
+  <n-data-table
+      size="small"
+      :columns="columns"
+      :data="tableData"
+      :pagination="pagination"
+      />
+  </template>
+
 <script lang="ts">
-import {defineComponent, onMounted, ref, watch} from 'vue'
+import {defineComponent, onMounted, ref, watch,reactive,toRefs} from 'vue'
 import axios from "axios";
-let data = ref();
-let range2 = ref();
+
 let columns = ref([
   {
-    title: 'val1',
-    dataIndex: 'val1',
-    key: 'val1'
+    title: '日期',
+    dataIndex: 'date',
+    key: 'date'
   },
   {
-    title: 'val2',
-    dataIndex: 'val2',
-    key: 'val2'
+    title: '12%变形点施工期间位移',
+    dataIndex: 'twelve_construction_value',
+    key: 'twelve_construction_value'
   },
   {
-    title: 'val3',
-    dataIndex: 'val3',
-    key: 'val3'
+    title: '22%变形点施工期间位移',
+    dataIndex: 'twentytwo_construction_value',
+    key: 'twentytwo_construction_value'
   },
   {
-    title: 'val4',
-    dataIndex: 'val4',
-    key: 'val4'
+    title: '12%变形点1运行期间位移',
+    dataIndex: 'twelve_one_operation_value',
+    key: 'twelve_one_operation_value'
   },
   {
-    title: 'createTime',
-    dataIndex: 'createTime',
-    key: 'createTime'
+    title: '12%变形点2运行期间位移',
+    dataIndex: 'twelve_two_operation_value',
+    key: 'twelve_two_operation_value'
+  },
+  {
+    title: '22%变形点运行期间位移',
+    dataIndex: 'twentytwo_operation_value',
+    key: 'twentytwo_operation_value'
   },
 ]);
-declare let formatDate: any;
-const formatDateWrapper = (time:any)=> {
-  const data = new Date(time);
-  return formatDate(data, 'yyyy-MM-dd hh:mm:ss');
-}
-
-const handleQuery = async (params: any) => {
-
-  await axios.get("/fbg/list", {
-    params: {
-      page: params.page,
-      size: params.size,
-      startTime: params.startTime,
-      endTime: params.endTime
-    }
-  }).then(function (response) {
-    let resultList = []
-
-    let flag = 1;
-    let columnList = []
-    if (response.data.content.list.length !== 0) {
-      for(let i = 0; i < response.data.content.list.length; i++){
-        let obj = JSON.parse(response.data.content.list[i])
-        obj.createTime =  formatDateWrapper(Number(obj.createTime));
-        if(flag === 1){
-          for(let i = 0; i < Object.getOwnPropertyNames(obj).length; i++){
-            columnList.push({
-              title : Object.getOwnPropertyNames(obj)[i],
-              dataIndex  : Object.getOwnPropertyNames(obj)[i],
-              key: Object.getOwnPropertyNames(obj)[i]
-            })
-          }
-          flag = 0;
-        }
-        resultList.push(obj);
-      }
-      columns.value = columnList;
-      data.value = resultList
-    }
-  })
-};
 
 export default defineComponent({
   components:{
@@ -97,20 +68,32 @@ export default defineComponent({
      * 数据查询
      * @param params
      */
+
+    let tableData = ref();
+    let range2 = ref();
+
+    const handleQuery = async (params: any) => {
+      await axios.get("/history/list", {
+        params: {
+          startTime: params.startTime,
+          endTime: params.endTime
+        }
+      }).then(res =>{
+        console.log(res)
+        tableData.value = res.data.content
+
+      })
+    };
+
     onMounted(()=> {
       //console.log("onMounted")
-      handleQuery({
-        page: 1,
-        size: 10,
-      })
+
       watch(range2, (newValue, oldValue) => {
         //console.log(newValue, oldValue);
         //console.log("range2.value[0]" + range2.value[0]);
         //console.log("range2.value[1]" + range2.value[1]);
 
         handleQuery({
-          page: 1,
-          size: 10,
           startTime: range2.value[0],
           endTime: range2.value[1]
         })
@@ -118,9 +101,31 @@ export default defineComponent({
     })
     return {
       columns,
-      data,
+      tableData,
       range2,
+      pagination: { pageSize: 10 },
     }
   }
 })
 </script>
+
+<style scoped>
+.block {
+  padding: 10px 0;
+  text-align: center;
+  border-right: solid 1px var(--el-border-color);
+  flex: 1;
+}
+.block:last-child {
+  border-right: none;
+}
+.block .demonstration {
+  display: block;
+  color: var(--el-text-color-secondary);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.headerBg {
+  background: #eee!important;
+}
+</style>

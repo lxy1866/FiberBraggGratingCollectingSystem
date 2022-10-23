@@ -7,6 +7,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -43,6 +44,7 @@ public class FileUtil {
         //mkdir
         return directory.mkdirs();
     }
+
     public static void deleteSaveFileDir2(String path) throws IOException {
 
         File file = new File(path);
@@ -56,6 +58,7 @@ public class FileUtil {
             temp.delete();
         }
     }
+
     public static void deleteSaveFileDir1(String basePath) throws IOException {
         Path path = Paths.get(basePath);
         Files.walkFileTree(path,
@@ -79,5 +82,33 @@ public class FileUtil {
 
                 }
         );
+    }
+
+    public static ArrayList<String> getAllFileName(String FilePath){
+        ArrayList<String> result = new ArrayList<>();
+        File file = new File(FilePath);
+        File[] array = file.listFiles();
+
+        for(int i=0;i<array.length;i++)
+        {
+            result.add(array[i].getName());
+        }
+        return result;
+    }
+
+    public static File getLastModified(String FilePath) {
+        File directory = new File(FilePath);
+        File[] files = directory.listFiles(File::isFile);
+        long lastModifiedTime = Long.MIN_VALUE;
+        File chosenFile = null;
+        if (files != null) {
+            for (File file : files) {
+                if (file.lastModified() > lastModifiedTime) {
+                    chosenFile = file;
+                    lastModifiedTime = file.lastModified();
+                }
+            }
+        }
+        return chosenFile;
     }
 }

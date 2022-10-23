@@ -8,7 +8,7 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://43.138.101.236:3306/pipeline_monitor?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"/>
+                <property name="url" value="jdbc:mysql://43.138.101.236:3306/pipeline_monitor_new?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"/>
                 <property name="username" value="root"/>
                 <property name="password" value="yourpassword"/>
             </dataSource>
@@ -16,5 +16,6 @@
     </environments>
     <mappers>
         <mapper resource="mapper/ExcelDataMapper.xml"/>
+        <mapper resource="mapper/VariantPointMapper.xml"/>
     </mappers>
 </configuration>

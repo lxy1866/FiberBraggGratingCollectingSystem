@@ -3,16 +3,16 @@
   <a-layout-content style="padding: 0; background: #053343" >
     <div style="position: relative; display: flex;justify-content: space-between" >
       <dv-decoration-8 style="width:300px;height:50px;" />
+
       <div style="display: flex; flex-flow: column wrap; justify-content: center; margin-top: -6px">
         <div style="font-size: 20px; color: cadetblue;text-align:center;font-family: 宋体" >册镇海底管道位移监测</div>
 
-        <div style="margin-left: 265px;"><dv-decoration-3 style="width:250px;height:30px;" /></div>
-        <div style="margin-left: 700px"><button @click="clickBtn" style="width:80px;height:30px;">加载数据</button></div>
-
-
+        <div style="margin-left: 5px;"><dv-decoration-3 style="width:250px;height:30px;" /></div>
       </div>
+
       <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />
     </div>
+    <div style="margin-left: 10px"><a-button type="primary" @click="clickBtn">读入数据</a-button></div>
     <div class="container" style="margin-top: 10px">
       <div class="box left">
         <dv-border-box-8 class="border-box">
@@ -24,13 +24,13 @@
       </div>
       <div class="box center">
         <dv-border-box-8 class="border-box" >
-          <PipeCenterTop  class="charts" style="height:300px;"/>
+          <PipeCenterTop  class="charts" style="height:150px;"/>
         </dv-border-box-8>
         <dv-border-box-8 class="border-box">
-          <center-bottom-chart class="charts" style="height: 300px;"/>
+          <center-bottom-chart class="charts" style="height: 425px;"/>
         </dv-border-box-8>
         <dv-border-box-8 class="border-box">
-          <center-bottom-bottom-chart class="charts" style="height: 300px;"/>
+          <center-bottom-bottom-chart class="charts" style="height: 325px;"/>
         </dv-border-box-8>
       </div>
       <div class="box right">

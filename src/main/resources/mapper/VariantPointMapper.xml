@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.kaluna.pipelineMonitor.mapper.VariantPointMapper">
+    <resultMap id="BaseResultMap" type="top.kaluna.pipelineMonitor.domain.QueryResulyRow">
+        <id column="date" jdbcType="BIGINT" property="date" />
+        <result column="twelve_construction_value" jdbcType="DECIMAL" property="twelve_construction_value" />
+        <result column="twentytwo_construction_value" jdbcType="DECIMAL" property="twentytwo_construction_value" />
+        <result column="twelve_one_operation_value" jdbcType="DECIMAL" property="twelve_one_operation_value" />
+        <result column="twelve_two_operation_value" jdbcType="DECIMAL" property="twelve_two_operation_value" />
+        <result column="twentytwo_operation_value" jdbcType="DECIMAL" property="twentytwo_operation_value" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        date,twelve_construction_value,twentytwo_construction_value,twelve_one_operation_value,twelve_two_operation_value,twentytwo_operation_value
+    </sql>
+
+    <insert id="twelveInConstructionBatchInsert">
+        insert into twelve_construction(date,twelve_construction_value)
+        values
+        <foreach item="VariantPoint" collection="list" separator=",">
+            (#{VariantPoint.date},#{VariantPoint.value})
+        </foreach>
+    </insert>
+
+    <insert id="twentytwoInConstructionBatchInsert">
+        insert into twentytwo_construction(date,twentytwo_construction_value)
+        values
+        <foreach item="VariantPoint" collection="list" separator=",">
+            (#{VariantPoint.date},#{VariantPoint.value})
+        </foreach>
+    </insert>
+
+    <insert id="twelveOneInOperationBatchInsert">
+        insert into twelve_one_operation(date,twelve_one_operation_value)
+        values
+        <foreach item="VariantPoint" collection="list" separator=",">
+            (#{VariantPoint.date},#{VariantPoint.value})
+        </foreach>
+    </insert>
+
+    <insert id="twelveTwoInOperationBatchInsert">
+        insert into twelve_two_operation(date,twelve_two_operation_value)
+        values
+        <foreach item="VariantPoint" collection="list" separator=",">
+            (#{VariantPoint.date},#{VariantPoint.value})
+        </foreach>
+    </insert>
+
+    <insert id="twentytwoInOperationBatchInsert">
+        insert into twentytwo_operation(date,twentytwo_operation_value)
+        values
+        <foreach item="VariantPoint" collection="list" separator=",">
+            (#{VariantPoint.date},#{VariantPoint.value})
+        </foreach>
+    </insert>
+
+    <delete id="truncateTwelveInConstruction">
+        truncate table twelve_construction
+    </delete>
+
+    <delete id="truncateTwentytwoInConstruction">
+        truncate table twentytwo_construction
+    </delete>
+
+    <delete id="truncateTwelveOneInOperation">
+        truncate table twelve_one_operation
+    </delete>
+
+    <delete id="truncateTwelveTwoInOperation">
+        truncate table twelve_two_operation
+    </delete>
+
+    <delete id="truncateTwentytwoInOperation">
+        truncate table twentytwo_operation
+    </delete>
+
+    <select id="existTable" parameterType="String" resultType="java.lang.Integer">
+        select count(*)
+        from information_schema.TABLES
+        where LCASE(table_name)=#{tableName}
+    </select>
+
+    <update id="dropTable">
+        DROP TABLE IF EXISTS ${tableName}
+    </update>
+
+    <update id="createJoinTable" parameterType="String">
+        CREATE TABLE ${tableName}
+
+        SELECT DISTINCT * FROM temptb
+
+        LEFT JOIN twelve_construction USING (date)
+
+        LEFT JOIN twentytwo_construction USING (date)
+
+        LEFT JOIN twelve_one_operation USING (date)
+
+        LEFT JOIN twelve_two_operation USING (date)
+
+        LEFT JOIN twentytwo_operation USING (date)
+
+        ORDER BY date;
+    </update>
+
+    <update id="createTempTable">
+        CREATE TABLE ${tableName}
+
+        AS (SELECT date FROM twelve_construction)
+
+        UNION (SELECT date FROM twentytwo_construction)
+
+        UNION (SELECT date FROM twelve_one_operation)
+
+        UNION (SELECT date FROM twelve_two_operation)
+
+        UNION (SELECT date FROM twentytwo_operation);
+    </update>
+
+    <select id="selectByExample" parameterType="top.kaluna.pipelineMonitor.domain.QueryResultExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from allpoint_value
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPage" resultType="top.kaluna.pipelineMonitor.domain.QueryResulyRow">
+        select * from allpoint_value where date between #{startTime} and #{endTime} limit #{pageNum}, #{pageSize}
+    </select>
+
+</mapper>

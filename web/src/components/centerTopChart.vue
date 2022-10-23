@@ -1,21 +1,14 @@
 <template>
   <div id="center">
-    <div class="up">
-      <div class="bg-color-black item" v-for="item in titleItem" :key="item.title">
-        <p style="font-family: '宋体';color: white">{{item.title}}</p>
-        <div>
-          <dv-digital-flop :config="item.number" style="width:100px;height:50px;" />
-        </div>
-      </div>
-    </div>
+
     <div class="down">
       <div class="percent">
         <div class="item  bg-color-black">
-          <span style="font-family: '宋体';">今日在线率</span>
+          <span style="font-family: '宋体';">传感器总量</span>
           <centerChart1 />
         </div>
         <div class="item  bg-color-black">
-          <span style="font-family: '宋体';">今日任务达标率</span>
+          <span style="font-family: '宋体';">报警次数</span>
           <centerChart2 />
         </div>
       </div>
@@ -25,21 +18,28 @@
                 style="--n-color: #053343;
                   --n-title-font-size: 10px;
                   --n-title-font-family:'宋体';
-                  --n-title-text-color: white"
+                  --n-title-text-color: white;
+                  --n-padding-bottom: 14px"
         >
 <!--          <span style="color: azure">{{timeslot}}</span>&nbsp;&nbsp;-->
-          <span style="color: azure;font-size: 10px">定位环位移：mm</span><br/>
-          <span style="color: azure;font-size: 10px">结构管卡位移：mm</span>
+          <span style="color: azure;font-size: 10px">定位环预警阈值：</span><br/>
+          <span style="color: azure;font-size: 10px">-129.66mm</span><br/>
+          <span style="color: azure;font-size: 10px">结构管卡预警阈值：</span><br/>
+          <span style="color: azure;font-size: 10px">-184mm</span>
         </n-card>
         <n-card title="22%变形点预警信息"
                 font-color="white"
                 style="--n-color: #053343;
                   --n-title-font-size: 10px;
                   --n-title-font-family:'宋体';
-                  --n-title-text-color: white"
+                  --n-title-text-color: white;
+                  --n-padding-bottom: 14px"
         >
 <!--          <span style="color: azure">{{timeslot}}</span>&nbsp;&nbsp;-->
-          <span style="color: azure;font-size: 10px">位移：mm</span>
+          <span style="color: azure;font-size: 10px">定位环预警阈值：</span><br/>
+          <span style="color: azure;font-size: 10px">-91.26mm</span><br/>
+          <span style="color: azure;font-size: 10px">结构管卡预警阈值：</span><br/>
+          <span style="color: azure;font-size: 10px">-101mm</span>
         </n-card>
       </div>
     </div>
@@ -248,11 +248,11 @@ export default defineComponent({
   justify-content: center;
 }
 .down .card{
-  margin-top: 14px;
+  margin-top: 6px;
   margin-left: 20px;
-  width: 60%;
-  height: 80%;
-  margin-bottom: 14px;
+  width: 80%;
+  height: 90%;
+  margin-bottom: 6px;
   display: flex;
 }
 </style>

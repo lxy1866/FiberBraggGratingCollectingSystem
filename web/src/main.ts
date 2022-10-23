@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from "axios";
-
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 import 'ant-design-vue/dist/antd.css'
 import naive from 'naive-ui'
 import {decoration8, decoration3, digitalFlop, borderBox8} from '@jiaminghi/data-view';
@@ -40,6 +42,6 @@ axios.interceptors.response.use(function (response){
 const app = createApp(App)
 setupAtnd(app)
 setupVant(app)
-app.use(store).use(router).use(decoration8).use(decoration3).use(digitalFlop).use(borderBox8).use(naive).mount('#app');
+app.use(store).use(router).use(ElementPlus,{locale}).use(decoration8).use(decoration3).use(digitalFlop).use(borderBox8).use(naive).mount('#app');
 
 

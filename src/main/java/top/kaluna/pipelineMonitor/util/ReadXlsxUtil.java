@@ -2,6 +2,7 @@ package top.kaluna.pipelineMonitor.util;
 
 import com.alibaba.excel.util.StringUtils;
 import jxl.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -23,10 +24,10 @@ public class ReadXlsxUtil {
         int maxRow = sheet.getLastRowNum();
         for (int i = startrow;i < maxRow;i++){
             XSSFCell cell = sheet.getRow(i).getCell(index);
-            if(StringUtils.isEmpty(cell.getStringCellValue())){
+            if(StringUtils.isEmpty(cell.toString())){
                 continue;
             }
-            value = cell.getStringCellValue();
+            value = cell.toString();
             colList.add(value);
         }
         return colList;
@@ -40,16 +41,30 @@ public class ReadXlsxUtil {
         XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
         XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
         int maxRow = sheet.getLastRowNum();
-        for (int i = startrow;i < maxRow;i++){
+        for (int i = startrow; i < maxRow; i++) {
             XSSFCell cell = sheet.getRow(i).getCell(index);
-            if(cell.getStringCellValue().contains("﹢")){
-                value = Double.valueOf(cell.getStringCellValue().replace("﹢",""));
-            }else{
-                if(StringUtils.isEmpty(cell.getStringCellValue()) || isContainChinese(cell.getStringCellValue())){
-                    value = null;
+            if (cell == null || isContainChinese(cell.toString())) {
+                value = null;
+            } else {
+                if (cell.getCellType() == CellType.STRING) {
+                    if (cell.toString().contains("﹢")) {
+                        value = Double.valueOf(cell.toString().replace("﹢", ""));
+                    }else{
+                        value = Double.valueOf(cell.toString());
+                    }
                 }else{
-                    value = Double.valueOf(cell.getStringCellValue());
+                    value = cell.getNumericCellValue();
                 }
+//            if(cell.toString().contains("﹢")){
+//                value = Double.valueOf(cell.toString().replace("﹢",""));
+//            }else{
+//                if(StringUtils.isEmpty(cell.toString()) || isContainChinese(cell.toString())){
+//                    value = null;
+//                }else{
+//                    value = cell.getNumericCellValue();
+//                }
+//            }
+//            colList.add(value);
             }
             colList.add(value);
         }

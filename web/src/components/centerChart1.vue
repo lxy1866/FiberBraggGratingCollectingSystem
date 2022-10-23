@@ -62,7 +62,7 @@ export default defineComponent({
       const newOption = {
         title: [
           {
-            text: data.content.onlineRate * 1 + "%",
+            text: data.content.onlineRate * 10,
             x: "center",
             y: "center",
             textStyle: {
