@@ -109,12 +109,13 @@
 <script lang="ts">
 import {computed, defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
-import { message } from 'ant-design-vue';
+import {message} from 'ant-design-vue';
 import {Tool} from "@/util/tool";
 import TheHeader from '@/components/theHeader.vue';
 import TheFooter from '@/components/theFooter.vue';
 import store from "@/store";
-import { useRouter } from 'vue-router'
+import {useRouter} from 'vue-router'
+
 declare let hexMd5: any;
 declare let KEY: any;
 
@@ -184,7 +185,7 @@ export default defineComponent({
       axios.get("/user/list", {
         params: {
           page: params.page,
-          size: params.size,
+          pageSize: params.size,
           loginName: searchLoginName.value
         }
       }).then((response) => {
@@ -209,7 +210,7 @@ export default defineComponent({
       //console.log("看看自带的分页参数都有啥：" + pagination);
       handleQuery({
         page: pagination.current,
-        size: pagination.pageSize
+        pageSize: pagination.pageSize
       });
     };
     // -------- 表单 ---------
@@ -225,7 +226,7 @@ export default defineComponent({
           // 重新加载列表
           handleQuery({
             page: pagination.value.current,
-            size: pagination.value.pageSize,
+            pageSize: pagination.value.pageSize,
           });
         } else {
           message.error(data.message);
@@ -289,7 +290,7 @@ export default defineComponent({
           // 重新加载列表
           handleQuery({
             page: pagination.value.current,
-            size: pagination.value.pageSize,
+            pageSize: pagination.value.pageSize,
           });
         } else {
           message.error(data.message);

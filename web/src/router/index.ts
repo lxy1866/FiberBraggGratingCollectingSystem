@@ -45,15 +45,6 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/p_index/admin/physicalValue',
-    name: 'p_AdminPhysicalValue',
-    component: ()=>import('../views/admin/adminPhysicalValue.vue'),
-    meta:{
-      "type":'pc',
-      loginRequire: true
-    }
-  },
-  {
     path: '/p_index/admin/user',
     name: 'p_AdminUser',
     component: ()=>import('../views/admin/adminUser.vue'),
@@ -132,7 +123,7 @@ router.beforeEach((to, from, next) => {
     const loginUser = store.state.user;
     if (Tool.isEmpty(loginUser)) {
       const path = redirectPath+"/login"
-      console.log(path)
+      //console.log(path)
       next(path);
     } else {
       next();

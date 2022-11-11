@@ -77,9 +77,7 @@ public class FbgValueInfoService {
         FbgValueInfoExample fbgValueInfoExample = new FbgValueInfoExample();
         FbgValueInfoExample.Criteria criteria = fbgValueInfoExample.createCriteria();
         criteria.andCategoryEqualTo(category);
-
         fbgValueInfoExample.setOrderByClause("id ASC");
-
         return fbgValueInfoMapper.selectByExample(fbgValueInfoExample);
     }
 
@@ -102,5 +100,11 @@ public class FbgValueInfoService {
         }else {
             return 0;
         }
+    }
+
+    public List<FbgValueInfo> getAll() {
+        FbgValueInfoExample fbgValueInfoExample = new FbgValueInfoExample();
+        fbgValueInfoExample.setOrderByClause("id ASC");
+        return fbgValueInfoMapper.selectByExample(fbgValueInfoExample);
     }
 }

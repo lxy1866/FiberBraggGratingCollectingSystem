@@ -20,5 +20,6 @@ module.exports = {
     '@typescript-eslint/no-empty-function' : 'off',
     'vue/no-unused-components' : 'off',
     '@typescript-eslint/no-extra-semi' : 'off',
+    '@typescript-eslint/no-var-requires': 0
   }
 }

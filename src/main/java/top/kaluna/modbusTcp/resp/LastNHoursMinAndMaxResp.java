@@ -10,6 +10,7 @@ public class LastNHoursMinAndMaxResp {
     BigDecimal max;
     BigDecimal min;
 
+
     public BigDecimal getMax() {
         return max;
     }

@@ -2,7 +2,7 @@
   <the-header></the-header>
   <a-layout-content
       :style="{margin: 0, height: height_top.height}"
-  style="">
+  style="background-image: url(https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/)">
 <!--    https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/-->
 <!--    https://cdnimgzh.vietnamplus.vn/uploaded/wbxx/2022_02_25/cap_quang.jpg-->
       <div class="center">
@@ -49,11 +49,11 @@
           </n-card>
         </div>
       </div>
-      <div class="logoImg">
-        <img src="@/assets/Logo_stu.png"/>&nbsp;
-        <img src="@/assets/zhejiangdaxue_bg_white.png"/>&nbsp;
-        <img src="@/assets/guojiadianwang_bg_white.png"/>
-      </div>
+<!--      <div class="logoImg">-->
+<!--        <img src="@/assets/Logo_stu.png"/>&nbsp;-->
+<!--        <img src="@/assets/zhejiangdaxue_bg_white.png"/>&nbsp;-->
+<!--        <img src="@/assets/guojiadianwang_bg_white.png"/>-->
+<!--      </div>-->
   </a-layout-content>
 </template>
 <script lang="ts" >
@@ -141,7 +141,7 @@ export default defineComponent({
 .logoImg{
   display: flex;
   flex-direction: row;
-  margin-top: 100px;
+  margin-top: 250px;
   justify-content: center;
   align-items: center;
 }

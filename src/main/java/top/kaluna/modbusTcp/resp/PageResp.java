@@ -11,6 +11,22 @@ public class PageResp<T> {
 
     private List<T> list;
 
+    private long pageCount;
+
+    public long getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(Integer pageSize){
+        if(pageSize == null){
+            return;
+        }
+        if(total % pageSize == 0){
+            this.pageCount = total / pageSize;
+        }else{
+            this.pageCount = total / pageSize + 1;
+        }
+    }
     public Long getTotal() {
         return total;
     }
@@ -34,5 +50,9 @@ public class PageResp<T> {
         sb.append(", list=").append(list);
         sb.append('}');
         return sb.toString();
+    }
+
+    public void setPageCount2(int pageSize) {
+        this.pageCount = pageSize;
     }
 }

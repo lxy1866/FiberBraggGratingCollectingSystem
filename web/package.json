@@ -2,6 +2,7 @@
   "name": "fbg",
   "version": "0.1.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "serve-dev": "vue-cli-service serve --mode dev --port 8081",
     "serve-prod": "vue-cli-service serve --mode prod",
@@ -18,7 +19,9 @@
     "ant-design-vue": "^2.2.8",
     "axios": "^0.26.0",
     "compression-webpack-plugin": "^9.2.0",
+    "cubic-spline": "^3.0.3",
     "echarts-gl": "^2.0.9",
+    "interp1": "^1.0.18",
     "jquery": "^3.6.0",
     "mathjs": "^10.4.1",
     "vant": "^3.4.3",

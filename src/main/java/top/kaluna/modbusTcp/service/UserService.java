@@ -72,7 +72,7 @@ public class UserService {
         }
 
         //两个请求参数
-        PageHelper.startPage(userQueryReq.getPage(), userQueryReq.getSize());
+        PageHelper.startPage(userQueryReq.getPage(), userQueryReq.getPageSize());
         final List<User> users = userMapper.selectByExample(userExample);
 
         PageInfo<User> pageInfo = new PageInfo<>(users);

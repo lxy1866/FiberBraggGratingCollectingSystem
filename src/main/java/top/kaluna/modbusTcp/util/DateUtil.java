@@ -59,4 +59,10 @@ public class DateUtil {
         c.set(Calendar.HOUR_OF_DAY,c.get(Calendar.HOUR_OF_DAY) - past);
         return c.getTime();
     }
+    public static Date LastNHoursStartOnTheDate(Date date, int past){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.set(Calendar.HOUR_OF_DAY,c.get(Calendar.HOUR_OF_DAY) - past);
+        return c.getTime();
+    }
 }

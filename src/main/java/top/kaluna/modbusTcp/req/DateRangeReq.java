@@ -11,6 +11,15 @@ public class DateRangeReq extends PageReq{
 
     public Long endTime;
 
+    public int category;
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
 
     public Long getStartTime() {
         return startTime;
@@ -30,10 +39,10 @@ public class DateRangeReq extends PageReq{
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("DateRangeReq{");
-        sb.append("startTime=").append(startTime);
-        sb.append(", endTime=").append(endTime);
-        sb.append('}');
-        return sb.toString();
+        return "DateRangeReq{" +
+                "startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", category=" + category +
+                '}';
     }
 }

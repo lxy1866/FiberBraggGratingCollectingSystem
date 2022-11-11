@@ -13,7 +13,7 @@ public class PageReq {
 
     @NotNull(message = "[每页条数]不能为空")
     @Max(value = 1000, message = "[每页条数]不能超过1000")
-    private int size;
+    private int pageSize;
 
     public int getPage() {
         return page;
@@ -23,19 +23,19 @@ public class PageReq {
         this.page = page;
     }
 
-    public int getSize() {
-        return size;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("PageReq{");
         sb.append("page=").append(page);
-        sb.append(", size=").append(size);
+        sb.append(", pageSize=").append(pageSize);
         sb.append('}');
         return sb.toString();
     }

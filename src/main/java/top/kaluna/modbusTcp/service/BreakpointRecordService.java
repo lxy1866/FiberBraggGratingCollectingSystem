@@ -48,7 +48,7 @@ public class BreakpointRecordService {
         criteria.andStateEqualTo(req.getState());
         List<BreakpointRecord> breakpointRecords = breakpointRecordMapper.selectByExample(breakpointRecordExample);
 
-        PageHelper.startPage(req.getPage(), req.getSize());
+        PageHelper.startPage(req.getPage(), req.getPageSize());
         PageInfo<BreakpointRecord> pageInfo = new PageInfo<>(breakpointRecords);
         LOG.info("BreakpointRecord总行数：{}", pageInfo.getTotal());
         LOG.info("BreakpointRecord总页数：{}",pageInfo.getPages());
@@ -82,8 +82,6 @@ public class BreakpointRecordService {
 
     //在线的个数计算 将断点记录表中的所有(arrayNum-1)相加起来下来 由于有一些通道没有断点，将该通道下的所有传感器加起来
     public int calculateOnLine() {
-        FbgValueInfoExample fbgValueInfoExample = new FbgValueInfoExample();
-        final FbgValueInfoExample.Criteria criteria = fbgValueInfoExample.createCriteria();
 
         int sum = 0;
         List channelList = new ArrayList();
@@ -94,15 +92,21 @@ public class BreakpointRecordService {
             channelList.add(breakpointRecords.get(i).getChannel());
             sum += breakpointRecords.get(i).getArrayNum()-1;
         }
+        List<Integer> channelUsed = new ArrayList<>();
         for (int i = 0; i < fbgValueInfos.size(); i++) {
-            if(!channelList.contains(fbgValueInfos.get(i).getChannel())){
-
-                criteria.andChannelEqualTo(fbgValueInfos.get(i).getChannel());
-                //计算没有在断点记录表中的通道下的所有传感器个数
-                final List<FbgValueInfo> fbgValueInfos1 = fbgValueInfoMapper.selectByExample(fbgValueInfoExample);
-                sum += fbgValueInfos1.size();
+            Integer channel = fbgValueInfos.get(i).getChannel();
+            if(!channelList.contains(channel) && !channelUsed.contains(channel)){
+                channelUsed.add(channel);
+                sum += countFbgValueInfoSize(fbgValueInfos.get(i).getChannel());
             }
         }
         return sum;
+    }
+    public int countFbgValueInfoSize(int channel){
+        FbgValueInfoExample fbgValueInfoExample = new FbgValueInfoExample();
+        final FbgValueInfoExample.Criteria criteria = fbgValueInfoExample.createCriteria();
+        criteria.andChannelEqualTo(channel);
+        final List<FbgValueInfo> fbgValueInfos1 = fbgValueInfoMapper.selectByExample(fbgValueInfoExample);
+        return fbgValueInfos1.size();
     }
 }

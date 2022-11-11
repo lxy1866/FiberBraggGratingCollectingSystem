@@ -5,8 +5,6 @@ import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import top.kaluna.modbusTcp.domain.BreakpointRecord;
-import top.kaluna.modbusTcp.domain.BreakpointRecordExample;
 import top.kaluna.modbusTcp.domain.BreakpointRecordFinish;
 import top.kaluna.modbusTcp.domain.BreakpointRecordFinishExample;
 import top.kaluna.modbusTcp.mapper.BreakpointRecordFinishMapper;
@@ -35,7 +33,7 @@ public class BreakpointRecordFinishService {
         criteria.andStateEqualTo(req.getState());
         List<BreakpointRecordFinish> breakpointRecordFinishes = breakpointRecordFinishMapper.selectByExample(breakpointRecordFinishExample);
 
-        PageHelper.startPage(req.getPage(), req.getSize());
+        PageHelper.startPage(req.getPage(), req.getPageSize());
         PageInfo<BreakpointRecordFinish> pageInfo = new PageInfo<>(breakpointRecordFinishes);
         LOG.info("BreakpointRecordFinish总行数：{}", pageInfo.getTotal());
         LOG.info("BreakpointRecordFinish总页数：{}",pageInfo.getPages());

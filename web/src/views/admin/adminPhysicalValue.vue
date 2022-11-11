@@ -1,8 +1,7 @@
 <template>
-  <the-header></the-header>
   <a-layout-content>
       <div class="content-wrapper">
-        <div class="content-left" style="margin-top: 30px; ">
+        <div class="content-left">
           <n-space vertical>
             <n-card
                 title="📖 设置光纤光栅传感器阵列的参数量程以及初始位置"
@@ -183,8 +182,6 @@
 import {defineComponent, onMounted, ref, watch} from 'vue'
 import {message} from "ant-design-vue";
 import axios from 'axios';
-import TheHeader from '@/components/theHeader.vue';
-import TheFooter from '@/components/theFooter.vue';
 const model = ref({
   dynamicInputValue: [{ minValue:'',name: '',maxValue: '',distance:'', category:'',channel:'',arrayNum:''}]
 })
@@ -211,8 +208,6 @@ const handlePositiveClick  = () =>{
 };
 export default defineComponent({
   components:{
-    TheHeader,
-    TheFooter
   },
   setup () {
     const showModalRef = ref(false)

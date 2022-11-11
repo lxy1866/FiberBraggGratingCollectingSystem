@@ -1,87 +1,59 @@
 <template>
   <div id="rightTopChart" class="rightTopChart"></div>
 </template>
-<script lang="ts">
+<script lang="js">
 import * as echarts from 'echarts';
-import store from "@/store";
-import {Tool} from "@/util/tool";
-import {defineComponent, onMounted, computed} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import axios from "axios";
-const user = computed(()=>store.state.user)
+function dateToGMT(strDate){
+  const dateStr = strDate.split(" ");
+  const strGMT = dateStr[0] + " " + dateStr[1] + " " + dateStr[2] + " " + dateStr[5] + " " + dateStr[3] + " GMT+0800";
+  const date = new Date(Date.parse(strGMT));
+  return date;
+}
 export default defineComponent({
   name: 'rightTopChart',
-  setup() {
-    const vibrationColors: Record<string, string> = {
-      0: '#3d2939',
-      1: '#000',
-      2: '#403897',
-      3: '#f93',
-      4: '#bc002d',
-      5: '#924fa2',
-      6: '#044500',
-      7: '#09947d',
-      8: '#ef2b2d',
-      9: '#82043c',
-      10: '#442b1e',
-      11: '#330a17',
-      12: '#70247d',
-      13: '#b22234',
-      14: '#ef7878',
-      15: '#559069',
-      16: '#a45060',
-      17: '#670044',
-      18: '#565965',
-      19: '#340569',
-      20: '#586042',
-      21: '#619405',
-      22: '#945006',
-      23: '#586473',
-      24: '#124995',
-      25: '#759594',
-      27: '#c56600'
-    };
-    function getFbgValueInfoForDistance(){
-      return axios.get("/nr/vibrationDistance")
+  setup: function () {
+    function handleQueryList(startTime, endTime) {
+      return axios.get("/txt/listLastHourForVibration", {
+        params: {
+          startTime: startTime,
+          endTime: endTime,
+          category: 3
+        }
+      })
     }
-    onMounted(async ()=>{
-      const { data } = await getFbgValueInfoForDistance();
-      const FbgValueInfo = data.content//数组 每一个元素是id, propertyName, min, max, distance, creatTime, category
-      let y = []
-      for (let i = 0; i < FbgValueInfo.length; i++) {
-        y.push(FbgValueInfo[i].propertyName)
-        //console.log(y)
-      }
-      const chartDom = document.getElementById('rightTopChart')!;
-      const myChart = echarts.init(chartDom);
-      let option:any;
-      let websocket: any;
-      let token: any;
-      //通过propertyName得到对应的distance
-      function distance(propertyName:string){
-        if(!propertyName){
-          return '';
-        }
-        return (
-            FbgValueInfo.find(function (item:any){
-                  return item.propertyName == propertyName
-                }
-            )).distance
-      }
-      function channel(propertyName: string) {
-        if (!propertyName) {
-          return '';
-        }
-        return (
-            FbgValueInfo.find(function (item: any) {
-                  return item.propertyName == propertyName
-                }
-            )).channel
+
+    onMounted(async () => {
+      var fullYear = new Date(new Date().setFullYear(2022, 8, 2));
+      // var frontOneHourTimeStamp = new Date(fullYear.setHours(0, 0, 0, 0)).getTime();
+      // var currentHourTimeStamp = new Date(fullYear.setHours(0, 59, 59, 0)).getTime();
+      var frontOneHourTimeStamp = new Date(new Date().setHours(new Date().getHours()-1, 0, 0, 0)).getTime();
+      var currentHourTimeStamp = new Date(new Date().setHours(new Date().getHours()-1, 59, 59, 0)).getTime();
+      let data = []
+      data = await handleQueryList(frontOneHourTimeStamp, currentHourTimeStamp);
+
+      data = data.data.content
+      for (let i = 0; i < data.length; i++) {
+        data[i].name = new Date(data[i].name).toLocaleString('zh')
+        //data[i].name = new Date(data[i].name.replace("CST", 'GMT+0800')).toLocaleString()
+        data[i][0] = data[i].name
       }
 
-      option =  {
+      let option;
+      let websocket;
+      let token;
+      option = {
+        toolbox: {
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true },
+          }
+        },
         title: {
-          text: '海底电缆实时振动值(mm)',
-          textStyle:{
+          text: '海缆上一个小时振动值(Hz)',
+          textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
           },
@@ -92,123 +64,89 @@ export default defineComponent({
           left: 80,
           right: 30
         },
-        toolbox: {
-          show: true,
-          feature: {
-            dataView: { readOnly: false },
-            magicType: { type: ['line', 'bar'] },
-            restore: {},
-            saveAsImage: {}
+        tooltip: {
+          trigger: 'axis',
+          formatter: function (params) {
+            params = params[0];
+            return (
+                params.name +
+                ' : ' +
+                params.value[1]
+            );
+          },
+          axisPointer: {
+            animation: false
           }
         },
         xAxis: {
-          max: 'dataMax',
-          axisLabel: {
-            show: true, formatter: function (n: number) {
-              return Math.round(n) + '';
-            },
-          },
-          axisLine:{
-            lineStyle:{
-              color:'#565c67'
-            }
+          type: 'time',
+          splitLine: {
+            show: false
           },
         },
         yAxis: {
-          name: '初始位置',
-          nameLocation: 'start',
-          type: 'category',
-          max: 4,
-          inverse: false,
-          data:['val6','val7','val8','val9','val10'],
-          axisLine:{
-            lineStyle:{
-              color:'#565c67'
-            }
-          },
-          axisLabel: {
-            show: true,
-            fontSize: 14,
-            formatter: function (value: any){
-              return '{distance|' + distance(value)+'米}';
-            },
-
-            rich: {
-              distance: {
-                fontSize: 15,
-                padding: 4
-              }
-            },
-          },
-          animationDuration: 300,
-          animationDurationUpdate: 300
+          type: 'value',
+          boundaryGap: [0, '100%'],
+          splitLine: {
+            show: false
+          }
         },
         series: [
           {
-            realtimeSort: false,
-            seriesLayoutBy: 'column',
-            type: 'bar',
-            itemStyle: {
-              //柱条的颜色
-              color: function (param:any) {
-                //console.log(param)
-                return vibrationColors[param.data.physicalValueInfoId] || '#003897';
-              }
-            },
-            label: {
-              show: true,
-              precision: 1,
-              position: 'right',
-              valueAnimation: true,
-              fontFamily: 'monospace',
-            },
-            data:[100, 200, 300, 400, 500]
+            name: 'Fake Data',
+            type: 'line',
+            showSymbol: false,
+            data: data
           }
         ],
-        // Disable init animation.
-        animationDuration: 0,
-        animationDurationUpdate: 2000,
-        animationEasing: 'linear', //初始动画的缓动效果
-        animationEasingUpdate: 'linear', //数据更新动画的缓动效果
       };
-      option.yAxis.data = y
-      myChart.setOption<echarts.EChartsOption>(option);
-      const onOpen = () =>{
-        //console.log('WebSocket连接成功，状态码：',websocket.readyState)
-      };
-      const onMessage = function (msg:any){
-        let data = JSON.parse(msg.data);
-        option.series[0].data = data[0];
-        myChart.setOption<echarts.EChartsOption>(option);
-      };
-      const onError = ()=>{
-        //console.log('WebSocket连接错误，状态码：', websocket.readyState)
-      };
-      const onClose = ()=>{
-        //console.log('WebSocket连接关闭，状态码：',websocket.readyState)
-      };
-      const initWebSocket = () =>{
-        //连接成功
-        websocket.onOpen = onOpen;
-        // 收到消息的回调
-        websocket.onmessage = onMessage;
-        // 连接错误
-        websocket.onerror = onError;
-        // 连接关闭的回调
-        websocket.onClose = onClose;
-      }
-      if('WebSocket' in window){
-        token = Tool.uuid(10);
-        //连接地址：ws://127.0.0.1:8080/ws/xxx
-        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/ws/'+token);
-        initWebSocket()
-      }else{
-        alert('当前浏览器 不支持')
-      }
+      const chartDom = document.getElementById('rightTopChart');
+      let myChart = echarts.init(chartDom);
+      // setInterval(function () {
+      //   //console.log(data)
+      //   for (let i = 0; i < 5; i++) {
+      //     let shift = data.value.shift();
+      //     data.value.push(shift);
+      //   }
+      //   option.series[0].data = data
+      //   myChart.setOption(option)
+      // }, 1000)
+
+      option && myChart.setOption(option)
+      // const onOpen = () =>{
+      //   //console.log('WebSocket连接成功，状态码：',websocket.readyState)
+      // };
+      // const onMessage = function (msg:any){
+      //   let data = JSON.parse(msg.data);
+      //   option.series[0].data = data[0];
+      //   myChart.setOption<echarts.EChartsOption>(option);
+      // };
+      // const onError = ()=>{
+      //   //console.log('WebSocket连接错误，状态码：', websocket.readyState)
+      // };
+      // const onClose = ()=>{
+      //   //console.log('WebSocket连接关闭，状态码：',websocket.readyState)
+      // };
+      // const initWebSocket = () =>{
+      //   //连接成功
+      //   websocket.onOpen = onOpen;
+      //   // 收到消息的回调
+      //   websocket.onmessage = onMessage;
+      //   // 连接错误
+      //   websocket.onerror = onError;
+      //   // 连接关闭的回调
+      //   websocket.onClose = onClose;
+      // }
+      // if('WebSocket' in window){
+      //   token = Tool.uuid(10);
+      //   //连接地址：ws://127.0.0.1:8080/ws/xxx
+      //   websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/ws/'+token);
+      //   initWebSocket()
+      // }else{
+      //   alert('当前浏览器 不支持')
+      // }
     });
-    return{
-      user,
-    }
+    return {}
   },
 })
 </script>

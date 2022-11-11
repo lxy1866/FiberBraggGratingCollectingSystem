@@ -7,7 +7,7 @@
     >
       <div class="header-wrap">
         <div class="header-left">
-          <div style=" font-size: 20px; color: cadetblue; font-weight: bolder">汕头大学</div>
+<!--          <div style=" font-size: 20px; color: cadetblue; font-weight: bolder">汕头大学</div>-->
           <a-menu-item key="/p_index">
             <transition :name="transitionName">
               <router-link to="/p_index" :style="user.id? {} : {display:'none'}">首页</router-link>
@@ -23,12 +23,6 @@
               <router-link to="/p_index/admin/user" :style="user.id? {} : {display:'none'}">用户</router-link>
             </transition>
           </a-menu-item>
-          <a-menu-item key="/p_index/admin/physicalValue">
-            <transition :name="transitionName">
-              <router-link to="/p_index/admin/physicalValue" :style="user.id? {} : {display:'none'}">新增传感器</router-link>
-            </transition>
-          </a-menu-item>
-
         </div>
         <div class="header-right">
           <a-menu-item key="/p_index/about" >
@@ -65,9 +59,7 @@ import axios from "axios";
 import {message} from "ant-design-vue";
 import { useRouter } from 'vue-router'
 export default defineComponent({
-
   name: 'the-header',
-
   setup(){
     const router=useRouter()
     const user = computed(()=>{

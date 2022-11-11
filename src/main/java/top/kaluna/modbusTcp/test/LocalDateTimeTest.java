@@ -1,6 +1,8 @@
 package top.kaluna.modbusTcp.test;
 import top.kaluna.modbusTcp.util.DateUtil;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author Yuery
@@ -10,16 +12,16 @@ public class LocalDateTimeTest {
     public static void main(String[] args) throws ParseException {
 
 
-        System.out.println("------getCurrYearFirst-------");
-        System.out.println(DateUtil.getCurrYearFirst());
-        System.out.println(DateUtil.getCurrYearFirst().getTime());
-        System.out.println("------getCurrYearLast-------");
-        System.out.println(DateUtil.getCurrYearLast());
-        System.out.println(DateUtil.getCurrYearLast().getTime());
-
-        System.out.println("------Last24HoursStart-------");
-        System.out.println(DateUtil.LastNHoursStart(24));
-        System.out.println(DateUtil.LastNHoursStart(24).getTime());
+//        System.out.println("------getCurrYearFirst-------");
+//        System.out.println(DateUtil.getCurrYearFirst());
+//        System.out.println(DateUtil.getCurrYearFirst().getTime());
+//        System.out.println("------getCurrYearLast-------");
+//        System.out.println(DateUtil.getCurrYearLast());
+//        System.out.println(DateUtil.getCurrYearLast().getTime());
+//
+//        System.out.println("------Last24HoursStart-------");
+//        System.out.println(DateUtil.LastNHoursStart(24));
+//        System.out.println(DateUtil.LastNHoursStart(24).getTime());
 
 //        String patterStr = "yyyy-MM-dd HH:mm:ss";
 //
@@ -31,5 +33,10 @@ public class LocalDateTimeTest {
 //        System.out.println("格式化器用的时区是：" + dateFormat.getTimeZone().getID());
 //        Date date = dateFormat.parse(dateStrParam);
 //        System.out.println(date);
+
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(sdf.format(now).toString());
+
     }
 }

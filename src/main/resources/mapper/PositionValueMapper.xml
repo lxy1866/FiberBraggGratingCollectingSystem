@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.kaluna.modbusTcp.mapper.PositionValueMapper">
+  <resultMap id="BaseResultMap" type="top.kaluna.modbusTcp.domain.PositionValue">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="a_x" jdbcType="DECIMAL" property="aX" />
+    <result column="a_y" jdbcType="DECIMAL" property="aY" />
+    <result column="a_z" jdbcType="DECIMAL" property="aZ" />
+    <result column="angle_x" jdbcType="DECIMAL" property="angleX" />
+    <result column="angle_y" jdbcType="DECIMAL" property="angleY" />
+    <result column="angle_z" jdbcType="DECIMAL" property="angleZ" />
+    <result column="w_x" jdbcType="DECIMAL" property="wX" />
+    <result column="w_y" jdbcType="DECIMAL" property="wY" />
+    <result column="w_z" jdbcType="DECIMAL" property="wZ" />
+    <result column="hexadecimal" jdbcType="VARCHAR" property="hexadecimal" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, a_x, a_y, a_z, angle_x, angle_y, angle_z, w_x, w_y, w_z, hexadecimal
+  </sql>
+  <select id="selectByExample" parameterType="top.kaluna.modbusTcp.domain.PositionValueExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from position_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from position_value
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from position_value
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="top.kaluna.modbusTcp.domain.PositionValueExample">
+    delete from position_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="top.kaluna.modbusTcp.domain.PositionValue">
+    insert into position_value (id, create_time, a_x, 
+      a_y, a_z, angle_x, angle_y, 
+      angle_z, w_x, w_y, w_z, 
+      hexadecimal)
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{aX,jdbcType=DECIMAL}, 
+      #{aY,jdbcType=DECIMAL}, #{aZ,jdbcType=DECIMAL}, #{angleX,jdbcType=DECIMAL}, #{angleY,jdbcType=DECIMAL}, 
+      #{angleZ,jdbcType=DECIMAL}, #{wX,jdbcType=DECIMAL}, #{wY,jdbcType=DECIMAL}, #{wZ,jdbcType=DECIMAL}, 
+      #{hexadecimal,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="top.kaluna.modbusTcp.domain.PositionValue">
+    insert into position_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="aX != null">
+        a_x,
+      </if>
+      <if test="aY != null">
+        a_y,
+      </if>
+      <if test="aZ != null">
+        a_z,
+      </if>
+      <if test="angleX != null">
+        angle_x,
+      </if>
+      <if test="angleY != null">
+        angle_y,
+      </if>
+      <if test="angleZ != null">
+        angle_z,
+      </if>
+      <if test="wX != null">
+        w_x,
+      </if>
+      <if test="wY != null">
+        w_y,
+      </if>
+      <if test="wZ != null">
+        w_z,
+      </if>
+      <if test="hexadecimal != null">
+        hexadecimal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aX != null">
+        #{aX,jdbcType=DECIMAL},
+      </if>
+      <if test="aY != null">
+        #{aY,jdbcType=DECIMAL},
+      </if>
+      <if test="aZ != null">
+        #{aZ,jdbcType=DECIMAL},
+      </if>
+      <if test="angleX != null">
+        #{angleX,jdbcType=DECIMAL},
+      </if>
+      <if test="angleY != null">
+        #{angleY,jdbcType=DECIMAL},
+      </if>
+      <if test="angleZ != null">
+        #{angleZ,jdbcType=DECIMAL},
+      </if>
+      <if test="wX != null">
+        #{wX,jdbcType=DECIMAL},
+      </if>
+      <if test="wY != null">
+        #{wY,jdbcType=DECIMAL},
+      </if>
+      <if test="wZ != null">
+        #{wZ,jdbcType=DECIMAL},
+      </if>
+      <if test="hexadecimal != null">
+        #{hexadecimal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="top.kaluna.modbusTcp.domain.PositionValueExample" resultType="java.lang.Long">
+    select count(*) from position_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update position_value
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aX != null">
+        a_x = #{record.aX,jdbcType=DECIMAL},
+      </if>
+      <if test="record.aY != null">
+        a_y = #{record.aY,jdbcType=DECIMAL},
+      </if>
+      <if test="record.aZ != null">
+        a_z = #{record.aZ,jdbcType=DECIMAL},
+      </if>
+      <if test="record.angleX != null">
+        angle_x = #{record.angleX,jdbcType=DECIMAL},
+      </if>
+      <if test="record.angleY != null">
+        angle_y = #{record.angleY,jdbcType=DECIMAL},
+      </if>
+      <if test="record.angleZ != null">
+        angle_z = #{record.angleZ,jdbcType=DECIMAL},
+      </if>
+      <if test="record.wX != null">
+        w_x = #{record.wX,jdbcType=DECIMAL},
+      </if>
+      <if test="record.wY != null">
+        w_y = #{record.wY,jdbcType=DECIMAL},
+      </if>
+      <if test="record.wZ != null">
+        w_z = #{record.wZ,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hexadecimal != null">
+        hexadecimal = #{record.hexadecimal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update position_value
+    set id = #{record.id,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      a_x = #{record.aX,jdbcType=DECIMAL},
+      a_y = #{record.aY,jdbcType=DECIMAL},
+      a_z = #{record.aZ,jdbcType=DECIMAL},
+      angle_x = #{record.angleX,jdbcType=DECIMAL},
+      angle_y = #{record.angleY,jdbcType=DECIMAL},
+      angle_z = #{record.angleZ,jdbcType=DECIMAL},
+      w_x = #{record.wX,jdbcType=DECIMAL},
+      w_y = #{record.wY,jdbcType=DECIMAL},
+      w_z = #{record.wZ,jdbcType=DECIMAL},
+      hexadecimal = #{record.hexadecimal,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="top.kaluna.modbusTcp.domain.PositionValue">
+    update position_value
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aX != null">
+        a_x = #{aX,jdbcType=DECIMAL},
+      </if>
+      <if test="aY != null">
+        a_y = #{aY,jdbcType=DECIMAL},
+      </if>
+      <if test="aZ != null">
+        a_z = #{aZ,jdbcType=DECIMAL},
+      </if>
+      <if test="angleX != null">
+        angle_x = #{angleX,jdbcType=DECIMAL},
+      </if>
+      <if test="angleY != null">
+        angle_y = #{angleY,jdbcType=DECIMAL},
+      </if>
+      <if test="angleZ != null">
+        angle_z = #{angleZ,jdbcType=DECIMAL},
+      </if>
+      <if test="wX != null">
+        w_x = #{wX,jdbcType=DECIMAL},
+      </if>
+      <if test="wY != null">
+        w_y = #{wY,jdbcType=DECIMAL},
+      </if>
+      <if test="wZ != null">
+        w_z = #{wZ,jdbcType=DECIMAL},
+      </if>
+      <if test="hexadecimal != null">
+        hexadecimal = #{hexadecimal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.kaluna.modbusTcp.domain.PositionValue">
+    update position_value
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      a_x = #{aX,jdbcType=DECIMAL},
+      a_y = #{aY,jdbcType=DECIMAL},
+      a_z = #{aZ,jdbcType=DECIMAL},
+      angle_x = #{angleX,jdbcType=DECIMAL},
+      angle_y = #{angleY,jdbcType=DECIMAL},
+      angle_z = #{angleZ,jdbcType=DECIMAL},
+      w_x = #{wX,jdbcType=DECIMAL},
+      w_y = #{wY,jdbcType=DECIMAL},
+      w_z = #{wZ,jdbcType=DECIMAL},
+      hexadecimal = #{hexadecimal,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="multipleInsert">
+    insert into position_value
+    (create_time, a_x, a_y, a_z, angle_x, angle_y, angle_z, w_x, w_y, w_z, hexadecimal)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.createTime},#{item.aX},#{item.aY},#{item.aZ},#{item.angleX},#{item.angleY},#{item.angleZ},#{item.wX},#{item.wY},#{item.wZ},#{item.hexadecimal})
+    </foreach>
+  </insert>
+  <select id="queryLast15" resultType="top.kaluna.modbusTcp.domain.PositionValue">
+    select * from position_value order by id desc limit 1,15
+  </select>
+</mapper>

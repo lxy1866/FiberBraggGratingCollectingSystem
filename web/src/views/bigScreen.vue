@@ -66,11 +66,11 @@ export default defineComponent({
     });
     onMounted(()=>{
       if(window.innerHeight != null){
-        height_top.value.height = window.innerHeight+'px';
+        height_top.value.height = window.innerHeight - 64 +'px';
       }
       window.onresize = () => {
         return (() => {
-          height_top.value.height = window.innerHeight+'px';
+          height_top.value.height = window.innerHeight - 64 +'px';
         })();
       };
 

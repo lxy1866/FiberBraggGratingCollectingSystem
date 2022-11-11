@@ -10,10 +10,9 @@ import axios from "axios";
 import dataV from '@jiaminghi/data-view';
 import Vant from 'vant';
 import 'vant/lib/index.css';
-axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 import '../static/reset.less'
 import {Tool} from "@/util/tool";
-
+axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 /**
  * axios拦截器
  */

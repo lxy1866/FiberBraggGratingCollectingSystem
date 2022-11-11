@@ -70,8 +70,18 @@ if(TP_value < -10) {
   boxPosition = [65, -120];
 }
 leftColor = Gradient[Gradient.length - 1].color;
+// var fullYear = new Date(new Date().setFullYear(2022, 8, 2));
+// var frontOneHourTimeStamp = new Date(fullYear.setHours(0, 0, 0, 0)).getTime();
+// var currentHourTimeStamp = new Date(fullYear.setHours(0, 59, 59, 0)).getTime();
+var frontOneHourTimeStamp = new Date(new Date().setHours(new Date().getHours()-1 , 0, 0, 0)).getTime();
+var currentHourTimeStamp = new Date(new Date().setHours(new Date().getHours()-1, 59, 59, 0)).getTime();
 function handleQueryTemperatureNow(){
-  return axios.get("/fbg/temperatureNow")
+  return axios.get("/txt/getLastHourAtTheLastSecondForTemperature", {
+    params:{
+      endTime: currentHourTimeStamp,
+      category: 2
+    }
+  })
 }
 
 export default defineComponent({
@@ -80,9 +90,10 @@ export default defineComponent({
   setup(){
     const state = reactive({
       option : {
+
         backgroundColor: 'transparent',
         title: {
-          text: '海缆实时温度值',
+          text: '海缆上一个小时最新温度值',
           show: true,
           textStyle:{
             color: '#ffffff',
@@ -293,8 +304,9 @@ export default defineComponent({
     })
     onMounted(async ()=>{
       const myChart = echarts.init(document.getElementById('realTemperature'));
-      const {data} = await handleQueryTemperatureNow();
-      let TP_value= data.content;
+      let data = await handleQueryTemperatureNow();
+      let TP_value= data.data.content;
+      //console.log(TP_value)
       const kd = [];
       const Gradient = [];
       let leftColor = '';
@@ -318,7 +330,7 @@ export default defineComponent({
       }
 //中间线的渐变色和文本内容
       if(TP_value > 20) {
-        TP_txt = '温度偏高';
+        TP_txt = '';
         Gradient.push({
           offset: 0,
           color: '#93FE94'
@@ -330,7 +342,7 @@ export default defineComponent({
           color: '#E01F28'
         })
       } else if(TP_value > -20) {
-        TP_txt = '温度正常';
+        TP_txt = '';
         Gradient.push({
           offset: 0,
           color: '#93FE94'
@@ -339,7 +351,7 @@ export default defineComponent({
           color: '#E4D225'
         })
       } else {
-        TP_txt = '温度偏低';
+        TP_txt = '';
         Gradient.push({
           offset: 1,
           color: '#93FE94'
@@ -360,7 +372,7 @@ export default defineComponent({
       leftColor = Gradient[Gradient.length - 1].color;
       state.option.series[0].data[0].value = showValue + 70
       state.option.series[0].data[0].label.normal.position = boxPosition
-      state.option.series[0].data[0].label.normal.formatter = '{back| ' + data.content + ' }{unit|°C}\n{downTxt|' + TP_txt + '}'
+      state.option.series[0].data[0].label.normal.formatter = '{back| ' + Math.round(data.data.content)+ ' }{unit|°C}\n{downTxt|' + TP_txt + '}'
       state.option.series[0].data[0].label.normal.rich.back.color = leftColor
       state.option.series[0].itemStyle.normal.color = new echarts.graphic.LinearGradient(0, 1, 0, 0, Gradient)
       state.option.series[6].data = kd

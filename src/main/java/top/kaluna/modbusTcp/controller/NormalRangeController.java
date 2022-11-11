@@ -81,4 +81,17 @@ public class NormalRangeController {
         }
         return resp;
     }
+    @GetMapping("/getAll")
+    public CommonResp<List<FbgValueInfo>> save(){
+        CommonResp<List<FbgValueInfo>> resp = new CommonResp<>();
+        final List<FbgValueInfo> list = fbgValueInfoService.getAll();
+        if(list.size() != 0){
+            resp.setSuccess(true);
+            resp.setContent(list);
+        }else {
+            resp.setSuccess(false);
+            resp.setContent(null);
+        }
+        return resp;
+    }
 }

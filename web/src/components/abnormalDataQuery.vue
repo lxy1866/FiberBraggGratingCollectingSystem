@@ -56,7 +56,6 @@ const handleQuery = (params:any)=>{
       })
       data.value = resultList;
     }
-
   })
 };
 export default defineComponent({

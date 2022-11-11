@@ -1,11 +1,4 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform" xmlns:v-model="">
-  <n-card
-      title="📖 如果想要新增传感器，请到点击菜单栏上的新增传感器"
-      embedded
-      :bordered="false"
-      style="margin-bottom: 20px"
-  >
-  </n-card>
   <span>
       <a-button type="primary" @click="showModalCodeVisible" ghost style="display: flex; margin-bottom: 20px">
         验证授权码
@@ -100,34 +93,46 @@
       @positive-click="handleAddModalOk"
       @negative-click="onNegativeClick"
   >
+    传感器名称
+    <n-input
+        v-model:value="fbgRecord.propertyName"
+        placeholder="传感器名称"
+        :maxlength="20"
+    />
+    <br/><br/>
+    量程的最小值
     <n-input
         v-model:value="fbgRecord.min"
         placeholder="量程的最小值"
-        :maxlength="8"
+        :maxlength="20"
     />
     <br/><br/>
+    量程的最大值
     <n-input
         v-model:value="fbgRecord.max"
         placeholder="量程的最大值"
-        :maxlength="8"
+        :maxlength="20"
     />
     <br/><br/>
+    初始位置
     <n-input
         v-model:value="fbgRecord.distance"
         placeholder="初始位置"
-        :maxlength="8"
+        :maxlength="6"
     />
     <br/><br/>
+    通道号
     <n-input
         v-model:value="fbgRecord.channel"
         placeholder="通道号"
-        :maxlength="8"
+        :maxlength="20"
     />
     <br/><br/>
+    阵列序号
     <n-input
         v-model:value="fbgRecord.arrayNum"
         placeholder="阵列序号"
-        :maxlength="8"
+        :maxlength="20"
     />
   </n-modal>
   <n-modal
@@ -238,13 +243,14 @@ const handleDelete = (record: any) => {
     });
 };
 const modify = (record: any)=>{
+  console.log(record)
   addModalVisible.value = true
   fbgRecord.value = Tool.copy(record);
-  fbgRecord.value.min = null;
-  fbgRecord.value.max = null;
-  fbgRecord.value.distance = null;
-  fbgRecord.value.channel = null;
-  fbgRecord.value.arrayNum = null;
+  // fbgRecord.value.min = null;
+  // fbgRecord.value.max = null;
+  // fbgRecord.value.distance = null;
+  // fbgRecord.value.channel = null;
+  // fbgRecord.value.arrayNum = null;
 }
 const onPositiveClickCode = ()=> {
   //验证授权码是否正确
@@ -299,7 +305,6 @@ const handleAddModalOk = () => {
 };
 export default defineComponent({
   setup () {
-
     onMounted(()=>{
       handleQueryVibration();
       handleQueryStrain();

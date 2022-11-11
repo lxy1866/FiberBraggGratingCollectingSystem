@@ -18,6 +18,8 @@ import top.kaluna.modbusTcp.util.DateUtil;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -30,7 +32,6 @@ import static java.util.stream.Collectors.groupingBy;
 public class FbgValueService {
     @Resource
     private FbgValueMapper fbgValueMapper;
-
     private static final Logger LOG = LoggerFactory.getLogger(FbgValueService.class);
     public PageResp<String> list(DateRangeReq req) {
         Long startTime;
@@ -65,7 +66,7 @@ public class FbgValueService {
             String astr = JSONObject.toJSONString(map,SerializerFeature.MapSortField);
             respsList.add(astr);
         });
-        PageHelper.startPage(req.getPage(), req.getSize());
+        PageHelper.startPage(req.getPage(), req.getPageSize());
         PageInfo<FbgValueQueryResp> pageInfo = new PageInfo<>();
         LOG.info("总行数：{}", pageInfo.getTotal());
         LOG.info("总页数：{}",pageInfo.getPages());
@@ -108,7 +109,7 @@ public class FbgValueService {
                 fbgValueQueryResp.setMap(map);
                 respsList.add(string);
             });
-            PageHelper.startPage(req.getPage(), req.getSize());
+            PageHelper.startPage(req.getPage(), req.getPageSize());
             PageInfo<FbgValueQueryResp> pageInfo = new PageInfo<>();
             LOG.info("总行数：{}", pageInfo.getTotal());
             LOG.info("总页数：{}",pageInfo.getPages());
@@ -163,7 +164,7 @@ public class FbgValueService {
                 minAndMaxFromLast24Hours.add(fbgValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStart(i).getTime(),DateUtil.LastNHoursStart(i - 1).getTime()));
             }
         }
-        System.out.println(minAndMaxFromLast24Hours.toString());
+        //System.out.println(minAndMaxFromLast24Hours.toString());
         return minAndMaxFromLast24Hours;
     }
 }

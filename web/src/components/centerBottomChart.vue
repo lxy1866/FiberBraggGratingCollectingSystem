@@ -1,15 +1,12 @@
 <template>
-  <div id="lineChartTemperature" class="lineChartTemperature"></div>
+  <div id="centerBottom" class="centerBottom"></div>
 </template>
 
-<script>
+<script lang="js">
 import {defineComponent, onMounted, toRefs, reactive} from "vue";
 import * as echarts from "echarts";
 import axios from "axios";
 
-function handleQuery(){
-  return axios.get("/fbg/minAndMaxFromLast24Hours")
-}
 export default defineComponent({
   name: 'line-chart-temperature',
   setup() {
@@ -117,18 +114,25 @@ export default defineComponent({
         ]
       }
     })
+    function handleQuery(){
+      return axios.get("/txt/minAndMaxFromLast24Hours")
+    }
     onMounted(async ()=>{
-      // data.content.forEach((item) => {
-      //     maxArray.push(item.max)
-      // })
-      // data.content.forEach((item)=>{
-      //    minArray.push(item.min)
-      // })
-      // state.option.series[0].data = maxArray
-      // state.option.series[1].data = minArray
-      const chart = echarts.init(document.getElementById('lineChartTemperature'));
-      window.onresize = chart.resize;
-      chart.setOption(state.option);
+      let maxArray = []
+      let minArray = []
+      let data
+      data = await handleQuery()
+      data = data.data.content
+      //console.log(data)
+      for (let i = 0; i < data.length; i++) {
+        maxArray.push(data[i].max)
+        minArray.push(data[i].min)
+      }
+      state.option.series[0].data = maxArray
+      state.option.series[1].data = minArray
+      const chartDom = document.getElementById('centerBottom');
+      let myChart = echarts.init(chartDom);
+      state.option && myChart.setOption(state.option)
     })
     return{
       ...toRefs(state)
@@ -138,7 +142,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.lineChartTemperature{
+.centerBottom{
   display: flex;
 }
 </style>
