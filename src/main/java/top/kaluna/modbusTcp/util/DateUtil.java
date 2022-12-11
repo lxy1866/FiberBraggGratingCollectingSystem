@@ -1,6 +1,9 @@
 package top.kaluna.modbusTcp.util;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -56,6 +59,19 @@ public class DateUtil {
     public static Date LastNHoursStart(int past){
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
+        c.set(Calendar.HOUR_OF_DAY,c.get(Calendar.HOUR_OF_DAY) - past);
+        return c.getTime();
+    }
+    public static Date LastNHoursStartAt00mm00ss00sss(int past){
+        Calendar c = Calendar.getInstance();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime1 = localDateTime.withSecond(0);
+        LocalDateTime localDateTime2 = localDateTime1.withMinute(0);
+        LocalDateTime localDateTime3 = localDateTime2.withNano(0);
+        Instant instant = Instant.ofEpochSecond(localDateTime3.toEpochSecond(ZoneOffset.ofHours(8)));
+        // 获得 Date
+        Date date = Date.from(instant);
+        c.setTime(date);
         c.set(Calendar.HOUR_OF_DAY,c.get(Calendar.HOUR_OF_DAY) - past);
         return c.getTime();
     }

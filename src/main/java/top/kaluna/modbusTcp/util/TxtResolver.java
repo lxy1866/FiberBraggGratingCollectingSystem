@@ -292,13 +292,13 @@ public class TxtResolver {
         }
         if(fbgValueInfo.getCategory() == 2){
             if(fbgValueInfo.getChannel() == 1){
-                value = random.nextDouble()*2 + 20;
+                value = random.nextDouble()*2 + 8;
             }
             if(fbgValueInfo.getChannel() == 2){
-                value = random.nextDouble()*2 + 20;
+                value = random.nextDouble()*2 + 8;
             }
             if(fbgValueInfo.getChannel() == 6){
-                value = random.nextDouble()*2 + 20;
+                value = random.nextDouble()*2 + 8;
             }
         }
         if(fbgValueInfo.getCategory() == 3){

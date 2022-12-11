@@ -55,17 +55,17 @@ public class PhysicalValueJob {
      * 从0秒开始,每30分钟执行一次
      * 从physical_value表查询前半个小时tag！=0的记录到breakpoint_record记录表中
      */
-    @Transactional(rollbackFor = Exception.class)
-    @Scheduled(cron = "0 0/30 * * * ?" )
-    //@Scheduled(cron = "0/5 * * * * ? ")
-    public void cron(){
-        //增加日志流水号
-        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-        LOG.info("更新断点记录表开始");
-        long start = System.currentTimeMillis();
-        breakpointRecordService.insertBreakpointInfoByScanFbgValue();
-        LOG.info("更新断点记录表结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-    }
+//    @Transactional(rollbackFor = Exception.class)
+//    @Scheduled(cron = "0 0/30 * * * ?" )
+//    //@Scheduled(cron = "0/5 * * * * ? ")
+//    public void cron(){
+//        //增加日志流水号
+//        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+//        LOG.info("更新断点记录表开始");
+//        long start = System.currentTimeMillis();
+//        breakpointRecordService.insertBreakpointInfoByScanFbgValue();
+//        LOG.info("更新断点记录表结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+//    }
 //    @Transactional(rollbackFor = Exception.class)
 //    @Scheduled(cron = "0/10 * * * * ? " )
 //    public void cronSendFbgValues(){
@@ -126,29 +126,29 @@ public class PhysicalValueJob {
 //        //将这个小时的温度最大值和最小值求出来存储到min_max_value_for_temperature中
 //        LOG.info("定时解析position txt文件结束，耗时：{}毫秒",System.currentTimeMillis() - start);
 //    }
-    @Scheduled(cron = "0 59 * * * ?" )
-    public void cronGenerateFakeFbgValue() throws ParseException {
-        //增加日志流水号
-        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-        LOG.info("每小时的59分生成所有传感器的假数据开始");
-        long start = System.currentTimeMillis();
-        TxtResolver txtResolver = new TxtResolver();
-        txtResolver.generateFakeFbgValue(fbgValueInfoService, txtValueService);
-        LOG.info("每小时的59分生成所有传感器的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中开始");
-        //暂时不这样计算了 最小值和最大值都是固定的
-        //txtResolver.computeAndInsertTheMaxMinTemperatureInThisHour(txtValueService);
-        txtResolver.generateFakeTemperatureValue(txtValueService);
-        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-    }
-    @Scheduled(cron = "0 59 * * * ?" )
-    public void cronGenerateFakeMemsValue() throws ParseException {
-        //增加日志流水号
-        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-        LOG.info("每小时的59分生成所有传感器的假数据开始");
-        long start = System.currentTimeMillis();
-        TxtResolver txtResolver = new TxtResolver();
-        txtResolver.generateFakeMemsValue(positionValueService);
-        LOG.info("每小时的59分生成所有MEMS的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-    }
+//    @Scheduled(cron = "0 59 * * * ?" )
+//    public void cronGenerateFakeFbgValue() throws ParseException {
+//        //增加日志流水号
+//        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+//        LOG.info("每小时的59分生成所有传感器的假数据开始");
+//        long start = System.currentTimeMillis();
+//        TxtResolver txtResolver = new TxtResolver();
+//        txtResolver.generateFakeFbgValue(fbgValueInfoService, txtValueService);
+//        LOG.info("每小时的59分生成所有传感器的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+//        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中开始");
+//        //暂时不这样计算了 最小值和最大值都是固定的
+//        //txtResolver.computeAndInsertTheMaxMinTemperatureInThisHour(txtValueService);
+//        txtResolver.generateFakeTemperatureValue(txtValueService);
+//        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+//    }
+//    @Scheduled(cron = "0 59 * * * ?" )
+//    public void cronGenerateFakeMemsValue() throws ParseException {
+//        //增加日志流水号
+//        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+//        LOG.info("每小时的59分生成所有传感器的假数据开始");
+//        long start = System.currentTimeMillis();
+//        TxtResolver txtResolver = new TxtResolver();
+//        txtResolver.generateFakeMemsValue(positionValueService);
+//        LOG.info("每小时的59分生成所有MEMS的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+//    }
 }

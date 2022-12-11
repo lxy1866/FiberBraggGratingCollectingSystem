@@ -54,7 +54,7 @@
 //    private WsService wsService;
 //    @Autowired
 //    private FbgValueMapper fbgValueMapper;
-//    @Autowired
+//    @Autowired·
 //    private FbgValueInfoMapper fbgValueInfoMapper;
 //    private final Logger logger = LoggerFactory.getLogger(getClass());
 //

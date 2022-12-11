@@ -198,7 +198,7 @@ public class TxtValueService {
     public List<MinMaxValueForTemperature> minAndMaxFromLast24Hours() {
         List<MinMaxValueForTemperature> minAndMaxFromLast24Hours = new ArrayList<>();
         for (int i = 1; i <= 24;i++) {
-            minAndMaxFromLast24Hours.add(txtValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStart(i)));
+            minAndMaxFromLast24Hours.add(txtValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStartAt00mm00ss00sss(i)));
         }
         //System.out.println(minAndMaxFromLast24Hours.toString());
         return minAndMaxFromLast24Hours;
