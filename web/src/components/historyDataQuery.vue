@@ -42,7 +42,7 @@ const handleTableColumn = function (){
     for(let i = 0; i < res.data.content.length; i++){
       columns.value.push({
         title: res.data.content[i].propertyName,
-        key: res.data.content[i].propertyName
+        key: i+1
       })
     }
   })
@@ -80,7 +80,7 @@ export default defineComponent({
     const handleQueryList = function (page, pageSize, startTime, endTime) {
       console.log(page, pageSize, startTime, endTime)
       // return new Promise((resolve) => {
-      axios.get("/txt/list", {
+      axios.get("/fbg/list", {
         params:{
           page: page,
           pageSize: pageSize,
@@ -90,11 +90,10 @@ export default defineComponent({
       }).then(function (res) {
         console.log("history", res.data.content.list);
         for(let i = 0; i < res.data.content.list.length; i++){
-          res.data.content.list[i].createTime = new Date(dateToGMT(res.data.content.list[i].createTime)).toLocaleString('zh');
+          res.data.content.list[i].createTime = res.data.content.list[i].createTime.toLocaleString('zh');
           //res.data.content.list[i].createTime = new Date(res.data.content.list[i].createTime.replace("CST",'GMT+0800')).toLocaleString()
         }
         dataRef.value = res.data.content.list
-
         paginationReactive.pageCount = res.data.content.pageCount
         paginationReactive.itemCount = res.data.content.total
       })

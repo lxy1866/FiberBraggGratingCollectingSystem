@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import top.kaluna.modbusTcp.domain.*;
+import top.kaluna.modbusTcp.mapper.FbgValueInfoMapper;
 import top.kaluna.modbusTcp.mapper.FbgValueMapper;
 import top.kaluna.modbusTcp.mapper.MinMaxValueForTemperatureMapper;
 import top.kaluna.modbusTcp.req.DateRangeReq;
@@ -33,6 +34,8 @@ import static java.util.stream.Collectors.groupingBy;
 public class FbgValueService {
     @Resource
     private FbgValueMapper fbgValueMapper;
+    @Resource
+    private FbgValueInfoMapper fbgValueInfoMapper;
     @Resource
     private MinMaxValueForTemperatureMapper minMaxValueForTemperatureMapper;
     private static final Logger LOG = LoggerFactory.getLogger(FbgValueService.class);
@@ -80,6 +83,51 @@ public class FbgValueService {
         return pageResp;
     }
 
+    public PageResp<Map<String, String>> list2(DateRangeReq req) throws ParseException {
+        Long startTime;
+        Long endTime;
+        FbgValueExample txtValueExample = new FbgValueExample();
+        FbgValueExample.Criteria criteria = txtValueExample.createCriteria();
+
+        FbgValueInfoExample fbgValueInfoExample = new FbgValueInfoExample();
+        startTime = req.getStartTime();
+        endTime =  req.getEndTime();
+
+        if(startTime == null || endTime == null){
+            return null;
+        }
+        SimpleDateFormat format =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" ,Locale.CHINA);
+        format.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        criteria.andCreateTimeBetween(format.parse(format.format(startTime)).getTime(), format.parse(format.format(endTime)).getTime());
+        //分页前先算好总条数
+        final long totalProperty = fbgValueInfoMapper.countByExample(fbgValueInfoExample);
+        final long total = fbgValueMapper.countByExample(txtValueExample) / totalProperty;
+        PageHelper.startPage(req.getPage(), (int) (req.getPageSize() * totalProperty));
+        //PageInfo<TxtValue> pageInfo = new PageInfo<>();
+        //查询到指定时间范围的数据
+        final List<FbgValue> txtValues = fbgValueMapper.selectByExample(txtValueExample);
+        //分组
+        final Collection<List<FbgValue>> collects = txtValues.stream().collect(groupingBy(FbgValue::getCreateTime)).values();
+        //分成很多组，每组有多条数据
+        List<Map<String, String>> respList = new ArrayList<>();
+
+        collects.forEach((item)->{
+            //item是有多条数据组成
+            Map<String, String> map = new HashMap<>();
+            for (int i = 1; i <= item.size(); i++) {
+                map.put(item.get(i-1).getPhysicalValueInfoId().toString(), item.get(i-1).getValue().toString());
+            }
+            map.put("createTime", format.format(new Date(item.get(0).getCreateTime())));
+            respList.add(map);
+        });
+        respList.sort(Comparator.comparing(obj->
+                obj.get("createTime")));
+        PageResp<Map<String, String>> pageResp = new PageResp<>();
+        pageResp.setTotal(total);
+        pageResp.setList(respList);
+        pageResp.setPageCount(req.getPageSize());
+        return pageResp;
+    }
     //拼接异常信息 将时间和异常信息以JsonString的方式返回
     public PageResp<String> abnormalList(DateRangeReq req) {
         Long startTime;

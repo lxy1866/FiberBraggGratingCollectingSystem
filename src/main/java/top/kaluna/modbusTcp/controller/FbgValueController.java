@@ -10,7 +10,9 @@ import top.kaluna.modbusTcp.service.FbgValueService;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Yuery
@@ -24,9 +26,9 @@ public class FbgValueController {
 
     @GetMapping("/list")
     @ResponseBody
-    public CommonResp<PageResp<String>> list(@Valid DateRangeReq req){
-        CommonResp<PageResp<String>> resp = new CommonResp<>();
-        PageResp<String> list = fbgValueService.list(req);
+    public CommonResp<PageResp<Map<String, String>>> list(@Valid DateRangeReq req) throws ParseException {
+        CommonResp<PageResp<Map<String, String>>> resp = new CommonResp<>();
+        PageResp<Map<String, String>> list = fbgValueService.list2(req);
         resp.setContent(list);
         return resp;
     }
@@ -49,17 +51,17 @@ public class FbgValueController {
         resp.setContent(temperatureNow);
         return resp;
     }
-    /**
-     * 查询过去24小时的温度最大最小值
-     * 传入时间参数
-     * 要得到每个小时的最小值以及最大值
-     */
-    @GetMapping("/minAndMaxFromLast24Hours")
-    public CommonResp<List<LastNHoursMinAndMaxResp>> minAndMaxFromLast24Hours(){
-        CommonResp<List<LastNHoursMinAndMaxResp>> resp = new CommonResp<>();
-        List<LastNHoursMinAndMaxResp> lists = fbgValueService.minAndMaxFromLast24Hours();
-        resp.setContent(lists);
-        return resp;
-    }
+//    /**
+//     * 查询过去24小时的温度最大最小值
+//     * 传入时间参数
+//     * 要得到每个小时的最小值以及最大值
+//     */
+//    @GetMapping("/minAndMaxFromLast24Hours")
+//    public CommonResp<List<LastNHoursMinAndMaxResp>> minAndMaxFromLast24Hours(){
+//        CommonResp<List<LastNHoursMinAndMaxResp>> resp = new CommonResp<>();
+//        List<LastNHoursMinAndMaxResp> lists = fbgValueService.minAndMaxFromLast24Hours();
+//        resp.setContent(lists);
+//        return resp;
+//    }
 
 }
