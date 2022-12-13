@@ -225,8 +225,8 @@
       channel = #{channel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectForAbnormal" parameterType="Long" resultType="top.kaluna.modbusTcp.domain.FbgValue">
-    select * from fbg_value a left join fbg_value_info b
+  <select id="selectForAbnormal"  resultType="top.kaluna.modbusTcp.domain.FbgValue">
+    select a.physical_value_info_id, a.value, a.array_num, a.create_time, a.channel from fbg_value a left join fbg_value_info b
     on a.physical_value_info_id = b.id
     where a.value not between b.min and b.max
     and a.create_time between #{startTime} and #{endTime}
@@ -234,10 +234,10 @@
   </select>
   <insert id="multipleInsert">
     insert into fbg_value
-    (physical_value_info_id, value, tag, create_time)
+    (physical_value_info_id, value, array_num, create_time,channel)
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.physicalValueInfoId},#{item.value},#{item.tag},#{item.createTime})
+      (#{item.physicalValueInfoId},#{item.value},#{item.arrayNum},#{item.createTime},#{item.channel})
     </foreach>
   </insert>
   <select id="temperatureNow" resultType="java.math.BigDecimal">
@@ -245,16 +245,16 @@
     on a.physical_value_info_id = b.id
     where b.category = 2 order by a.create_time desc limit 1;
   </select>
-  <select id="minAndMaxFrom24Hours" resultType="top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp">
-    select min(value) min, max(value) max from fbg_value a left join fbg_value_info b
-    on a.physical_value_info_id = b.id
-    where b.category = 2
-    and a.create_time between #{lastNHoursStart} and #{lastNHoursEnd}
-  </select>
-  <select id="minAndMaxFrom24Hours2" resultType="top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp">
-    select min(value) min, max(value) max from txt_value a left join fbg_value_info b
-    on a.property_name = b.property_name
-    where b.category = 2
-      and a.create_time between #{lastNHoursStart} and #{lastNHoursEnd}
-  </select>
+<!--  <select id="minAndMaxFrom24Hours" resultType="top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp">-->
+<!--    select min(value) min, max(value) max from fbg_value a left join fbg_value_info b-->
+<!--    on a.physical_value_info_id = b.id-->
+<!--    where b.category = 2-->
+<!--    and a.create_time between #{lastNHoursStart} and #{lastNHoursEnd}-->
+<!--  </select>-->
+<!--  <select id="minAndMaxFrom24Hours2" resultType="top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp">-->
+<!--    select min(value) min, max(value) max from fbg_value a left join fbg_value_info b-->
+<!--    on a.physical_value_info_id = b.id-->
+<!--    where b.category = 2-->
+<!--      and a.create_time between #{lastNHoursStart} and #{lastNHoursEnd}-->
+<!--  </select>-->
 </mapper>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import top.kaluna.modbusTcp.domain.*;
 import top.kaluna.modbusTcp.mapper.FbgValueMapper;
+import top.kaluna.modbusTcp.mapper.MinMaxValueForTemperatureMapper;
 import top.kaluna.modbusTcp.req.DateRangeReq;
 import top.kaluna.modbusTcp.resp.FbgValueQueryResp;
 import top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp;
@@ -18,8 +19,8 @@ import top.kaluna.modbusTcp.util.DateUtil;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
 import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -32,6 +33,8 @@ import static java.util.stream.Collectors.groupingBy;
 public class FbgValueService {
     @Resource
     private FbgValueMapper fbgValueMapper;
+    @Resource
+    private MinMaxValueForTemperatureMapper minMaxValueForTemperatureMapper;
     private static final Logger LOG = LoggerFactory.getLogger(FbgValueService.class);
     public PageResp<String> list(DateRangeReq req) {
         Long startTime;
@@ -155,16 +158,52 @@ public class FbgValueService {
      * 要得到每个小时的最小值以及最大值
      * @return
      */
-    public List<LastNHoursMinAndMaxResp> minAndMaxFromLast24Hours() {
-        List<LastNHoursMinAndMaxResp> minAndMaxFromLast24Hours = new ArrayList<>();
-        for (int i = 1; i <= 24;i++) {
-            if (i == 1) {
-                minAndMaxFromLast24Hours.add(fbgValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStart(i).getTime(), DateUtil.getNowTime().getTime()));
-            }else{
-                minAndMaxFromLast24Hours.add(fbgValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStart(i).getTime(),DateUtil.LastNHoursStart(i - 1).getTime()));
-            }
-        }
-        //System.out.println(minAndMaxFromLast24Hours.toString());
-        return minAndMaxFromLast24Hours;
+//    public List<LastNHoursMinAndMaxResp> minAndMaxFromLast24Hours() {
+//        List<LastNHoursMinAndMaxResp> minAndMaxFromLast24Hours = new ArrayList<>();
+//        for (int i = 1; i <= 24;i++) {
+//            if (i == 1) {
+//                minAndMaxFromLast24Hours.add(fbgValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStart(i).getTime(), DateUtil.getNowTime().getTime()));
+//            }else{
+//                minAndMaxFromLast24Hours.add(fbgValueMapper.minAndMaxFrom24Hours(DateUtil.LastNHoursStart(i).getTime(),DateUtil.LastNHoursStart(i - 1).getTime()));
+//            }
+//        }
+//        //System.out.println(minAndMaxFromLast24Hours.toString());
+//        return minAndMaxFromLast24Hours;
+//    }
+    public MinMaxValueForTemperature computeAndInsertTheMaxMinTemperatureInThisHour() throws ParseException {
+        MinMaxValueForTemperature minMaxValueForTemperature = computeMinAndMax();
+        insertToMinMaxValueForTemperature(minMaxValueForTemperature);
+        return minMaxValueForTemperature;
+    }
+    public void insertToMinMaxValueForTemperature(MinMaxValueForTemperature minMaxValueForTemperature) {
+        minMaxValueForTemperatureMapper.insert(minMaxValueForTemperature);
+    }
+    public MinMaxValueForTemperature computeMinAndMax() throws ParseException {
+        Date now = new Date();
+        SimpleDateFormat hourSdf = new SimpleDateFormat("yyyy-MM-dd HH");
+        Date currentHourStart = hourSdf.parse(hourSdf.format(now));
+        Date startTime = DateUtil.LastNHoursStartAt00mm00ss00sss(1);
+        long time = startTime.getTime();
+        FbgValueExample fbgValueExample = new FbgValueExample();
+        FbgValueExample.Criteria criteria = fbgValueExample.createCriteria();
+        Date date = new Date(time);
+        List<Integer> integers = new ArrayList<>();
+        integers.add(1);
+        integers.add(2);
+        integers.add(6);
+        criteria.andCreateTimeGreaterThan(date.getTime()).andChannelIn(integers);
+        List<FbgValue> fbgValues = fbgValueMapper.selectByExample(fbgValueExample);
+
+        FbgValue fbgValue1 = fbgValues.stream().max(
+                Comparator.comparing(FbgValue::getValue)
+        ).get();
+        FbgValue fbgValue2 = fbgValues.stream().min(
+                Comparator.comparing(FbgValue::getValue)
+        ).get();
+        MinMaxValueForTemperature e = new MinMaxValueForTemperature();
+        e.setCreateTime(currentHourStart);
+        e.setMax(fbgValue1.getValue());
+        e.setMin(fbgValue2.getValue());
+        return e;
     }
 }

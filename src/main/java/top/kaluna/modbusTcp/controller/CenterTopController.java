@@ -19,9 +19,9 @@ import javax.annotation.Resource;
 public class CenterTopController {
     @Resource
     private FbgValueInfoService normalRangeSaveService;
-    @Autowired
+    @Resource
     private BreakpointRecordService breakpointRecordService;
-    @Autowired
+    @Resource
     private FbgValueService fbgValueService;
     @GetMapping("/calculateOnLine")
     @ResponseBody
@@ -29,16 +29,17 @@ public class CenterTopController {
         CommonResp<CenterTopResp> resp = new CommonResp<>();
         CenterTopResp centerTopResp = new CenterTopResp();
         int total = normalRangeSaveService.getTotal();
-        int onLine = breakpointRecordService.calculateOnLine();
-        int abnormalTimes = fbgValueService.abnormalListTimes();
-        int thisYearAbnormalTimes = fbgValueService.thisYearAbnormalListTimes();
+        int onLine = normalRangeSaveService.getTotal();
+        //int onLine = breakpointRecordService.calculateOnLine();
+        //int abnormalTimes = fbgValueService.abnormalListTimes();
+        //int thisYearAbnormalTimes = fbgValueService.thisYearAbnormalListTimes();
         int onlineRate = onLine * 100 / total ;
 
         centerTopResp.setTotal(total);
         centerTopResp.setOnLine(onLine);
-        centerTopResp.setAbnormalTimes(abnormalTimes);
+        //centerTopResp.setAbnormalTimes(abnormalTimes);
         centerTopResp.setOnlineRate(onlineRate);
-        centerTopResp.setThisYearAbnormalTimes(thisYearAbnormalTimes);
+        //centerTopResp.setThisYearAbnormalTimes(thisYearAbnormalTimes);
         resp.setContent(centerTopResp);
         return resp;
     }

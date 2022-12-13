@@ -62,15 +62,13 @@ public class WebSocketServer {
     /**
      * 群发消息
      */
-    public void sendInfo(Object message) {
+    public void sendInfo(String message) {
         for (String token : map.keySet()) {
             Session session = map.get(token);
             try {
-                session.getBasicRemote().sendObject(message);
+                session.getBasicRemote().sendText( message);
             } catch (IOException e) {
                 LOG.error("推送消息失败：{}，内容：{}", token, message);
-            } catch (EncodeException e) {
-                throw new RuntimeException(e);
             }
             //LOG.info("推送消息：{}，内容：{}", token, message);
         }

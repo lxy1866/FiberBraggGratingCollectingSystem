@@ -23,7 +23,7 @@ public class FbgValue {
         this.createTime = createTime;
         this.channel = channel;
     }
-    public FbgValue( Long physicalValueInfoId, BigDecimal value, Integer arrayNum, Long createTime,Integer channel) {
+    public FbgValue(Long physicalValueInfoId, BigDecimal value, Integer arrayNum, Long createTime,Integer channel) {
 
         this.physicalValueInfoId = physicalValueInfoId;
         this.value = value;

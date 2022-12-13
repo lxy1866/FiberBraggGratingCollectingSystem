@@ -2,10 +2,12 @@ package top.kaluna.modbusTcp.mapper;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import top.kaluna.modbusTcp.domain.FbgValue;
 import top.kaluna.modbusTcp.domain.FbgValueExample;
+import top.kaluna.modbusTcp.domain.MinMaxValueForTemperature;
 import top.kaluna.modbusTcp.resp.LastNHoursMinAndMaxResp;
 
 public interface FbgValueMapper {
@@ -36,7 +38,10 @@ public interface FbgValueMapper {
     int multipleInsert(List<FbgValue> fbgValues);
 
     BigDecimal temperatureNow();
-
-    LastNHoursMinAndMaxResp minAndMaxFrom24Hours(long lastNHoursStart, long lastNHoursEnd);
-    LastNHoursMinAndMaxResp minAndMaxFrom24Hours2(LocalDateTime lastNHoursStart, LocalDateTime lastNHoursEnd);
+//
+//    LastNHoursMinAndMaxResp minAndMaxFrom24Hours(long lastNHoursStart, long lastNHoursEnd);
+//
+//    LastNHoursMinAndMaxResp minAndMaxFrom24Hours2(LocalDateTime lastNHoursStart, LocalDateTime lastNHoursEnd);
+//
+//    //MinMaxValueForTemperature minAndMaxFrom24Hours(Date createTime);
 }

@@ -12,6 +12,7 @@ import top.kaluna.modbusTcp.config.TxtFileConfig;
 import top.kaluna.modbusTcp.config.TxtPositionFileConfig;
 import top.kaluna.modbusTcp.domain.FbgValue;
 import top.kaluna.modbusTcp.domain.FbgValueInfo;
+import top.kaluna.modbusTcp.mapper.FbgValueMapper;
 import top.kaluna.modbusTcp.service.*;
 import top.kaluna.modbusTcp.util.DateUtil;
 import top.kaluna.modbusTcp.util.RandomUtil;
@@ -21,7 +22,9 @@ import top.kaluna.modbusTcp.util.TxtResolver;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Yuery
@@ -35,6 +38,8 @@ public class PhysicalValueJob {
     @Resource
     private WsService wsService;
     @Resource
+    private FbgValueMapper fbgValueMapper;
+    @Resource
     private BreakpointRecordService breakpointRecordService;
 
     @Resource
@@ -46,6 +51,8 @@ public class PhysicalValueJob {
     private FbgValueInfoService fbgValueInfoService;
     @Resource
     private TxtValueService txtValueService;
+    @Resource
+    private FbgValueService fbgValueService;
     @Resource
     private PositionValueService positionValueService;
 
@@ -66,23 +73,37 @@ public class PhysicalValueJob {
 //        breakpointRecordService.insertBreakpointInfoByScanFbgValue();
 //        LOG.info("更新断点记录表结束，耗时：{}毫秒",System.currentTimeMillis() - start);
 //    }
-//    @Transactional(rollbackFor = Exception.class)
-//    @Scheduled(cron = "0/10 * * * * ? " )
-//    public void cronSendFbgValues(){
-//        //创建五个FbgValue 初始化val值
-//        List<FbgValue> vibrationfbgValues = new ArrayList<>();
-//        List<FbgValue> strainfbgValues = new ArrayList<>();
-//        for(int i = 0; i < 5; i++){
-//            // id physicalValueId 物理值 断裂位置 创建时间 通道号
-//            vibrationfbgValues.add(new FbgValue(i, new Long(Long.toString(i+22)), RandomUtil.From100TO1000(),  0, DateUtil.getNowTime().getTime(),i));
-//        }
-//        for(int i = 0; i < 20; i++){
-//            strainfbgValues.add(new FbgValue(i, new Long(Long.toString(i+2)), RandomUtil.From100TO1000(), 0, DateUtil.getNowTime().getTime(),i));
-//        }
-//        List<List<FbgValue>> list  = new ArrayList<>();
-//        list.add(vibrationfbgValues);
-//        list.add(strainfbgValues);
-//        //System.out.println(list.toString());
+    @Transactional(rollbackFor = Exception.class)
+    @Scheduled(cron = "0/10 * * * * ? " )
+    public void cronSendFbgValues(){
+        long datetime = new Date().getTime();
+        List<FbgValue> temperatureFbgValues = new ArrayList<>();
+        List<FbgValue> vibrationFbgValues = new ArrayList<>();
+        List<FbgValue> strainFbgValues = new ArrayList<>();
+        temperatureFbgValues.add(new FbgValue((long) 1, RandomUtil.From1TO10(),  1, datetime,1));
+        temperatureFbgValues.add(new FbgValue((long) 2, RandomUtil.From1TO10(),  1, datetime,2));
+        temperatureFbgValues.add(new FbgValue((long) 3, RandomUtil.From1TO10(),  1, datetime,6));
+
+        // id physicalValueId 物理值 断裂位置 创建时间 通道号
+        vibrationFbgValues.add(new FbgValue((long) 4, RandomUtil.From100TO1000(),  1, datetime,4));
+
+        for(int i = 0; i < 6; i++){
+            strainFbgValues.add(new FbgValue((long) i+5, RandomUtil.From100TO1000(), i+1, datetime,3));
+        }
+        for(int i = 0; i < 7; i++){
+            strainFbgValues.add(new FbgValue((long) i+11, RandomUtil.From100TO1000(), i+1, datetime,5));
+        }
+        List<FbgValue> list  = new ArrayList<>();
+        list.addAll(temperatureFbgValues);
+        list.addAll(vibrationFbgValues);
+        list.addAll(strainFbgValues);
+        String jsonString = JSONObject.toJSONString(list, SerializerFeature.MapSortField);
+        //增加日志流水号
+        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+        String logId = MDC.get("LOG_ID");
+        LOG.info("推送新消息");
+        wsService.sendInfo(jsonString,logId);
+        fbgValueMapper.multipleInsert(list);
 //        String astr = JSONObject.toJSONString(list, SerializerFeature.MapSortField);
 //        //System.out.println(astr);
 //        //增加日志流水号
@@ -92,7 +113,18 @@ public class PhysicalValueJob {
 //        long start = System.currentTimeMillis();
 //        wsService.sendInfo(astr,logId);
 //        LOG.info("推送新消息结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-//    }
+    }
+    //定时计算最大最小值并插入min_max_value_for_temperature
+    @Scheduled(cron = "0 59 * * * ?" )
+    public void cronGenerateFakeFbgValue() throws ParseException {
+        //增加日志流水号
+        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中开始");
+        long start = System.currentTimeMillis();
+        //暂时不这样计算了 最小值和最大值都是固定的
+        fbgValueService.computeAndInsertTheMaxMinTemperatureInThisHour();
+        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+    }
 //    @Transactional(rollbackFor = Exception.class)
 //    @Scheduled(cron = "0 0/5 * * * *" )
 //    //@Scheduled(cron = "0 0 0/1 * * *" )
@@ -141,14 +173,14 @@ public class PhysicalValueJob {
 //        txtResolver.generateFakeTemperatureValue(txtValueService);
 //        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中结束，耗时：{}毫秒",System.currentTimeMillis() - start);
 //    }
-//    @Scheduled(cron = "0 59 * * * ?" )
-//    public void cronGenerateFakeMemsValue() throws ParseException {
-//        //增加日志流水号
-//        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-//        LOG.info("每小时的59分生成所有传感器的假数据开始");
-//        long start = System.currentTimeMillis();
-//        TxtResolver txtResolver = new TxtResolver();
-//        txtResolver.generateFakeMemsValue(positionValueService);
-//        LOG.info("每小时的59分生成所有MEMS的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-//    }
+    @Scheduled(cron = "0 59 * * * ?" )
+    public void cronGenerateFakeMemsValue() throws ParseException {
+        //增加日志流水号
+        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+        LOG.info("每小时的59分生成所有传感器的假数据开始");
+        long start = System.currentTimeMillis();
+        TxtResolver txtResolver = new TxtResolver();
+        txtResolver.generateFakeMemsValue(positionValueService);
+        LOG.info("每小时的59分生成所有MEMS的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+    }
 }

@@ -18,7 +18,7 @@ public class WsService {
     private WebSocketServer webSocketServer;
 
     @Async
-    public void sendInfo(Object message, String logId){
+    public void sendInfo(String message, String logId){
         //往所有的session推送消息
         MDC.put("LOG_ID",logId);
         webSocketServer.sendInfo(message);
