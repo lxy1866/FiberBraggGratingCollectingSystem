@@ -73,47 +73,47 @@ public class PhysicalValueJob {
 //        breakpointRecordService.insertBreakpointInfoByScanFbgValue();
 //        LOG.info("更新断点记录表结束，耗时：{}毫秒",System.currentTimeMillis() - start);
 //    }
-    @Transactional(rollbackFor = Exception.class)
-    @Scheduled(cron = "0/10 * * * * ? " )
-    public void cronSendFbgValues(){
-        long datetime = new Date().getTime();
-        List<FbgValue> temperatureFbgValues = new ArrayList<>();
-        List<FbgValue> vibrationFbgValues = new ArrayList<>();
-        List<FbgValue> strainFbgValues = new ArrayList<>();
-        temperatureFbgValues.add(new FbgValue((long) 1, RandomUtil.From1TO10(),  1, datetime,1));
-        temperatureFbgValues.add(new FbgValue((long) 2, RandomUtil.From1TO10(),  1, datetime,2));
-        temperatureFbgValues.add(new FbgValue((long) 3, RandomUtil.From1TO10(),  1, datetime,6));
-
-        // id physicalValueId 物理值 断裂位置 创建时间 通道号
-        vibrationFbgValues.add(new FbgValue((long) 4, RandomUtil.From100TO1000(),  1, datetime,4));
-
-        for(int i = 0; i < 6; i++){
-            strainFbgValues.add(new FbgValue((long) i+5, RandomUtil.From100TO1000(), i+1, datetime,3));
-        }
-        for(int i = 0; i < 7; i++){
-            strainFbgValues.add(new FbgValue((long) i+11, RandomUtil.From100TO1000(), i+1, datetime,5));
-        }
-        List<FbgValue> list  = new ArrayList<>();
-        list.addAll(temperatureFbgValues);
-        list.addAll(vibrationFbgValues);
-        list.addAll(strainFbgValues);
-        String jsonString = JSONObject.toJSONString(list, SerializerFeature.MapSortField);
-        //增加日志流水号
-        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-        String logId = MDC.get("LOG_ID");
-        LOG.info("推送新消息");
-        wsService.sendInfo(jsonString,logId);
-        fbgValueMapper.multipleInsert(list);
-//        String astr = JSONObject.toJSONString(list, SerializerFeature.MapSortField);
-//        //System.out.println(astr);
+//    @Transactional(rollbackFor = Exception.class)
+//    @Scheduled(cron = "0/10 * * * * ? " )
+//    public void cronSendFbgValues(){
+//        long datetime = new Date().getTime();
+//        List<FbgValue> temperatureFbgValues = new ArrayList<>();
+//        List<FbgValue> vibrationFbgValues = new ArrayList<>();
+//        List<FbgValue> strainFbgValues = new ArrayList<>();
+//        temperatureFbgValues.add(new FbgValue((long) 1, RandomUtil.From1TO10(),  1, datetime,1));
+//        temperatureFbgValues.add(new FbgValue((long) 2, RandomUtil.From1TO10(),  1, datetime,2));
+//        temperatureFbgValues.add(new FbgValue((long) 3, RandomUtil.From1TO10(),  1, datetime,6));
+//
+//        // id physicalValueId 物理值 断裂位置 创建时间 通道号
+//        vibrationFbgValues.add(new FbgValue((long) 4, RandomUtil.From100TO1000(),  1, datetime,4));
+//
+//        for(int i = 0; i < 6; i++){
+//            strainFbgValues.add(new FbgValue((long) i+5, RandomUtil.From100TO1000(), i+1, datetime,3));
+//        }
+//        for(int i = 0; i < 7; i++){
+//            strainFbgValues.add(new FbgValue((long) i+11, RandomUtil.From100TO1000(), i+1, datetime,5));
+//        }
+//        List<FbgValue> list  = new ArrayList<>();
+//        list.addAll(temperatureFbgValues);
+//        list.addAll(vibrationFbgValues);
+//        list.addAll(strainFbgValues);
+//        String jsonString = JSONObject.toJSONString(list, SerializerFeature.MapSortField);
 //        //增加日志流水号
 //        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
 //        String logId = MDC.get("LOG_ID");
 //        LOG.info("推送新消息");
-//        long start = System.currentTimeMillis();
-//        wsService.sendInfo(astr,logId);
-//        LOG.info("推送新消息结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-    }
+//        wsService.sendInfo(jsonString,logId);
+//        fbgValueMapper.multipleInsert(list);
+////        String astr = JSONObject.toJSONString(list, SerializerFeature.MapSortField);
+////        //System.out.println(astr);
+////        //增加日志流水号
+////        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+////        String logId = MDC.get("LOG_ID");
+////        LOG.info("推送新消息");
+////        long start = System.currentTimeMillis();
+////        wsService.sendInfo(astr,logId);
+////        LOG.info("推送新消息结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+//    }
     //定时计算最大最小值并插入min_max_value_for_temperature
     @Scheduled(cron = "0 59 * * * ?" )
     public void cronGenerateFakeFbgValue() throws ParseException {
