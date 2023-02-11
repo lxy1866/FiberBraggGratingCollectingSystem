@@ -38,12 +38,8 @@
 import centerChart1 from "./centerChart1.vue";
 import centerChart2 from "./centerChart2.vue";
 import {defineComponent, onMounted, toRefs,reactive} from "vue";
-import axios from "axios";
-
+import functionCall from "@/functionCall";
 const warnMessage = '暂无'
-function handleQueryOnline() {
-  return axios.get("/ct/calculateOnLine")
-}
 export default defineComponent({
   name: 'center-top',
   setup() {
@@ -104,7 +100,7 @@ export default defineComponent({
      * 大概清楚了，就是要新建一个newTitleItem 设置里面的值来替换state中的titleItem
      */
     onMounted(async ()=>{
-      const { data } = await handleQueryOnline();
+      const { data } = await new functionCall().handleQueryOnline();
       //console.log(data.content)
       state.titleItem = [{
         title: "今日传感器总量",
@@ -162,6 +158,7 @@ export default defineComponent({
     }
   },
   components: {
+    functionCall,
     centerChart1,
     centerChart2
   }
