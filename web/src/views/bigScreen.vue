@@ -12,11 +12,11 @@
     <div class="container fontClass" style="margin-top: 10px">
       <div class="box2 top">
         <dv-border-box-7 class="border-box" >
-          <div style="height: 400px; border-color: white">
+          <div style="height: 350px; border-color: white">
             <div class="textAnnotation" >
               海缆监测示意图
             </div>
-            <img src="@/assets/archTransparent.png" style="height: 100%; width: 100%" alt="">
+            <img src="@/assets/archInfoTransparent.png" style="height: 100%; width: 100%" alt="">
             <div style="display: flex; flex-direction: row-reverse; margin-top: 10px" >
               <a-button @click="pageTurning">曲线图翻页</a-button>
             </div>
