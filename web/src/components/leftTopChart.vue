@@ -71,7 +71,7 @@ export default defineComponent({
         grid: {
           top: 40,
           bottom: 40,
-          left: 120,
+          left: 80,
           right: 40
         },
         toolbox: {

@@ -14,6 +14,7 @@ public class FbgValue {
     private Long createTime;
 
     private Integer channel;
+    private Integer dffWavePhysic;
 
     public FbgValue(Integer id, Long physicalValueInfoId, BigDecimal value, Integer arrayNum, Long createTime,Integer channel) {
         this.id = id;
@@ -30,6 +31,15 @@ public class FbgValue {
         this.arrayNum = arrayNum;
         this.createTime = createTime;
         this.channel = channel;
+    }
+    public FbgValue(Long physicalValueInfoId, BigDecimal value, Integer arrayNum, Long createTime,Integer channel, Integer dffWavePhysic) {
+
+        this.physicalValueInfoId = physicalValueInfoId;
+        this.value = value;
+        this.arrayNum = arrayNum;
+        this.createTime = createTime;
+        this.channel = channel;
+        this.dffWavePhysic = dffWavePhysic;
     }
     public Integer getId() {
         return id;

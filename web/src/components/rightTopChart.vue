@@ -82,7 +82,7 @@ export default defineComponent({
           },
         },
         grid: {
-          left: '15%',
+          left: '0%',
           right: '3%',
           top: '20%',
           bottom:'10%'
@@ -99,7 +99,7 @@ export default defineComponent({
         yAxis: {
           name: '振动值(Hz)',
           nameLocation: 'center',
-          nameGap: 5,
+          nameGap: 10,
           type: 'value',
           boundaryGap: [0, '100%'],
           splitLine: {
