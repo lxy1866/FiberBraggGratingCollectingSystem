@@ -1,5 +1,5 @@
 <template>
-  <div id="leftTopChart" className="leftTopChart"></div>
+  <div id="leftTopChart" class="leftTopChart"></div>
 </template>
 
 <script lang="js">
@@ -90,6 +90,7 @@ export default defineComponent({
             data: strain,
             label: {
               show: true,
+              color: '#fff',
               position: 'right',
               valueAnimation: true
             }
@@ -112,7 +113,7 @@ export default defineComponent({
           // Map the score column to color
           dimension: 0,
           inRange: {
-            color: ['#65B581', '#FFCE34', '#403897']
+            color: ['#403897', '#288888', '#988888']
           },
           padding: 5,
           textGap: 20

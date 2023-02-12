@@ -47,7 +47,7 @@ export default defineComponent({
       let vibration = [];
       option = {
         title: {
-          text: '海底电缆实时振动值(Hz)',
+          text: '海底电缆实时振动值',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -82,7 +82,7 @@ export default defineComponent({
           },
         },
         grid: {
-          left: '10%',
+          left: '15%',
           right: '3%',
           top: '20%',
           bottom:'10%'
@@ -97,6 +97,9 @@ export default defineComponent({
           triggerEvent: true
         },
         yAxis: {
+          name: '振动值(Hz)',
+          nameLocation: 'center',
+          nameGap: 5,
           type: 'value',
           boundaryGap: [0, '100%'],
           splitLine: {
@@ -144,21 +147,21 @@ export default defineComponent({
               }
             },
           },//线条样式
-          areaStyle: {
-            normal: {
-              //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0,
-                color: 'RGB(24,93,158)'
-              }, {
-                offset: .50,
-                color: 'RGB(12,45,95)'
-              }, {
-                offset: 1,
-                color: 'RGB(6,22,64)'
-              }])
-            }
-          },//区域颜色渐变
+          // areaStyle: {
+          //   normal: {
+          //     //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+          //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          //       offset: 0,
+          //       color: 'RGB(24,93,158)'
+          //     }, {
+          //       offset: .50,
+          //       color: 'RGB(12,45,95)'
+          //     }, {
+          //       offset: 1,
+          //       color: 'RGB(6,22,64)'
+          //     }])
+          //   }
+          // },//区域颜色渐变
           data: vibration,
         }]
       }
