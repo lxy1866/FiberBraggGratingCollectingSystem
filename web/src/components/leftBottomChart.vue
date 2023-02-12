@@ -34,28 +34,28 @@ if(TP_value > 20) {
   TP_txt = '温度偏高';
   Gradient.push({
     offset: 0,
-    color: '#93FE94'
+    color: '#403897'
   }, {
     offset: 0.5,
-    color: '#E4D225'
+    color: '#288888'
   }, {
     offset: 1,
-    color: '#E01F28'
+    color: '#988888'
   })
 } else if(TP_value > -20) {
   TP_txt = '温度正常';
   Gradient.push({
     offset: 0,
-    color: '#93FE94'
+    color: '#403897'
   }, {
     offset: 1,
-    color: '#E4D225'
+    color: '#288888'
   })
 } else {
   TP_txt = '温度偏低';
   Gradient.push({
     offset: 1,
-    color: '#93FE94'
+    color: '#988888'
   })
 }
 if(TP_value > 62) {
@@ -217,7 +217,7 @@ export default defineComponent({
           symbolSize: 48,
           itemStyle: {
             normal: {
-              color: '#93FE94',
+              color: '#ffffff',
               opacity: 1,
             }
           },
@@ -329,28 +329,31 @@ export default defineComponent({
           TP_txt = '';
           Gradient.push({
             offset: 0,
-            color: '#93FE94'
+            color: '#403897'
           }, {
             offset: 0.5,
-            color: '#E4D225'
+            color: '#288888'
           }, {
             offset: 1,
-            color: '#E01F28'
+            color: '#988888'
           })
         } else if(TP_value > -20) {
           TP_txt = '';
           Gradient.push({
             offset: 0,
-            color: '#93FE94'
+            color: '#403897'
+          }, {
+            offset: 0.5,
+            color: '#288888'
           }, {
             offset: 1,
-            color: '#E4D225'
+            color: '#988888'
           })
         } else {
           TP_txt = '';
           Gradient.push({
             offset: 1,
-            color: '#93FE94'
+            color: '#403897'
           })
         }
         if(TP_value > 62) {

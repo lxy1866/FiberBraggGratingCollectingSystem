@@ -112,7 +112,7 @@ export default defineComponent({
           // Map the score column to color
           dimension: 0,
           inRange: {
-            color: ['#65B581', '#FFCE34', '#403897']
+            color: ['#403897', '#288888', '#988888']
           },
           padding: 5,
           textGap: 20
