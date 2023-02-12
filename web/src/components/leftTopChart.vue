@@ -90,6 +90,7 @@ export default defineComponent({
             data: strain,
             label: {
               show: true,
+              color: '#fff',
               position: 'right',
               valueAnimation: true
             }

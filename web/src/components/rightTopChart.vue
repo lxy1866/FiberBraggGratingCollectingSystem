@@ -144,21 +144,21 @@ export default defineComponent({
               }
             },
           },//线条样式
-          areaStyle: {
-            normal: {
-              //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0,
-                color: 'RGB(24,93,158)'
-              }, {
-                offset: .50,
-                color: 'RGB(12,45,95)'
-              }, {
-                offset: 1,
-                color: 'RGB(6,22,64)'
-              }])
-            }
-          },//区域颜色渐变
+          // areaStyle: {
+          //   normal: {
+          //     //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+          //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          //       offset: 0,
+          //       color: 'RGB(24,93,158)'
+          //     }, {
+          //       offset: .50,
+          //       color: 'RGB(12,45,95)'
+          //     }, {
+          //       offset: 1,
+          //       color: 'RGB(6,22,64)'
+          //     }])
+          //   }
+          // },//区域颜色渐变
           data: vibration,
         }]
       }
