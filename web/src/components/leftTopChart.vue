@@ -1,5 +1,5 @@
 <template>
-  <div id="leftTopChart" className="leftTopChart"></div>
+  <div id="leftTopChart" class="leftTopChart"></div>
 </template>
 
 <script lang="js">

@@ -10,30 +10,6 @@
       <dv-decoration-3 :reverse="true" style="width:250px;height:50px;" />
     </div>
     <div class="container fontClass" style="margin-top: 10px">
-<!--      <div class="box left">-->
-<!--        <dv-border-box-7 class="border-box">-->
-<!--          <line-chart-strain class="charts" style="height: 350px"/>-->
-<!--        </dv-border-box-7>-->
-<!--        <dv-border-box-7  class="border-box"  >-->
-<!--          <real-temperature class="charts" style="height: 350px; margin-left: 90px"/>-->
-<!--        </dv-border-box-7>-->
-<!--      </div>-->
-<!--      <div class="box center">-->
-<!--        <dv-border-box-7 class="border-box" >-->
-<!--          <CenterTop   class="charts" style="height:350px;"/>-->
-<!--        </dv-border-box-7>-->
-<!--        <dv-border-box-7 class="border-box">-->
-<!--          <line-chart-temperature class="charts" style="height: 350px;"/>-->
-<!--        </dv-border-box-7>-->
-<!--      </div>-->
-<!--      <div class="box right">-->
-<!--        <dv-border-box-7 class="border-box">-->
-<!--          <line-chart-vibration class="charts" style="height: 350px;"/>-->
-<!--        </dv-border-box-7>-->
-<!--        <dv-border-box-7  class="border-box">-->
-<!--          <line3d-shape class="charts" style="height: 350px;"/>-->
-<!--        </dv-border-box-7>-->
-<!--      </div>-->
       <div class="box2 top">
         <dv-border-box-7 class="border-box" >
           <div style="height: 400px; border-color: white">
@@ -63,7 +39,7 @@
       </div>
       <div class="box2 bottom" id="next" v-show="showCurveNext">
         <dv-border-box-7 class="border-box">
-          <CenterTop   class="charts" style="height:400px;"/>
+          <max-offset   class="charts" style="height:400px;"/>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
           <real-temperature class="charts" style="height: 400px; "/>
@@ -92,6 +68,7 @@ import LineChartVibration from '../components/rightTopChart.vue'
 import RealTemperature from '../components/leftBottomChart.vue'
 import TheHeader from '@/components/theHeader.vue';
 import TheFooter from '@/components/theFooter.vue';
+import MaxOffset from '@/components/maxOffset.vue';
 import functionCall from "@/functionCall";
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
@@ -113,7 +90,8 @@ export default defineComponent({
     Line3dShape,
     RealTemperature,
     TheHeader,
-    TheFooter
+    TheFooter,
+    MaxOffset
   },
 
   setup(){
