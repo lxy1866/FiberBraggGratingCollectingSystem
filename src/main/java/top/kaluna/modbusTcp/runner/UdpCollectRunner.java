@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.digitalpetri.modbus.master.ModbusTcpMaster;
 import com.digitalpetri.modbus.master.ModbusTcpMasterConfig;
-import jdk.jpackage.internal.Log;
+//import jdk.jpackage.internal.Log;
 import org.jboss.logging.MDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,6 +98,9 @@ public class UdpCollectRunner  implements ApplicationRunner {
                     count2++;
                 }
                 fbgValues.addAll(channel5);
+                //获取振动波长
+                float vibration_wave =NumTypeChangeUtil.bytesToFloat3(datas, 57) / 1000 + 1520;
+                fbgValues.add(new FbgValue(18L,new BigDecimal(Float.toString(vibration_wave)),1, datetime, 4));
                 //websocket推送
                 String logId = (String) MDC.get("LOG_ID");
                 String jsonString = JSONObject.toJSONString(fbgValues, SerializerFeature.MapSortField);

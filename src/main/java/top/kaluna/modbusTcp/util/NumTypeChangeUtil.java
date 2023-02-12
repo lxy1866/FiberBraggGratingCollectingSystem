@@ -42,6 +42,16 @@ public class NumTypeChangeUtil {
         return Float.intBitsToFloat(value);
     }
 
+    //两字节
+    public static float bytesToFloat3(byte[] src, int offset){
+        int value;
+        value = (int) (((src[offset] & 0xFF)
+                | ((src[offset+1] & 0xFF) << 8)
+                ));
+
+        return Float.intBitsToFloat(value);
+    }
+
 //    static public BigDecimal bytesToBigDecimal(byte[] buffer) {
 //        String string = bytesToString(buffer);
 //        return new BigDecimal(string);
