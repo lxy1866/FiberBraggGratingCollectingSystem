@@ -21,12 +21,18 @@ export default defineComponent({
             fontFamily: '宋体',
           },
         },
+        grid: {
+          top: 45,
+          bottom: 40,
+          left: 60,
+          right: 10
+        },
         xAxis: {
           max: 'category',
           data:[],
           name: '周数（周）',
           nameLocation: 'center',
-          nameGap: 40
+          nameGap: 25
         },
         yAxis: {
           type: 'value',
