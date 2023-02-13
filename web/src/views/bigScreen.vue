@@ -39,16 +39,13 @@
       </div>
       <div class="box2 bottom" id="next" v-show="showCurveNext">
         <dv-border-box-7 class="border-box">
-          <max-offset   class="charts" style="height:400px;"/>
+          <viberation-wave class="charts" style="height: 400px; width: 400px"></viberation-wave>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <real-temperature class="charts" style="height: 400px; "/>
+          <line-chart-temperature class="charts" style="height: 400px; width:600px"></line-chart-temperature>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <line-chart-vibration class="charts" style="height: 400px;"/>
-        </dv-border-box-7>
-        <dv-border-box-7 class="border-box">
-          <line3d-shape class="charts" style="height: 400px;"/>
+          <max-offset   class="charts" style="height:400px; width: 400px"/>
         </dv-border-box-7>
       </div>
     </div>
@@ -69,6 +66,7 @@ import RealTemperature from '../components/leftBottomChart.vue'
 import TheHeader from '@/components/theHeader.vue';
 import TheFooter from '@/components/theFooter.vue';
 import MaxOffset from '@/components/maxOffset.vue';
+import ViberationWave from '@/components/viberationWave.vue';
 import functionCall from "@/functionCall";
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
@@ -91,7 +89,8 @@ export default defineComponent({
     RealTemperature,
     TheHeader,
     TheFooter,
-    MaxOffset
+    MaxOffset,
+    ViberationWave
   },
 
   setup(){

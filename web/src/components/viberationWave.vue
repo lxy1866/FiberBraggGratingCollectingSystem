@@ -1,5 +1,5 @@
 <template>
-  <div id="rightTopChart" class="rightTopChart"></div>
+  <div id="viberationWave" class="viberationWave"></div>
 </template>
 <script lang="js">
 import * as echarts from 'echarts';
@@ -13,17 +13,8 @@ function dateToGMT(strDate){
   return date;
 }
 export default defineComponent({
-  name: 'rightTopChart',
+  name: 'viberationWave',
   setup: function () {
-    function handleQueryList(startTime, endTime) {
-      return axios.get("/txt/listLastHourForVibration", {
-        params: {
-          startTime: startTime,
-          endTime: endTime,
-          category: 3
-        }
-      })
-    }
     function getData (value){
       let now = +new Date();
       const oneDay = 100;
@@ -47,7 +38,7 @@ export default defineComponent({
       let vibration = [];
       option = {
         title: {
-          text: '海底电缆实时振动值',
+          text: '海底电缆实时振动波长值',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -78,7 +69,7 @@ export default defineComponent({
           },
           formatter: function (params) {
             params = params[0];
-            return '时间：'+ params.name + '<br/>振动值 : ' + params.value[1];
+            return '时间：'+ params.name + '<br/>波长值 : ' + params.value[1];
           },
         },
         grid: {
@@ -97,7 +88,7 @@ export default defineComponent({
           triggerEvent: true
         },
         yAxis: {
-          name: '振动值(Hz)',
+          name: '波长值',
           nameLocation: 'center',
           nameGap: 10,
           type: 'value',
@@ -165,7 +156,7 @@ export default defineComponent({
           data: vibration,
         }]
       }
-      const chartDom = document.getElementById('rightTopChart');
+      const chartDom = document.getElementById('viberationWave');
       let myChart = echarts.init(chartDom);
       myChart.setOption(option);
       const onOpen = () =>{
@@ -173,12 +164,13 @@ export default defineComponent({
       };
       const onMessage = function (msg){
         let data = JSON.parse(msg.data);
+        //console.log(data)
         if(vibration.length % 20 === 0){
           for(let i = 0; i < 20; i++){
             vibration.shift()
           }
         }
-        vibration.push(getData(data[3].value));
+        vibration.push(getData(data[data.length - 1].value));
         myChart.setOption(option);
       };
       const onError = ()=>{
@@ -212,7 +204,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.rightTopChart{
+.viberationWave{
   display: flex;
 }
 </style>

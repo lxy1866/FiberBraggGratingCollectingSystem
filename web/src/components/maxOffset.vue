@@ -64,6 +64,9 @@ export default defineComponent({
         1.509, 1.774, 0.941, 1.089, 1.119,
         1.221, 2.352, 2.462, 1.079, 1.920]
       option && myChart.setOption(option);
+      window.addEventListener("resize", () => {
+        myChart.resize();
+      });
     })
   }
 })
