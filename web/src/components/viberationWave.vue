@@ -73,10 +73,10 @@ export default defineComponent({
           },
         },
         grid: {
-          left: '5%',
-          right: '3%',
-          top: '20%',
-          bottom:'10%'
+          left: '70',
+          right: '10',
+          top: '50',
+          bottom:'30'
         },
         xAxis: {
           type: 'category',
@@ -90,7 +90,7 @@ export default defineComponent({
         yAxis: {
           name: '波长值',
           nameLocation: 'center',
-          nameGap: 10,
+          nameGap: 40,
           type: 'value',
           boundaryGap: [0, '100%'],
           splitLine: {
