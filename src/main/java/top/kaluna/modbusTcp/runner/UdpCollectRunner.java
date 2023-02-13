@@ -92,7 +92,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
                 }
                 fbgValues.addAll(channel5);
                 //获取振动波长
-                float vibration_wave =NumTypeChangeUtil.bytesToFloat3(datas, 57) / 1000 + 1520;
+                float vibration_wave =NumTypeChangeUtil.bytesToFloat3(datas, 57) / 1000 +1520;
                 fbgValues.add(new FbgValue(18L,new BigDecimal(Float.toString(vibration_wave)),1, datetime, 4, 1));
                 //websocket推送
                 String logId = (String) MDC.get("LOG_ID");

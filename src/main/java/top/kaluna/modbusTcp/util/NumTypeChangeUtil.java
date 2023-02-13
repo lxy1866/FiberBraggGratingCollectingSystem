@@ -44,12 +44,21 @@ public class NumTypeChangeUtil {
 
     //两字节
     public static float bytesToFloat3(byte[] src, int offset){
-        int value;
-        value = (int) (((src[offset] & 0xFF)
-                | ((src[offset+1] & 0xFF) << 8)
-        ));
+        String tmp1;
+        String tmp2;
 
-        return Float.intBitsToFloat(value);
+        tmp1 = Integer.toHexString(0xFF & src[offset+1]);
+        if (tmp1.length() == 1) {
+            tmp1 = "0" + tmp1;//只有一位的前面补个0
+        }
+        tmp2 = Integer.toHexString(0xFF & src[offset]);
+        if (tmp2.length() == 1) {
+            tmp2 = "0" + tmp2;//只有一位的前面补个0
+        }
+
+        float result=(float) Integer.parseInt(tmp1+tmp2,16);
+
+        return result;
     }
 
 //    static public BigDecimal bytesToBigDecimal(byte[] buffer) {
