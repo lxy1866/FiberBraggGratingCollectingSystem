@@ -32,7 +32,7 @@ xin              <a-button @click="HispageTurning">历史数据图</a-button>
             <real-temperature class="charts" style="height: 400px; "/>
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
-            <line-chart-vibration class="charts" style="height: 400px;"/>
+            <viberation-wave class="charts" style="height: 400px;"></viberation-wave>
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
             <line3d-shape class="charts" style="height: 400px;"/>
@@ -40,7 +40,7 @@ xin              <a-button @click="HispageTurning">历史数据图</a-button>
       </div>
       <div class="box2 bottom" id="next" v-show="showCurveNext">
         <dv-border-box-7 class="border-box">
-          <viberation-wave class="charts" style="height: 400px; width: 400px"></viberation-wave>
+          <line-chart-vibration class="charts" style="height: 400px; width: 400px"/>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
           <line-chart-temperature class="charts" style="height: 400px; width:600px"></line-chart-temperature>

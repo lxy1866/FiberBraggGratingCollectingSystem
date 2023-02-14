@@ -92,6 +92,8 @@ export default defineComponent({
           nameLocation: 'center',
           nameGap: 40,
           type: 'value',
+          min: 1540,
+          max: 1560,
           boundaryGap: [0, '100%'],
           splitLine: {
             show: true,
