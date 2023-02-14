@@ -19,6 +19,7 @@
             <img src="@/assets/archInfoTransparent.png" style="height: 100%; width: 100%" alt="">
             <div style="display: flex; flex-direction: row-reverse; margin-top: 10px" >
               <a-button @click="pageTurning">曲线图翻页</a-button>
+xin              <a-button @click="HispageTurning">历史数据图</a-button>
             </div>
           </div>
         </dv-border-box-7>
@@ -48,6 +49,20 @@
           <max-offset   class="charts" style="height:400px; width: 400px"/>
         </dv-border-box-7>
       </div>
+      <div class="box2 bottom" id="his" v-show="showCurveHis">
+        <dv-border-box-7 class="border-box">
+          <img src="@/assets/temperature.png" style="height: 400px;" alt="">
+        </dv-border-box-7>
+        <dv-border-box-7 class="border-box">
+          <img src="@/assets/vibration2.png" style="height: 400px;" alt="">
+        </dv-border-box-7>
+        <dv-border-box-7 class="border-box">
+          <img src="@/assets/strain.png" style="height: 400px;" alt="">
+        </dv-border-box-7>
+        <dv-border-box-7 class="border-box">
+          <img src="@/assets/shorttermenergy.jpg" style="height: 400px;" alt="">
+        </dv-border-box-7>
+      </div>
     </div>
   </a-layout-content>
 </template>
@@ -70,14 +85,26 @@ import ViberationWave from '@/components/viberationWave.vue';
 import functionCall from "@/functionCall";
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
+let showCurveHis = ref(false);
 const pageTurning = ()=>{
   if(showCurvePrev.value === true && showCurveNext.value === false){
     showCurvePrev.value = false;
     showCurveNext.value = true;
-  }else{
+    showCurveHis.value = false;
+  } else if(showCurveHis.value === true){
     showCurvePrev.value = true;
     showCurveNext.value = false;
+    showCurveHis.value = false;
+  } else{
+    showCurvePrev.value = true;
+    showCurveNext.value = false;
+    showCurveHis.value = false;
   }
+}
+const HispageTurning = ()=>{
+    showCurvePrev.value = false;
+    showCurveNext.value = false;
+    showCurveHis.value = true
 }
 export default defineComponent({
   components:{
@@ -115,7 +142,9 @@ export default defineComponent({
       functionCall,
       showCurvePrev,
       showCurveNext,
-      pageTurning
+      showCurveHis,
+      pageTurning,
+      HispageTurning
     }
   }
 });
