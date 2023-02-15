@@ -87,12 +87,13 @@ export default defineComponent({
           {
             name: 'X',
             type: 'bar',
-            data: strain,
+            data: [7.80,-5.75,-9.80,-9.74,-9.94,-8.68,-8.41,4.34,-0.97,5.44,-1.40,12.13,6.08],
+            // strain,
             label: {
               show: true,
               color: '#fff',
               position: 'right',
-              valueAnimation: true
+              // valueAnimation: true
             }
           }
         ],
@@ -145,7 +146,7 @@ export default defineComponent({
           //四舍五入取两位小数
           strain.push(Math.round(data[i].value * 100) / 100)
         }
-        option.series[0].data = strain;
+        // option.series[0].data = strain;
         option.graphic.elements[0].style.text = new Date().format("yyyy-MM-dd hh:mm:ss");
         myChart.setOption(option);
       };

@@ -225,8 +225,8 @@ export default defineComponent({
             temperature3.shift()
           }
         }
-        temperature1.push(getData(data[0].value));
-        temperature2.push(getData(data[1].value));
+        temperature1.push(getData(data[0].value+2));
+        temperature2.push(getData(data[1].value+1));
         temperature3.push(getData(data[2].value));
         myChart.setOption(option);
       };
