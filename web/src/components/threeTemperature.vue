@@ -48,6 +48,15 @@ export default defineComponent({
       let temperature2 = [];
       let temperature3 = [];
       option = {
+        color: ['#3366CC', '#FFCC99','#99CC33'],
+        legend: {
+          show: true,
+          orient: 'vertical',
+          textStyle: {
+            color: '#ffffff',
+            fontFamily: '宋体',
+          },
+        },
         title: {
           text: '海底电缆实时温度值',
           textStyle: {
@@ -129,7 +138,7 @@ export default defineComponent({
           }
         },
         series: [{
-          name: '温度曲线1',
+          name: '温度传感器1',
           type: 'line',
           smooth: true,
           showSymbol: false,
@@ -141,19 +150,19 @@ export default defineComponent({
               lineStyle: {// 系列级个性化折线样式
                 width: 1,
                 type: 'solid',
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: '#0000FF'
-                }, {
-                  offset: 1,
-                  color: '#0096FF'
-                }]),//线条渐变色
+                // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                //   offset: 0,
+                //   color: '#0000FF'
+                // }, {
+                //   offset: 1,
+                //   color: '#0096FF'
+                // }]),//线条渐变色
               }
             },
           },//线条样式
           data: temperature1,
         }, {
-          name: '温度曲线2',
+          name: '温度传感器2',
           type: 'line',
           smooth: true,
           showSymbol: false,
@@ -165,19 +174,19 @@ export default defineComponent({
               lineStyle: {// 系列级个性化折线样式
                 width: 1,
                 type: 'solid',
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: '#0000FF'
-                }, {
-                  offset: 1,
-                  color: '#0096FF'
-                }]),//线条渐变色
+                // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                //   offset: 0,
+                //   color: '#0000FF'
+                // }, {
+                //   offset: 1,
+                //   color: '#0096FF'
+                // }]),//线条渐变色
               }
             },
           },//线条样式
           data: temperature2,
         },{
-          name: '温度曲线3',
+          name: '温度传感器3',
           type: 'line',
           smooth: true,
           showSymbol: false,
@@ -189,13 +198,13 @@ export default defineComponent({
               lineStyle: {// 系列级个性化折线样式
                 width: 1,
                 type: 'solid',
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: '#0000FF'
-                }, {
-                  offset: 1,
-                  color: '#0096FF'
-                }]),//线条渐变色
+                // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                //   offset: 0,
+                //   color: '#0000FF'
+                // }, {
+                //   offset: 1,
+                //   color: '#0096FF'
+                // }]),//线条渐变色
               }
             },
           },//线条样式
@@ -227,7 +236,7 @@ export default defineComponent({
         }
         temperature1.push(getData(data[0].value+2));
         temperature2.push(getData(data[1].value+1));
-        temperature3.push(getData(data[2].value));
+        temperature3.push(getData(data[2].value+0.3));
         myChart.setOption(option);
       };
       const onError = ()=>{
