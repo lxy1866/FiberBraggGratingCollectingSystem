@@ -16,7 +16,7 @@
             <div class="textAnnotation" >
               海缆监测示意图
             </div>
-            <img src="@/assets/archInfoTransparent.png" style="height: 100%; width: 100%" alt="">
+            <img src="@/assets/1111.png" style="height: 100%; width: 100%" alt="">
             <div style="display: flex; flex-direction: row-reverse; margin-top: 10px" >
               <a-button @click="pageTurning">曲线图翻页</a-button>
             </div>
@@ -28,7 +28,8 @@
             <line-chart-strain class="charts" style="height: 400px"/>
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
-            <real-temperature class="charts" style="height: 400px; "/>
+            <three-temperature class="charts" style="height: 400px"></three-temperature>
+<!--            <real-temperature class="charts" style="height: 400px; "/>-->
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
             <viberation-wave class="charts" style="height: 400px;"></viberation-wave>
@@ -67,6 +68,7 @@ import TheHeader from '@/components/theHeader.vue';
 import TheFooter from '@/components/theFooter.vue';
 import MaxOffset from '@/components/maxOffset.vue';
 import ViberationWave from '@/components/viberationWave.vue';
+import ThreeTemperature from "@/components/threeTemperature.vue";
 import functionCall from "@/functionCall";
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
@@ -90,7 +92,8 @@ export default defineComponent({
     TheHeader,
     TheFooter,
     MaxOffset,
-    ViberationWave
+    ViberationWave,
+    ThreeTemperature
   },
 
   setup(){
