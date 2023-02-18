@@ -47,7 +47,6 @@ public class UdpCollectRunner  implements ApplicationRunner {
         // 调用DatagramSocket对象的方法接收数据
         Thread thread = new Thread(() -> {
             while (true) {
-
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {

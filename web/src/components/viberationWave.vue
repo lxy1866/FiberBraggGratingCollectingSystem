@@ -172,7 +172,7 @@ export default defineComponent({
             vibration.shift()
           }
         }
-        vibration.push(getData(data[data.length - 1].value));
+        vibration.push(getData(data[data.length - 1].value));1
         myChart.setOption(option);
       };
       const onError = ()=>{
