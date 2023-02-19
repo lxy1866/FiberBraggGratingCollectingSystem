@@ -1,32 +1,30 @@
 <template>
   <the-header></the-header>
   <a-layout-content style="padding: 0; background: #001529;   overflow-y: hidden;overflow-x: hidden;" :style="{margin: 0, height: height_top.height}">
+
     <div style="position: relative; display: flex;justify-content: space-between" >
-      <dv-decoration-8 style="width:300px;height:50px;" />
-      <div style="width:200px;height:75px;margin-top: 45px">
-        <div style="font-size: 15px; color: #70DBDB;text-align:center;margin-top: 10px" class="fontClass" >设备数量</div>
-        <div style="font-size: 15px; color: #00FF7F;text-align:center;" class="fontClass" >50个</div>
+      <div style="width:250px;height:75px;margin-top: 45px">
+        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >设备数量</div>
+        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
       </div>
-      <div style="width:200px;height:75px;margin-top: 45px">
-        <div style="font-size: 15px; color: #70DBDB;text-align:center;margin-top: 10px" class="fontClass" >在线数量</div>
-        <div style="font-size: 15px; color: #00FF7F;text-align:center;" class="fontClass" >50个</div>
-        </div>
-      <div style="width:150px;height:75px;margin-top: 45px"></div>
+      <div style="width:250px;height:75px;margin-top: 45px">
+        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass " >在线数量</div>
+        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
+      </div>
+      <div style="width:100px;height:75px;margin-top: 45px"></div>
       <div style="width:400px;height:160px;display: flex; flex-flow: column; justify-content: center; margin-top: -50px;margin-right: 10px;">
         <div style="font-size: 30px; color: cadetblue;text-align:center;" class="fontClass" >海底电缆智能健康监测系统</div>
-        <div><dv-decoration-5 style="width:400px;height:30px;" /></div>
       </div>
-      <div style="width:150px;height:75px;margin-top: 45px"></div>
-      <div style="width:200px;height:75px;margin-top: 40px">
-        <div style="font-size: 15px; color: #70DBDB;text-align:center;margin-top: 2px" class="fontClass" >温度阈值：<span style="color:#00FF7F">50°C</span></div>
-        <div style="font-size: 15px; color: #70DBDB;text-align:center;" class="fontClass" >位移阈值：<span style="color:#00FF7F">10cm</span></div>
-        <div style="font-size: 15px; color: #70DBDB;text-align:center;" class="fontClass" >振动信号短时能量阈值：<span style="color:#00FF7F">20dB</span></div>
+      <div style="width:100px;height:75px;margin-top: 45px"></div>
+      <div style="width:250px;height:75px;margin-top: 40px">
+        <div style="font-size: 15px; text-align:center;margin-top: 2px" class="fontClass" >温度阈值：<span style="color:white">50°C</span></div>
+        <div style="font-size: 15px; text-align:center;" class="fontClass" >位移阈值：<span style="color:white">10cm</span></div>
+        <div style="font-size: 15px; text-align:center;" class="fontClass" >振动信号短时能量阈值：<span style="color:white">20dB</span></div>
       </div>
-      <div style="width:200px;height:75px;margin-top: 45px">
-        <div style="font-size: 15px; color: #70DBDB;text-align:center;margin-top: 10px" class="fontClass" >预警信息</div>
-        <div style="font-size: 15px; color: #00FF7F;text-align:center;" class="fontClass" >无</div>
+      <div style="width:250px;height:75px;margin-top: 45px">
+        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >预警信息</div>
+        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >无</div>
       </div>
-      <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />
     </div>
     <div class="container fontClass" style="margin-top: 10px">
       <div class="box2 top">
