@@ -29,15 +29,14 @@
     <div class="container fontClass" style="margin-top: 10px">
       <div class="box2 top">
         <dv-border-box-7 class="border-box" >
-          <div style="height: 350px; border-color: white">
-            <div class="textAnnotation" >
-              海缆监测示意图
+          <div style="height: 300px; border-color: white">
+            <div class="imgTop" >
+                <span >海缆监测示意图</span>
+                <span style="right: 0px">
+                  <a-button @click="imgTurning">实物图预览</a-button>
+                </span>
             </div>
-            <img src="@/assets/1111.png" style="height: 100%; width: 100%" alt="">
-            <div style="display: flex; flex-direction: row-reverse; margin-top: 10px" >
-              <a-button @click="pageTurning">曲线图翻页</a-button>
-              <a-button @click="HispageTurning">历史数据图</a-button>
-            </div>
+            <img src="@/assets/拱形.png" style="height: 100%; width: 100%" alt="">
           </div>
         </dv-border-box-7>
       </div>
@@ -69,22 +68,37 @@
       </div>
       <div class="box2 bottom" id="his" v-show="showCurveHis">
         <dv-border-box-7 class="border-box">
-          <temperatureHistory class="charts" style="height:400px; width: 500px"></temperatureHistory>
+          <temperatureHistory class="charts" style="height:400px; width: 400px"></temperatureHistory>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <strainHistory class="charts" style="height:400px; width: 500px"></strainHistory>
+          <strainHistory class="charts" style="height:400px; width: 400px"></strainHistory>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <img src="@/assets/vibration.png" style="height: 400px;" alt="">
+          <img src="@/assets/vibration.png" class="charts" style="height: 400px;" alt="">
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <img src="@/assets/shortterm.png" style="height: 400px;" alt="">
+          <img src="@/assets/shortterm.png"  class="charts" style="height: 400px;" alt="">
         </dv-border-box-7>
+      </div>
+      <div style="display: flex; flex-direction: row-reverse; margin-bottom: 0px" >
+        <a-button @click="pageTurning">曲线图翻页</a-button>
+        <a-button @click="HispageTurning">历史数据图</a-button>
       </div>
     </div>
   </a-layout-content>
+  <n-modal v-model:show="showRealImg">
+    <n-card
+        style="width: 600px"
+        title="实物图"
+        :bordered="false"
+        size="huge"
+        role="dialog"
+        aria-modal="true"
+    >
+      <img src="@/assets/realImg.png" style="height: 100%; width: 100%" alt="">
+    </n-card>
+  </n-modal>
 </template>
-
 <script>
 
 
@@ -104,9 +118,13 @@ import ThreeTemperature from "@/components/threeTemperature.vue";
 import functionCall from "@/functionCall";
 import temperatureHistory from "@/components/temperatureHistory.vue";
 import strainHistory from "@/components/strainHistory.vue";
+import { useDialog } from 'naive-ui'
+
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
 let showCurveHis = ref(false);
+let showRealImg = ref(false);
+let clickTime = 1;
 const pageTurning = ()=>{
   if(showCurvePrev.value === true && showCurveNext.value === false){
     showCurvePrev.value = false;
@@ -123,9 +141,30 @@ const pageTurning = ()=>{
   }
 }
 const HispageTurning = ()=>{
-    showCurvePrev.value = false;
-    showCurveNext.value = false;
-    showCurveHis.value = true
+    //第一次点击
+    if(clickTime === 1){
+      showCurvePrev.value = false;
+      showCurveNext.value = false;
+      showCurveHis.value = true
+      clickTime = 2;
+      console.log("000000")
+      return;
+    }
+    //第二次点击
+  console.log("77777")
+    if(clickTime === 2){
+      console.log("999")
+      showCurvePrev.value = true;
+      showCurveNext.value = false;
+      showCurveHis.value = false
+      clickTime = 1;
+
+    }
+}
+const imgTurning = () => {
+  showRealImg.value = true;
+  // const dialog = useDialog()
+  // dialog.warning(options)
 }
 export default defineComponent({
   components:{
@@ -167,8 +206,11 @@ export default defineComponent({
       showCurvePrev,
       showCurveNext,
       showCurveHis,
+      showRealImg,
       pageTurning,
-      HispageTurning
+      HispageTurning,
+      imgTurning,
+
     }
   }
 });
@@ -179,12 +221,13 @@ export default defineComponent({
   color:  cadetblue;
 }
 
-.textAnnotation{
-  height: 80px;
-  width: 200px;
+.imgTop{
   font-size: large;
   margin-left:10px;
   margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
 }
 
 .container{

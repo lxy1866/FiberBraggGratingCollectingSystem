@@ -123,7 +123,6 @@ public class UdpCollectRunner  implements ApplicationRunner {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                long datetime  = new Date().getTime();
                 // 解析数据包，并把数据在控制台显示
                 byte[] datas = waveDp.getData();
                 //获取振动波长
@@ -132,12 +131,12 @@ public class UdpCollectRunner  implements ApplicationRunner {
                 if(count.get() <= 500){
                     redisTemplate.opsForList().rightPush(key, vibrationWave);
                     count.getAndIncrement();
-                    if(count.get() == 501){
-                        LOG.info("成功放入redis,key为{},放入{}条", key, count);
-                        count.set(1);
-                    }
-                }else{
+                }
+                if(count.get() == 501){
+                    LOG.info("成功放入redis,key为{},放入{}条", key, 500);
+                    count.set(1);
                     List list = redisTemplate.opsForList().range(key, 0, -1);
+                    redisTemplate.delete(key);
                     LOG.info("500条数据：{}", list.toString());
                     //websocket推送
                     String logId = (String) MDC.get("LOG_ID");
@@ -151,5 +150,5 @@ public class UdpCollectRunner  implements ApplicationRunner {
         vibrationWaveThread.start();
         //ds.close();
     }
-    
+
 }
