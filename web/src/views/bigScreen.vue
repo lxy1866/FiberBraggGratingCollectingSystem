@@ -50,7 +50,7 @@
 <!--            <real-temperature class="charts" style="height: 400px; "/>-->
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
-            <viberation-wave class="charts" style="height: 400px;"></viberation-wave>
+            <vibration-wave class="charts" style="height: 400px;"></vibration-wave>
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
             <line3d-shape class="charts" style="height: 400px;"/>
@@ -99,7 +99,7 @@ import RealTemperature from '../components/leftBottomChart.vue'
 import TheHeader from '@/components/theHeader.vue';
 import TheFooter from '@/components/theFooter.vue';
 import MaxOffset from '@/components/maxOffset.vue';
-import ViberationWave from '@/components/viberationWave.vue';
+import VibrationWave from '@/components/vibrationWave.vue';
 import ThreeTemperature from "@/components/threeTemperature.vue";
 import functionCall from "@/functionCall";
 import temperatureHistory from "@/components/temperatureHistory.vue";
@@ -138,7 +138,7 @@ export default defineComponent({
     TheHeader,
     TheFooter,
     MaxOffset,
-    ViberationWave,
+    VibrationWave,
     ThreeTemperature,
     strainHistory,
     temperatureHistory
