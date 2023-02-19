@@ -22,6 +22,7 @@ public class WebSocketVibrationWaveServer {
      */
     private String token = "";
 
+
     private static HashMap<String, Session> map = new HashMap<>();
 
     /**

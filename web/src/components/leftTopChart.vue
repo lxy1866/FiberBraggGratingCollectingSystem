@@ -49,7 +49,7 @@ export default defineComponent({
       var chartDom = document.getElementById('leftTopChart');
       var myChart = echarts.init(chartDom);
       var option;
-      const strain = [];
+      let strain = [];
       option = {
         title: {
           text: '海底电缆实时应变值(με)',
@@ -146,7 +146,8 @@ export default defineComponent({
           //四舍五入取两位小数
           strain.push(Math.round(data[i].value * 100) / 100)
         }
-        // option.series[0].data = strain;
+        option.series[0].data = strain;
+        strain = [];
         option.graphic.elements[0].style.text = new Date().format("yyyy-MM-dd hh:mm:ss");
         myChart.setOption(option);
       };

@@ -16,26 +16,13 @@ export default defineComponent({
       var chartDom = document.getElementById('vibrationWave');
       var myChart = echarts.init(chartDom);
       let time = new Date();
-      let data;
-      time -= 5000
-      function generateData(list) {
-        const categoryData = [];
-        const valueData = [];
-        for (let i = 0; i < 500; i++) {
-          categoryData.push(
-              echarts.format.formatTime('yyyy-MM-dd\nhh:mm:ss', time, false)
-          );
-          valueData.push(list[i]);
-          time += 10
-        }
-        return {
-          categoryData: categoryData,
-          valueData: valueData
-        };
-      }
+      let data = {
+        categoryData:[],
+        valueData:[]
+      } ;
       let option = {
         title: {
-          text: '海底电缆振动波长值(με)',
+          text: '海底电缆振动波长值',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -81,7 +68,9 @@ export default defineComponent({
         yAxis: {
           splitArea: {
             show: false
-          }
+          },
+          min:1540,
+          max:1560
         },
         series: [
           {
@@ -91,15 +80,33 @@ export default defineComponent({
           }
         ]
       };
-      myChart.setOption(option);
+      time -= 5000
+      function generateData(list) {
+        const categoryData = [];
+        const valueData = [];
+        for (let i = 0; i < 500; i++) {
+          categoryData.push(
+              echarts.format.formatTime('yyyy-MM-dd\nhh:mm:ss', time, false)
+          );
+          valueData.push(list[i]);
+          time += 10
+        }
+        return {
+          categoryData: categoryData,
+          valueData: valueData
+        };
+      }
       const onOpen = () =>{
         console.log('WebSocket连接成功，状态码：',websocket.readyState)
       };
       const onMessage = function (msg){
         vibration = JSON.parse(msg.data)
         data = generateData(vibration);
+        option.xAxis.data = data.categoryData;
+        option.series[0].data = data.valueData;
+
         myChart.setOption(option)
-        // console.log(vibration)
+        console.log(vibration)
       };
       const onError = ()=>{
         console.log('WebSocket连接错误，状态码：', websocket.readyState)
@@ -118,9 +125,11 @@ export default defineComponent({
         websocket.onClose = onClose;
       }
       if('WebSocket' in window){
+
         token = Tool.uuid(10);
+        console.log("******",token)
         //连接地址：ws://127.0.0.1:8080/vibrationWaveWs/xxx
-        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/vibrationWaveWs/'+token);
+        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/vibrationWaveWs/' + token);
         initWebSocket()
       }else{
         alert('当前浏览器 不支持')
