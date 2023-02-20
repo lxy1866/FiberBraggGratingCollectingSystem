@@ -45,6 +45,7 @@ export default defineComponent({
           }
         },
         grid: {
+          left: 90,
           bottom: 90
         },
         dataZoom: [
@@ -69,12 +70,11 @@ export default defineComponent({
           splitArea: {
             show: false
           },
-          min:1540,
-          max:1560
+          scale:true,
         },
         series: [
           {
-            type: 'bar',
+            type: 'line',
             data: data.valueData,
             large: true
           }
@@ -104,7 +104,6 @@ export default defineComponent({
         data = generateData(vibration);
         option.xAxis.data = data.categoryData;
         option.series[0].data = data.valueData;
-
         myChart.setOption(option)
         console.log(vibration)
       };

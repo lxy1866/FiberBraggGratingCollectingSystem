@@ -1,9 +1,10 @@
 <template>
   <the-header></the-header>
-  <a-layout-content style="padding: 0; background: #001529;   overflow-y: hidden;overflow-x: hidden;" :style="{margin: 0, height: height_top.height}">
+  <a-layout-content style="padding: 0; background: #001529;  overflow-x: hidden;" :style="{margin: 0, height: height_top.height}">
 
     <div style="position: relative; display: flex;justify-content: space-between" >
-      <div style="width:250px;height:75px;margin-top: 45px">
+      <dv-decoration-8 style="width:200px;height:50px;" />
+      <div style="width:200px;height:75px;margin-top: 45px">
         <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >设备数量</div>
         <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
       </div>
@@ -25,6 +26,7 @@
         <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >预警信息</div>
         <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >无</div>
       </div>
+      <dv-decoration-8 :reverse="true" style="width:200px;height:50px;" />
     </div>
     <div class="container fontClass" style="margin-top: 10px">
       <div class="box2 top">
