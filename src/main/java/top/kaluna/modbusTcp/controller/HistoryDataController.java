@@ -124,6 +124,26 @@ public class HistoryDataController {
         return resp;
     }
 
+//    @GetMapping("/shape")
+//    public CommonResp<Map<String,List<Double>>> getShape() throws IOException {
+//        CommonResp<Map<String,List<Double>>> resp = new CommonResp<>();
+//        Map<String,List<Double>> result = new HashMap<>();
+//        List<Double> list1 = readxlsxVal("F:\\数据\\数据.xlsx",2,0);
+//        List<Double> list2 = readxlsxVal("F:\\数据\\数据.xlsx",6,0);
+//        List<Double> list3 = readxlsxVal("F:\\数据\\数据.xlsx",10,0);
+//        List<Double> list4 = readxlsxVal("F:\\数据\\数据.xlsx",14,0);
+//        List<Double> list5 = readxlsxVal("F:\\数据\\数据.xlsx",18,0);
+//        List<Double> list6 = readxlsxVal("F:\\数据\\数据.xlsx",22,0);
+//        result.put("shape1",list1);
+//        result.put("shape2",list2);
+//        result.put("shape3",list3);
+//        result.put("shape4",list4);
+//        result.put("shape5",list5);
+//        result.put("shape6",list6);
+//        resp.setContent(result);
+//        return resp;
+//    }
+
     public static File getLastModified(String FilePath) {
         File directory = new File(FilePath);
         File[] files = directory.listFiles(File::isFile);

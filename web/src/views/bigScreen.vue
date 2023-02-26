@@ -1,32 +1,38 @@
 <template>
   <the-header></the-header>
   <a-layout-content style="padding: 0; background: #001529;  overflow-x: hidden;" :style="{margin: 0, height: height_top.height}">
-
-    <div style="position: relative; display: flex;justify-content: space-between" >
-      <dv-decoration-8 style="width:200px;height:50px;" />
-      <div style="width:200px;height:75px;margin-top: 45px">
-        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >设备数量</div>
-        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
-      </div>
-      <div style="width:250px;height:75px;margin-top: 45px">
-        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass " >在线数量</div>
-        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
-      </div>
+    <div style="position: relative; height:60px; display: flex;justify-content: space-between" >
+      <dv-decoration-8 style="width:350px;height:50px;" />
       <div style="width:100px;height:75px;margin-top: 45px"></div>
       <div style="width:400px;height:160px;display: flex; flex-flow: column; justify-content: center; margin-top: -50px;margin-right: 10px;">
         <div style="font-size: 30px; color: cadetblue;text-align:center;" class="fontClass" >海底电缆智能健康监测系统</div>
       </div>
       <div style="width:100px;height:75px;margin-top: 45px"></div>
-      <div style="width:250px;height:75px;margin-top: 40px">
-        <div style="font-size: 15px; text-align:center;margin-top: 2px" class="fontClass" >温度阈值：<span style="color:white">50°C</span></div>
-        <div style="font-size: 15px; text-align:center;" class="fontClass" >位移阈值：<span style="color:white">10cm</span></div>
-        <div style="font-size: 15px; text-align:center;" class="fontClass" >振动信号短时能量阈值：<span style="color:white">20dB</span></div>
+      <dv-decoration-8 :reverse="true" style="width:350px;height:50px;" />
+    </div>
+    <div style="position: relative; height:80px;display: flex;justify-content: space-between">
+      <div style="width:200px;height:75px;margin-top: 0px">
+        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >设备数量</div>
+        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
       </div>
-      <div style="width:250px;height:75px;margin-top: 45px">
+      <div style="width:250px;height:75px;margin-top: 0px">
+        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass " >在线数量</div>
+        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
+      </div>
+      <div style="width:250px;height:75px;margin-top: 0px"></div>
+      <div style="width:250px;height:75px;margin-top: 0px"></div>
+      <div style="width:250px;height:75px;margin-top: 0px"></div>
+      <div style="width:250px;height:75px;margin-top: 0px"></div>
+      <div style="width:250px;height:75px;margin-top: 0px">
         <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >预警信息</div>
         <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >无</div>
       </div>
-      <dv-decoration-8 :reverse="true" style="width:200px;height:50px;" />
+      <div style="width:250px;height:75px;margin-top: -10px">
+        <div style="font-size: 15px; text-align:center;margin-top: 2px" class="fontClass" >温度阈值：<span style="color:white">50°C</span></div>
+        <div style="font-size: 15px; text-align:center;" class="fontClass" >位移阈值：<span style="color:white">10cm</span></div>
+        <div style="font-size: 15px; text-align:center;" class="fontClass" >振动信号短时能量<br>阈值：<span style="color:white">20dB</span></div>
+
+      </div>
     </div>
     <div class="container fontClass" style="margin-top: 10px">
       <div class="box2 top">
@@ -62,7 +68,7 @@
           <line-chart-vibration class="charts" style="height: 400px; width: 400px"/>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <max-offset   class="charts" style="height:400px; width: 400px"/>
+          <shortTimeEnergy class="charts" style="height: 400px; width:600px"></shortTimeEnergy>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
           <line-chart-temperature class="charts" style="height: 400px; width:600px"></line-chart-temperature>
@@ -76,7 +82,7 @@
           <strainHistory class="charts" style="height:400px; width: 400px"></strainHistory>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <img src="@/assets/vibration.png" class="charts" style="height: 400px;" alt="">
+          <max-offset   class="charts" style="height:400px; width: 400px"/>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
           <img src="@/assets/shortterm.png"  class="charts" style="height: 400px;" alt="">
@@ -102,10 +108,7 @@
   </n-modal>
 </template>
 <script>
-
-
 import {defineComponent, onMounted, ref} from "vue";
-
 import CenterTop from '../components/centerTopChart.vue'
 import LineChartTemperature from '../components/centerBottomChart.vue'
 import LineChartStrain from '../components/leftTopChart.vue'
@@ -120,8 +123,8 @@ import ThreeTemperature from "@/components/threeTemperature.vue";
 import functionCall from "@/functionCall";
 import temperatureHistory from "@/components/temperatureHistory.vue";
 import strainHistory from "@/components/strainHistory.vue";
+import shortTimeEnergy from "@/components/shortTimeEnergy";
 import { useDialog } from 'naive-ui'
-
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
 let showCurveHis = ref(false);
@@ -160,7 +163,6 @@ const HispageTurning = ()=>{
       showCurveNext.value = false;
       showCurveHis.value = false
       clickTime = 1;
-
     }
 }
 const imgTurning = () => {
@@ -182,14 +184,13 @@ export default defineComponent({
     VibrationWave,
     ThreeTemperature,
     strainHistory,
+    shortTimeEnergy,
     temperatureHistory
   },
-
   setup(){
     const height_top = ref({
       height: ''
     });
-
     onMounted(async ()=>{
       const { data } = await new functionCall().handleQueryOnline();
       if(window.innerHeight != null){
@@ -200,7 +201,6 @@ export default defineComponent({
           height_top.value.height = window.innerHeight - 64 +'px';
         })();
       };
-
     })
     return{
       height_top,
@@ -212,7 +212,6 @@ export default defineComponent({
       pageTurning,
       HispageTurning,
       imgTurning,
-
     }
   }
 });
@@ -222,7 +221,6 @@ export default defineComponent({
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color:  cadetblue;
 }
-
 .imgTop{
   font-size: large;
   margin-left:10px;
@@ -231,7 +229,6 @@ export default defineComponent({
   flex-direction: row;
   justify-content: space-between
 }
-
 .container{
   display: flex;
   flex-direction: column;
@@ -294,24 +291,4 @@ img{
   height: fit-content;
   display: flex;
 }
-/*@media screen and(max-device-width: 450px){*/
-/*  .container{*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    padding-bottom: 75px;*/
-/*  }*/
-/*  .left{*/
-/*    width: 100%;*/
-/*  }*/
-/*  .right{*/
-/*    width: 100%;*/
-/*  }*/
-/*  .center{*/
-/*    width: 100%;*/
-/*  }*/
-/*  .box{*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*  }*/
-/*}*/
 </style>

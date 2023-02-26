@@ -47,7 +47,7 @@ export default defineComponent({
       let vibration = [];
       option = {
         title: {
-          text: '海底电缆实时振动值',
+          text: '实时振动信号主频值',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',

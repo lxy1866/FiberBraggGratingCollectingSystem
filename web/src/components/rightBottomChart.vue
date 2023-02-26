@@ -9,11 +9,13 @@ import "echarts-gl"
 import {all, create} from 'mathjs'
 import axios from "axios";
 import interp1 from 'interp1';
+import {Tool} from "@/util/tool";
 const config = {}
 const math = create(all, config)
 function queryLast15() {
   return axios.get("/txt/queryLast15")
 }
+
 const Spline = require('cubic-spline');
 async function generateData(queryLast15Result) {
   /*******15*3******/
@@ -126,10 +128,15 @@ export default defineComponent({
       const chartDom = document.getElementById('rightBottomChart');
       const myChart = echarts.init(chartDom);
       let option;
+      let websocket;
+      let token;
       let queryLast15Result = []
       queryLast15Result = await queryLast15()
       let createTime = queryLast15Result.data.content[14].createTime.toLocaleString('zh');
       console.log("createTime", createTime)
+      var shape = "shape";
+      var temp = "";
+
       //let createTime = queryLast15Result.data.content[14].createTime.replace("CST",'GMT+0800').toLocaleString()
       //console.log(data.length);
       option = {
@@ -199,6 +206,8 @@ export default defineComponent({
           }
         },
         zAxis3D: {
+          max: 1,
+          min: -4,
           type: 'value',
           axisLabel: {
             show: true,
@@ -283,9 +292,43 @@ export default defineComponent({
         // }
       };
       //window.onresize = myChart.resize;
-      await myChart.setOption(option);
 
-   })
+      const onOpen = () =>{
+        console.log('WebSocket连接成功，状态码：',websocket.readyState)
+      };
+      const onMessage = function (msg){
+        let data = JSON.parse(msg.data);
+        for(let i=0;i<30;i++){
+          option.series[0].data[i][2]=data[i];
+        }
+        myChart.setOption(option);
+      };
+      const onError = ()=>{
+        console.log('WebSocket连接错误，状态码：', websocket.readyState)
+      };
+      const onClose = ()=>{
+        console.log('WebSocket连接关闭，状态码：',websocket.readyState)
+      };
+      const initWebSocket = () =>{
+        //连接成功
+        websocket.onOpen = onOpen;
+        // 收到消息的回调
+        websocket.onmessage = onMessage;
+        // 连接错误
+        websocket.onerror = onError;
+        // 连接关闭的回调
+        websocket.onClose = onClose;
+      }
+      if('WebSocket' in window){
+        token = Tool.uuid(10);
+        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/MEMSWs/'+token);
+        initWebSocket()
+      }else{
+        alert('当前浏览器 不支持')
+      }
+
+    })
+
     return{
     }
   },

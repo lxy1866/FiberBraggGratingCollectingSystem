@@ -20,12 +20,12 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static top.kaluna.modbusTcp.util.ReadXlsxUtil.readxlsxVal;
 
 @Component
 @Order(1)
@@ -53,6 +53,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
         byte[] waveBytes = new byte[1024];
         DatagramPacket waveDp = new DatagramPacket(waveBytes, bytes.length);
         // 调用DatagramSocket对象的方法接收数据
+
         Thread thread = new Thread(() -> {
             while (true) {
                 try {
@@ -104,6 +105,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
                 //websocket推送
                 String logId = (String) MDC.get("LOG_ID");
                 String jsonString = JSONObject.toJSONString(fbgValues, SerializerFeature.MapSortField);
+                System.out.println("线程2："+jsonString);
                 wsService.sendInfo(jsonString, logId);
                 //存储到数据库
                 fbgValueMapper.multipleInsert(fbgValues);
@@ -144,10 +146,32 @@ public class UdpCollectRunner  implements ApplicationRunner {
                     wsService.sendVibrationWaveInfo(jsonString, logId);
                 }
             }
-
         });
+
+        Thread MEMSThread =new Thread(() ->{
+            while(true){
+                List<Double> MEMSvalue = new ArrayList<>();
+                for(int i=2;i<23;i=i+4){
+                    try {
+                        MEMSvalue=readxlsxVal("/root/fbgData/data.xlsx",i,0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    String logId = (String) MDC.get("LOG_ID");
+                    String jsonString = JSONObject.toJSONString(MEMSvalue, SerializerFeature.MapSortField);
+                    wsService.sendMEMSInfo(jsonString, logId);
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
         thread.start();
         vibrationWaveThread.start();
+        MEMSThread.start();
         //ds.close();
     }
 

@@ -18,6 +18,7 @@
 <script lang="js">
 import {defineComponent, onMounted, reactive, ref, watch} from 'vue';
 import axios from "axios";
+import * as echarts from 'echarts';
 import {message} from "ant-design-vue";
 let data = {};
 let range2 = ref();

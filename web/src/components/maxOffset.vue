@@ -36,7 +36,7 @@ export default defineComponent({
         },
         yAxis: {
           type: 'value',
-          name: '最大位移（m）',
+          name: '最大位移（mm）',
           nameLocation: 'center',
           nameGap: 40
         },

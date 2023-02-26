@@ -102,12 +102,12 @@ export default defineComponent({
         animationEasing: 'linear',
         animationEasingUpdate: 'linear',
         visualMap: {
-          orient: 'vertical',
-          left: 'left',
-          bottom: 0,
-          min: -100,
-          max: 100,
-          text: ['High Score', 'Low Score'],
+          orient: 'horizontal',
+          left: -5,
+          bottom: -5,
+          min: -50,
+          max: 50,
+          text: ['High', 'Low'],
           textStyle: {
             color: 'white'
           },
@@ -123,7 +123,7 @@ export default defineComponent({
           elements: [
             {
               type: 'text',
-              right: 70,
+              right: 40,
               bottom: 0,
               style: {
                 text: "",
@@ -144,7 +144,45 @@ export default defineComponent({
         let data = JSON.parse(msg.data);
         for (let i = 4; i < 17; i++) {
           //四舍五入取两位小数
-          strain.push(Math.round(data[i].value * 100) / 100)
+          if(i==4){
+            strain.push(Math.round((data[i].value+70) * 100) / 100);
+          }
+          if(i==5){
+            strain.push(Math.round((data[i].value-30) * 100) / 100);
+          }
+          if(i==6){
+            strain.push(Math.round((data[i].value+60) * 100) / 100);
+          }
+          if(i==7){
+            strain.push(Math.round((data[i].value+70) * 100) / 100);
+          }
+          if(i==8){
+            strain.push(Math.round((data[i].value+90) * 100) / 100);
+          }
+          if(i==9){
+            strain.push(Math.round(data[i].value * 100) / 100);
+          }
+          if(i==10){
+            strain.push(Math.round((data[i].value+70) * 100) / 100);
+          }
+          if(i==11){
+            strain.push(Math.round((data[i].value+80) * 100) / 100);
+          }
+          if(i==12){
+            strain.push(Math.round((data[i].value-40) * 100) / 100);
+          }
+          if(i==13){
+            strain.push(Math.round((data[i].value+70) * 100) / 100);
+          }
+          if(i==14){
+            strain.push(Math.round((data[i].value-130) * 100) / 100);
+          }
+          if(i==15){
+            strain.push(Math.round((data[i].value+30) * 100) / 100);
+          }
+          if(i==16){
+            strain.push(Math.round(data[i].value * 100) / 100);
+          }
         }
         option.series[0].data = strain;
         strain = [];
