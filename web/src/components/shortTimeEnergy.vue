@@ -14,7 +14,7 @@ export default defineComponent({
       let websocket;
       let token;
       let vibration = [];
-      const hann = [0.0800,0.1876,0.4601,0.7700,0.9723,0.9723,0.7700,0.4601,0.1876,0.0800];
+      const win = [0.0800,0.1876,0.4601,0.7700,0.9723,0.9723,0.7700,0.4601,0.1876,0.0800];
       const wlen = 10;
       const inc = 4;
       var chartDom = document.getElementById('shortTimeEnergy');
@@ -71,6 +71,9 @@ export default defineComponent({
           }
         },
         yAxis: {
+          name: '能量(dB)',
+          nameLocation: 'center',
+          nameGap: 30,
           splitArea: {
             show: false
           },
@@ -89,7 +92,6 @@ export default defineComponent({
         var a = 0;
         var ans = 0;
         var c = 0;
-        var asa = 0;
         var m = 0;
         var k = 0;
         var v = 0;
@@ -98,65 +100,84 @@ export default defineComponent({
         for (let i = 0;i<500;i++){
           ans=ans+list[i];
           v += 1;
-          if(i%60==0){
-            console.log('ans:',ans);
-            console.log('v:',v);
+          if((i+1)%60==0){
             c=ans/60;
-            console.log('c:',c);
-            asa=c;
             ans=0;
-            for(k=v-59;k<v;k++){
+            for(k=v-60;k<v;k++){
               M[k]=M[k]-c;
-              s=i;
             }
+            s=i+1;
           }
         }
-        console.log('s:',s);
-        console.log('M:',M);
         var sad=0;
         for(let i =s;i<500;i++){
           sad=sad+M[i];
         }
         console.log('sad:',sad);
         var sade=sad/(500-s);
-        for(let i=s+1;i<500;i++){
+        for(let i=s;i<500;i++){
           M[i]=M[i]-sade;
         }
-        console.log('sade:',sade);
-        var frames = Array(123);
-        for (let i =0;i<frames.length;i++){
-          frames[i]=Array(10);
+
+        var f = Array(123);
+        for (let i = 0;i<123;i++){
+          f[i]=Array(10);
         }
-        var startIndex=0;
-        var endIndex=0;
-        for(let i = 0;i<123;i++){
-          startIndex = i*inc;
-          endIndex = startIndex+wlen;
-          if(endIndex>M.length){
-            endIndex = M.length;
-          }
-          // var frame = [];
+        var indf =Array(123);
+        for(let i=0;i<123;i++){
+          indf[i]=i*inc;
+        }
+        var inds =Array(10);
+        for (let i=0;i<10;i++){
+          inds[i]=i+1;
+        }
+        for(let i=0;i<123;i++){
           for(let j=0;j<10;j++){
-            if(startIndex+i<M.length){
-              frames[i][j]=M[startIndex+j];
-              // frame.push(M[startIndex+i]);
-            }else {
-              frames[i][j]=0;
-              // frame.push(0);
-            }
+            f[i][j]=M[indf[i]+inds[j]-1];
           }
-          // frames.push(frame);
         }
-        console.log('frames:',frames);
+        for(let i=0;i<123;i++){
+          for(let j=0;j<10;j++){
+            f[i][j]=f[i][j]*win[j];
+          }
+        }
+        // var frames = Array(123);
+        // for (let i =0;i<frames.length;i++){
+        //   frames[i]=Array(10);
+        // }
+        // var startIndex=0;
+        // var endIndex=0;
+        // for(let i = 0;i<123;i++){
+        //   startIndex = i*inc;
+        //   endIndex = startIndex+wlen;
+        //   if(endIndex>M.length){
+        //     endIndex = M.length;
+        //   }
+        //   // var frame = [];
+        //   for(let j=0;j<10;j++){
+        //     if(startIndex+i<M.length){
+        //       frames[i][j]=M[startIndex+j];
+        //       // frame.push(M[startIndex+i]);
+        //     }else {
+        //       frames[i][j]=0;
+        //       // frame.push(0);
+        //     }
+        //   }
+        //   // frames.push(frame);
+        // }
+        // console.log('frames:',frames);
         var temp = 0;
         var energy = Array(123);
         for(let i=0;i<123;i++){
+          energy[i]=0;
+        }
+        for(let i=0;i<123;i++){
           for (let j =0;j<10;j++){
-            temp=frames[i][j]*frames[i][j];
+            temp=f[i][j]*f[i][j];
             energy[i]=energy[i]+temp;
+            temp=0;
           }
         }
-        console.log('energy:',energy);
         const categoryData = [];
         const valueData = [];
         for (let i = 0; i < 123; i++) {

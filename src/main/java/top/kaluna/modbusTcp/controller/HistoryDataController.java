@@ -124,6 +124,42 @@ public class HistoryDataController {
         return resp;
     }
 
+    @GetMapping("/shortTimeX")
+    public CommonResp<List<String>> getShortTimeX() throws IOException {
+        CommonResp<List<String>> resp = new CommonResp<>();
+        List<String> list = readxlsxStr("/root/fbgData/shorttime.xlsx",1,0);
+//        List<String> list = readxlsxStr("F:\\数据\\短时能量.xlsx",1,0);
+        resp.setContent(list);
+        return resp;
+    }
+
+    @GetMapping("/shortTimeY")
+    public CommonResp<List<Double>> getShortTimeY() throws IOException {
+        CommonResp<List<Double>> resp = new CommonResp<>();
+        List<Double> list = readxlsxVal("/root/fbgData/shorttime.xlsx",0,0);
+//        List<Double> list = readxlsxVal("F:\\数据\\短时能量.xlsx",0,0);
+        resp.setContent(list);
+        return resp;
+    }
+
+    @GetMapping("/vibrationX")
+    public CommonResp<List<String>> getVibrationX() throws IOException {
+        CommonResp<List<String>> resp = new CommonResp<>();
+        List<String> list = readxlsxStr("/root/fbgData/vibration.xlsx",1,0);
+//        List<String> list = readxlsxStr("F:\\数据\\振动波长.xlsx",1,0);
+        resp.setContent(list);
+        return resp;
+    }
+
+    @GetMapping("/vibrationY")
+    public CommonResp<List<Double>> getVibrationY() throws IOException {
+        CommonResp<List<Double>> resp = new CommonResp<>();
+        List<Double> list = readxlsxVal("/root/fbgData/vibration.xlsx",0,0);
+//        List<Double> list = readxlsxVal("F:\\数据\\振动波长.xlsx",0,0);
+        resp.setContent(list);
+        return resp;
+    }
+
 //    @GetMapping("/shape")
 //    public CommonResp<Map<String,List<Double>>> getShape() throws IOException {
 //        CommonResp<Map<String,List<Double>>> resp = new CommonResp<>();

@@ -10,21 +10,7 @@
               mode="inline"
               :style="{ height: '100%', borderRight: 0 }"
           >
-            <a-sub-menu key="传感器列表">
-              <template #title>
-              <span>
-                <database-outlined />
-                传感器列表
-              </span>
-              </template>
-              <a-menu-item key="属性查询" >
-                属性查询
-              </a-menu-item>
-              <a-menu-item key="新增传感器" >
-                新增传感器
-              </a-menu-item>
-            </a-sub-menu>
-            <a-sub-menu key="数据查询">
+          <a-sub-menu key="数据查询">
               <template #title>
               <span>
                 <database-outlined />
@@ -41,6 +27,21 @@
 <!--                异常波动数据检测-->
 <!--              </a-menu-item>-->
             </a-sub-menu>
+            <a-sub-menu key="传感器列表">
+              <template #title>
+              <span>
+                <database-outlined />
+                传感器列表
+              </span>
+              </template>
+              <a-menu-item key="属性查询" >
+                属性查询
+              </a-menu-item>
+              <a-menu-item key="新增传感器" >
+                新增传感器
+              </a-menu-item>
+            </a-sub-menu>
+
 <!--            <a-sub-menu key="断点查询">-->
 <!--              <template #title>-->
 <!--                <span>-->

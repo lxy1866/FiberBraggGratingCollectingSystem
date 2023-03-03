@@ -15,7 +15,7 @@
           </a-menu-item>
           <a-menu-item key="/p_index/detail">
             <transition :name="transitionName">
-              <router-link to="/p_index/detail" :style="user.id? {} : {display:'none'}">传感器列表</router-link>
+              <router-link to="/p_index/detail" :style="user.id? {} : {display:'none'}">历史数据查询</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/p_index/admin/user">

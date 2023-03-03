@@ -13,11 +13,11 @@
     <div style="position: relative; height:80px;display: flex;justify-content: space-between">
       <div style="width:200px;height:75px;margin-top: 0px">
         <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >设备数量</div>
-        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
+        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >54个</div>
       </div>
       <div style="width:250px;height:75px;margin-top: 0px">
         <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass " >在线数量</div>
-        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >50个</div>
+        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >54个</div>
       </div>
       <div style="width:250px;height:75px;margin-top: 0px"></div>
       <div style="width:250px;height:75px;margin-top: 0px"></div>
@@ -65,7 +65,7 @@
       </div>
       <div class="box2 bottom" id="next" v-show="showCurveNext">
         <dv-border-box-7 class="border-box">
-          <line-chart-vibration class="charts" style="height: 400px; width: 400px"/>
+          <line-chart-vibration class="charts" style="height: 400px; width: 600px"/>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
           <shortTimeEnergy class="charts" style="height: 400px; width:600px"></shortTimeEnergy>
@@ -76,16 +76,21 @@
       </div>
       <div class="box2 bottom" id="his" v-show="showCurveHis">
         <dv-border-box-7 class="border-box">
-          <temperatureHistory class="charts" style="height:400px; width: 400px"></temperatureHistory>
+          <temperatureHistory class="charts" style="height:400px; width: 600px"></temperatureHistory>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <strainHistory class="charts" style="height:400px; width: 400px"></strainHistory>
+          <strainHistory class="charts" style="height:400px; width: 600px"></strainHistory>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <max-offset   class="charts" style="height:400px; width: 400px"/>
+          <max-offset   class="charts" style="height:400px; width: 600px"/>
+        </dv-border-box-7>
+      </div>
+      <div class="box2 bottom" id="hisnext" v-show="showHisNext">
+        <dv-border-box-7 class="border-box">
+          <vibrationHis class="charts" style="height:400px; width: 800px"></vibrationHis>
         </dv-border-box-7>
         <dv-border-box-7 class="border-box">
-          <img src="@/assets/shortterm.png"  class="charts" style="height: 400px;" alt="">
+          <shortTimeHis class="charts" style="height:400px; width: 800px"></shortTimeHis>
         </dv-border-box-7>
       </div>
       <div style="display: flex; flex-direction: row-reverse; margin-bottom: 0px" >
@@ -124,10 +129,13 @@ import functionCall from "@/functionCall";
 import temperatureHistory from "@/components/temperatureHistory.vue";
 import strainHistory from "@/components/strainHistory.vue";
 import shortTimeEnergy from "@/components/shortTimeEnergy";
+import shortTimeHis from "@/components/shortTimeHis";
+import vibrationHis from "@/components/vibrationHis";
 import { useDialog } from 'naive-ui'
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
 let showCurveHis = ref(false);
+let showHisNext = ref(false);
 let showRealImg = ref(false);
 let clickTime = 1;
 const pageTurning = ()=>{
@@ -135,35 +143,30 @@ const pageTurning = ()=>{
     showCurvePrev.value = false;
     showCurveNext.value = true;
     showCurveHis.value = false;
-  } else if(showCurveHis.value === true){
-    showCurvePrev.value = true;
-    showCurveNext.value = false;
-    showCurveHis.value = false;
   } else{
     showCurvePrev.value = true;
     showCurveNext.value = false;
     showCurveHis.value = false;
+    showHisNext.value = false;
   }
 }
 const HispageTurning = ()=>{
-    //第一次点击
-    if(clickTime === 1){
-      showCurvePrev.value = false;
-      showCurveNext.value = false;
-      showCurveHis.value = true
-      clickTime = 2;
-      console.log("000000")
-      return;
-    }
-    //第二次点击
-  console.log("77777")
-    if(clickTime === 2){
-      console.log("999")
-      showCurvePrev.value = true;
-      showCurveNext.value = false;
-      showCurveHis.value = false
-      clickTime = 1;
-    }
+  if(showCurvePrev.value === true || showCurveNext.value == true){
+    showCurvePrev.value = false;
+    showCurveNext.value = false;
+    showCurveHis.value = true;
+    showHisNext.value =false;
+  } else if(showCurveHis.value === true){
+    showCurvePrev.value = false;
+    showCurveNext.value = false;
+    showCurveHis.value = false;
+    showHisNext.value = true;
+  }else{
+    showCurvePrev.value = false;
+    showCurveNext.value = false;
+    showCurveHis.value = true;
+    showHisNext.value = false;
+  }
 }
 const imgTurning = () => {
   showRealImg.value = true;
@@ -185,6 +188,8 @@ export default defineComponent({
     ThreeTemperature,
     strainHistory,
     shortTimeEnergy,
+    shortTimeHis,
+    vibrationHis,
     temperatureHistory
   },
   setup(){
@@ -208,6 +213,7 @@ export default defineComponent({
       showCurvePrev,
       showCurveNext,
       showCurveHis,
+      showHisNext,
       showRealImg,
       pageTurning,
       HispageTurning,

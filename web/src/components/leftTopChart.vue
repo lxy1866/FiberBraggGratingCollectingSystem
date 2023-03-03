@@ -142,48 +142,63 @@ export default defineComponent({
       };
       const onMessage = function (msg) {
         let data = JSON.parse(msg.data);
-        for (let i = 4; i < 17; i++) {
-          //四舍五入取两位小数
-          if(i==4){
-            strain.push(Math.round((data[i].value+70) * 100) / 100);
+        var value = Array(13);
+        for (let i=0;i<13;i++){
+          value[i]=data[i+4].value;
+          if(value[i]>0) {
+            while (value[i] > 30) {
+              value[i] = value[i] - 20;
+            }
           }
-          if(i==5){
-            strain.push(Math.round((data[i].value-30) * 100) / 100);
+          if (value[i]<0){
+            while (value[i]<-30){
+              value[i]=value[i]+20;
+            }
           }
-          if(i==6){
-            strain.push(Math.round((data[i].value+60) * 100) / 100);
-          }
-          if(i==7){
-            strain.push(Math.round((data[i].value+70) * 100) / 100);
-          }
-          if(i==8){
-            strain.push(Math.round((data[i].value+90) * 100) / 100);
-          }
-          if(i==9){
-            strain.push(Math.round(data[i].value * 100) / 100);
-          }
-          if(i==10){
-            strain.push(Math.round((data[i].value+70) * 100) / 100);
-          }
-          if(i==11){
-            strain.push(Math.round((data[i].value+80) * 100) / 100);
-          }
-          if(i==12){
-            strain.push(Math.round((data[i].value-40) * 100) / 100);
-          }
-          if(i==13){
-            strain.push(Math.round((data[i].value+70) * 100) / 100);
-          }
-          if(i==14){
-            strain.push(Math.round((data[i].value-130) * 100) / 100);
-          }
-          if(i==15){
-            strain.push(Math.round((data[i].value+30) * 100) / 100);
-          }
-          if(i==16){
-            strain.push(Math.round(data[i].value * 100) / 100);
-          }
+          strain.push(Math.round(value[i]*100)/100);
         }
+        // for (let i = 4; i < 17; i++) {
+        //   //四舍五入取两位小数
+        //   if(i==4){
+        //     strain.push(Math.round((data[i].value-30) * 100) / 100);
+        //   }
+        //   if(i==5){
+        //     strain.push(Math.round((data[i].value-30) * 100) / 100);
+        //   }
+        //   if(i==6){
+        //     strain.push(Math.round((data[i].value+60) * 100) / 100);
+        //   }
+        //   if(i==7){
+        //     strain.push(Math.round((data[i].value+70) * 100) / 100);
+        //   }
+        //   if(i==8){
+        //     strain.push(Math.round((data[i].value+90) * 100) / 100);
+        //   }
+        //   if(i==9){
+        //     strain.push(Math.round(data[i].value * 100) / 100);
+        //   }
+        //   if(i==10){
+        //     strain.push(Math.round((data[i].value+70) * 100) / 100);
+        //   }
+        //   if(i==11){
+        //     strain.push(Math.round((data[i].value+80) * 100) / 100);
+        //   }
+        //   if(i==12){
+        //     strain.push(Math.round((data[i].value-40) * 100) / 100);
+        //   }
+        //   if(i==13){
+        //     strain.push(Math.round((data[i].value+70) * 100) / 100);
+        //   }
+        //   if(i==14){
+        //     strain.push(Math.round((data[i].value+160) * 100) / 100);
+        //   }
+        //   if(i==15){
+        //     strain.push(Math.round((data[i].value+30) * 100) / 100);
+        //   }
+        //   if(i==16){
+        //     strain.push(Math.round(data[i].value * 100) / 100);
+        //   }
+        // }
         option.series[0].data = strain;
         strain = [];
         option.graphic.elements[0].style.text = new Date().format("yyyy-MM-dd hh:mm:ss");

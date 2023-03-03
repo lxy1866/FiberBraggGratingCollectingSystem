@@ -206,8 +206,11 @@ export default defineComponent({
           }
         },
         zAxis3D: {
-          max: 1,
-          min: -4,
+          name: '长\n度\n(m)',
+          nameLocation: 'center',
+          nameGap: 30,
+          max: 0.5,
+          min: -2,
           type: 'value',
           axisLabel: {
             show: true,
