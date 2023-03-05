@@ -7,6 +7,9 @@ public class User {
 
     private String password;
 
+    private String email;
+
+
     public Long getId() {
         return id;
     }
@@ -31,6 +34,14 @@ public class User {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -40,6 +51,7 @@ public class User {
         sb.append(", id=").append(id);
         sb.append(", loginName=").append(loginName);
         sb.append(", password=").append(password);
+        sb.append(", email=").append(email);
         sb.append("]");
         return sb.toString();
     }

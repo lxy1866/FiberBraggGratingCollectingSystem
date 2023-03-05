@@ -9,9 +9,17 @@ public class UserLoginResp {
 
     private String loginName;
 
-    private String name;
-
     private String token;
+
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getToken() {
         return token;
@@ -35,23 +43,14 @@ public class UserLoginResp {
         this.loginName = loginName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("UserLoginResp{");
-        sb.append("id=").append(id);
-        sb.append(", loginName='").append(loginName).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", token='").append(token).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "UserLoginResp{" +
+                "id=" + id +
+                ", loginName='" + loginName + '\'' +
+                ", token='" + token + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

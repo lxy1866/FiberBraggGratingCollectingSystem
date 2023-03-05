@@ -12,6 +12,7 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import '../static/reset.less'
 import {Tool} from "@/util/tool";
+import './assets/iconfont/iconfont.css';
 axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 /**
  * axios拦截器

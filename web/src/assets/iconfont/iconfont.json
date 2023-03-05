@@ -1,0 +1,23 @@
+{
+  "id": "3931931",
+  "name": "监控系统",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "577319",
+      "name": "问号",
+      "font_class": "wenhao",
+      "unicode": "e72d",
+      "unicode_decimal": 59181
+    },
+    {
+      "icon_id": "145425",
+      "name": "灯泡提示",
+      "font_class": "dengpaotishi",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    }
+  ]
+}

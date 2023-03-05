@@ -47,9 +47,9 @@
 <!--        <table tableName="normal_range"></table>-->
 <!--        <table tableName="fbg_value_info"/>-->
 <!--        <table tableName="txt_value"/>-->
-                <table tableName="position_value"/>
+<!--                <table tableName="position_value"/>-->
 <!--        <table tableName="min_max_value_for_temperature"/>-->
-<!--        <table tableName="user"/>-->
+        <table tableName="user"/>
 <!--        <table tableName="arc"/>-->
     </context>
 </generatorConfiguration>
