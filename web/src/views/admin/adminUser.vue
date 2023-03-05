@@ -66,6 +66,14 @@
         placeholder="密码"
         :maxlength="8"
     />
+    <br/><br/>
+    <n-input
+        v-model:value="user.email"
+        type="password"
+        show-password-on="mousedown"
+        placeholder="邮件"
+        :maxlength="8"
+    />
   </n-modal>
   <n-modal
       v-model:show="resetModalVisible"
@@ -152,6 +160,10 @@ export default defineComponent({
         dataIndex: 'password'
       },
       {
+        title: '邮件',
+        dataIndex: 'email'
+      },
+      {
         title: 'Action',
         key: 'action',
         slots: { customRender: 'action' }
@@ -173,7 +185,6 @@ export default defineComponent({
       }else{
         message.success('授权码错误')
       }
-
     }
     /**
      * 数据查询
@@ -194,7 +205,7 @@ export default defineComponent({
         const data = response.data;
         if (data.success) {
           users.value = data.content.list;
-
+          console.log(users.value)
           // 重置分页按钮
           pagination.value.current = params.page;
           pagination.value.total = data.content.total;

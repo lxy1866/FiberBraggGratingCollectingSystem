@@ -1,38 +1,23 @@
 <template>
   <the-header></the-header>
   <a-layout-content style="padding: 0; background: #001529;  overflow-x: hidden;" :style="{margin: 0, height: height_top.height}">
-    <div style="position: relative; height:60px; display: flex;justify-content: space-between" >
-      <dv-decoration-8 style="width:350px;height:50px;" />
-      <div style="width:100px;height:75px;margin-top: 45px"></div>
-      <div style="width:400px;height:160px;display: flex; flex-flow: column; justify-content: center; margin-top: -50px;margin-right: 10px;">
-        <div style="font-size: 30px; color: cadetblue;text-align:center;" class="fontClass" >海底电缆智能健康监测系统</div>
-      </div>
-      <div style="width:100px;height:75px;margin-top: 45px"></div>
-      <dv-decoration-8 :reverse="true" style="width:350px;height:50px;" />
+    <div style=" height:60px; display: flex;justify-content: space-between" >
+      <dv-decoration-8 style="width:350px;" />
+        <div style="font-size: 30px; width:400px;color: cadetblue;text-align:center;" >海底电缆智能健康监测系统</div>
+      <dv-decoration-8 :reverse=true style="width:350px;" />
     </div>
-    <div style="position: relative; height:80px;display: flex;justify-content: space-between">
-      <div style="width:200px;height:75px;margin-top: 0px">
-        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >设备数量</div>
-        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >54个</div>
-      </div>
-      <div style="width:250px;height:75px;margin-top: 0px">
-        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass " >在线数量</div>
-        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >54个</div>
-      </div>
-      <div style="width:250px;height:75px;margin-top: 0px"></div>
-      <div style="width:250px;height:75px;margin-top: 0px"></div>
-      <div style="width:250px;height:75px;margin-top: 0px"></div>
-      <div style="width:250px;height:75px;margin-top: 0px"></div>
-      <div style="width:250px;height:75px;margin-top: 0px">
-        <div style="font-size: 15px; text-align:center;margin-top: 10px" class="fontClass" >预警信息</div>
-        <div style="font-size: 15px; color: white;text-align:center;" class="fontClass" >无</div>
-      </div>
-      <div style="width:250px;height:75px;margin-top: -10px">
-        <div style="font-size: 15px; text-align:center;margin-top: 2px" class="fontClass" >温度阈值：<span style="color:white">50°C</span></div>
-        <div style="font-size: 15px; text-align:center;" class="fontClass" >位移阈值：<span style="color:white">10cm</span></div>
-        <div style="font-size: 15px; text-align:center;" class="fontClass" >振动信号短时能量<br>阈值：<span style="color:white">20dB</span></div>
-
-      </div>
+    <div class="warn-info">
+      <ul>
+        <li><div style="color: cadetblue">设备数量</div><div>54个</div></li>
+        <li><div style="color: cadetblue">在线数量</div><div>54个</div></li></ul>
+      <ul>
+        <li>
+          <div style="color: cadetblue">健康状态
+            <span><a-button size="small" type="link" class="wenhao" @click="showWarnInfoDialog" style="visibility: visible">⚠</a-button></span>
+          </div>
+          <div><span class="iconfont icon-dengpaotishi" style="margin-right: 3px"></span>正常状态</div>
+        </li>
+      </ul>
     </div>
     <div class="container fontClass" style="margin-top: 10px">
       <div class="box2 top">
@@ -111,6 +96,30 @@
       <img src="@/assets/realImg.png" style="height: 100%; width: 100%" alt="">
     </n-card>
   </n-modal>
+  <n-modal v-model:show="warnInfoDialog">
+    <n-card
+        style="width: 600px"
+        title="说明"
+        :bordered="false"
+        size="huge"
+        role="dialog"
+        aria-modal="true"
+    >
+      <p>正常状态：海缆各状态量处于规定的注意值以内，可以正常运行（低于状态量的阈值80%）</p>
+      <p>注意状态：海缆的单项（或多项）状态量变化趋势朝标准限值方向发展，仍可继续运行，但应加强监视（介于状态量阈值的 80%-100%）</p>
+      <p>异常状态：单项重要状态量变化较大，已略微超过标准限值，应监视运行，并适时安排检修(介于状态量阈值的100%-120%)</p>
+      <p>严重状态：单项重要状态量严重超过标准限值，应尽快安排检修（高于状态量阈值的 120%）</p>
+      <p>当整体健康状态是正常状态时，海缆本体和OFFSET的状态也是正常状态，灯泡显示绿色；
+        当整体健康状态是注意状态时，灯泡显示黄色，并发送邮件提醒海缆本体和OFFSET的状态；
+        当整体健康状态是异常状态时，灯泡显示红色，并发送邮件提醒海缆本体和OFFSET的状态；</p>
+      <p>
+        温度阈值：50℃<br>
+        位移最大变化量：16cm<br>
+        应变值阈值：±200微应变<br>
+        振动信号短时能量阈值：1dB<br>
+      </p>
+    </n-card>
+  </n-modal>
 </template>
 <script>
 import {defineComponent, onMounted, ref} from "vue";
@@ -131,12 +140,12 @@ import strainHistory from "@/components/strainHistory.vue";
 import shortTimeEnergy from "@/components/shortTimeEnergy";
 import shortTimeHis from "@/components/shortTimeHis";
 import vibrationHis from "@/components/vibrationHis";
-import { useDialog } from 'naive-ui'
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
 let showCurveHis = ref(false);
 let showHisNext = ref(false);
 let showRealImg = ref(false);
+let warnInfoDialog = ref(false);
 let clickTime = 1;
 const pageTurning = ()=>{
   if(showCurvePrev.value === true && showCurveNext.value === false){
@@ -170,8 +179,9 @@ const HispageTurning = ()=>{
 }
 const imgTurning = () => {
   showRealImg.value = true;
-  // const dialog = useDialog()
-  // dialog.warning(options)
+}
+const showWarnInfoDialog = () => {
+  warnInfoDialog.value = true;
 }
 export default defineComponent({
   components:{
@@ -215,17 +225,50 @@ export default defineComponent({
       showCurveHis,
       showHisNext,
       showRealImg,
+      warnInfoDialog,
       pageTurning,
       HispageTurning,
       imgTurning,
+      showWarnInfoDialog
     }
   }
 });
 </script>
 <style scoped>
+.icon-dengpaotishi{
+  color: green;
+
+}
+/*.icon-wenhao{*/
+/*  background-color: transparent;*/
+/*  border-color: transparent;*/
+/*  cursor: pointer;*/
+/*}*/
+
+.wenhao{
+  padding-left: 0;
+  border-color: transparent;
+}
+.warn-info{
+  margin-top: 10px;
+  height:60px;
+  display: flex;
+  justify-content: space-between
+}
 .fontClass{
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color:  cadetblue;
+}
+li{
+  display: inline-block;
+  height: 60px;
+  margin-left: 100px;
+  text-align:center;
+  color: white;
+  vertical-align: center;
+}
+ul:last-child{
+  margin-right: 100px;
 }
 .imgTop{
   font-size: large;
@@ -238,15 +281,6 @@ export default defineComponent({
 .container{
   display: flex;
   flex-direction: column;
-}
-.left{
-  width: 30%;
-}
-.right{
-  width: 30%;
-}
-.center{
-  width: 40%;
 }
 .top{
   height: 30%;
