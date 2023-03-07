@@ -3,19 +3,27 @@
   <a-layout-content style="padding: 0; background: #001529;  overflow-x: hidden;" :style="{margin: 0, height: height_top.height}">
     <div style=" height:60px; display: flex;justify-content: space-between" >
       <dv-decoration-8 style="width:350px;" />
-        <div style="font-size: 30px; width:400px;color: cadetblue;text-align:center;" >海底电缆智能健康监测系统</div>
+        <div style="font-size: 30px; width:400px;color: cadetblue;text-align:center;display: inline-block;vertical-align: center;"  >
+          <div>海底电缆智能健康监测系统</div>
+          <div style="transform: translate(-47px, 0px);"><dv-decoration-3 style="width:100%;height:30px;" /></div>
+        </div>
       <dv-decoration-8 :reverse=true style="width:350px;" />
     </div>
     <div class="warn-info">
       <ul>
-        <li><div style="color: cadetblue">设备数量</div><div>54个</div></li>
-        <li><div style="color: cadetblue">在线数量</div><div>54个</div></li></ul>
+        <li><div style="color: cadetblue; font-size: x-large">设备数量</div><div>54个</div></li>
+        <li><div style="color: cadetblue; font-size: x-large">在线数量</div><div>54个</div></li></ul>
       <ul>
         <li>
-          <div style="color: cadetblue">健康状态
-            <span><a-button size="small" type="link" class="wenhao" @click="showWarnInfoDialog" style="visibility: visible">⚠</a-button></span>
+          <div class="warn-text">
+            <div style="color: cadetblue; font-size: x-large">健康状态
+              <span><a-button size="small" type="link" class="wenhao" @click="showWarnInfoDialog" style="visibility: visible">⚠</a-button></span>
+            </div>
+            <div style="padding-right: 30px">正常状态</div>
           </div>
-          <div><span class="iconfont icon-dengpaotishi" style="margin-right: 3px"></span>正常状态</div>
+          <div class="light-img">
+            <span class="iconfont icon-dengpao"></span>
+          </div>
         </li>
       </ul>
     </div>
@@ -39,7 +47,6 @@
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
             <three-temperature class="charts" style="height: 400px"></three-temperature>
-<!--            <real-temperature class="charts" style="height: 400px; "/>-->
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
             <vibration-wave class="charts" style="height: 400px;"></vibration-wave>
@@ -235,9 +242,22 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.icon-dengpaotishi{
-  color: green;
 
+.light-img{
+  float: right;
+  padding-top: 0;
+}
+.warn-text{
+  float: left;
+}
+.icon-dengpao{
+  color: green;
+  font-size: xxx-large;
+  animation: blink 500ms linear infinite;
+}
+@keyframes blink {
+  0%{opacity: 1;}
+  100%{opacity: 0}
 }
 /*.icon-wenhao{*/
 /*  background-color: transparent;*/
@@ -248,6 +268,9 @@ export default defineComponent({
 .wenhao{
   padding-left: 0;
   border-color: transparent;
+}
+.light-right{
+  vertical-align: center;
 }
 .warn-info{
   margin-top: 10px;
@@ -331,4 +354,5 @@ img{
   height: fit-content;
   display: flex;
 }
+
 </style>
