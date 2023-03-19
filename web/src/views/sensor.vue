@@ -1,5 +1,5 @@
 <template>
-  <the-header></the-header>
+<the-header></the-header>
   <div  class="components-layout-fixed" >
     <a-layout-content >
       <a-layout style="padding: 10px 0; background: #fff">
@@ -11,16 +11,14 @@
               :style="{ height: '100%', borderRight: 0 }"
           >
 
-              <a-menu-item key="光纤光栅传感器历史数据" title="光纤光栅传感器历史数据">
-                光纤光栅传感器历史数据
-              </a-menu-item>
-              <a-menu-item key="MEMS传感器历史数据" title="MEMS传感器历史数据">
-                MEMS传感器历史数据
-              </a-menu-item>
-<!--              <a-menu-item key="异常波动数据检测">-->
-<!--                异常波动数据检测-->
-<!--              </a-menu-item>-->
 
+
+              <a-menu-item key="属性查询" >
+                属性查询
+              </a-menu-item>
+              <a-menu-item key="新增传感器" >
+                新增传感器
+              </a-menu-item>
 
 
 <!--            <a-sub-menu key="断点查询">-->
@@ -54,24 +52,23 @@
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
         >
           <div>
-
-            <div v-if="'光纤光栅传感器历史数据' === selectedKey">
+            <div v-if="'属性查询' === selectedKey">
               <n-loading-bar-provider>
                 <n-message-provider>
                   <n-notification-provider>
                     <n-dialog-provider>
-                      <HistoryDataQuery />
+                      <SensorList />
                     </n-dialog-provider>
                   </n-notification-provider>
                 </n-message-provider>
               </n-loading-bar-provider>
             </div>
-            <div v-else-if="'MEMS传感器历史数据' === selectedKey">
+            <div v-else-if="'新增传感器' === selectedKey">
               <n-loading-bar-provider>
                 <n-message-provider>
                   <n-notification-provider>
                     <n-dialog-provider>
-                      <Query />
+                      <AdminPhysicalValue />
                     </n-dialog-provider>
                   </n-notification-provider>
                 </n-message-provider>
@@ -105,7 +102,7 @@
                 <n-message-provider>
                   <n-notification-provider>
                     <n-dialog-provider>
-                      <HistoryDataQuery />
+                      <SensorList />
                     </n-dialog-provider>
                   </n-notification-provider>
                 </n-message-provider>
@@ -117,7 +114,8 @@
     </a-layout-content>
   </div>
 </template>
-<script >
+
+<script>
 import { defineComponent, ref, watch, onMounted} from "vue";
 import HistoryDataQuery from "../components/historyDataQuery.vue";
 import AbnormalDataQuery from "../components/abnormalDataQuery.vue";
@@ -162,6 +160,7 @@ export default defineComponent({
 
 });
 </script>
+
 <style scoped>
 .components-layout-fixed{
   margin-bottom: 70px;

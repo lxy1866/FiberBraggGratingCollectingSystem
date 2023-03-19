@@ -5,17 +5,12 @@
         v-model:value="range2"
         type="datetimerange"
     />
-    <n-data-table
-        remote
-        ref="table"
-        :columns="columns"
-        :data="data"
-        :pagination="pagination"
-        @update:page="handlePageChange"
-    />
+    <div style="color: #1890ff; font-family: 'Adobe 宋体 Std L';">请选择要查询的传感器类型：</div>
+    <n-select v-model:value="selected" :options="options"></n-select>
   </n-space>
+  <div id="chart" class="chart" style="height: 500px;margin-top: 20px" ></div>
 </template>
-<script lang="js">
+<script lang="ts">
 import {defineComponent, onMounted, reactive, ref, watch} from 'vue';
 import axios from "axios";
 import * as echarts from 'echarts';
@@ -24,168 +19,888 @@ let data = {};
 let range2 = ref();
 let startTime = ref();
 let endTime = ref();
-let columns = ref([]);
 let dataRef = ref()
-var fullYear = new Date(new Date().setFullYear(2022, 7, 29));//其实是8月29日
-//var frontOneHourTimeStamp = new Date(fullYear.setHours(15, 0, 0, 0)).getTime();
-//var currentHourTimeStamp = new Date(fullYear.setHours(15, 59, 59, 0)).getTime();
-//如果没有选时间控件，就默认展示上个小时的内容
-var frontOneHourTimeStamp = startTime.value == null ? startTime.value : new Date(new Date().setHours(new Date().getHours() - 1, 0, 0, 0)).getTime();
-var currentHourTimeStamp = endTime.value == null ? endTime.value : new Date(new Date().setHours(new Date().getHours(), 0, 0, 0)).getTime();
-function dateToGMT(strDate){
-  const dateStr = strDate.split(" ");
-  const strGMT = dateStr[0] + " " + dateStr[1] + " " + dateStr[2] + " " + dateStr[5] + " " + dateStr[3] + " GMT+0800";
-  const date = new Date(Date.parse(strGMT));
-  return date;
-}
-const handleTableColumn = function (){
-    columns.value = [];
-    columns.value.push(
-        {
-          title: "创建时间",
-          dataIndex: "createTime",
-          key: "createTime",
-        },
-        {
-          title: "传感器",
-          dataIndex: "hexadecimal",
-          key: "hexadecimal",
-        },
-        {
-          title: "角度x",
-          dataIndex: "angleX",
-          key: "angleX",
-        },
-        {
-          title: "角度y",
-          dataIndex: "angleY",
-          key: "angleY",
-        },
-        {
-          title: "角度z",
-          dataIndex: "angleZ",
-          key: "angleZ",
-        },
-        {
-          title: "加速度x",
-          dataIndex: "aX",
-          key: "aX",
-        },
-        {
-          title: "加速度y",
-          dataIndex: "aY",
-          key: "aY",
-        },
-        {
-          title: "加速度z",
-          dataIndex: "aZ",
-          key: "aZ",
-        },
-        {
-          title: "角加速度x",
-          dataIndex: "wX",
-          key: "wX",
-        },
-        {
-          title: "角加速度y",
-          dataIndex: "wY",
-          key: "wY",
-        },
-        {
-          title: "角加速度z",
-          dataIndex: "wZ",
-          key: "wZ",
-        },
-    )
-}
+
 export default defineComponent({
   components:{
   },
   setup () {
-    const paginationReactive = reactive({
-      page: 1,
-      pageCount: 1,
-      pageSize: 25,
-      prefix ({ itemCount }) {
-        return `Total is ${itemCount}.`
+
+    const options = [
+      {label: "25", value: '25'},
+      {label: "26", value: '26'},
+      {label: "27", value: '27'},
+      {label: "28", value: '28'},
+      {label: "29", value: '29'},
+      {label: "30", value: '30'},
+      {label: "31", value: '31'},
+      {label: "32", value: '32'},
+      {label: "33", value: '33'},
+      {label: "34", value: '34'},
+      {label: "35", value: '35'},
+      {label: "36", value: '36'},
+      {label: "37", value: '37'},
+      {label: "38", value: '38'},
+      {label: "39", value: '39'},
+    ]
+    let selected = ref()
+
+    var options25 = {
+      title: {
+        text: '0x25'
       },
-      onChange: (page) => {
-        paginationReactive.page = page;
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
       },
-    })
-    const handlePageChange = function (currentPage) {
-      handleQueryList(
-          currentPage,
-          paginationReactive.pageSize,
-          startTime.value,
-          endTime.value
-      )
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
     }
-    const handleQueryList = function (page, pageSize, startTime, endTime) {
-      console.log(page, pageSize, startTime, endTime)
-      // return new Promise((resolve) => {
-      axios.get("/txt/listPosition", {
-        params:{
-          page: page,
-          pageSize: pageSize,
-          startTime: startTime,
-          endTime: endTime
+
+    var options26 = {
+      title: {
+        text: '0x26'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
         }
-      }).then(function (res) {
-        if (res.data.content == null){
-          return;
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
         }
-        console.log("MEMS", res.data.content.list)
-        for(let i = 0; i < res.data.content.list.length; i++){
-          res.data.content.list[i].createTime = new Date(res.data.content.list[i].createTime).toLocaleString('zh');
-          //res.data.content.list[i].createTime = new Date(res.data.content.list[i].createTime.replace("CST",'GMT+0800')).toLocaleString()
-        }
-        dataRef.value = res.data.content.list
-        paginationReactive.pageCount = res.data.content.pageCount
-        paginationReactive.itemCount = res.data.content.total
-      })
+      ]
     }
+
+    var options27 = {
+      title: {
+        text: '0x27'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options28 = {
+      title: {
+        text: '0x28'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options29 = {
+      title: {
+        text: '0x29'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options30 = {
+      title: {
+        text: '0x30'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options31 = {
+      title: {
+        text: '0x31'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options32 = {
+      title: {
+        text: '0x32'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options33 = {
+      title: {
+        text: '0x33'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options34 = {
+      title: {
+        text: '0x34'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options35 = {
+      title: {
+        text: '0x35'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options36 = {
+      title: {
+        text: '0x36'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options37 = {
+      title: {
+        text: '0x37'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options38 = {
+      title: {
+        text: '0x38'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+    var options39 = {
+      title: {
+        text: '0x39'
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(32, 33, 36,.7)',
+        borderColor: 'rgba(32, 33, 36,0.20)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#fff',
+          fontSize: '12'
+        },
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [],
+          name: '加速度x',
+          type: 'line',
+          smooth: true
+        },
+        {
+          data: [],
+          name: '加速度y',
+          smooth: true,
+          type: 'line'
+        },
+        {
+          data: [],
+          name: '加速度z',
+          smooth: true,
+          type: 'line'
+        }
+      ]
+    }
+
+
+
     /**
      * 数据查询
      * @param params
      */
     onMounted(()=> {
-      handleTableColumn();
-      handleQueryList(
-          paginationReactive.page,
-          paginationReactive.pageSize,
-          frontOneHourTimeStamp,
-          currentHourTimeStamp)
-      watch(range2, (newValue, oldValue) => {
-        // console.log(newValue, oldValue);
-        // console.log("range2.value[0]" + range2.value[0]);
-        // console.log("range2.value[1]" + range2.value[1]);
-        startTime.value = range2.value[0];
-        frontOneHourTimeStamp = startTime.value
-        endTime.value = range2.value[1];
-        currentHourTimeStamp = endTime.value
-        if(endTime.value - startTime.value > 3600000){
-          message.success("选择的时间范围过大，请将时间范围缩短在一个小时以内");
-        }else{
-          handleQueryList(
-              paginationReactive.page,
-              paginationReactive.pageSize,
-              frontOneHourTimeStamp,
-              currentHourTimeStamp
-          )
-        }
+      const chartDom = document.getElementById('chart');
+      const myChart = echarts.init(chartDom);
+      watch([range2,selected], async (newValue, oldValue) => {
+
+          await axios.get("/historyData/queryMEMS", {
+            params: {
+              startTime: range2.value[0],
+              endTime: range2.value[1]
+            }
+          }).then(res =>{
+            options25.xAxis.data=res.data.content["time25"];
+            options26.xAxis.data=res.data.content["time26"];
+            options27.xAxis.data=res.data.content["time27"];
+            options28.xAxis.data=res.data.content["time28"];
+            options29.xAxis.data=res.data.content["time29"];
+            options30.xAxis.data=res.data.content["time30"];
+            options31.xAxis.data=res.data.content["time31"];
+            options32.xAxis.data=res.data.content["time32"];
+            options33.xAxis.data=res.data.content["time33"];
+            options34.xAxis.data=res.data.content["time34"];
+            options35.xAxis.data=res.data.content["time35"];
+            options36.xAxis.data=res.data.content["time36"];
+            options37.xAxis.data=res.data.content["time37"];
+            options38.xAxis.data=res.data.content["time38"];
+            options39.xAxis.data=res.data.content["time39"];
+            options25.series[0].data=res.data.content["x25"];
+            options25.series[1].data=res.data.content["y25"];
+            options25.series[2].data=res.data.content["z25"];
+            options26.series[0].data=res.data.content["x26"];
+            options26.series[1].data=res.data.content["y26"];
+            options26.series[2].data=res.data.content["z26"];
+            options27.series[0].data=res.data.content["x27"];
+            options27.series[1].data=res.data.content["y27"];
+            options27.series[2].data=res.data.content["z27"];
+            options28.series[0].data=res.data.content["x28"];
+            options28.series[1].data=res.data.content["y28"];
+            options28.series[2].data=res.data.content["z28"];
+            options29.series[0].data=res.data.content["x29"];
+            options29.series[1].data=res.data.content["y29"];
+            options29.series[2].data=res.data.content["z29"];
+            options30.series[0].data=res.data.content["x30"];
+            options30.series[1].data=res.data.content["y30"];
+            options30.series[2].data=res.data.content["z30"];
+            options31.series[0].data=res.data.content["x31"];
+            options31.series[1].data=res.data.content["y31"];
+            options31.series[2].data=res.data.content["z31"];
+            options32.series[0].data=res.data.content["x32"];
+            options32.series[1].data=res.data.content["y32"];
+            options32.series[2].data=res.data.content["z32"];
+            options33.series[0].data=res.data.content["x33"];
+            options33.series[1].data=res.data.content["y33"];
+            options33.series[2].data=res.data.content["z33"];
+            options34.series[0].data=res.data.content["x34"];
+            options34.series[1].data=res.data.content["y34"];
+            options34.series[2].data=res.data.content["z34"];
+            options35.series[0].data=res.data.content["x35"];
+            options35.series[1].data=res.data.content["y35"];
+            options35.series[2].data=res.data.content["z35"];
+            options36.series[0].data=res.data.content["x36"];
+            options36.series[1].data=res.data.content["y36"];
+            options36.series[2].data=res.data.content["z36"];
+            options37.series[0].data=res.data.content["x37"];
+            options37.series[1].data=res.data.content["y37"];
+            options37.series[2].data=res.data.content["z37"];
+            options38.series[0].data=res.data.content["x38"];
+            options28.series[1].data=res.data.content["y38"];
+            options38.series[2].data=res.data.content["z38"];
+            options39.series[0].data=res.data.content["x39"];
+            options39.series[1].data=res.data.content["y39"];
+            options39.series[2].data=res.data.content["z39"];
+          })
+
+          if(selected.value=='25'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options25)
+          }else if(selected.value=='26'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options26)
+          }else if(selected.value=='27'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options27)
+          }else if(selected.value=='28'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options28)
+          }else if(selected.value=='29'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options29)
+          }else if(selected.value=='30'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options30)
+          }else if(selected.value=='31'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options31)
+          }else if(selected.value=='32'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options32)
+          }else if(selected.value=='33'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options33)
+          }else if(selected.value=='34'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options34)
+          }else if(selected.value=='35'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options35)
+          }else if(selected.value=='36'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options36)
+          }else if(selected.value=='37'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options37)
+          }else if(selected.value=='38'){
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options38)
+          } else{
+            if(myChart != null){
+              myChart.clear()
+            }
+            myChart.setOption(options39)
+          }
+
+
       });
     })
     return {
-      columns,
+      selected,
+      options,
       data: dataRef,
       range2,
       startTime,
       endTime,
-      handleTableColumn,
-      handlePageChange,
-      handleQueryList,
-      pagination: paginationReactive,
     }
   }
 })

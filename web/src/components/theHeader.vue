@@ -10,12 +10,17 @@
 <!--          <div style=" font-size: 20px; color: cadetblue; font-weight: bolder">汕头大学</div>-->
           <a-menu-item key="/p_index">
             <transition :name="transitionName">
-              <router-link to="/p_index" :style="user.id? {} : {display:'none'}">首页</router-link>
+              <router-link to="/p_index" :style="user.id? {} : {display:'none'}" >首页</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/p_index/detail">
             <transition :name="transitionName">
               <router-link to="/p_index/detail" :style="user.id? {} : {display:'none'}">历史数据查询</router-link>
+            </transition>
+          </a-menu-item>
+          <a-menu-item key="/p_index/sensor">
+            <transition :name="transitionName">
+              <router-link to="/p_index/sensor" :style="user.id? {} : {display:'none'}">传感器查询</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/p_index/admin/user">
@@ -105,6 +110,9 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.ant-menu{
+  font-size: 16px;
+}
 .header-wrap{
   display: flex;
   justify-content: space-between;

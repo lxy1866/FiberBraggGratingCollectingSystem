@@ -28,6 +28,15 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/p_index/sensor',
+    name: 'p_Sensor',
+    component: () => import('../views/sensor.vue'),
+    meta: {
+      "type":'pc',
+      loginRequire: true
+    },
+  },
+  {
     path: '/p_index/login',
     name: 'p_Login',
     component: ()=>import('../views/login.vue'),
