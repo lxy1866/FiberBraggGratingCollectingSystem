@@ -10,7 +10,12 @@
 <!--          <div style=" font-size: 20px; color: cadetblue; font-weight: bolder">汕头大学</div>-->
           <a-menu-item key="/p_index">
             <transition :name="transitionName">
-              <router-link to="/p_index" :style="user.id? {} : {display:'none'}" >首页</router-link>
+              <router-link to="/p_index" :style="user.id? {} : {display:'none'}" >MEMS</router-link>
+            </transition>
+          </a-menu-item>
+          <a-menu-item key="/p_index2">
+            <transition :name="transitionName">
+              <router-link to="/p_index2" :style="user.id? {} : {display:'none'}" >FBG</router-link>
             </transition>
           </a-menu-item>
           <a-menu-item key="/p_index/detail">

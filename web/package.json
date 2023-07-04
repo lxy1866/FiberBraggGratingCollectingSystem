@@ -20,6 +20,7 @@
     "axios": "^0.26.0",
     "compression-webpack-plugin": "^9.2.0",
     "cubic-spline": "^3.0.3",
+    "e": "^0.2.33",
     "echarts-gl": "^2.0.9",
     "interp1": "^1.0.18",
     "jquery": "^3.6.0",

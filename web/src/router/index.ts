@@ -11,8 +11,17 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/p_index',
-    name: 'p_BigScreen',
-    component: () => import('../views/bigScreen.vue'),
+    name: 'p_BigScreen1',
+    component: () => import('../views/bigScreen1.vue'),
+    meta:{
+      "type":'pc',
+      loginRequire: true
+    }
+  },
+  {
+    path: '/p_index2',
+    name: 'p_BigScreen2',
+    component: () => import('../views/bigScreen2.vue'),
     meta:{
       "type":'pc',
       loginRequire: true
