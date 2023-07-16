@@ -1,7 +1,7 @@
 <template>
-  <n-card style="--n-color:#001529;
+  <n-card style="--n-color:transparent;
         --n-title-text-color: white; display: flex;
-        --n-border-color: white;" title="重构精度">
+        " title="重构精度" :bordered="false">
     <a-row :gluter="24">
       <a-col :span="16">
         <a-form
@@ -28,6 +28,20 @@
             <a-input readonly></a-input>
             <!--        <a-input-password v-model:value="LoginUser.password" />-->
           </a-form-item>
+        </a-form>
+      </a-col>
+      <a-col :span="8">
+        <a-form
+            name="basic"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 16 }"
+            autocomplete="off"
+            style="margin-top: 100px;"
+        >
+          <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
+            <a-button  html-type="submit" >计算</a-button>
+          </a-form-item>
+
         </a-form>
       </a-col>
     </a-row>
@@ -192,21 +206,21 @@ export default defineComponent({
           data: vibration,
         }]
       }
-      const chartDom = document.getElementById('rightTopChart');
-      let myChart = echarts.init(chartDom);
-      myChart.setOption(option);
+      // const chartDom = document.getElementById('rightTopChart');
+      // let myChart = echarts.init(chartDom);
+      // myChart.setOption(option);
       const onOpen = () =>{
         console.log('WebSocket连接成功，状态码：',websocket.readyState)
       };
       const onMessage = function (msg){
-        let data = JSON.parse(msg.data);
-        if(vibration.length % 20 === 0){
-          for(let i = 0; i < 20; i++){
-            vibration.shift()
-          }
-        }
-        vibration.push(getData(data[3].value));
-        myChart.setOption(option);
+        // let data = JSON.parse(msg.data);
+        // if(vibration.length % 20 === 0){
+        //   for(let i = 0; i < 20; i++){
+        //     vibration.shift()
+        //   }
+        // }
+        // vibration.push(getData(data[3].value));
+        // myChart.setOption(option);
       };
       const onError = ()=>{
         console.log('WebSocket连接错误，状态码：', websocket.readyState)
@@ -239,7 +253,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.rightTopChart{
-  display: flex;
-}
+
 </style>

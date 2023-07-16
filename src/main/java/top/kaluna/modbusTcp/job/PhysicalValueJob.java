@@ -118,16 +118,16 @@ public class PhysicalValueJob {
 ////        LOG.info("推送新消息结束，耗时：{}毫秒",System.currentTimeMillis() - start);
 //    }
     //定时计算最大最小值并插入min_max_value_for_temperature
-    @Scheduled(cron = "0 59 * * * ?" )
-    public void cronGenerateFakeFbgValue() throws ParseException {
-        //增加日志流水号
-        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中开始");
-        long start = System.currentTimeMillis();
-        //暂时不这样计算了 最小值和最大值都是固定的
-        fbgValueService.computeAndInsertTheMaxMinTemperatureInThisHour();
-        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-    }
+//    @Scheduled(cron = "0 59 * * * ?" )
+//    public void cronGenerateFakeFbgValue() throws ParseException {
+//        //增加日志流水号
+//        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+//        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中开始");
+//        long start = System.currentTimeMillis();
+//        //暂时不这样计算了 最小值和最大值都是固定的
+//        fbgValueService.computeAndInsertTheMaxMinTemperatureInThisHour();
+//        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+//    }
 //    @Transactional(rollbackFor = Exception.class)
 //    @Scheduled(cron = "0 0/5 * * * *" )
 //    //@Scheduled(cron = "0 0 0/1 * * *" )
@@ -176,29 +176,29 @@ public class PhysicalValueJob {
 //        txtResolver.generateFakeTemperatureValue(txtValueService);
 //        LOG.info("计算这个小时的温度最大值和最小值，求出来存储到min_max_value_for_temperature中结束，耗时：{}毫秒",System.currentTimeMillis() - start);
 //    }
-    @Scheduled(cron = "0 59 * * * ?" )
-    public void cronGenerateFakeMemsValue() throws ParseException {
-        //增加日志流水号
-        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-        LOG.info("每小时的59分生成所有传感器的假数据开始");
-        long start = System.currentTimeMillis();
-        TxtResolver txtResolver = new TxtResolver();
-        txtResolver.generateFakeMemsValue(positionValueService);
-        LOG.info("每小时的59分生成所有MEMS的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-    }
-//    @Scheduled(cron = "0/5 * * * * ?" )
-//    public void cronGenerateFakeVibrationWave() throws ParseException {
+//    @Scheduled(cron = "0 59 * * * ?" )
+//    public void cronGenerateFakeMemsValue() throws ParseException {
 //        //增加日志流水号
 //        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-//        LOG.info("每五秒生成500个的振动波长假数据开始");
+//        LOG.info("每小时的59分生成所有传感器的假数据开始");
 //        long start = System.currentTimeMillis();
-//        List list = new ArrayList();
-//        for(int i = 1; i < 500; i++){
-//            float v = (float) (Math.random() * (1000 - 500));
-//            list.add(v);
-//        }
-//        String logId =  MDC.get("LOG_ID");
-//        wsService.sendVibrationWaveInfo(JSONObject.toJSONString(list, SerializerFeature.MapSortField), logId);
-//        LOG.info("每五秒生成500个的振动波长假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+//        TxtResolver txtResolver = new TxtResolver();
+//        txtResolver.generateFakeMemsValue(positionValueService);
+//        LOG.info("每小时的59分生成所有MEMS的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
 //    }
+    @Scheduled(cron = "0/5 * * * * ?" )
+    public void cronGenerateFakeVibrationWave() throws ParseException {
+        //增加日志流水号
+        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+        LOG.info("每五秒生成500个的振动波长假数据开始");
+        long start = System.currentTimeMillis();
+        List list = new ArrayList();
+        for(int i = 1; i < 500; i++){
+            float v = (float) (Math.random() * (1000 - 500));
+            list.add(v);
+        }
+        String logId =  MDC.get("LOG_ID");
+        wsService.sendVibrationWaveInfo(JSONObject.toJSONString(list, SerializerFeature.MapSortField), logId);
+        LOG.info("每五秒生成500个的振动波长假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+    }
 }

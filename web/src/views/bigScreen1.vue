@@ -8,19 +8,20 @@
         </div>
       <dv-decoration-8 :reverse=true style="width:350px;" />
     </div>
-    <div class="container fontClass" style="margin-top: 10px">
-      <div class="box2 top">
-        <dv-border-box-7 class="border-box">
-          <left-top-chart class="charts" style="height: 300px"/>
+    <div class="screen-wrapper fontClass" style="margin-top: 10px">
+      <div class="screen">
+        <dv-border-box-7 class="section">
+          <mems-reshape class="charts section2"  />
         </dv-border-box-7>
-      </div>
-      <div class="box2 bottom" id="prev" >
-          <dv-border-box-7 class="border-box">
-            <shape-control class="charts" style="height: 400px"/>
-          </dv-border-box-7>
-          <dv-border-box-7 class="border-box">
-            <reshape-precision class="charts" style="height: 400px"/>
-          </dv-border-box-7>
+        <dv-border-box-7 class="section" >
+          <motor-reshape class="charts section2" />
+        </dv-border-box-7>
+        <dv-border-box-7 class="section">
+          <shape-control class="charts "   />
+        </dv-border-box-7>
+        <dv-border-box-7 class="section">
+          <reshape-precision class="charts " />
+        </dv-border-box-7>
       </div>
     </div>
   </a-layout-content>
@@ -32,12 +33,16 @@ import shapeControl from "@/components/shapeControl";
 import reshapePrecision from "@/components/reshapePrecision";
 import leftTopChart from "@/components/leftTopChart";
 import theHeader from "@/components/theHeader";
+import motorReshape from "@/components/motorReshape.vue"
+import memsReshape from "@/components/memsReshape.vue"
 export default defineComponent({
   components:{
     shapeControl,
     reshapePrecision,
     leftTopChart,
-    theHeader
+    theHeader,
+    memsReshape,
+    motorReshape
   },
   setup(){
     const height_top = ref({
@@ -45,14 +50,7 @@ export default defineComponent({
     });
     onMounted(async ()=>{
       const { data } = await new functionCall().handleQueryOnline();
-      if(window.innerHeight != null){
-        height_top.value.height = window.innerHeight - 64 +'px';
-      }
-      window.onresize = () => {
-        return (() => {
-          height_top.value.height = window.innerHeight - 64 +'px';
-        })();
-      };
+
     })
     return{
       height_top,
@@ -82,31 +80,10 @@ li{
 ul:last-child{
   margin-right: 100px;
 }
-.container{
-  display: flex;
-  flex-direction: column;
-}
-.top{
-  height: 30%;
-  width:100%;
-}
-.bottom{
-  height: 40%;
-  display: flex;
-  flex-direction: row;
-}
-.box2{
-  display: flex;
-  flex-direction: row;
-}
 .charts{
   width: 94%;
   margin: 3%;
   display: flex;
-}
-#pie.charts{
-  height: 100%;
-  width: 100%;
 }
 img{
   width: auto;
@@ -117,10 +94,34 @@ img{
   margin-right: 1%;
   max-height: 64%;
 }
-.border-box{
-  width: 100%;
-  height: 100%;
-  display: flex;
+.screen-wrapper {
+  height: 105vh;
+  width: 100vw;
+  background-color:  #001529;
+  .screen{
+    display: inline-block;
+    background: transparent;
+    transform-origin: 0 0;
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    .section{
+      height: 100%;
+      width: 50%;
+      line-height: 200px;
+      font-size: 40px;
+      text-align: center;
+      display: inline-block;
+      .section2 {
+        height: 98%;
+        width: 100%;
+        margin: 0;
+        line-height: 200px;
+        font-size: 40px;
+        text-align: center;
+        display: inline-block;
+      }
+    }
+  }
 }
-
 </style>
