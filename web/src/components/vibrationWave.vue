@@ -22,7 +22,7 @@ export default defineComponent({
       } ;
       let option = {
         title: {
-          text: '海底电缆振动波长值',
+          text: '振动信号（波长值）原始曲线图',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -100,7 +100,7 @@ export default defineComponent({
         option.xAxis.data = data.categoryData;
         option.series[0].data = data.valueData;
         myChart.setOption(option)
-        console.log(vibration)
+        // console.log(vibration)
       };
       const onError = ()=>{
         console.log('WebSocket连接错误，状态码：', websocket.readyState)

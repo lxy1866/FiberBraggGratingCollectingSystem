@@ -1,7 +1,7 @@
 <template>
-  <n-card style="--n-color:#001529;
-        --n-title-text-color: white; display: flex;
-        --n-border-color: white;" title="形状构造控制">
+  <n-card style="--n-color:transparent;
+        --n-title-text-color: white; display: flex; --n-border-color: white;
+       " title="形状构造控制" :bordered="false">
     <a-row :gluter="24">
       <a-col :span="16">
         <a-form
@@ -225,21 +225,21 @@ export default defineComponent({
           data: vibration,
         }]
       }
-      const chartDom = document.getElementById('rightTopChart');
-      let myChart = echarts.init(chartDom);
-      myChart.setOption(option);
+      // const chartDom = document.getElementById('shapeControl');
+      // let myChart = echarts.init(chartDom);
+      // myChart.setOption(option);
       const onOpen = () =>{
         console.log('WebSocket连接成功，状态码：',websocket.readyState)
       };
       const onMessage = function (msg){
-        let data = JSON.parse(msg.data);
-        if(vibration.length % 20 === 0){
-          for(let i = 0; i < 20; i++){
-            vibration.shift()
-          }
-        }
-        vibration.push(getData(data[3].value));
-        myChart.setOption(option);
+        // let data = JSON.parse(msg.data);
+        // if(vibration.length % 20 === 0){
+        //   for(let i = 0; i < 20; i++){
+        //     vibration.shift()
+        //   }
+        // }
+        // vibration.push(getData(data[3].value));
+        // myChart.setOption(option);
       };
       const onError = ()=>{
         console.log('WebSocket连接错误，状态码：', websocket.readyState)
@@ -272,11 +272,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.rightTopChart{
-  display: flex;
-}
-.external{
-  display: flex;
 
-}
 </style>

@@ -26,7 +26,7 @@ export default defineComponent({
       } ;
       let option = {
         title: {
-          text: '海缆振动短时能量值',
+          text: '振动信号短时能量图',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -201,7 +201,7 @@ export default defineComponent({
         option.xAxis.data = data.categoryData;
         option.series[0].data = data.valueData;
         myChart.setOption(option)
-        console.log(vibration)
+        //console.log(vibration)
       };
       const onError = ()=>{
         console.log('WebSocket连接错误，状态码：', websocket.readyState)
