@@ -83,7 +83,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
         });
 
         //新启一个线程专门收集振动波长 每5秒渲染一次页面
-        AtomicInteger count = new AtomicInteger(1);
+//        AtomicInteger count = new AtomicInteger(1);
         Thread vibrationWaveThread = new Thread(() ->{
             while (true) {
                 try {
@@ -100,24 +100,64 @@ public class UdpCollectRunner  implements ApplicationRunner {
                 byte[] datas = dp.getData();
                 //获取振动波长
                 float s1 = NumTypeChangeUtil.bytesToFloat3(datas, 9)/ 1000 +1520;
+                String logId = (String) MDC.get("LOG_ID");
+                String jsonString = JSONObject.toJSONString(s1, SerializerFeature.MapSortField);
+//                System.out.println("线程："+jsonString);
+                wsService.sendVibrationWaveInfo(jsonString, logId);
+//                String key = "viberationWave";
+//                if(count.get() <= 500){
+//                    redisTemplate.opsForList().rightPush(key, s1);
+//                    count.getAndIncrement();
+//                }
+//                if(count.get() == 501){
+//                    count.set(1);
+//                    List list=redisTemplate.opsForList().range(key,0,-1);
+//                    redisTemplate.delete(key);
+//                    //websocket推送
+//                    String logId = (String) MDC.get("LOG_ID");
+//                    String jsonString = JSONObject.toJSONString(list, SerializerFeature.MapSortField);
+//                    System.out.println("线程："+jsonString);
+//                    wsService.sendVibrationWaveInfo(jsonString, logId);
+//                }
+
+            }
+        });
+
+        AtomicInteger count = new AtomicInteger(1);
+        Thread EnergyThread = new Thread(()->{
+            while (true) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    ds.receive(dp);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                // 解析数据包，并把数据在控制台显示
+                byte[] datas = dp.getData();
+                //获取振动波长
+                float s2 = NumTypeChangeUtil.bytesToFloat3(datas, 9)/ 1000 +1520;
                 String key = "viberationWave";
-                if(count.get() <= 500){
-                    redisTemplate.opsForList().rightPush(key, s1);
+                if(count.get() <= 100){
+                    redisTemplate.opsForList().rightPush(key, s2);
                     count.getAndIncrement();
                 }
-                if(count.get() == 501){
+                if(count.get() == 101){
                     count.set(1);
                     List list=redisTemplate.opsForList().range(key,0,-1);
                     redisTemplate.delete(key);
                     //websocket推送
                     String logId = (String) MDC.get("LOG_ID");
                     String jsonString = JSONObject.toJSONString(list, SerializerFeature.MapSortField);
-                    System.out.println("线程："+jsonString);
-                    wsService.sendVibrationWaveInfo(jsonString, logId);
+//                    System.out.println("线程："+jsonString);
+                    wsService.sendMEMSInfo(jsonString, logId);
                 }
+
             }
         });
-
 //        Thread MEMSThread =new Thread(() ->{
 //            while(true){
 //                List<Double> MEMSvalue = new ArrayList<>();
@@ -141,6 +181,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
 
         thread.start();
         vibrationWaveThread.start();
+        EnergyThread.start();
 //        MEMSThread.start();
 //        ds.close();
     }

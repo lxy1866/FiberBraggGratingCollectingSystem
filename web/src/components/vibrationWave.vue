@@ -15,7 +15,7 @@ export default defineComponent({
       let vibration = [];
       var chartDom = document.getElementById('vibrationWave');
       var myChart = echarts.init(chartDom);
-      let time = new Date();
+
       let data = {
         categoryData:[],
         valueData:[]
@@ -80,28 +80,23 @@ export default defineComponent({
           }
         ]
       };
-      time -= 5000
       function generateData(list) {
-        const categoryData = [];
-        const valueData = [];
-        for (let i = 0; i < 500; i++) {
-          categoryData.push(
-              echarts.format.formatTime('yyyy-MM-dd\nhh:mm:ss', time, false)
-          );
-          valueData.push(list[i]);
-          time += 10
-        }
-        return {
-          categoryData: categoryData,
-          valueData: valueData
-        };
+
+        let time = new Date();
+
+        data.categoryData.push(echarts.format.formatTime('yyyy-MM-dd\nhh:mm:ss.SSS', time, false));
+        console.log(data.categoryData);
+        data.valueData.push(list);
+        console.log(data.valueData);
+
+
       }
       const onOpen = () =>{
         console.log('WebSocket连接成功，状态码：',websocket.readyState)
       };
       const onMessage = function (msg){
         vibration = JSON.parse(msg.data)
-        data = generateData(vibration);
+        generateData(vibration);
         option.xAxis.data = data.categoryData;
         option.series[0].data = data.valueData;
         myChart.setOption(option)

@@ -1,9 +1,9 @@
 <template>
   <div id="strainVerticalView" class="strainVerticalView">
-<!--    <span>俯视图</span>-->
-    <span class="bigRectangle">
-      <span v-for="(value,index) in interpolatedValues" :key="index" class="rectangle" :style="{backgroundColor:getColor(value)}"></span>
-    </span>
+    <div>俯视图</div>
+    <div class="bigRectangle">
+      <div v-for="(value,index) in interpolatedValues" :key="index" class="rectangle" :style="{backgroundColor:getColor(value)}"></div>
+    </div>
   </div>
 </template>
 

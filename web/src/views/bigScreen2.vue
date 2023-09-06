@@ -119,6 +119,7 @@ img{
         font-size: 40px;
         text-align: center;
         display: inline-block;
+        vertical-align:top;
       }
     }
   }

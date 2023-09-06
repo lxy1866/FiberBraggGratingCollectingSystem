@@ -16,7 +16,7 @@ export default defineComponent({
       let vibration = [];
       const win = [0.0800,0.1876,0.4601,0.7700,0.9723,0.9723,0.7700,0.4601,0.1876,0.0800];
       const wlen = 10;
-      const inc = 4;
+      const inc = 2;
       var chartDom = document.getElementById('shortTimeEnergy');
       var myChart = echarts.init(chartDom);
       let time = new Date();
@@ -71,6 +71,8 @@ export default defineComponent({
           }
         },
         yAxis: {
+          min: -0.001,
+          max: 0.001,
           name: '能量(dB)',
           nameLocation: 'center',
           nameGap: 30,
@@ -87,17 +89,15 @@ export default defineComponent({
           }
         ]
       };
-      time -= 4920
+      time -= 1000
       function countEnergy(list) {
-        var a = 0;
         var ans = 0;
         var c = 0;
-        var m = 0;
         var k = 0;
         var v = 0;
         var s = 0;
         var M = list;
-        for (let i = 0;i<500;i++){
+        for (let i = 0;i<100;i++){
           ans=ans+list[i];
           v += 1;
           if((i+1)%60==0){
@@ -110,33 +110,33 @@ export default defineComponent({
           }
         }
         var sad=0;
-        for(let i =s;i<500;i++){
+        for(let i =s;i<100;i++){
           sad=sad+M[i];
         }
         console.log('sad:',sad);
-        var sade=sad/(500-s);
-        for(let i=s;i<500;i++){
+        var sade=sad/(100-s);
+        for(let i=s;i<100;i++){
           M[i]=M[i]-sade;
         }
 
-        var f = Array(123);
-        for (let i = 0;i<123;i++){
+        var f = Array(50);
+        for (let i = 0;i<50;i++){
           f[i]=Array(10);
         }
-        var indf =Array(123);
-        for(let i=0;i<123;i++){
+        var indf =Array(50);
+        for(let i=0;i<50;i++){
           indf[i]=i*inc;
         }
         var inds =Array(10);
         for (let i=0;i<10;i++){
           inds[i]=i+1;
         }
-        for(let i=0;i<123;i++){
+        for(let i=0;i<50;i++){
           for(let j=0;j<10;j++){
             f[i][j]=M[indf[i]+inds[j]-1];
           }
         }
-        for(let i=0;i<123;i++){
+        for(let i=0;i<50;i++){
           for(let j=0;j<10;j++){
             f[i][j]=f[i][j]*win[j];
           }
@@ -167,11 +167,11 @@ export default defineComponent({
         // }
         // console.log('frames:',frames);
         var temp = 0;
-        var energy = Array(123);
-        for(let i=0;i<123;i++){
+        var energy = Array(50);
+        for(let i=0;i<50;i++){
           energy[i]=0;
         }
-        for(let i=0;i<123;i++){
+        for(let i=0;i<50;i++){
           for (let j =0;j<10;j++){
             temp=f[i][j]*f[i][j];
             energy[i]=energy[i]+temp;
@@ -180,7 +180,7 @@ export default defineComponent({
         }
         const categoryData = [];
         const valueData = [];
-        for (let i = 0; i < 123; i++) {
+        for (let i = 0; i < 50; i++) {
           categoryData.push(
               echarts.format.formatTime('yyyy-MM-dd\nhh:mm:ss', time, false)
           );
@@ -224,7 +224,7 @@ export default defineComponent({
         token = Tool.uuid(10);
         console.log("******",token)
         //连接地址：ws://127.0.0.1:8080/vibrationWaveWs/xxx
-        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/vibrationWaveWs/' + token);
+        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/MEMSWs/' + token);
         initWebSocket()
       }else{
         alert('当前浏览器 不支持')

@@ -158,7 +158,7 @@ export default defineComponent({
       };
       const onMessage = function (msg){
         strain = JSON.parse(msg.data)
-        console.log(strain)
+        // console.log(strain)
         data = generateData(strain);
         option.xAxis.data = data.categoryData;
         option.series[0].data = data.valueData;
