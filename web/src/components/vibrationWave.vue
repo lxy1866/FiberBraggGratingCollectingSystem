@@ -25,6 +25,7 @@ export default defineComponent({
           text: '振动信号（波长值）原始曲线图',
           textStyle: {
             color: '#ffffff',
+            fontSize:20,
             fontFamily: '宋体',
           },
         },

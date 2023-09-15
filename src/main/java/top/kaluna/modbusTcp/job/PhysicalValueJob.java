@@ -186,19 +186,19 @@ public class PhysicalValueJob {
 //        txtResolver.generateFakeMemsValue(positionValueService);
 //        LOG.info("每小时的59分生成所有MEMS的假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
 //    }
-    @Scheduled(cron = "0/5 * * * * ?" )
-    public void cronGenerateFakeVibrationWave() throws ParseException {
-        //增加日志流水号
-        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
-        LOG.info("每五秒生成500个的振动波长假数据开始");
-        long start = System.currentTimeMillis();
-        List list = new ArrayList();
-        for(int i = 1; i < 500; i++){
-            float v = (float) (Math.random() * (1000 - 500));
-            list.add(v);
-        }
-        String logId =  MDC.get("LOG_ID");
-        wsService.sendVibrationWaveInfo(JSONObject.toJSONString(list, SerializerFeature.MapSortField), logId);
-        LOG.info("每五秒生成500个的振动波长假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
-    }
+//    @Scheduled(cron = "0/5 * * * * ?" )
+//    public void cronGenerateFakeVibrationWave() throws ParseException {
+//        //增加日志流水号
+//        MDC.put("LOG_ID",String.valueOf(snowFlake.nextId()));
+//        LOG.info("每五秒生成500个的振动波长假数据开始");
+//        long start = System.currentTimeMillis();
+//        List list = new ArrayList();
+//        for(int i = 1; i < 500; i++){
+//            float v = (float) (Math.random() * (1000 - 500));
+//            list.add(v);
+//        }
+//        String logId =  MDC.get("LOG_ID");
+//        wsService.sendVibrationWaveInfo(JSONObject.toJSONString(list, SerializerFeature.MapSortField), logId);
+//        LOG.info("每五秒生成500个的振动波长假数据结束，耗时：{}毫秒",System.currentTimeMillis() - start);
+//    }
 }

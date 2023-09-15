@@ -25,11 +25,15 @@ export default defineComponent({
         title: {
           text: '侧视图',
           textStyle: {
+            fontSize: 30,
             color: '#ffffff',
             fontFamily: '宋体',
           },
         },
         visualMap:{
+          textStyle: {
+            color:'#ffffff'
+          },
           top: 50,
           right: 10,
           pieces: [
@@ -107,6 +111,7 @@ export default defineComponent({
         //   }
         // ],
         xAxis: {
+          show: false,
           data: data.categoryData,
           silent: false,
           splitLine: {
@@ -117,8 +122,13 @@ export default defineComponent({
           }
         },
         yAxis: {
-          min: -0.004,
-          max: 0.004,
+          min: function (value){
+            return value.min-0.004
+          },
+          max: function (value){
+            return value.max+0.004
+          },
+          show: false,
           splitArea: {
             show: false
           },
@@ -127,6 +137,13 @@ export default defineComponent({
         series: [
           {
             type: 'line',
+            itemStyle:{
+              normal:{
+                lineStyle:{
+                  width:10
+                }
+              }
+            },
             data: data.valueData,
             large: true
           }

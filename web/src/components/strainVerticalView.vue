@@ -1,6 +1,6 @@
 <template>
   <div id="strainVerticalView" class="strainVerticalView">
-    <div>俯视图</div>
+    <div class="title">俯视图</div>
     <div class="bigRectangle">
       <div v-for="(value,index) in interpolatedValues" :key="index" class="rectangle" :style="{backgroundColor:getColor(value)}"></div>
     </div>
@@ -75,9 +75,19 @@ export default defineComponent({
 .strainVerticalView{
   display: flex;
 }
+.title{
+  width: 200px;
+  height: 30px;
+  text-align: left;
+  margin-right: 0;
+  margin-top: 0;
+  color: #ffffff;
+  font-size: 30px;
+}
 .bigRectangle{
   margin-left: 150px;
   margin-right: 100px;
+  margin-top: 125px;
   display: flex;
 }
 .rectangle{

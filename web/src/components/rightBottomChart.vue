@@ -17,27 +17,26 @@ function queryLast15() {
 }
 
 const Spline = require('cubic-spline');
-async function generateData(queryLast15Result) {
+function generateData(list) {
   /*******15*3******/
-  queryLast15Result = queryLast15Result.data.content
-  //console.log("queryLast15Result", queryLast15Result)
-  let data = Array.from(Array(15), () => new Array(3));
-  for (let i = 0; i < 15; i++) {
-    data[i][0] = queryLast15Result[i].aX;
-    data[i][1] = queryLast15Result[i].aY;
-    data[i][2] = queryLast15Result[i].aZ;
+  console.log("queryLast15Result", list)
+  let data = Array.from(Array(8), () => new Array(3));
+  for (let i = 0; i < 8; i++) {
+    data[i][0] = list[i].aX;
+    data[i][1] = list[i].aY;
+    data[i][2] = list[i].aZ;
   }
   let datajs1 = data;
 
   let angleXY = []
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 8; i++) {
     angleXY[i] = math.acos((datajs1[i][1]) / Math.sqrt(Math.pow(datajs1[i][0], 2) + Math.pow(datajs1[i][1], 2) + Math.pow(datajs1[i][2], 2)))
   }
   let angle_raw3 = angleXY;
   let l3 = 1;
   let p_before_test3 = math.matrix([0, 0, 0]);
   let H3 = math.matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
-  let p_test3 = Array.from(Array(3), () => new Array(15));
+  let p_test3 = Array.from(Array(3), () => new Array(8));
   p_test3 = math.subset(p_test3, math.index(0,0), 0);
   p_test3 = math.subset(p_test3, math.index(1,0), 0);
   p_test3 = math.subset(p_test3, math.index(2,0), 0);
@@ -64,7 +63,7 @@ async function generateData(queryLast15Result) {
       [0, 1, 0], [-math.sin(angle3[row3]), 0, math.cos(angle3[row3])]]);
     H3 = math.multiply(H3, delta_R2);
   }
-  let addMatrix = math.matrix([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0.015, 0.016, 0.013, 0.011]])
+  let addMatrix = math.matrix([[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0.015, 0.016, 0.013, 0.011]])
   p_test3 = math.add(p_test3, addMatrix);
   // console.log("angle3", angle3)
   // console.log("p_test3",p_test3)
@@ -75,15 +74,15 @@ async function generateData(queryLast15Result) {
   //p_test3[1]实际x轴范围 p_test3[3]：函数   x13 实际要插值的范围  spline：三次样条插值
   //let y13 = math.inte(p_test3[1],p_test3[3],x13,'spline');
   let xs = []
-  let row0 = math.subset(p_test3, math.index(0,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]));
-  for(let i = 0; i < 15; i++){
+  let row0 = math.subset(p_test3, math.index(0,[0,1,2,3,4,5,6,7]));
+  for(let i = 0; i < 8; i++){
     xs.push(row0.get([0,i]));
   }
   xs = xs.map(Number);
   //console.log("xs", xs)
-  let row2 = math.subset(p_test3, math.index(2,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]));
+  let row2 = math.subset(p_test3, math.index(2,[0,1,2,3,4,5,6,7]));
   let vs = [];
-  for(let i = 0; i < 15; i++){
+  for(let i = 0; i < 8; i++){
     vs.push(row2.get([0,i]));
   }
   //console.log("vs", vs)
@@ -105,7 +104,7 @@ async function generateData(queryLast15Result) {
   //   resultData.push(row);
   // }
   let z = 0;
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 8; i++) {
     let row = []
     row.push(xs[i]);
     row.push(z);
@@ -209,8 +208,6 @@ export default defineComponent({
           name: '长\n度\n(m)',
           nameLocation: 'center',
           nameGap: 30,
-          max: 0.5,
-          min: -2,
           type: 'value',
           axisLabel: {
             show: true,
@@ -240,39 +237,39 @@ export default defineComponent({
             symbolSize: 4,
             symbolRotate: null,
             showSymbol: true,
-            data: [
-                [0,0,0],
-                [1,0,-0.03525838],
-                [2,0,0.063254433],
-                [2.99999,0,-0.219677246],
-                [3.99998,0,-0.313990242],
-                [4.99996,0,-0.755997135],
-                [5.99993,0,-1.57492344],
-                [6.9999,0,-2.253100091],
-                [7.99987,0,-3.01845234],
-                [8.99983,0,-2.415426429],
-                [9.99978,0,-1.526751372],
-                [10.99977,0,-0.575292324],
-                [11.99977,0,-0.371192939],
-                [12.99977,0,-0.364782675],
-                [13.99975,0,0.019789412],
-                [15,0,0.00923835],
-                [16,0,-0.023213068],
-                [17,0,-0.39315502],
-                [18,0,-0.434432252],
-                [19,0,-1.000892699],
-                [20,0,-1.814506772],
-                [21,0,-2.489081286],
-                [22,0,-3.438102746],
-                [23,0,-2.858221361],
-                [24,0,-1.098724382],
-                [25,0,-0.839583901],
-                [26,0,-0.554524772],
-                [27,0,-0.276296898],
-                [28,0,-0.349620175],
-                [29,0,-0.391709386]
-            ],
-                // await generateData(queryLast15Result),
+            // data: [
+            //     [0,0,0],
+            //     [1,0,-0.03525838],
+            //     [2,0,0.063254433],
+            //     [2.99999,0,-0.219677246],
+            //     [3.99998,0,-0.313990242],
+            //     [4.99996,0,-0.755997135],
+            //     [5.99993,0,-1.57492344],
+            //     [6.9999,0,-2.253100091],
+            //     [7.99987,0,-3.01845234],
+            //     [8.99983,0,-2.415426429],
+            //     [9.99978,0,-1.526751372],
+            //     [10.99977,0,-0.575292324],
+            //     [11.99977,0,-0.371192939],
+            //     [12.99977,0,-0.364782675],
+            //     [13.99975,0,0.019789412],
+            //     [15,0,0.00923835],
+            //     [16,0,-0.023213068],
+            //     [17,0,-0.39315502],
+            //     [18,0,-0.434432252],
+            //     [19,0,-1.000892699],
+            //     [20,0,-1.814506772],
+            //     [21,0,-2.489081286],
+            //     [22,0,-3.438102746],
+            //     [23,0,-2.858221361],
+            //     [24,0,-1.098724382],
+            //     [25,0,-0.839583901],
+            //     [26,0,-0.554524772],
+            //     [27,0,-0.276296898],
+            //     [28,0,-0.349620175],
+            //     [29,0,-0.391709386]
+            // ],
+                data: [],
             lineStyle: {
               width: 4
             }
@@ -301,9 +298,8 @@ export default defineComponent({
       };
       const onMessage = function (msg){
         let data = JSON.parse(msg.data);
-        for(let i=0;i<30;i++){
-          option.series[0].data[i][2]=data[i];
-        }
+        console.log(data);
+        option.series[0].data=generateData(data);
         myChart.setOption(option);
       };
       const onError = ()=>{

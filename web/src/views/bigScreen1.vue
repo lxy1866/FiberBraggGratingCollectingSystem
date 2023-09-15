@@ -11,7 +11,7 @@
     <div class="screen-wrapper fontClass" style="margin-top: 10px">
       <div class="screen">
         <dv-border-box-7 class="section">
-          <mems-reshape class="charts section2"  />
+          <right-bottom-chart class="charts section2"  />
         </dv-border-box-7>
         <dv-border-box-7 class="section" >
           <motor-reshape class="charts section2" />
@@ -35,6 +35,7 @@ import leftTopChart from "@/components/leftTopChart";
 import theHeader from "@/components/theHeader";
 import motorReshape from "@/components/motorReshape.vue"
 import memsReshape from "@/components/memsReshape.vue"
+import rightBottomChart from "@/components/rightBottomChart.vue";
 export default defineComponent({
   components:{
     shapeControl,
@@ -42,6 +43,7 @@ export default defineComponent({
     leftTopChart,
     theHeader,
     memsReshape,
+    rightBottomChart,
     motorReshape
   },
   setup(){

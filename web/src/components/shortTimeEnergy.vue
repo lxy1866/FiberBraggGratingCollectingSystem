@@ -29,6 +29,7 @@ export default defineComponent({
           text: '振动信号短时能量图',
           textStyle: {
             color: '#ffffff',
+            fontSize: 20,
             fontFamily: '宋体',
           },
         },
@@ -72,7 +73,9 @@ export default defineComponent({
         },
         yAxis: {
           min: -0.001,
-          max: 0.001,
+          max: function (value){
+            return value.max+0.001
+          },
           name: '能量(dB)',
           nameLocation: 'center',
           nameGap: 30,

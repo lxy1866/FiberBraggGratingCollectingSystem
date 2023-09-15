@@ -2,6 +2,9 @@ package top.kaluna.modbusTcp.runner;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import gnu.io.CommPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
 import org.jboss.logging.MDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,18 +14,20 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import top.kaluna.modbusTcp.domain.FbgValue;
+import top.kaluna.modbusTcp.domain.PositionValue;
 import top.kaluna.modbusTcp.mapper.FbgValueMapper;
 import top.kaluna.modbusTcp.service.WsService;
 import top.kaluna.modbusTcp.util.NumTypeChangeUtil;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static top.kaluna.modbusTcp.util.ReadXlsxUtil.readxlsxVal;
@@ -53,11 +58,11 @@ public class UdpCollectRunner  implements ApplicationRunner {
 
         Thread thread = new Thread(() -> {
             while (true) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(10);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 try {
                     ds.receive(dp);
                 } catch (IOException e) {
@@ -67,8 +72,8 @@ public class UdpCollectRunner  implements ApplicationRunner {
                 byte[] datas = dp.getData();
                 List<Float> Values = new ArrayList<>();
                 //获取应变
-                float s1 = (float) ((NumTypeChangeUtil.bytesToFloat3(datas, 6)/ 1000 +1520-1533.822)/4.79);
-                float s2 = (float) ((NumTypeChangeUtil.bytesToFloat3(datas, 9)/ 1000 +1520-1544.772)/4.74);
+                float s1 = (float) ((NumTypeChangeUtil.bytesToFloat3(datas, 6)/ 1000 +1520-1533.805)/4.79);
+                float s2 = (float) ((NumTypeChangeUtil.bytesToFloat3(datas, 9)/ 1000 +1520-1544.757)/4.74);
                 Values.add(s1);
                 Values.add(s2);
                 Values.add(s1);
@@ -86,11 +91,11 @@ public class UdpCollectRunner  implements ApplicationRunner {
 //        AtomicInteger count = new AtomicInteger(1);
         Thread vibrationWaveThread = new Thread(() ->{
             while (true) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(10);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 try {
                     ds.receive(dp);
                 } catch (IOException e) {
@@ -126,11 +131,11 @@ public class UdpCollectRunner  implements ApplicationRunner {
         AtomicInteger count = new AtomicInteger(1);
         Thread EnergyThread = new Thread(()->{
             while (true) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(10);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 try {
                     ds.receive(dp);
                 } catch (IOException e) {
@@ -158,6 +163,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
 
             }
         });
+
 //        Thread MEMSThread =new Thread(() ->{
 //            while(true){
 //                List<Double> MEMSvalue = new ArrayList<>();
@@ -185,5 +191,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
 //        MEMSThread.start();
 //        ds.close();
     }
+
+
 
 }
