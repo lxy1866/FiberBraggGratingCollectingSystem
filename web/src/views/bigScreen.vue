@@ -74,18 +74,6 @@
             </div>
           </dv-border-box-7>
         </div>
-        <div class="history-charts-row">
-          <dv-border-box-7 class="border-box">
-            <div class="chart-container">
-              <vibrationHis ref="vibrationChart" class="history-chart"></vibrationHis>
-            </div>
-          </dv-border-box-7>
-          <dv-border-box-7 class="border-box">
-            <div class="chart-container">
-              <shortTimeHis ref="shortTimeChart" class="history-chart"></shortTimeHis>
-            </div>
-          </dv-border-box-7>
-        </div>
       </div>
       <div style="display: flex; flex-direction: row-reverse; margin-bottom: 0px" >
         <a-button @click="HispageTurning">历史数据图</a-button>
@@ -147,8 +135,6 @@ import functionCall from "@/functionCall";
 import temperatureHistory from "@/components/temperatureHistory.vue";
 import strainHistory from "@/components/strainHistory.vue";
 import shortTimeEnergy from "@/components/shortTimeEnergy.vue";
-import shortTimeHis from "@/components/shortTimeHis.vue";
-import vibrationHis from "@/components/vibrationHis.vue";
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
 let showCurveHis = ref(false);
@@ -205,11 +191,9 @@ export default defineComponent({
     MaxOffset,
     VibrationWave,
     ThreeTemperature,
+    temperatureHistory,
     strainHistory,
-    shortTimeEnergy,
-    shortTimeHis,
-    vibrationHis,
-    temperatureHistory
+    shortTimeEnergy
   },
   setup(){
     const height_top = ref({
@@ -217,8 +201,6 @@ export default defineComponent({
     });
     const tempChart = ref(null);
     const strainChart = ref(null);
-    const vibrationChart = ref(null);
-    const shortTimeChart = ref(null);
     onMounted(async ()=>{
       const { data } = await new functionCall().handleQueryOnline();
       if(window.innerHeight != null){
@@ -244,9 +226,7 @@ export default defineComponent({
       imgTurning,
       showWarnInfoDialog,
       tempChart,
-      strainChart,
-      vibrationChart,
-      shortTimeChart
+      strainChart
     }
   }
 });
@@ -427,9 +407,8 @@ img {
 .history-charts-row {
   display: flex;
   width: 100%;
-  height: 50%;
+  height: 100%;
   gap: 20px;
-  margin-bottom: 20px;
 }
 
 .history-charts-row .border-box {
@@ -439,14 +418,16 @@ img {
 }
 
 .history-chart {
-  width: 100%;
-  height: 100%;
-  padding: 10px;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #hisnext {
   flex-direction: column;
-  height: 800px;
+  height: 400px;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -455,14 +436,6 @@ img {
   width: 100%;
   height: 100%;
   position: relative;
-}
-
-.history-chart {
-  width: 100% !important;
-  height: 100% !important;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 </style>

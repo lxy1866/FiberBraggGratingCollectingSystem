@@ -27,7 +27,7 @@ public class HistoryDataController {
     @GetMapping("/tempX")
     public CommonResp<List<String>> getHisX() throws IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsxStr(getLastModified("D://temp/temperature").toString(),1,0);
+        List<String> list = readxlsxStr(getLastModified("/root/fbgData/temperature").toString(),1,0);
         resp.setContent(list);
         return resp;
     }
@@ -35,7 +35,7 @@ public class HistoryDataController {
     @GetMapping("/tempY")
     public CommonResp<List<Double>> getHisY() throws IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsxVal(getLastModified("D://temp/temperature").toString(),0,0);
+        List<Double> list = readxlsxVal(getLastModified("/root/fbgData/temperature").toString(),0,0);
         resp.setContent(list);
         return resp;
     }
@@ -99,19 +99,19 @@ public class HistoryDataController {
     public CommonResp<Map<String,List<Double>>> getStrainY() throws IOException {
         CommonResp<Map<String,List<Double>>> resp = new CommonResp<>();
         Map<String,List<Double>> result = new HashMap<>();
-        List<Double> list1 = readxlsxVal(getLastModified("D://temp/strain").toString(),0,0);
-        List<Double> list2 = readxlsxVal(getLastModified("D://temp/strain").toString(),1,0);
-        List<Double> list3 = readxlsxVal(getLastModified("D://temp/strain").toString(),2,0);
-        List<Double> list4 = readxlsxVal(getLastModified("D://temp/strain").toString(),3,0);
-        List<Double> list5 = readxlsxVal(getLastModified("D://temp/strain").toString(),4,0);
-        List<Double> list6 = readxlsxVal(getLastModified("D://temp/strain").toString(),5,0);
-        List<Double> list7 = readxlsxVal(getLastModified("D://temp/strain").toString(),6,0);
-        List<Double> list8 = readxlsxVal(getLastModified("D://temp/strain").toString(),7,0);
-        List<Double> list9 = readxlsxVal(getLastModified("D://temp/strain").toString(),8,0);
-        List<Double> list10 = readxlsxVal(getLastModified("D://temp/strain").toString(),9,0);
-        List<Double> list11 = readxlsxVal(getLastModified("D://temp/strain").toString(),10,0);
-        List<Double> list12 = readxlsxVal(getLastModified("D://temp/strain").toString(),11,0);
-        List<Double> list13 = readxlsxVal(getLastModified("D://temp/strain").toString(),12,0);
+        List<Double> list1 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),0,0);
+        List<Double> list2 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),1,0);
+        List<Double> list3 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),2,0);
+        List<Double> list4 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),3,0);
+        List<Double> list5 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),4,0);
+        List<Double> list6 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),5,0);
+        List<Double> list7 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),6,0);
+        List<Double> list8 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),7,0);
+        List<Double> list9 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),8,0);
+        List<Double> list10 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),9,0);
+        List<Double> list11 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),10,0);
+        List<Double> list12 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),11,0);
+        List<Double> list13 = readxlsxVal(getLastModified("/root/fbgData/strain").toString(),12,0);
         result.put("strain1",list1);
         result.put("strain2",list2);
         result.put("strain3",list3);
@@ -132,7 +132,7 @@ public class HistoryDataController {
     @GetMapping("/shortTimeX")
     public CommonResp<List<String>> getShortTimeX() throws IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsxStr("D://temp/shorttime.xlsx",1,0);
+        List<String> list = readxlsxStr("/root/fbgData/shorttime.xlsx",1,0);
 //        List<String> list = readxlsxStr("F:\\数据\\短时能量.xlsx",1,0);
         resp.setContent(list);
         return resp;
@@ -141,7 +141,7 @@ public class HistoryDataController {
     @GetMapping("/shortTimeY")
     public CommonResp<List<Double>> getShortTimeY() throws IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsxVal("D://temp/shorttime.xlsx",0,0);
+        List<Double> list = readxlsxVal("/root/fbgData/shorttime.xlsx",0,0);
 //        List<Double> list = readxlsxVal("F:\\数据\\短时能量.xlsx",0,0);
         resp.setContent(list);
         return resp;
@@ -150,7 +150,7 @@ public class HistoryDataController {
     @GetMapping("/vibrationX")
     public CommonResp<List<String>> getVibrationX() throws IOException {
         CommonResp<List<String>> resp = new CommonResp<>();
-        List<String> list = readxlsxStr("D://temp/vibration.xlsx",1,0);
+        List<String> list = readxlsxStr("/root/fbgData/vibration.xlsx",1,0);
 //        List<String> list = readxlsxStr("F:\\数据\\振动波长.xlsx",1,0);
         resp.setContent(list);
         return resp;
@@ -159,7 +159,7 @@ public class HistoryDataController {
     @GetMapping("/vibrationY")
     public CommonResp<List<Double>> getVibrationY() throws IOException {
         CommonResp<List<Double>> resp = new CommonResp<>();
-        List<Double> list = readxlsxVal("D://temp/vibration.xlsx",0,0);
+        List<Double> list = readxlsxVal("/root/fbgData/vibration.xlsx",0,0);
 //        List<Double> list = readxlsxVal("F:\\数据\\振动波长.xlsx",0,0);
         resp.setContent(list);
         return resp;
