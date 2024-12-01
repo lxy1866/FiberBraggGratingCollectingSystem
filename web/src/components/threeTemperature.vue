@@ -24,10 +24,28 @@ export default defineComponent({
         }
       })
     }
-    function getData (value){
-      let now = +new Date();
-      const oneDay = 100;
-      now = new Date(+now + oneDay);
+    function generateInitialData() {
+      const data = [];
+      let now = new Date();
+      for (let i = 0; i < 20; i++) {
+        now = new Date(+now - 1000); // 每秒一个数据点
+        const valueName = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() +
+          ' ' + (now.getHours() >= 10 ? now.getHours() : '0' + now.getHours()) + ':' +
+          (now.getMinutes() >= 10 ? now.getMinutes() : '0' + now.getMinutes()) +
+          ':' + (now.getSeconds() >= 10 ? now.getSeconds() : '0' + now.getSeconds());
+        
+        data.push({
+          name: valueName,
+          value: [
+            valueName,
+            Math.round((Math.random() * 10 + 20) * 100) / 100 // 生成20-30之间的随机温度
+          ]
+        });
+      }
+      return data;
+    }
+    function getData(value) {
+      const now = new Date();
       const valueName = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() +
           ' ' + (now.getHours() >= 10 ? now.getHours() : '0' + now.getHours()) + ':' +
           (now.getMinutes() >= 10 ? now.getMinutes() : '0' + now.getMinutes()) +
@@ -44,9 +62,9 @@ export default defineComponent({
       let option;
       let websocket;
       let token;
-      let temperature1 = [];
-      let temperature2 = [];
-      let temperature3 = [];
+      let temperature1 = generateInitialData();
+      let temperature2 = generateInitialData();
+      let temperature3 = generateInitialData();
       option = {
         color: ['#3366CC', '#FFCC99','#99CC33'],
         legend: {
@@ -58,7 +76,7 @@ export default defineComponent({
           },
         },
         title: {
-          text: '海底电缆实时温度值',
+          text: '海底管道实时温度值',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -262,6 +280,23 @@ export default defineComponent({
         initWebSocket()
       }else{
         alert('当前浏览器 不支持')
+      }
+      if (!process.env.VUE_APP_WS_SERVER) {
+        // 如果没有WebSocket服务器，使用模拟数据
+        setInterval(() => {
+          if (temperature1.length > 20) {
+            temperature1.shift();
+            temperature2.shift();
+            temperature3.shift();
+          }
+          
+          // 模拟三个传感器的数据
+          temperature1.push(getData(Math.random() * 5 + 25)); // 25-30
+          temperature2.push(getData(Math.random() * 5 + 23)); // 23-28
+          temperature3.push(getData(Math.random() * 5 + 20)); // 20-25
+          
+          myChart.setOption(option);
+        }, 1000);
       }
     });
     return {}

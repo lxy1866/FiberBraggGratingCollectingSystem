@@ -148,7 +148,7 @@ export default defineComponent({
           }
         },
         title: {
-          text: '海底电缆实时形状',
+          text: '海底管道实时应变情况',
           textStyle:{
             color: '#ffffff',
             fontFamily: '宋体',

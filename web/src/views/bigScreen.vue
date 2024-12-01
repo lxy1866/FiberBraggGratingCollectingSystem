@@ -1,28 +1,32 @@
 <template>
   <the-header></the-header>
   <a-layout-content style="padding: 0; background: #001529;  overflow-x: hidden;" :style="{margin: 0, height: height_top.height}">
-    <div style=" height:60px; display: flex;justify-content: space-between" >
-      <dv-decoration-8 style="width:350px;" />
-        <div style="font-size: 30px; width:400px;color: cadetblue;text-align:center;display: inline-block;vertical-align: center;"  >
-          <div>海底电缆智能健康监测系统</div>
-          <div style="transform: translate(-47px, 0px);"><dv-decoration-3 style="width:100%;height:30px;" /></div>
+    <div style="height:40px; display: flex;justify-content: space-between" >
+      <dv-decoration-8 style="width:250px;height:30px;" />
+        <div style="font-size: 28px; width:400px;color: #809ed4;text-align:center;display: inline-block;vertical-align: center;"  >
+          <div>海底管道智能健康监测系统</div>
+          <div style="transform: translate(-47px, 0px);"><dv-decoration-3 style="width:100%;height:20px;" /></div>
         </div>
-      <dv-decoration-8 :reverse=true style="width:350px;" />
+      <dv-decoration-8 :reverse=true style="width:250px;height:30px;" />
     </div>
     <div class="warn-info">
       <ul>
-        <li><div style="color: cadetblue; font-size: x-large">设备数量</div><div>54个</div></li>
-        <li><div style="color: cadetblue; font-size: x-large">在线数量</div><div>54个</div></li></ul>
+        <li><div style="color: #809ed4; font-size: large">设备数量</div><div>7个</div></li>
+        <li><div style="color: #809ed4; font-size: large">在线数量</div><div>7个</div></li></ul>
       <ul>
         <li>
-          <div class="warn-text">
-            <div style="color: cadetblue; font-size: x-large">健康状态
-              <span><a-button size="small" type="link" class="wenhao" @click="showWarnInfoDialog" style="visibility: visible">⚠</a-button></span>
+          <div class="status-container">
+            <div class="warn-text">
+              <div class="status-title">
+                <div class="light-img">
+                  <span class="iconfont icon-dengpao"></span>
+                </div>
+                <div style="color: #809ed4; font-size: large">健康状态
+                  <span><a-button size="small" type="link" class="wenhao" @click="showWarnInfoDialog">⚠</a-button></span>
+                </div>
+              </div>
+              <div style="text-align: center">正常状态</div>
             </div>
-            <div style="padding-right: 30px">正常状态</div>
-          </div>
-          <div class="light-img">
-            <span class="iconfont icon-dengpao"></span>
           </div>
         </li>
       </ul>
@@ -30,77 +34,74 @@
     <div class="container fontClass" style="margin-top: 10px">
       <div class="box2 top">
         <dv-border-box-7 class="border-box" >
-          <div style="height: 300px; border-color: white">
-            <div class="imgTop" >
-                <span >海缆监测示意图</span>
+          <div style="height: 100%; border-color: white">
+            <div class="imgTop">
+                <span>管道监测示意图</span>
                 <span style="right: 0px">
                   <a-button @click="imgTurning">实物图预览</a-button>
                 </span>
             </div>
-            <img src="@/assets/拱形.png" style="height: 100%; width: 100%" alt="">
+            <div style="height: calc(100% - 40px); width: 100%; position: relative;">
+              <img 
+                src="@/assets/replace8.png" 
+                style="width: 100%; height: 100%; object-fit: contain;" 
+                alt="海缆监测示意图"
+              >
+            </div>
           </div>
         </dv-border-box-7>
       </div>
       <div class="box2 bottom" id="prev" v-show="showCurvePrev">
-          <dv-border-box-7 class="border-box">
-            <line-chart-strain class="charts" style="height: 400px"/>
-          </dv-border-box-7>
+          
           <dv-border-box-7 class="border-box">
             <three-temperature class="charts" style="height: 400px"></three-temperature>
           </dv-border-box-7>
-          <dv-border-box-7 class="border-box">
-            <vibration-wave class="charts" style="height: 400px;"></vibration-wave>
-          </dv-border-box-7>
+          
           <dv-border-box-7 class="border-box">
             <line3d-shape class="charts" style="height: 400px;"/>
           </dv-border-box-7>
       </div>
-      <div class="box2 bottom" id="next" v-show="showCurveNext">
-        <dv-border-box-7 class="border-box">
-          <line-chart-vibration class="charts" style="height: 400px; width: 600px"/>
-        </dv-border-box-7>
-        <dv-border-box-7 class="border-box">
-          <shortTimeEnergy class="charts" style="height: 400px; width:600px"></shortTimeEnergy>
-        </dv-border-box-7>
-        <dv-border-box-7 class="border-box">
-          <line-chart-temperature class="charts" style="height: 400px; width:600px"></line-chart-temperature>
-        </dv-border-box-7>
-      </div>
-      <div class="box2 bottom" id="his" v-show="showCurveHis">
-        <dv-border-box-7 class="border-box">
-          <temperatureHistory class="charts" style="height:400px; width: 600px"></temperatureHistory>
-        </dv-border-box-7>
-        <dv-border-box-7 class="border-box">
-          <strainHistory class="charts" style="height:400px; width: 600px"></strainHistory>
-        </dv-border-box-7>
-        <dv-border-box-7 class="border-box">
-          <max-offset   class="charts" style="height:400px; width: 600px"/>
-        </dv-border-box-7>
-      </div>
       <div class="box2 bottom" id="hisnext" v-show="showHisNext">
-        <dv-border-box-7 class="border-box">
-          <vibrationHis class="charts" style="height:400px; width: 800px"></vibrationHis>
-        </dv-border-box-7>
-        <dv-border-box-7 class="border-box">
-          <shortTimeHis class="charts" style="height:400px; width: 800px"></shortTimeHis>
-        </dv-border-box-7>
+        <div class="history-charts-row">
+          <dv-border-box-7 class="border-box">
+            <div class="chart-container">
+              <temperatureHistory ref="tempChart" class="history-chart"></temperatureHistory>
+            </div>
+          </dv-border-box-7>
+          <dv-border-box-7 class="border-box">
+            <div class="chart-container">
+              <strainHistory ref="strainChart" class="history-chart"></strainHistory>
+            </div>
+          </dv-border-box-7>
+        </div>
+        <div class="history-charts-row">
+          <dv-border-box-7 class="border-box">
+            <div class="chart-container">
+              <vibrationHis ref="vibrationChart" class="history-chart"></vibrationHis>
+            </div>
+          </dv-border-box-7>
+          <dv-border-box-7 class="border-box">
+            <div class="chart-container">
+              <shortTimeHis ref="shortTimeChart" class="history-chart"></shortTimeHis>
+            </div>
+          </dv-border-box-7>
+        </div>
       </div>
       <div style="display: flex; flex-direction: row-reverse; margin-bottom: 0px" >
-        <a-button @click="pageTurning">曲线图翻页</a-button>
         <a-button @click="HispageTurning">历史数据图</a-button>
       </div>
     </div>
   </a-layout-content>
   <n-modal v-model:show="showRealImg">
     <n-card
-        style="width: 600px"
+        style="width: 900px"
         title="实物图"
         :bordered="false"
         size="huge"
         role="dialog"
         aria-modal="true"
     >
-      <img src="@/assets/realImg.png" style="height: 100%; width: 100%" alt="">
+      <img src="@/assets/realImg2.png" style="width: 100%; height: auto" alt="">
     </n-card>
   </n-modal>
   <n-modal v-model:show="warnInfoDialog">
@@ -128,8 +129,9 @@
     </n-card>
   </n-modal>
 </template>
-<script>
-import {defineComponent, onMounted, ref} from "vue";
+<script lang="ts">
+import {defineComponent, onMounted, ref, nextTick} from "vue";
+import * as echarts from 'echarts';
 import CenterTop from '../components/centerTopChart.vue'
 import LineChartTemperature from '../components/centerBottomChart.vue'
 import LineChartStrain from '../components/leftTopChart.vue'
@@ -144,9 +146,9 @@ import ThreeTemperature from "@/components/threeTemperature.vue";
 import functionCall from "@/functionCall";
 import temperatureHistory from "@/components/temperatureHistory.vue";
 import strainHistory from "@/components/strainHistory.vue";
-import shortTimeEnergy from "@/components/shortTimeEnergy";
-import shortTimeHis from "@/components/shortTimeHis";
-import vibrationHis from "@/components/vibrationHis";
+import shortTimeEnergy from "@/components/shortTimeEnergy.vue";
+import shortTimeHis from "@/components/shortTimeHis.vue";
+import vibrationHis from "@/components/vibrationHis.vue";
 let showCurvePrev = ref(true);
 let showCurveNext = ref(false);
 let showCurveHis = ref(false);
@@ -166,21 +168,21 @@ const pageTurning = ()=>{
     showHisNext.value = false;
   }
 }
-const HispageTurning = ()=>{
-  if(showCurvePrev.value === true || showCurveNext.value == true){
+const HispageTurning = () => {
+  if (showCurvePrev.value) {
     showCurvePrev.value = false;
-    showCurveNext.value = false;
-    showCurveHis.value = true;
-    showHisNext.value =false;
-  } else if(showCurveHis.value === true){
-    showCurvePrev.value = false;
-    showCurveNext.value = false;
-    showCurveHis.value = false;
     showHisNext.value = true;
-  }else{
-    showCurvePrev.value = false;
-    showCurveNext.value = false;
-    showCurveHis.value = true;
+    nextTick(() => {
+      const charts = document.querySelectorAll('.history-chart');
+      charts.forEach(chart => {
+        const instance = echarts.getInstanceByDom(chart as HTMLElement);
+        if (instance) {
+          instance.resize();
+        }
+      });
+    });
+  } else if (showHisNext.value) {
+    showCurvePrev.value = true;
     showHisNext.value = false;
   }
 }
@@ -213,6 +215,10 @@ export default defineComponent({
     const height_top = ref({
       height: ''
     });
+    const tempChart = ref(null);
+    const strainChart = ref(null);
+    const vibrationChart = ref(null);
+    const shortTimeChart = ref(null);
     onMounted(async ()=>{
       const { data } = await new functionCall().handleQueryOnline();
       if(window.innerHeight != null){
@@ -236,7 +242,11 @@ export default defineComponent({
       pageTurning,
       HispageTurning,
       imgTurning,
-      showWarnInfoDialog
+      showWarnInfoDialog,
+      tempChart,
+      strainChart,
+      vibrationChart,
+      shortTimeChart
     }
   }
 });
@@ -244,16 +254,21 @@ export default defineComponent({
 <style scoped>
 
 .light-img{
-  float: right;
-  padding-top: 0;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
 }
 .warn-text{
-  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .icon-dengpao{
   color: green;
-  font-size: xxx-large;
+  font-size: 32px;
   animation: blink 500ms linear infinite;
+  display: inline-block;
+  vertical-align: middle;
 }
 @keyframes blink {
   0%{opacity: 1;}
@@ -266,8 +281,9 @@ export default defineComponent({
 /*}*/
 
 .wenhao{
-  padding-left: 0;
-  border-color: transparent;
+  padding: 0 4px;
+  height: auto;
+  line-height: 1;
 }
 .light-right{
   vertical-align: center;
@@ -280,14 +296,14 @@ export default defineComponent({
 }
 .fontClass{
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color:  cadetblue;
+  color:  #809ed4;
 }
 li{
   display: inline-block;
   height: 60px;
   margin-left: 100px;
   text-align:center;
-  color: white;
+  color: #809ed4;
   vertical-align: center;
 }
 ul:last-child{
@@ -335,24 +351,118 @@ ul:last-child{
   height: 100%;
   width: 100%;
 }
-img{
-  width: auto;
+img {
+  width: 100%;
   height: auto;
-  max-width: 98%;
-  margin-top: 1%;
-  margin-left: 1%;
-  margin-right: 1%;
-  max-height: 64%;
 }
 .border-box{
   width: 100%;
   height: 100%;
   display: flex;
+  padding: 15px;
+  box-sizing: border-box;
 }
 .spacial-border-box{
   width: 100%;
   height: fit-content;
   display: flex;
+}
+.box2.top {
+  height: 30%;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.border-box > div {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* 按钮样式 */
+:deep(.ant-btn) {
+  color: #809ed4;
+  border-color: #809ed4;
+  &:hover {
+    color: #c48d29;
+    border-color: #c48d29;
+  }
+}
+
+/* 边框盒子样式 */
+:deep(.dv-border-box-7) {
+  --border-color: #809ed4;
+}
+
+/* 装饰组件样式 */
+:deep(.dv-decoration-8),
+:deep(.dv-decoration-3) {
+  --color: #809ed4;
+  --accent-color: #809ed4;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+}
+
+.status-title {
+  display: flex;
+  align-items: center;
+}
+
+.light-img {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.warn-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.history-charts-row {
+  display: flex;
+  width: 100%;
+  height: 50%;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.history-charts-row .border-box {
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+.history-chart {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+#hisnext {
+  flex-direction: column;
+  height: 800px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.history-chart {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 </style>

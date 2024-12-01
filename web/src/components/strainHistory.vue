@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import * as echarts from 'echarts';
-import {defineComponent, onMounted} from "vue";
+import {defineComponent, onMounted, onUnmounted} from "vue";
 import axios from "axios";
 interface Xvalue {
   date: string
@@ -21,9 +21,17 @@ function handleQueryY(){
 export default defineComponent({
   name: 'strainHistory',
   setup() {
+    let myChart: echarts.ECharts;
+    
+    const resize = () => {
+      if (myChart) {
+        myChart.resize();
+      }
+    }
+
     onMounted(async () => {
       const chartDom = document.getElementById('strainHistory')!;
-      const myChart = echarts.init(chartDom);
+      myChart = echarts.init(chartDom);
       const option = {
         title: {
           text: '应变量变化',
@@ -79,19 +87,21 @@ export default defineComponent({
         yAxis: {
           type: 'value',
           axisLabel: {
-            formatter: '{value} °C'
+            formatter: '{value} '
           },
         },
         dataZoom: [
           {
+            type: 'slider',
             show: true,
-            type: 'inside',
-            filterMode: 'none',
+            start: 0,
+            end: 100,
+            filterMode: 'none'
           },
           {
-            show: true,
             type: 'inside',
-            filterMode: 'none',
+            show: true,
+            filterMode: 'none'
           }
         ],
         series: [
@@ -175,6 +185,7 @@ export default defineComponent({
           }
         ]
       }
+      
       await handleQueryX().then(res => {
         option.xAxis.data = res.data.content;
       })
@@ -193,12 +204,35 @@ export default defineComponent({
         option.series[11].data = res.data.content["strain12"];
         option.series[12].data = res.data.content["strain13"];
       })
-      myChart.setOption(option)
-    })
+      
+      myChart.setOption(option);
+      
+      window.addEventListener('resize', () => {
+        myChart.resize();
+      });
+    });
+
+    onUnmounted(() => {
+      if (myChart) {
+        myChart.dispose();
+      }
+      window.removeEventListener('resize', () => {
+        myChart.resize();
+      });
+    });
+
+    // 暴露 resize 方法
+    return {
+      resize
+    }
   }
 })
 </script>
 
 <style scoped>
-
+.strainHistory {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+}
 </style>

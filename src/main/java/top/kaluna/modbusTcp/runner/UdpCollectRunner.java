@@ -153,7 +153,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
                 List<Double> MEMSvalue = new ArrayList<>();
                 for(int i=2;i<23;i=i+4){
                     try {
-                        MEMSvalue=readxlsxVal("/root/fbgData/data.xlsx",i,0);
+                        MEMSvalue=readxlsxVal("D://temp/data.xlsx",i,0);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

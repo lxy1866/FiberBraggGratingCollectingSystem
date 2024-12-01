@@ -4,7 +4,7 @@
         验证授权码
       </a-button>
   </span>
-
+<!-- 
   <div>
     <div class="fontClass">光纤光栅振动传感器列表</div>
     <a-table
@@ -30,7 +30,7 @@
         </a-space>
       </template>
     </a-table>
-  </div>
+  </div> -->
 
   <div>
     <div class="fontClass">光纤光栅应变传感器列表</div>

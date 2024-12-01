@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import * as echarts from 'echarts';
-import {defineComponent, onMounted} from "vue";
+import {defineComponent, onMounted, onUnmounted} from "vue";
 import axios from "axios";
 interface Xvalue {
   date: string
@@ -18,9 +18,10 @@ function handleQueryX(){
 function handleQueryY(){
   return axios.get("/historyData/vibrationY")
 }
-export default ({
+export default defineComponent({
   name: "vibrationHis",
   setup() {
+    let myChart: echarts.ECharts;
     onMounted(async () => {
       const chartDom = document.getElementById('vibrationHis')!;
       const myChart = echarts.init(chartDom);
@@ -132,11 +133,27 @@ export default ({
         option.series[0].data = res.data.content;
       })
       myChart.setOption(option)
-    })
+      window.addEventListener('resize', () => {
+        myChart.resize();
+      });
+    });
+    onUnmounted(() => {
+      if (myChart) {
+        myChart.dispose();
+      }
+      window.removeEventListener('resize', () => {
+        myChart.resize();
+      });
+    });
+    
   }
 })
 </script>
 
 <style scoped>
-
+.vibrationHis {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+}
 </style>

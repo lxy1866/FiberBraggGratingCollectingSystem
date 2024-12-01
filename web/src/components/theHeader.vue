@@ -162,4 +162,19 @@ img{
   left: 0px;
   right: 0px;
 }
+
+/* 添加菜单项文字颜色 */
+:deep(.ant-menu-item) {
+  color: #809ed4 !important;
+}
+
+:deep(.ant-menu-item a) {
+  color: #809ed4 !important;
+}
+
+/* 鼠标悬停时的颜色 */
+:deep(.ant-menu-item:hover),
+:deep(.ant-menu-item a:hover) {
+  color: #a8c1e9 !important;
+}
 </style>

@@ -19,9 +19,9 @@
       </div>
       <div class="card">
         <n-card
-        style="background: #001529">
-          <div style="font-size: 10px;color: white" class="fontClass">海缆健康状态预警信息</div>
-          <p style="color: red" class="fontClass">{{warnMessage}}</p>
+        style="background: #809ed4">
+          <div style="font-size: 10px;color: #c48d29" class="fontClass">海缆健康状态预警信息</div>
+          <p style="color: #c48d29" class="fontClass">{{warnMessage}}</p>
         </n-card>
       </div>
     </div>

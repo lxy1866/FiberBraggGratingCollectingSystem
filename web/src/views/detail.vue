@@ -14,9 +14,9 @@
               <a-menu-item key="光纤光栅传感器历史数据" title="光纤光栅传感器历史数据">
                 光纤光栅传感器历史数据
               </a-menu-item>
-              <a-menu-item key="MEMS传感器历史数据" title="MEMS传感器历史数据">
+              <!-- <a-menu-item key="MEMS传感器历史数据" title="MEMS传感器历史数据">
                 MEMS传感器历史数据
-              </a-menu-item>
+              </a-menu-item> -->
 <!--              <a-menu-item key="异常波动数据检测">-->
 <!--                异常波动数据检测-->
 <!--              </a-menu-item>-->
@@ -66,7 +66,7 @@
                 </n-message-provider>
               </n-loading-bar-provider>
             </div>
-            <div v-else-if="'MEMS传感器历史数据' === selectedKey">
+            <!-- <div v-else-if="'MEMS传感器历史数据' === selectedKey">
               <n-loading-bar-provider>
                 <n-message-provider>
                   <n-notification-provider>
@@ -76,7 +76,7 @@
                   </n-notification-provider>
                 </n-message-provider>
               </n-loading-bar-provider>
-            </div>
+            </div> -->
 
 <!--            <div v-else-if="'二维形状传感'=== selectedKey">-->
 <!--              <n-loading-bar-provider>-->

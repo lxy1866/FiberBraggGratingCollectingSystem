@@ -376,7 +376,7 @@ export default defineComponent({
         state.option.series[0].itemStyle.normal.color = new echarts.graphic.LinearGradient(0, 1, 0, 0, Gradient)
         state.option.series[6].data = kd
         myChart.setOption(state.option);
-      };
+    };
       const onError = () => {
         console.log('WebSocket连接错误，状态码：', websocket.readyState)
       };

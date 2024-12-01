@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import * as echarts from 'echarts';
-import {defineComponent, onMounted} from "vue";
+import {defineComponent, onMounted, onUnmounted} from "vue";
 import axios from "axios";
 interface Xvalue {
   date: string
@@ -21,12 +21,14 @@ function handleQueryY(){
 export default defineComponent({
   name: 'temperatureHistory',
   setup() {
+    let myChart: echarts.ECharts;
+    
     onMounted(async () => {
       const chartDom = document.getElementById('temperatureHistory')!;
-      const myChart = echarts.init(chartDom);
+      myChart = echarts.init(chartDom);
       const option = {
         title: {
-          text: '随桥电缆温度变化',
+          text: '海底管道温度变化',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
@@ -75,14 +77,16 @@ export default defineComponent({
         },
         dataZoom: [
           {
+            type: 'slider',
             show: true,
-            type: 'inside',
-            filterMode: 'none',
+            start: 0,
+            end: 100,
+            filterMode: 'none'
           },
           {
-            show: true,
             type: 'inside',
-            filterMode: 'none',
+            show: true,
+            filterMode: 'none'
           }
         ],
         series: [
@@ -90,6 +94,17 @@ export default defineComponent({
             data: [],
             type: 'line',
             smooth: true,
+            name: '温度',
+            symbolSize: 5,
+            lineStyle: {
+              width: 2
+            },
+            itemStyle: {
+              color: '#409EFF'
+            },
+            areaStyle: {
+              opacity: 0.2
+            }
           }
         ]
       }
@@ -100,7 +115,20 @@ export default defineComponent({
         option.series[0].data = res.data.content;
       })
       myChart.setOption(option)
-    })
+      
+      window.addEventListener('resize', () => {
+        myChart.resize();
+      });
+    });
+
+    onUnmounted(() => {
+      if (myChart) {
+        myChart.dispose();
+      }
+      window.removeEventListener('resize', () => {
+        myChart.resize();
+      });
+    });
   }
 })
 </script>
