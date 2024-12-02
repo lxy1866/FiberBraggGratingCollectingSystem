@@ -9,7 +9,7 @@
         <div class="center-right">
           <div style="display: flex;justify-content: space-between; " >
             <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-              <div class="fontClass" >海底电缆智能健康监测系统</div>
+              <div class="fontClass" >海底管道智能健康监测系统</div>
               <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
             </div>
           </div>
