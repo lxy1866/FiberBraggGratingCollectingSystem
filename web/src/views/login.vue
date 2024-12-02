@@ -1,21 +1,15 @@
+<!-- web/src/views/login.vue -->
 <template>
-  <the-header></the-header>
   <a-layout-content
       :style="{margin: 0, height: height_top.height}"
-  style="background-image: url(https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/)">
-<!--    https://i-1-lanrentuku.52tup.com/2020/12/9/e0758bac-bba3-497f-ab0b-fa278f8114a6.jpg?imageView2/2/w/1024/-->
-<!--    https://cdnimgzh.vietnamplus.vn/uploaded/wbxx/2022_02_25/cap_quang.jpg-->
+      style="background-image: url(https://s1.ax1x.com/2022/04/17/Lauu59.jpg); background-size: cover;">
       <div class="center">
         <div class="center-right">
-          <div style="display: flex;justify-content: space-between; " >
-            <div style="display: flex; flex-flow: column; justify-content: center; margin-top: -6px">
-              <div class="fontClass" >海底管道智能健康监测系统</div>
-              <div><dv-decoration-3 style="width:250px;height:30px;" /></div>
-            </div>
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div class="fontClass">海底管道智能健康监测系统</div>
+            <!-- 去掉装饰 -->
           </div>
-          <n-card style="--n-color:#001529;
-        --n-title-text-color: white; display: flex;
-        --n-border-color: white;">
+          <n-card class="login-card">
             <a-form
                 :model="LoginUser"
                 name="basic"
@@ -24,38 +18,76 @@
                 autocomplete="off"
                 @finish="onFinish"
                 @finishFailed="onFinishFailed"
-                style="margin-top: 50px;margin-left: -12.5px"
+                style="margin-top: 50px;"
             >
               <a-form-item
                   label="NAME"
                   name="loginName"
-                  :rules="[{ required: true, message: 'Please input your name!' }]"
-              >
+                  :rules="[{ required: true, message: 'Please input your name!' }]">
                 <a-input v-model:value="LoginUser.loginName" />
               </a-form-item>
 
               <a-form-item
                   label="PASSWORD"
                   name="password"
-                  :rules="[{ required: true, message: 'Please input your password!' }]"
-              >
+                  :rules="[{ required: true, message: 'Please input your password!' }]">
                 <a-input-password v-model:value="LoginUser.password" />
               </a-form-item>
 
-              <a-form-item :wrapper-col="{ offset: 14, span: 16 }">
-                <a-button  html-type="submit" >LOGIN</a-button>
+              <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
+                <a-button class="login-button" html-type="submit">LOGIN</a-button>
               </a-form-item>
             </a-form>
           </n-card>
         </div>
       </div>
-<!--      <div class="logoImg">-->
-<!--        <img src="@/assets/Logo_stu.png"/>&nbsp;-->
-<!--        <img src="@/assets/zhejiangdaxue_bg_white.png"/>&nbsp;-->
-<!--        <img src="@/assets/guojiadianwang_bg_white.png"/>-->
-<!--      </div>-->
   </a-layout-content>
 </template>
+
+<style scoped>
+.center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-right {
+  width: 30%;
+  height: auto; /* 自适应高度 */
+  position: relative;
+  margin-left: 700px;
+  margin-top: 100px;
+}
+
+.login-card {
+  background-color: rgba(0, 0, 0, 0.7); /* 半透明背景 */
+  border-radius: 10px; /* 圆角 */
+  padding: 20px; /* 内边距 */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* 阴影 */
+}
+
+.fontClass {
+  font-size: 32px;
+  color: #003366; /* 修改为更深的蓝色 */
+  text-align: center;
+  font-family: 宋体;
+}
+
+.login-button {
+  background-color: #1890ff; /* 按钮背景色 */
+  color: white; /* 按钮文字颜色 */
+  border: none; /* 去掉边框 */
+  border-radius: 5px; /* 圆角 */
+  width: 100%; /* 按钮宽度 */
+  height: 40px; /* 按钮高度 */
+  transition: background-color 0.3s; /* 动画效果 */
+}
+
+.login-button:hover {
+  background-color: #40a9ff; /* 悬停时的背景色 */
+}
+</style>
 <script lang="ts" >
 import {defineComponent, ref, onMounted} from 'vue';
 import { useRouter } from 'vue-router'
@@ -119,41 +151,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.center{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-.center-right{
-  width: 30%;
-  height: 58%;
-  position: relative;
-  margin-left: 700px;
-  margin-top: 100px;
-}
-.logoImg img{
-  position: relative;
-  width: 45px;
-  height: 45px;
-}
-.logoImg{
-  display: flex;
-  flex-direction: row;
-  margin-top: 250px;
-  justify-content: center;
-  align-items: center;
-}
-.border-box{
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-.fontClass{
-  font-size: 32px;
-  color:white;
-  text-align: center;
-  font-family: 宋体;
-}
-</style>
