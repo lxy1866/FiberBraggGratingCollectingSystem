@@ -1,9 +1,9 @@
 <template>
   <div id="threeTemperature" class="threeTemperature"></div>
 </template>
-<script lang="js">
+<script lang="ts">
 import * as echarts from 'echarts';
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, ref, onUnmounted} from "vue";
 import axios from "axios";
 import {Tool} from "@/util/tool";
 function dateToGMT(strDate){
@@ -15,6 +15,8 @@ function dateToGMT(strDate){
 export default defineComponent({
   name: 'threeTemperature',
   setup: function () {
+    let myChart: echarts.ECharts;  // 声明图表实例变量
+
     function handleQueryList(startTime, endTime) {
       return axios.get("/txt/listLastHourFortemperature", {
         params: {
@@ -230,7 +232,7 @@ export default defineComponent({
         }]
       }
       const chartDom = document.getElementById('threeTemperature');
-      let myChart = echarts.init(chartDom);
+      myChart = echarts.init(chartDom);
       myChart.setOption(option);
       const onOpen = () =>{
         console.log('WebSocket连接成功，状态码：',websocket.readyState)
@@ -298,7 +300,21 @@ export default defineComponent({
           myChart.setOption(option);
         }, 1000);
       }
+
+      // 添加 resize 事件监听
+      window.addEventListener('resize', () => {
+        myChart.resize();
+      });
     });
+
+    // 组件卸载时移除事件监听
+    onUnmounted(() => {
+      window.removeEventListener('resize', () => {
+        myChart?.resize();
+      });
+      myChart?.dispose();
+    });
+
     return {}
   },
 })

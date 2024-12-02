@@ -159,7 +159,7 @@ const HispageTurning = () => {
     showCurvePrev.value = false;
     showHisNext.value = true;
     nextTick(() => {
-      const charts = document.querySelectorAll('.history-chart');
+      const charts = document.querySelectorAll('.history-chart, #threeTemperature, #rightBottomChart');
       charts.forEach(chart => {
         const instance = echarts.getInstanceByDom(chart as HTMLElement);
         if (instance) {
@@ -170,6 +170,15 @@ const HispageTurning = () => {
   } else if (showHisNext.value) {
     showCurvePrev.value = true;
     showHisNext.value = false;
+    nextTick(() => {
+      const charts = document.querySelectorAll('#threeTemperature, #rightBottomChart');
+      charts.forEach(chart => {
+        const instance = echarts.getInstanceByDom(chart as HTMLElement);
+        if (instance) {
+          instance.resize();
+        }
+      });
+    });
   }
 }
 const imgTurning = () => {

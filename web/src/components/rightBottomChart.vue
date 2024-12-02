@@ -2,11 +2,11 @@
     <div id="rightBottomChart" class="rightBottomChart"></div>
 </template>
 
-<script>
-import {defineComponent, onMounted} from "vue";
+<script lang="ts">
+import {defineComponent, onMounted, onUnmounted} from "vue";
 import * as echarts from 'echarts';
 import "echarts-gl"
-import {all, create} from 'mathjs'
+import {all, create, Matrix, MathType} from 'mathjs'
 import axios from "axios";
 import interp1 from 'interp1';
 import {Tool} from "@/util/tool";
@@ -37,7 +37,7 @@ async function generateData(queryLast15Result) {
   let l3 = 1;
   let p_before_test3 = math.matrix([0, 0, 0]);
   let H3 = math.matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
-  let p_test3 = Array.from(Array(3), () => new Array(15));
+  let p_test3: Matrix = math.matrix([[0]]);
   p_test3 = math.subset(p_test3, math.index(0,0), 0);
   p_test3 = math.subset(p_test3, math.index(1,0), 0);
   p_test3 = math.subset(p_test3, math.index(2,0), 0);
@@ -75,13 +75,13 @@ async function generateData(queryLast15Result) {
   //p_test3[1]实际x轴范围 p_test3[3]：函数   x13 实际要插值的范围  spline：三次样条插值
   //let y13 = math.inte(p_test3[1],p_test3[3],x13,'spline');
   let xs = []
-  let row0 = math.subset(p_test3, math.index(0,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]));
+  let row0: Matrix = math.subset(p_test3, math.index(0,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]));
   for(let i = 0; i < 15; i++){
     xs.push(row0.get([0,i]));
   }
   xs = xs.map(Number);
   //console.log("xs", xs)
-  let row2 = math.subset(p_test3, math.index(2,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]));
+  let row2: Matrix = math.subset(p_test3, math.index(2,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]));
   let vs = [];
   for(let i = 0; i < 15; i++){
     vs.push(row2.get([0,i]));
@@ -124,15 +124,23 @@ async function generateData(queryLast15Result) {
 export default defineComponent({
   name: 'rightBottomChart',
   setup() {
-    onMounted(async ()=>{
+    let myChart: echarts.ECharts;  // 声明图表实例变量
+
+    onMounted(async () => {
       const chartDom = document.getElementById('rightBottomChart');
-      const myChart = echarts.init(chartDom);
+      myChart = echarts.init(chartDom);
+      
+      // 添加 resize 事件监听
+      window.addEventListener('resize', () => {
+        myChart.resize();
+      });
+
       let option;
       let websocket;
       let token;
-      let queryLast15Result = []
-      queryLast15Result = await queryLast15()
-      let createTime = queryLast15Result.data.content[14].createTime.toLocaleString('zh');
+      let queryLast15Result: any;  // 不再初始化为数组
+      queryLast15Result = (await queryLast15()).data;  // 直接获取响应的 data
+      let createTime = queryLast15Result.content[14].createTime.toLocaleString('zh');
       console.log("createTime", createTime)
       var shape = "shape";
       var temp = "";
@@ -330,7 +338,15 @@ export default defineComponent({
         alert('当前浏览器 不支持')
       }
 
-    })
+    });
+
+    // 组件卸载时移除事件监听
+    onUnmounted(() => {
+      window.removeEventListener('resize', () => {
+        myChart?.resize();
+      });
+      myChart?.dispose();
+    });
 
     return{
     }
