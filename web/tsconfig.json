@@ -19,7 +19,8 @@
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "@vue/*": ["./node_modules/@vue/*"]
     },
     "lib": [
       "esnext",

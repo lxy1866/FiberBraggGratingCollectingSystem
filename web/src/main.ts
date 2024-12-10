@@ -5,7 +5,8 @@ import store from './store'
 import axios from "axios";
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import 'element-plus/dist/index.css'
 import 'ant-design-vue/dist/antd.css'
 import naive from 'naive-ui'
 import {decoration8, decoration3, digitalFlop, borderBox8} from '@jiaminghi/data-view';
@@ -39,9 +40,28 @@ axios.interceptors.response.use(function (response){
     //console.log('返回错误:',error)
     return Promise.reject(error);
 })
-const app = createApp(App)
-setupAtnd(app)
-setupVant(app)
-app.use(store).use(router).use(ElementPlus,{locale}).use(decoration8).use(decoration3).use(digitalFlop).use(borderBox8).use(naive).mount('#app');
+// ... 其他导入保持不变 ...
 
+// 创建应用实例
+const app = createApp(App);
 
+// 按顺序注册插件
+app.use(store);
+app.use(router);
+app.use(ElementPlus, {
+    locale: zhCn,
+});
+app.use(naive);
+
+// 注册 DataV 组件
+app.use(decoration8);
+app.use(decoration3);
+app.use(digitalFlop);
+app.use(borderBox8);
+
+// 注册其他组件
+setupAtnd(app);
+setupVant(app);
+
+// 最后挂载应用
+app.mount('#app');
