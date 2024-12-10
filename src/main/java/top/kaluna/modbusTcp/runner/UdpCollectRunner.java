@@ -10,6 +10,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import top.kaluna.modbusTcp.config.TxtFileConfig;
 import top.kaluna.modbusTcp.domain.FbgValue;
 import top.kaluna.modbusTcp.mapper.FbgValueMapper;
 import top.kaluna.modbusTcp.service.WsService;
@@ -37,6 +38,9 @@ public class UdpCollectRunner  implements ApplicationRunner {
     private FbgValueMapper fbgValueMapper;
     @Resource
     private RedisTemplate redisTemplate;
+    @Resource
+    private TxtFileConfig txtFileConfig;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         start();
@@ -153,7 +157,7 @@ public class UdpCollectRunner  implements ApplicationRunner {
                 List<Double> MEMSvalue = new ArrayList<>();
                 for(int i=2;i<23;i=i+4){
                     try {
-                        MEMSvalue=readxlsxVal("/root/fbgData/data.xlsx",i,0);
+                        MEMSvalue=readxlsxVal(txtFileConfig.getPath()+"data.xlsx",i,0);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

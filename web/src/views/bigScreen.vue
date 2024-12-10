@@ -42,24 +42,42 @@
                 </span>
             </div>
             <div style="height: calc(100% - 40px); width: 100%; position: relative;">
-              <img 
-                src="@/assets/replace8.png" 
-                style="width: 100%; height: 100%; object-fit: contain;" 
-                alt="海缆监测示意图"
-              >
+              <div style="display: flex; height: 100%;">
+                <img 
+                  src="@/assets/图片1.png" 
+                  style="width: 50%; height: 100%; object-fit: contain;" 
+                  alt="海缆监测示意图"
+                >
+                <img 
+                  src="@/assets/图片2.png" 
+                  style="width: 50%; height: 100%; object-fit: contain;" 
+                  alt="海缆监测示意图"
+                >
+              </div>
             </div>
           </div>
         </dv-border-box-7>
       </div>
       <div class="box2 bottom" id="prev" v-show="showCurvePrev">
-          
+        <div class="charts-row">
           <dv-border-box-7 class="border-box">
-            <three-temperature class="charts" style="height: 400px"></three-temperature>
+            <three-temperature class="charts"/>
           </dv-border-box-7>
           
           <dv-border-box-7 class="border-box">
-            <line3d-shape class="charts" style="height: 400px;"/>
+            <line3d-shape class="charts"/>
           </dv-border-box-7>
+        </div>
+        
+        <div class="charts-row">
+          <dv-border-box-7 class="border-box">
+            <line-chart-strain class="charts"/>
+          </dv-border-box-7>
+          
+          <dv-border-box-7 class="border-box">
+            <vibration-wave class="charts"/>
+          </dv-border-box-7>
+        </div>
       </div>
       <div class="box2 bottom" id="hisnext" v-show="showHisNext">
         <div class="history-charts-row">
@@ -445,6 +463,33 @@ img {
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+.box2.bottom {
+  height: 850px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.charts-row {
+  display: flex;
+  width: 100%;
+  height: 50%;
+  gap: 20px;
+}
+
+.charts-row .border-box {
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+.charts {
+  width: 100%;
+  height: 100% !important;
+  margin: 0;
 }
 
 </style>

@@ -4,31 +4,65 @@
 <script lang="js">
 import * as echarts from 'echarts';
 import {defineComponent, onMounted} from "vue";
-import {Tool} from "@/util/tool";
 
 export default defineComponent({
   name: 'vibrationWave',
   setup: function () {
-    onMounted(async () => {
-      let websocket;
-      let token;
-      let vibration = [];
+    // 生成模拟振动数据
+    const generateVibrationData = () => {
+      const data = [];
+      for (let i = 0; i < 100; i++) {
+        let value = Math.sin(i * 0.1) * 0.5;
+        value += Math.sin(i * 0.5) * 0.2;
+        value += (Math.random() - 0.5) * 0.3;
+        value += Math.sin(i * 0.01) * 0.3;
+        data.push(Number(value.toFixed(3)));
+      }
+      return data;
+    };
+
+    onMounted(() => {
       var chartDom = document.getElementById('vibrationWave');
       var myChart = echarts.init(chartDom);
       let time = new Date();
-      let data = {
-        categoryData:[],
-        valueData:[]
-      } ;
+      
+      function generateData() {
+        const categoryData = [];
+        const valueData = generateVibrationData();
+        time = new Date();
+        
+        for (let i = 0; i < 100; i++) {
+          if (i % 10 === 0) {
+            categoryData.push(
+              echarts.format.formatTime('hh:mm:ss', new Date(time.getTime() - (100 - i) * 1000))
+            );
+          } else {
+            categoryData.push('');
+          }
+        }
+        
+        return {
+          categoryData: categoryData,
+          valueData: valueData
+        };
+      }
+
       let option = {
         title: {
-          text: '海底电缆振动波长值',
+          text: '海底管道振动波形',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
           },
         },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross'
+          }
+        },
         toolbox: {
+          show: true,
           feature: {
             dataZoom: {
               yAxisIndex: false
@@ -36,106 +70,109 @@ export default defineComponent({
             saveAsImage: {
               pixelRatio: 2
             }
-          }
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow'
+          },
+          iconStyle: {
+            color: '#fff'
           }
         },
         grid: {
-          left: 90,
-          bottom: 90
+          left: '5%',
+          right: '5%',
+          bottom: '15%',
+          top: '15%'
         },
-        dataZoom: [
-          {
-            type: 'inside'
-          },
-          {
-            type: 'slider'
-          }
-        ],
         xAxis: {
-          data: data.categoryData,
-          silent: false,
-          splitLine: {
-            show: false
+          type: 'category',
+          data: [],
+          axisLabel: {
+            color: '#fff',
+            rotate: 30,
+            fontSize: 12,
+            interval: 'auto'
           },
-          splitArea: {
+          splitLine: {
             show: false
           }
         },
         yAxis: {
-          splitArea: {
-            show: false
+          type: 'value',
+          scale: true,
+          axisLabel: {
+            color: '#fff'
           },
-          scale:true,
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: 'rgba(255,255,255,0.1)'
+            }
+          }
         },
+        dataZoom: [
+          {
+            type: 'inside',
+            start: 0,
+            end: 100
+          },
+          {
+            show: true,
+            type: 'slider',
+            top: '90%',
+            start: 0,
+            end: 100,
+            textStyle: {
+              color: '#fff'
+            }
+          }
+        ],
         series: [
           {
+            name: '振动值',
             type: 'line',
-            data: data.valueData,
-            large: true
+            data: [],
+            sampling: 'lttb',
+            symbol: 'none',
+            lineStyle: {
+              width: 2,
+              color: '#00C851'
+            },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: 'rgba(0, 200, 81, 0.3)'
+                },
+                {
+                  offset: 1,
+                  color: 'rgba(0, 200, 81, 0)'
+                }
+              ])
+            }
           }
-        ]
+        ],
+        animation: false
       };
-      time -= 5000
-      function generateData(list) {
-        const categoryData = [];
-        const valueData = [];
-        for (let i = 0; i < 500; i++) {
-          categoryData.push(
-              echarts.format.formatTime('yyyy-MM-dd\nhh:mm:ss', time, false)
-          );
-          valueData.push(list[i]);
-          time += 10
-        }
-        return {
-          categoryData: categoryData,
-          valueData: valueData
-        };
-      }
-      const onOpen = () =>{
-        console.log('WebSocket连接成功，状态码：',websocket.readyState)
-      };
-      const onMessage = function (msg){
-        vibration = JSON.parse(msg.data)
-        data = generateData(vibration);
+
+      // 初始化数据
+      const updateData = () => {
+        const data = generateData();
         option.xAxis.data = data.categoryData;
         option.series[0].data = data.valueData;
-        myChart.setOption(option)
-        console.log(vibration)
+        myChart.setOption(option);
       };
-      const onError = ()=>{
-        console.log('WebSocket连接错误，状态码：', websocket.readyState)
-      };
-      const onClose = ()=>{
-        console.log('WebSocket连接关闭，状态码：',websocket.readyState)
-      };
-      const initWebSocket = () =>{
-        //连接成功
-        websocket.onOpen = onOpen;
-        // 收到消息的回调
-        websocket.onmessage = onMessage;
-        // 连接错误
-        websocket.onerror = onError;
-        // 连接关闭的回调
-        websocket.onClose = onClose;
-      }
-      if('WebSocket' in window){
 
-        token = Tool.uuid(10);
-        console.log("******",token)
-        //连接地址：ws://127.0.0.1:8080/vibrationWaveWs/xxx
-        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/vibrationWaveWs/' + token);
-        initWebSocket()
-      }else{
-        alert('当前浏览器 不支持')
-      }
-    })
-  },
-})
+      // 首次渲染
+      updateData();
+
+      // 定时更新数据
+      setInterval(updateData, 2000);
+
+      // 响应式处理
+      window.addEventListener('resize', () => {
+        myChart.resize();
+      });
+    });
+  }
+});
 </script>
 
 <style scoped>

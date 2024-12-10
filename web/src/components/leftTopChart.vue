@@ -45,6 +45,35 @@ export default defineComponent({
       strain12: '#330a17',
       strain13: '#70247d',
     };
+    const generateSimulatedData = (() => {
+      let previousValues = {
+        strain1: 15,
+        strain2: -12,
+        strain3: 8,
+        strain4: -18,
+        strain5: 22,
+        strain6: -15,
+        strain7: 10,
+        strain8: -8,
+        strain9: 25,
+        strain10: -20,
+        strain11: 12,
+        strain12: -16,
+        strain13: 18
+      };
+
+      return () => {
+        const newValues = Object.entries(previousValues).map(([key, value]) => {
+          const change = (Math.random() - 0.5) * 2;
+          let newValue = value + change;
+          newValue = Math.max(-30, Math.min(30, newValue));
+          previousValues[key] = newValue;
+          return Math.round(newValue * 100) / 100;
+        });
+
+        return newValues;
+      };
+    })();
     onMounted(() => {
       var chartDom = document.getElementById('leftTopChart');
       var myChart = echarts.init(chartDom);
@@ -52,21 +81,29 @@ export default defineComponent({
       let strain = [];
       option = {
         title: {
-          text: '海底电缆实时应变值(με)',
+          text: '海底管道实时应变值(με)',
           textStyle: {
             color: '#ffffff',
             fontFamily: '宋体',
           },
         },
         xAxis: {
-          max: 'dataMax'
+          max: 30,
+          min: -30,
+          axisLabel: {
+            color: '#fff'
+          }
         },
         yAxis: {
           type: 'category',
-          data: ['strain1', 'strain2', 'strain3', 'strain4', 'strain5', 'strain6', 'strain7', 'strain8', 'strain9', 'strain10', 'strain11', 'strain12', 'strain13'],
+          data: ['strain1', 'strain2', 'strain3', 'strain4', 'strain5', 'strain6', 'strain7', 
+                 'strain8', 'strain9', 'strain10', 'strain11', 'strain12', 'strain13'],
           inverse: true,
           animationDuration: 300,
           animationDurationUpdate: 300,
+          axisLabel: {
+            color: '#fff'
+          }
         },
         grid: {
           top: 40,
@@ -81,154 +118,63 @@ export default defineComponent({
             magicType: {type: ['line', 'bar']},
             restore: {},
             saveAsImage: {}
+          },
+          iconStyle: {
+            color: '#fff'
           }
         },
         series: [
           {
-            name: 'X',
+            name: '应变值',
             type: 'bar',
-            data: [7.80,-5.75,-9.80,-9.74,-9.94,-8.68,-8.41,4.34,-0.97,5.44,-1.40,12.13,6.08],
-            // strain,
+            data: generateSimulatedData(),
             label: {
               show: true,
               color: '#fff',
-              position: 'right',
-              // valueAnimation: true
+              position: 'right'
             }
           }
         ],
         animationDuration: 0,
-        animationDurationUpdate: 3000,
+        animationDurationUpdate: 1000,
         animationEasing: 'linear',
         animationEasingUpdate: 'linear',
         visualMap: {
           orient: 'horizontal',
-          left: -5,
-          bottom: -5,
-          min: -50,
-          max: 50,
-          text: ['High', 'Low'],
+          left: 'center',
+          bottom: 0,
+          min: -30,
+          max: 30,
+          text: ['高', '低'],
           textStyle: {
             color: 'white'
           },
-          // Map the score column to color
           dimension: 0,
           inRange: {
-            color: ['#403897', '#288888', '#988888']
-          },
-          padding: 5,
-          textGap: 20
-        },
-        graphic: {
-          elements: [
-            {
-              type: 'text',
-              right: 40,
-              bottom: 0,
-              style: {
-                text: "",
-                font: 'bolder 17px monospace',
-                fill: 'rgba(225, 225, 225, 255)'
-              },
-              z: 100
-            }
-          ]
+            color: ['#ff4444', '#ffbb33', '#00C851']
+          }
         }
       };
-      let websocket;
-      let token;
-      const onOpen = () => {
-        console.log('WebSocket连接成功，状态码：', websocket.readyState)
-      };
-      const onMessage = function (msg) {
-        let data = JSON.parse(msg.data);
-        var value = Array(13);
-        for (let i=0;i<13;i++){
-          value[i]=data[i+4].value;
-          if(value[i]>0) {
-            while (value[i] > 30) {
-              value[i] = value[i] - 20;
+      setInterval(() => {
+        option.series[0].data = generateSimulatedData();
+        option.graphic = {
+          elements: [{
+            type: 'text',
+            left: 'center',
+            top: 'bottom',
+            style: {
+              text: new Date().format("yyyy-MM-dd hh:mm:ss"),
+              fill: '#fff',
+              fontSize: 14
             }
-          }
-          if (value[i]<0){
-            while (value[i]<-30){
-              value[i]=value[i]+20;
-            }
-          }
-          strain.push(Math.round(value[i]*100)/100);
-        }
-        // for (let i = 4; i < 17; i++) {
-        //   //四舍五入取两位小数
-        //   if(i==4){
-        //     strain.push(Math.round((data[i].value-30) * 100) / 100);
-        //   }
-        //   if(i==5){
-        //     strain.push(Math.round((data[i].value-30) * 100) / 100);
-        //   }
-        //   if(i==6){
-        //     strain.push(Math.round((data[i].value+60) * 100) / 100);
-        //   }
-        //   if(i==7){
-        //     strain.push(Math.round((data[i].value+70) * 100) / 100);
-        //   }
-        //   if(i==8){
-        //     strain.push(Math.round((data[i].value+90) * 100) / 100);
-        //   }
-        //   if(i==9){
-        //     strain.push(Math.round(data[i].value * 100) / 100);
-        //   }
-        //   if(i==10){
-        //     strain.push(Math.round((data[i].value+70) * 100) / 100);
-        //   }
-        //   if(i==11){
-        //     strain.push(Math.round((data[i].value+80) * 100) / 100);
-        //   }
-        //   if(i==12){
-        //     strain.push(Math.round((data[i].value-40) * 100) / 100);
-        //   }
-        //   if(i==13){
-        //     strain.push(Math.round((data[i].value+70) * 100) / 100);
-        //   }
-        //   if(i==14){
-        //     strain.push(Math.round((data[i].value+160) * 100) / 100);
-        //   }
-        //   if(i==15){
-        //     strain.push(Math.round((data[i].value+30) * 100) / 100);
-        //   }
-        //   if(i==16){
-        //     strain.push(Math.round(data[i].value * 100) / 100);
-        //   }
-        // }
-        option.series[0].data = strain;
-        strain = [];
-        option.graphic.elements[0].style.text = new Date().format("yyyy-MM-dd hh:mm:ss");
+          }]
+        };
         myChart.setOption(option);
-      };
-      const onError = () => {
-        console.log('WebSocket连接错误，状态码：', websocket.readyState)
-      };
-      const onClose = () => {
-        console.log('WebSocket连接关闭，状态码：', websocket.readyState)
-      };
-      const initWebSocket = () => {
-        //连接成功
-        websocket.onOpen = onOpen;
-        // 收到消息的回调
-        websocket.onmessage = onMessage;
-        // 连接错误
-        websocket.onerror = onError;
-        // 连接关闭的回调
-        websocket.onClose = onClose;
-      }
-
-      if ('WebSocket' in window) {
-        token = Tool.uuid(10);
-        //连接地址：ws://127.0.0.1:8080/ws/xxx
-        websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/ws/' + token);
-        initWebSocket()
-      } else {
-        alert('当前浏览器 不支持')
-      }
+      }, 1000);
+      myChart.setOption(option);
+      window.addEventListener('resize', () => {
+        myChart.resize();
+      });
     })
   }
 })
