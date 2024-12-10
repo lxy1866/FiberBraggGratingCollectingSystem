@@ -9,4 +9,5 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class TxtFileConfig {
     private String path;
+    private String ycypath;
 }
