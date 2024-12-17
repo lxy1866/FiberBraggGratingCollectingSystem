@@ -19,6 +19,16 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
+    path: '/screen1',
+    name: 'BigScreen1',
+    component: () => import('@/views/bigScreen.vue')
+  },
+  {
+    path: '/screen2',
+    name: 'BigScreen2',
+    component: () => import('@/views/bigScreen2.vue')
+  },
+  {
     path: '/p_index/detail',
     name: 'p_Detail',
     component: () => import('../views/detail.vue'),
@@ -34,14 +44,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       "type":'pc',
       loginRequire: true
-    },
-  },
-  {
-    path: '/p_index/login',
-    name: 'p_Login',
-    component: ()=>import('../views/login.vue'),
-    meta: {
-      "type":'pc'
     },
   },
   {
@@ -82,14 +84,6 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/m_index/login',
-    name: 'm_Login',
-    component: ()=>import('../views/mobile/m_login.vue'),
-    meta:{
-      "type":'mobile',
-    }
-  },
-  {
     path: '/m_index/about',
     name: 'm_About',
     component: ()=>import('../views/mobile/m_about.vue'),
@@ -121,24 +115,5 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
-//路由登录拦截
-router.beforeEach((to, from, next) => {
-  // 要不要对meta.loginRequire属性做监控拦截
-  if (to.matched.some(function (item) {
-    //console.log(item, "是否需要登录校验：", item.meta.loginRequire);
-    return item.meta.loginRequire
-  })) {
-    const loginUser = store.state.user;
-    if (Tool.isEmpty(loginUser)) {
-      const path = redirectPath+"/login"
-      //console.log(path)
-      next(path);
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
 })
 export default router

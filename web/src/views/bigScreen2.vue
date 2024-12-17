@@ -38,15 +38,15 @@
             <div class="imgTop">
                 <span>管道监测示意图</span>
                 <span style="right: 0px">
-                  <router-link to="/screen2">
-                    <a-button>切换到位移/振动监测</a-button>
+                  <router-link to="/screen1">
+                    <a-button>切换到温度/应变监测</a-button>
                   </router-link>
                 </span>
             </div>
             <div style="height: calc(100% - 40px); width: 100%; position: relative;">
               <div style="display: flex; height: 100%; justify-content: center; align-items: center;">
                 <img 
-                  src="@/assets/图片1.png" 
+                  src="@/assets/图片2.png" 
                   style="width: 60%; height: 80%; object-fit: contain;" 
                   alt="海缆监测示意图"
                 >
@@ -59,12 +59,12 @@
         <div class="history-charts-row">
           <dv-border-box-7 class="border-box">
             <div class="chart-container">
-              <three-temperature ref="tempChart" class="history-chart"/>
+              <vibration-wave ref="tempChart" class="history-chart"/>
             </div>
           </dv-border-box-7>
           <dv-border-box-7 class="border-box">
             <div class="chart-container">
-              <line-chart-strain ref="strainChart" class="history-chart"/>
+              <right-bottom-chart ref="strainChart" class="history-chart"/>
             </div>
           </dv-border-box-7>
         </div>

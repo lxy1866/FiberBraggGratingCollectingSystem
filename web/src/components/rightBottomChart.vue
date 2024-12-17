@@ -113,7 +113,16 @@ export default defineComponent({
             },
             axisLabel: {
               color: '#fff',
-              fontSize: 12
+              fontSize: 12,
+              formatter: function(value) {
+                // 假设日期格式为 "MM/DD/YY HH:mm"
+                const datePart = value.split(' ')[0]; // 提取日期部分
+                const parts = datePart.split('/');
+                if (parts.length === 3) {
+                  return `${parts[0]}/${parts[1]}`; // 返回 "MM/DD"
+                }
+                return value; // 如果格式不对，返回原值
+              }
             }
           },
           {
@@ -129,7 +138,16 @@ export default defineComponent({
             },
             axisLabel: {
               color: '#fff',
-              fontSize: 12
+              fontSize: 12,
+              formatter: function(value) {
+                // 假设日期格式为 "MM/DD/YY HH:mm"
+                const datePart = value.split(' ')[0]; // 提取日期部分
+                const parts = datePart.split('/');
+                if (parts.length === 3) {
+                  return `${parts[0]}/${parts[1]}`; // 返回 "MM/DD"
+                }
+                return value; // 如果格式不对，返回原值
+              }
             }
           }
         ],
@@ -188,13 +206,13 @@ export default defineComponent({
           {
             top: '15%',
             bottom: '55%',
-            left: '8%',
+            left: '12%',
             right: '4%'
           },
           {
             top: '63%',
             bottom: '8%',
-            left: '8%',
+            left: '12%',
             right: '4%'
           }
         ],

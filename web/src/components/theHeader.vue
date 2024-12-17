@@ -7,50 +7,25 @@
     >
       <div class="header-wrap">
         <div class="header-left">
-<!--          <div style=" font-size: 20px; color: cadetblue; font-weight: bolder">汕头大学</div>-->
           <a-menu-item key="/p_index">
-            <transition :name="transitionName">
-              <router-link to="/p_index" :style="user.id? {} : {display:'none'}" >首页</router-link>
-            </transition>
+            <router-link to="/p_index">首页</router-link>
           </a-menu-item>
           <a-menu-item key="/p_index/detail">
-            <transition :name="transitionName">
-              <router-link to="/p_index/detail" :style="user.id? {} : {display:'none'}">历史数据查询</router-link>
-            </transition>
+            <router-link to="/p_index/detail">历史数据查询</router-link>
           </a-menu-item>
           <a-menu-item key="/p_index/sensor">
-            <transition :name="transitionName">
-              <router-link to="/p_index/sensor" :style="user.id? {} : {display:'none'}">传感器查询</router-link>
-            </transition>
+            <router-link to="/p_index/sensor">传感器查询</router-link>
           </a-menu-item>
           <a-menu-item key="/p_index/admin/user">
-            <transition :name="transitionName">
-              <router-link to="/p_index/admin/user" :style="user.id? {} : {display:'none'}">用户</router-link>
-            </transition>
+            <router-link to="/p_index/admin/user">用户</router-link>
           </a-menu-item>
         </div>
         <div class="header-right">
-          <a-menu-item key="/p_index/about" >
-            <transition :name="transitionName">
-              <router-link to="/p_index/about" :style="user.id? {} : {display:'none'}">关于</router-link>
-            </transition>
+          <a-menu-item key="/p_index/about">
+            <router-link to="/p_index/about">关于</router-link>
           </a-menu-item>
-          <a-menu-item key="/p_index/login">
-              <router-link to="/p_index/login" v-show="!user.id">登录</router-link>
-          </a-menu-item>
-          <a-menu-item key="/p_index/logout" >
-            <a-popconfirm
-                title="确认退出登录?"
-                ok-text="是"
-                cancel-text="否"
-                @confirm="logout()"
-            >
-              <a  v-show="user.id">
-                <span>退出</span>
-              </a>
-            </a-popconfirm>
-          </a-menu-item>
-          <a-menu-item>
+          <a-menu-item v-if="user.id" @click="logout">
+            退出登录
           </a-menu-item>
         </div>
       </div>
